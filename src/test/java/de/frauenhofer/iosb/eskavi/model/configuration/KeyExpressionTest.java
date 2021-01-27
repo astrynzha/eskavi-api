@@ -1,4 +1,4 @@
-package de.frauenhofer.iosb.eskavi.modell.configuration;
+package de.frauenhofer.iosb.eskavi.model.configuration;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
