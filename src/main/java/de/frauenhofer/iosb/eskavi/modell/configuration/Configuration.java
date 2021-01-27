@@ -26,11 +26,11 @@ public abstract class Configuration {
     /*
     public Collection<ImmutableModuleImp> getDependentModuleImps() {
         return null;
-    }*/
+    }
 
     public ImmutableModuleImp getModuleImp() {
         return null;
-    }
+    }*/
 
     public KeyExpression getKeyExpression() {
         return keyExpression;
