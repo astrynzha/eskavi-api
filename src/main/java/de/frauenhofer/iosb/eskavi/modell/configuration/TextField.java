@@ -19,7 +19,7 @@ public class TextField extends SingleValueField {
     }
 
     @Override
-    public Configuration clone() {
+    public TextField clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
         return new TextField(getName(), allowsMultiple(), copy, getDataType());
     }
