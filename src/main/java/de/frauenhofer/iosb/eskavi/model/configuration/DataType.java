@@ -1,4 +1,4 @@
-package de.frauenhofer.iosb.eskavi.modell.configuration;
+package de.frauenhofer.iosb.eskavi.model.configuration;
 
 public enum DataType {
     TEXT,

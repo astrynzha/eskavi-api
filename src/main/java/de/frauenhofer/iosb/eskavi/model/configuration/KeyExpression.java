@@ -1,4 +1,4 @@
-package de.frauenhofer.iosb.eskavi.modell.configuration;
+package de.frauenhofer.iosb.eskavi.model.configuration;
 
 /**
  * Represents the invariant parts of the KeyExpression of a Configuration. Is a simple storage class.
