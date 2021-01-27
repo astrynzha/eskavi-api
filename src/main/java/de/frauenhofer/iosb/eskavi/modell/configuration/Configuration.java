@@ -1,6 +1,4 @@
-package de.frauenhofer.iosb.eskavi.module.configuration;
-
-import java.util.Collection;
+package de.frauenhofer.iosb.eskavi.modell.configuration;
 
 public abstract class Configuration {
     private String name;

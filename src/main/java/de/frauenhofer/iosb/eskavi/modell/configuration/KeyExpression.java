@@ -1,4 +1,4 @@
-package de.frauenhofer.iosb.eskavi.module.configuration;
+package de.frauenhofer.iosb.eskavi.modell.configuration;
 
 /**
  * Represents the invariant parts of the KeyExpression of a Configuration. Is a simple storage class.
@@ -26,7 +26,7 @@ public class KeyExpression {
     }
 
     /**
-     * Changes the beginning of the KeyExpression
+     * Sets the beginning of the KeyExpression
      * @param expressionStart String to start the expression
      */
     public void setExpressionStart(String expressionStart) {
@@ -42,7 +42,7 @@ public class KeyExpression {
     }
 
     /**
-     * Changes the beginning of the KeyExpression
+     * Sets the beginning of the KeyExpression
      * @param expressionEnd String to start the expression
      */
     public void setExpressionEnd(String expressionEnd) {
