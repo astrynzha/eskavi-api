@@ -26,6 +26,7 @@ public abstract class Implementation implements ImmutableImplementation {
     scope.unsubscribe(user);
   }
 
+  @Override
   public boolean isSubscribed(ImmutableUser user) {
     return scope.isSubscribed((User) user); // TODO: is conversion OK?
   }
@@ -38,18 +39,22 @@ public abstract class Implementation implements ImmutableImplementation {
     this.scope = scope;
   }
 
+  @Override
   public long getImplementationId() {
     return implementationId;
   }
 
+  @Override
   public ImmutableUser getAuthor() {
     return (ImmutableUser) author;
   }
 
+  @Override
   public String getName() {
     return name;
   }
 
+  @Override
   public Scope getScope() {
     return scope;
   }
