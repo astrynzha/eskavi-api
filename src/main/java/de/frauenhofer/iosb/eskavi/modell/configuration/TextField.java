@@ -14,11 +14,6 @@ public class TextField extends SingleValueField {
     }
 
     @Override
-    public String resolveKeyExpression() {
-        return getKeyExpression().getExpressionStart() + getValue() + getKeyExpression().getExpressionEnd();
-    }
-
-    @Override
     public TextField clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
         return new TextField(getName(), allowsMultiple(), copy, getDataType());

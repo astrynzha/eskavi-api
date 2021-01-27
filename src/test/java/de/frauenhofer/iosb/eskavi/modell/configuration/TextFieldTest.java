@@ -19,13 +19,6 @@ class TextFieldTest {
     }
 
     @Test
-    void resolveKeyExpression() {
-        testObject.setValue("value");
-        assertEquals("testvalue.", testObject.resolveKeyExpression());
-        //have to take a look at mistake behavior, what happens if no value set?
-    }
-
-    @Test
     void testClone() {
         TextField clone = testObject.clone();
         //assert whether clone is equal

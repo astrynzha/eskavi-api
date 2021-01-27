@@ -20,17 +20,12 @@ public class Select extends SingleValueField {
     }
 
     @Override
-    public void setValue(String value) {
+    public void setValue(String value) throws IllegalArgumentException{
         if (content.containsKey(value)) {
             super.setValue(content.get(value));
         } else {
             throw new IllegalArgumentException("value must be a possible value from content");
         }
-    }
-
-    @Override
-    public String resolveKeyExpression() {
-        return getKeyExpression().getExpressionStart() + getValue() + getKeyExpression().getExpressionEnd();
     }
 
     @Override
