@@ -3,7 +3,7 @@ package de.frauenhofer.iosb.eskavi.model.configuration;
 import java.util.Objects;
 
 /**
- * Represents the invariant parts of the KeyExpression of a Configuration. Is a simple storage class.
+ * Represents the invariant parts of the KeyExpression of a Configuration. Is a simple storage class
  */
 public class KeyExpression {
     private String expressionStart;
@@ -11,6 +11,7 @@ public class KeyExpression {
 
     /**
      * Constructs a new KeyExpression
+     *
      * @param expressionStart
      * @param expressionEnd
      */
@@ -21,7 +22,8 @@ public class KeyExpression {
 
     /**
      * Returns the part of the KeyExpression to be added in front of the value
-     * @return expressionStart
+     *
+     * @return Start of the expression
      */
     public String getExpressionStart() {
         return expressionStart;
@@ -29,6 +31,7 @@ public class KeyExpression {
 
     /**
      * Sets the beginning of the KeyExpression
+     *
      * @param expressionStart String to start the expression
      */
     public void setExpressionStart(String expressionStart) {
@@ -37,7 +40,8 @@ public class KeyExpression {
 
     /**
      * Returns the part of the KeyExpression to be added after the value
-     * @return expressionEnd
+     *
+     * @return End of the expression
      */
     public String getExpressionEnd() {
         return expressionEnd;
@@ -45,18 +49,16 @@ public class KeyExpression {
 
     /**
      * Sets the beginning of the KeyExpression
-     * @param expressionEnd String to start the expression
+     *
+     * @param expressionEnd String to end the expression
      */
     public void setExpressionEnd(String expressionEnd) {
         this.expressionEnd = expressionEnd;
     }
 
     @Override
-    public String toString() {
-        return "KeyExpression{" +
-                "expressionStart='" + expressionStart + '\'' +
-                ", expressionEnd='" + expressionEnd + '\'' +
-                '}';
+    public int hashCode() {
+        return Objects.hash(expressionStart, expressionEnd);
     }
 
     @Override
@@ -68,7 +70,10 @@ public class KeyExpression {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(expressionStart, expressionEnd);
+    public String toString() {
+        return "KeyExpression{" +
+                "expressionStart='" + expressionStart + '\'' +
+                ", expressionEnd='" + expressionEnd + '\'' +
+                '}';
     }
 }

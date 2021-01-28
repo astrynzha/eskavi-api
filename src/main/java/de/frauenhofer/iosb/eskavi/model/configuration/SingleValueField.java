@@ -2,17 +2,38 @@ package de.frauenhofer.iosb.eskavi.model.configuration;
 
 import java.util.Objects;
 
+/**
+ * Class extends {@link Configuration} and is an abstraction of all Configurations just containing one value
+ */
 public abstract class SingleValueField extends Configuration {
 
     private String value;
 
+    /**
+     * Constructs a new SingleValueField
+     *
+     * @param name          the name of this SingleValueField
+     * @param allowMultiple boolean, whether this SingleValueField can be added multiple times
+     * @param expression    the {@link KeyExpression} of this SingleValueField
+     */
     public SingleValueField(String name, boolean allowMultiple, KeyExpression expression) {
         super(name, allowMultiple, expression);
     }
 
-    @Override
-    public boolean checkCompatible() {
-        return true;
+    /**
+     * @return the set value of this SingleValueField or NULL if value not set yet
+     */
+    public String getValue() {
+        return value;
+    }
+
+    /**
+     * Sets the value of this SingleValueField
+     *
+     * @param value the new Value of the field
+     */
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Override
@@ -24,21 +45,14 @@ public abstract class SingleValueField extends Configuration {
         }
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
+    @Override
+    public boolean checkCompatible() {
+        return true;
     }
 
     @Override
-    public String toString() {
-        return "SingleValueField{" +
-                "name='" + getName() + '\'' +
-                ", allowMultiple=" + allowsMultiple() +
-                ", keyExpression=" + getKeyExpression().toString() +
-                ", value='" + getValue() + "'}";
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getValue());
     }
 
     @Override
@@ -51,7 +65,11 @@ public abstract class SingleValueField extends Configuration {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getValue());
+    public String toString() {
+        return "SingleValueField{" +
+                "name='" + getName() + '\'' +
+                ", allowMultiple=" + allowsMultiple() +
+                ", keyExpression=" + getKeyExpression().toString() +
+                ", value='" + getValue() + "'}";
     }
 }
