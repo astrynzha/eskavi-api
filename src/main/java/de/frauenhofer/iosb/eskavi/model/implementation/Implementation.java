@@ -36,7 +36,10 @@ public abstract class Implementation implements ImmutableImplementation {
 
   @Override
   public boolean isSubscribed(ImmutableUser user) {
-    return scope.isSubscribed((User) user); // TODO: is the cast OK?
+    if (!(user instanceof User)) { // TODO: mehh instanceof. Is it possible to do without it here?
+      return false;
+    }
+    return scope.isSubscribed((User) user);
   }
 
   public void setName(String name) {
