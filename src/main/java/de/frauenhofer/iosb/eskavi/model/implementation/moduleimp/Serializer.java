@@ -28,7 +28,12 @@ public class Serializer extends ModuleImp {
         return false;
       }
     }
-    return true;
+    for (ImmutableModuleImp usedImp : instanceConfiguration.getDependentModuleImps()) {
+      if (!usedImp.checkCompatibleSerializer(this)) {
+        return false;
+      }
+    }
+    return instanceConfiguration.checkCompatible();
   }
 
   @Override
@@ -38,8 +43,7 @@ public class Serializer extends ModuleImp {
 
   @Override
   public boolean checkCompatibleSerializer(Serializer serializer) {
-    return serializer.getMessageType().checkCompatibility(messageType) &&
-            serializer.getProtocolType().checkCompatibility(protocolType);
+    return this.equals(serializer);
   }
 
   @Override
@@ -54,23 +58,8 @@ public class Serializer extends ModuleImp {
   }
 
   @Override
-  public boolean checkCompatibleAssetConnection(AssetConnection assetConnection) {
-    return true;
-  }
-
-  @Override
   public boolean checkCompatibleHandler(Handler handler) {
     return handler.getMessageType().checkCompatibility(messageType);
-  }
-
-  @Override
-  public boolean checkCompatiblePersistenceManager(PersistenceManager persistenceManager) {
-    return true;
-  }
-
-  @Override
-  public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter) {
-    return true;
   }
 
   public MessageType getMessageType() {

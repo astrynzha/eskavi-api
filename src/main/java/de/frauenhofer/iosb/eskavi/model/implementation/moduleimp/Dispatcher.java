@@ -18,11 +18,6 @@ public class Dispatcher extends ModuleImp {
   }
 
   @Override
-  public boolean checkCompatibleEndpoint(Endpoint endpoint) {
-    return true;
-  }
-
-  @Override
   public boolean checkCompatibleSerializer(Serializer serializer) {
     return serializer.getMessageType().checkCompatibility(messageType);
   }
@@ -34,27 +29,12 @@ public class Dispatcher extends ModuleImp {
 
   @Override
   public boolean checkCompatibleDispatcher(Dispatcher dispatcher) {
-    return dispatcher.getMessageType().checkCompatibility(messageType);
-  }
-
-  @Override
-  public boolean checkCompatibleAssetConnection(AssetConnection assetConnection) {
-    return true;
+    return dispatcher.equals(this);
   }
 
   @Override
   public boolean checkCompatibleHandler(Handler handler) {
     return handler.getMessageType().checkCompatibility(messageType);
-  }
-
-  @Override
-  public boolean checkCompatiblePersistenceManager(PersistenceManager persistenceManager) {
-    return true;
-  }
-
-  @Override
-  public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter) {
-    return true;
   }
 
   @Override
@@ -64,7 +44,12 @@ public class Dispatcher extends ModuleImp {
         return false;
       }
     }
-    return true;
+    for (ImmutableModuleImp usedImp : instanceConfiguration.getDependentModuleImps()) {
+      if (!usedImp.checkCompatibleDispatcher(this)) {
+        return false;
+      }
+    }
+    return instanceConfiguration.checkCompatible();
   }
 
   public MessageType getMessageType() {
