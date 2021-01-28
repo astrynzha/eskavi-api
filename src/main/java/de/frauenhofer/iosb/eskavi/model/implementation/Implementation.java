@@ -1,17 +1,61 @@
 package de.frauenhofer.iosb.eskavi.model.implementation;
 
+import de.frauenhofer.iosb.eskavi.model.user.ImmutableUser;
 import de.frauenhofer.iosb.eskavi.model.user.User;
 
-/**
- * @author Niv Adam
- * @version 1.0.0
- */
 public abstract class Implementation implements ImmutableImplementation {
-    public void subscribe(User user) {
-        return;
-    }
+  private long implementationId;
+  private User author;
+  private String name;
+  private Scope scope;
 
-    public void unsubscribe(User user) {
-        return;
-    }
+  // TODO: where do ID's come from?
+  protected Implementation(long implementationId, User author, String name, Scope scope) {
+    this.implementationId = implementationId;
+    this.author = author;
+    this.name = name;
+    scope.subscribe(author);
+    this.scope = scope;
+  }
+
+  public void subscribe(User user) {
+    scope.subscribe(user);
+  }
+
+  public void unsubscribe(User user) {
+    scope.unsubscribe(user);
+  }
+
+  @Override
+  public boolean isSubscribed(ImmutableUser user) {
+    return scope.isSubscribed((User) user); // TODO: is conversion OK?
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setScope(Scope scope) {
+    this.scope = scope;
+  }
+
+  @Override
+  public long getImplementationId() {
+    return implementationId;
+  }
+
+  @Override
+  public ImmutableUser getAuthor() {
+    return (ImmutableUser) author;
+  }
+
+  @Override
+  public String getName() {
+    return name;
+  }
+
+  @Override
+  public Scope getScope() {
+    return scope;
+  }
 }

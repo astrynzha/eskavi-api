@@ -1,5 +1,6 @@
 package de.frauenhofer.iosb.eskavi.model.user;
 
+<<<<<<< HEAD
 import de.frauenhofer.iosb.eskavi.model.implementation.ImmutableImplementation;
 import de.frauenhofer.iosb.eskavi.model.implementation.Implementation;
 
@@ -118,5 +119,4 @@ public class User implements ImmutableUser {
         this.implementations.remove(mi);
         mi.unsubscribe(this);
     }
-
 }
