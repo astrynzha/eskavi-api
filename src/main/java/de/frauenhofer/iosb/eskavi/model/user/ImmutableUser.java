@@ -41,11 +41,11 @@ public interface ImmutableUser {
     public SecurityQuestion getSecurityQuestion();
 
     /**
-     * Gets the response to the user's {@link SecurityQuestion}.
+     * Gets the answer to the user's {@link SecurityQuestion}.
      *
-     * @return response to security question
+     * @return answer to security question
      */
-    public String getSecurityResponse();
+    public String getSecurityAnswer();
 
     /**
      * Checks if user has access to the passed {@link ImmutableImplementation}
