@@ -83,13 +83,13 @@ public class User implements ImmutableUser {
 
     @Override
     public boolean isSubscribedTo(ImmutableImplementation mi) {
-        //todo implement
+        //todo implement (wird hier auch gechecked wenn öffentliche imp?)
         return this.implementations.contains(mi);
     }
 
     @Override
     public Collection<ImmutableImplementation> getSubscribed() {
-        //todo implement
+        //todo implement (werden hier auch öffentliche imps zurückgegeben?)
         return new HashSet<>(this.implementations);
     }
 
@@ -99,6 +99,9 @@ public class User implements ImmutableUser {
      * @param mi {@link Implementation} to subscribe to
      */
     public void subscribe(Implementation mi) {
+        if (this.implementations.contains(mi)) {
+            return;
+        }
         this.implementations.add(mi);
         mi.subscribe(this);
     }
@@ -109,6 +112,9 @@ public class User implements ImmutableUser {
      * @param mi {@link Implementation} to unsubscribe from
      */
     public void unsubscribe(Implementation mi) {
+        if (!this.implementations.contains(mi)) {
+            return;
+        }
         this.implementations.remove(mi);
         mi.unsubscribe(this);
     }
