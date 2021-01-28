@@ -33,4 +33,5 @@ build/
 .vscode/
 
 ### Keep intellij code style files ###
-!.idea/codeStyles/*
+!.idea/codeStyles/codeStyleConfig.xml
+!.idea/codeStyles/Project.xml.xml
