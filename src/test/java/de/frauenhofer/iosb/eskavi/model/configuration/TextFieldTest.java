@@ -8,11 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class TextFieldTest {
     private TextField testObject;
 
-    @BeforeEach
-    void setUp(){
-        testObject = new TextField("test", false, new KeyExpression("test", "."), DataType.TEXT);
-    }
-
     @Test
     void getDataType() {
         assertEquals(DataType.TEXT, testObject.getDataType());
@@ -29,5 +24,52 @@ class TextFieldTest {
         clone.setValue("test");
         //assert whether changes to clone dont happen to testObject
         assertNotEquals(testObject.getValue(), clone.getValue());
+    }
+
+    @Test
+    void testEqualsItself() {
+        assertTrue(testObject.equals(testObject));
+    }
+
+    @Test
+    void testNullNotEqual() {
+        assertFalse(testObject.equals(null));
+    }
+
+    @Test
+    void testEqualsClone() {
+        assertTrue(testObject.equals(testObject.clone()));
+    }
+
+    @Test
+    void testEqualsSuccess() {
+        TextField other = new TextField("test", false, new KeyExpression("test", "."), DataType.TEXT);
+        assertTrue(testObject.equals(other));
+    }
+
+    @Test
+    void testEqualsFail() {
+        TextField other = new TextField("fail", false, new KeyExpression("test", "."), DataType.TEXT);
+        assertFalse(testObject.equals(other));
+
+        other = new TextField("test", true, new KeyExpression("test", "."), DataType.TEXT);
+        assertFalse(testObject.equals(other));
+
+        other = new TextField("test", false, new KeyExpression(".", "."), DataType.TEXT);
+        assertFalse(testObject.equals(other));
+
+        other = new TextField("test", false, new KeyExpression("test", "."), DataType.DATE);
+        assertFalse(testObject.equals(other));
+    }
+
+    @Test
+    void testHashCode() {
+        TextField other = new TextField("test", false, new KeyExpression("test", "."), DataType.TEXT);
+        assertEquals(testObject.hashCode(), other.hashCode());
+    }
+
+    @BeforeEach
+    void setUp() {
+        testObject = new TextField("test", false, new KeyExpression("test", "."), DataType.TEXT);
     }
 }

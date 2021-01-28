@@ -38,9 +38,9 @@ class SelectTest {
     void setValueFailure() {
         try {
             testObject.setValue("no key");
-            assertTrue(false);
+            fail();
         } catch (IllegalArgumentException e) {
-            assertTrue(true);
+            assertEquals(true, true);
         }
     }
 
@@ -55,5 +55,25 @@ class SelectTest {
         Map<String, String> newContent = new HashMap<>();
         clone.setContent(newContent);
         assertNotEquals(testObject.getContent(), clone.getContent());
+    }
+
+    @Test
+    void testEqualsSuccess() {
+        Select other = new Select("test", false, new KeyExpression("start", "end"), content);
+        assertEquals(true, testObject.equals(other));
+    }
+
+    @Test
+    void testEqualsFailure() {
+        Map<String, String> newContent = new HashMap<>();
+        newContent.put("fail", "fail");
+        Select other = new Select("test", false, new KeyExpression("start", "end"), newContent);
+        assertEquals(false, testObject.equals(other));
+    }
+
+    @Test
+    void testHashCode() {
+        TextField other = new TextField("test", false, new KeyExpression("test", "."), DataType.TEXT);
+        assertEquals(testObject.hashCode(), other.hashCode());
     }
 }

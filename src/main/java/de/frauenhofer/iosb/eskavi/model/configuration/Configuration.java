@@ -1,5 +1,8 @@
 package de.frauenhofer.iosb.eskavi.model.configuration;
 
+import de.frauenhofer.iosb.eskavi.model.implementation.ImmutableModuleImp;
+
+import java.util.Collection;
 import java.util.Objects;
 
 /**
@@ -73,14 +76,14 @@ public abstract class Configuration {
     public void setKeyExpression(KeyExpression expression) {
         this.keyExpression = expression;
     }
-    /*
+
     public Collection<ImmutableModuleImp> getDependentModuleImps() {
         return null;
     }
 
     public ImmutableModuleImp getModuleImp() {
         return null;
-    }*/
+    }
 
     /**
      * @return whether this Configuration can be added multiple times. This means multiple times the same fields just
