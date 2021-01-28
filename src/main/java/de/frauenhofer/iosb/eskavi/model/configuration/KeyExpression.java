@@ -1,5 +1,7 @@
 package de.frauenhofer.iosb.eskavi.model.configuration;
 
+import java.util.Objects;
+
 /**
  * Represents the invariant parts of the KeyExpression of a Configuration. Is a simple storage class.
  */
@@ -47,5 +49,26 @@ public class KeyExpression {
      */
     public void setExpressionEnd(String expressionEnd) {
         this.expressionEnd = expressionEnd;
+    }
+
+    @Override
+    public String toString() {
+        return "KeyExpression{" +
+                "expressionStart='" + expressionStart + '\'' +
+                ", expressionEnd='" + expressionEnd + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        KeyExpression that = (KeyExpression) o;
+        return Objects.equals(expressionStart, that.expressionStart) && Objects.equals(expressionEnd, that.expressionEnd);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(expressionStart, expressionEnd);
     }
 }

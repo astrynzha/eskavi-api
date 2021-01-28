@@ -1,6 +1,7 @@
 package de.frauenhofer.iosb.eskavi.model.configuration;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class Select extends SingleValueField {
 
@@ -32,5 +33,30 @@ public class Select extends SingleValueField {
     public Select clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
         return new Select(getName(), allowsMultiple(), copy, getContent());
+    }
+
+    @Override
+    public String toString() {
+        return "Select{" +
+                "name='" + getName() + "'" +
+                ", allowMultiple=" + allowsMultiple() +
+                ", keyExpression=" + getKeyExpression().toString() +
+                ", value='" + getValue() + "'" +
+                ", content=" + getContent() +
+                "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Select select = (Select) o;
+        return Objects.equals(getContent(), select.getContent());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getContent());
     }
 }

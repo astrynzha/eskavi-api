@@ -22,4 +22,25 @@ public class Switch extends Select {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
         return new Switch(getName(), allowsMultiple(), copy, getContent().get(TRUE), getContent().get(FALSE));
     }
+
+    @Override
+    public String toString() {
+        return "Switch{" +
+                "name='" + getName() + "'" +
+                ", allowMultiple=" + allowsMultiple() +
+                ", keyExpression=" + getKeyExpression().toString() +
+                ", value='" + getValue() + "'" +
+                ", content=" + getContent() +
+                "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
