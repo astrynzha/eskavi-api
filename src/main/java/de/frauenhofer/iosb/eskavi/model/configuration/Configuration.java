@@ -1,5 +1,7 @@
 package de.frauenhofer.iosb.eskavi.model.configuration;
 
+import java.util.Objects;
+
 public abstract class Configuration {
     private String name;
     private boolean allowMultiple;
@@ -54,5 +56,27 @@ public abstract class Configuration {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Configuration{" +
+                "name='" + name + '\'' +
+                ", allowMultiple=" + allowMultiple +
+                ", keyExpression=" + keyExpression +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Configuration that = (Configuration) o;
+        return allowsMultiple() == that.allowsMultiple() && Objects.equals(getName(), that.getName()) && Objects.equals(getKeyExpression(), that.getKeyExpression());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), allowsMultiple(), getKeyExpression());
     }
 }
