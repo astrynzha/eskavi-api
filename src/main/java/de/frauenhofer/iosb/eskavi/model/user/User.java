@@ -4,6 +4,7 @@ import de.frauenhofer.iosb.eskavi.model.implementation.ImmutableImplementation;
 import de.frauenhofer.iosb.eskavi.model.implementation.Implementation;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * This class represents a user of the ESKAVI web app.
@@ -17,6 +18,7 @@ public class User implements ImmutableUser {
     private SecurityQuestion securityQuestion;
     private String securityAnswer;
     private UserLevel userLevel;
+    private Collection<Implementation> implementations;
 
     /**
      * Constructs a user object.
@@ -33,6 +35,7 @@ public class User implements ImmutableUser {
         this.userLevel = userLevel;
         this.securityAnswer = securityAnswer;
         this.securityQuestion = securityQuestion;
+        this.implementations = new HashSet<>();
     }
 
     @Override
@@ -81,13 +84,13 @@ public class User implements ImmutableUser {
     @Override
     public boolean isSubscribedTo(ImmutableImplementation mi) {
         //todo implement
-        return false;
+        return this.implementations.contains(mi);
     }
 
     @Override
     public Collection<ImmutableImplementation> getSubscribed() {
         //todo implement
-        return null;
+        return new HashSet<>(this.implementations);
     }
 
     /**
@@ -96,7 +99,8 @@ public class User implements ImmutableUser {
      * @param mi {@link Implementation} to subscribe to
      */
     public void subscribe(Implementation mi) {
-        //todo implement
+        this.implementations.add(mi);
+        mi.subscribe(this);
     }
 
     /**
@@ -105,7 +109,8 @@ public class User implements ImmutableUser {
      * @param mi {@link Implementation} to unsubscribe from
      */
     public void unsubscribe(Implementation mi) {
-        //todo implement
+        this.implementations.remove(mi);
+        mi.unsubscribe(this);
     }
 
 }
