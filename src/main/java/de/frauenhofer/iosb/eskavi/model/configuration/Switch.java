@@ -8,8 +8,8 @@ import java.util.Map;
  * false value. Because of that Switch always has a value.
  */
 public class Switch extends Select {
-    private static String TRUE = "trueValue";
-    private static String FALSE = "falseValue";
+    public static String TRUE = "trueValue";
+    public static String FALSE = "falseValue";
 
     /**
      * Constructs a new Switch
