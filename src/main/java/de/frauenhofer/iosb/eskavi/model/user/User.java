@@ -118,5 +118,4 @@ public class User implements ImmutableUser {
         this.implementations.remove(mi);
         mi.unsubscribe(this);
     }
-
 }

@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Keep intellij code style files ###
+!.idea/codeStyles/codeStyleConfig.xml
+!.idea/codeStyles/Project.xml.xml
