@@ -1,6 +1,5 @@
 package de.frauenhofer.iosb.eskavi.model.user;
 
-<<<<<<< HEAD
 import de.frauenhofer.iosb.eskavi.model.implementation.ImmutableImplementation;
 
 import java.util.Collection;
