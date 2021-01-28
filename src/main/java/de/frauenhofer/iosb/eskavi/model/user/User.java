@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+// TODO: update data base upon subscribing
 public class User {
   // TODO: one list of implementations or separate for moduleImps and GenericImps
   private List<Scope> scopeList;

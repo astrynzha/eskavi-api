@@ -5,6 +5,7 @@ import de.frauenhofer.iosb.eskavi.model.user.User;
 import java.util.LinkedList;
 import java.util.List;
 
+// TODO: update database upon subscribing
 public class Scope {
   private ImplementationScope impScope;
   private List<User> grantedUsers;
