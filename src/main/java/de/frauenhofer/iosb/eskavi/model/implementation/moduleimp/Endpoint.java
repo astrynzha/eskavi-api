@@ -19,7 +19,7 @@ public class Endpoint extends ModuleImp {
 
   @Override
   public boolean checkCompatibleEndpoint(Endpoint endpoint) {
-    return endpoint.getProtocolType().checkCompatibility(protocolType);
+    return endpoint.equals(this) || !endpoint.getProtocolType().checkCompatibility(protocolType);
   }
 
   @Override
@@ -33,38 +33,18 @@ public class Endpoint extends ModuleImp {
   }
 
   @Override
-  public boolean checkCompatibleDispatcher(Dispatcher dispatcher) {
-    return true;
-  }
-
-  @Override
-  public boolean checkCompatibleAssetConnection(AssetConnection assetConnection) {
-    return true;
-  }
-
-  @Override
-  public boolean checkCompatibleHandler(Handler handler) {
-    return true;
-  }
-
-  @Override
-  public boolean checkCompatiblePersistenceManager(PersistenceManager persistenceManager) {
-    return true;
-  }
-
-  @Override
-  public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter) {
-    return true;
-  }
-
-  @Override
   public boolean isCompatible(Collection<ImmutableModuleImp> usedImpCollection, Configuration instanceConfiguration) {
     for (ImmutableModuleImp usedImp : usedImpCollection) {
       if (!usedImp.checkCompatibleEndpoint(this)) {
         return false;
       }
     }
-    return true;
+    for (ImmutableModuleImp usedImp : instanceConfiguration.getDependentModuleImps()) {
+      if (!usedImp.checkCompatibleEndpoint(this)) {
+        return false;
+      }
+    }
+    return instanceConfiguration.checkCompatible();
   }
 
   public ProtocolType getProtocolType() {

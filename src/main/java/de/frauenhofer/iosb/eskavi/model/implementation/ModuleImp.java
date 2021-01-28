@@ -21,29 +21,47 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
   }
 
   @Override
-  public abstract boolean checkCompatibleEndpoint(Endpoint endpoint);
+  public boolean checkCompatibleEndpoint(Endpoint endpoint) {
+    return true;
+  }
 
   @Override
-  public abstract boolean checkCompatibleSerializer(Serializer serializer);
+  public boolean checkCompatibleSerializer(Serializer serializer) {
+    return true;
+  }
 
   @Override
-  public abstract boolean checkCompatibleDeserializer(Deserializer deserializer);
+  public boolean checkCompatibleDeserializer(Deserializer deserializer) {
+    return true;
+  }
 
   @Override
-  public abstract boolean checkCompatibleDispatcher(Dispatcher dispatcher);
+  public boolean checkCompatibleDispatcher(Dispatcher dispatcher) {
+    return true;
+  }
 
   @Override
-  public abstract boolean checkCompatibleAssetConnection(AssetConnection assetConnection);
+  public boolean checkCompatibleAssetConnection(AssetConnection assetConnection) {
+    return true;
+  }
 
   @Override
-  public abstract boolean checkCompatibleHandler(Handler handler);
+  public boolean checkCompatibleHandler(Handler handler) {
+    return true;
+  }
 
   @Override
-  public abstract boolean checkCompatiblePersistenceManager(PersistenceManager persistenceManager);
+  public boolean checkCompatiblePersistenceManager(PersistenceManager persistenceManager) {
+    return true;
+  }
 
   @Override
-  public abstract boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter);
+  public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter) {
+    return true;
+  }
 
   @Override
-  public abstract boolean isCompatible(Collection<ImmutableModuleImp> usedImpCollection, Configuration instanceConfiguration);
+  public boolean isCompatible(Collection<ImmutableModuleImp> usedImpCollection, Configuration instanceConfiguration) {
+    return true;
+  }
 }

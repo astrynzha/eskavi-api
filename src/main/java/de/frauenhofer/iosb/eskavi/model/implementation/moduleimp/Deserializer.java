@@ -34,8 +34,7 @@ public class Deserializer extends ModuleImp {
 
   @Override
   public boolean checkCompatibleDeserializer(Deserializer deserializer) {
-    return deserializer.getMessageType().checkCompatibility(messageType) &&
-            deserializer.getProtocolType().checkCompatibility(protocolType);
+    return deserializer.equals(this);
   }
 
   @Override
@@ -44,23 +43,8 @@ public class Deserializer extends ModuleImp {
   }
 
   @Override
-  public boolean checkCompatibleAssetConnection(AssetConnection assetConnection) {
-    return true;
-  }
-
-  @Override
   public boolean checkCompatibleHandler(Handler handler) {
     return handler.getMessageType().checkCompatibility(messageType);
-  }
-
-  @Override
-  public boolean checkCompatiblePersistenceManager(PersistenceManager persistenceManager) {
-    return true;
-  }
-
-  @Override
-  public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter) {
-    return true;
   }
 
   @Override
@@ -70,7 +54,12 @@ public class Deserializer extends ModuleImp {
         return false;
       }
     }
-    return true;
+    for (ImmutableModuleImp usedImp : instanceConfiguration.getDependentModuleImps()) {
+      if (!usedImp.checkCompatibleDeserializer(this)) {
+        return false;
+      }
+    }
+    return instanceConfiguration.checkCompatible();
   }
 
   public MessageType getMessageType() {
