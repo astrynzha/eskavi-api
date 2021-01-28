@@ -19,16 +19,24 @@ public abstract class Implementation implements ImmutableImplementation {
   }
 
   public void subscribe(User user) {
+    if (isSubscribed(user)) {
+      return;
+    }
     scope.subscribe(user);
+    user.subscribe(this);
   }
 
   public void unsubscribe(User user) {
+    if (!isSubscribed(user)) {
+      return;
+    }
     scope.unsubscribe(user);
+    user.unsubscribe(this);
   }
 
   @Override
   public boolean isSubscribed(ImmutableUser user) {
-    return scope.isSubscribed((User) user); // TODO: is conversion OK?
+    return scope.isSubscribed((User) user); // TODO: is the cast OK?
   }
 
   public void setName(String name) {
