@@ -49,7 +49,7 @@ class SelectTest {
         Select clone = testObject.clone();
         assertEquals(testObject.getContent(), clone.getContent());
         assertEquals(testObject.getKeyExpression().getExpressionStart(), clone.getKeyExpression().getExpressionStart());
-        assertNotEquals(testObject.getKeyExpression(), clone.getKeyExpression());
+        assertEquals(testObject.getKeyExpression(), clone.getKeyExpression());
 
         //changing clone
         Map<String, String> newContent = new HashMap<>();
@@ -69,11 +69,5 @@ class SelectTest {
         newContent.put("fail", "fail");
         Select other = new Select("test", false, new KeyExpression("start", "end"), newContent);
         assertEquals(false, testObject.equals(other));
-    }
-
-    @Test
-    void testHashCode() {
-        TextField other = new TextField("test", false, new KeyExpression("test", "."), DataType.TEXT);
-        assertEquals(testObject.hashCode(), other.hashCode());
     }
 }
