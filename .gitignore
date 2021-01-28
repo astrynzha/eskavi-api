@@ -15,7 +15,6 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
-!.idea/codeStyles
 *.iws
 *.iml
 *.ipr
@@ -32,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Keep intellij code style files ###
+!.idea/codeStyles/*
