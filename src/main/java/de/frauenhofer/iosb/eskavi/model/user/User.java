@@ -83,13 +83,11 @@ public class User implements ImmutableUser {
 
     @Override
     public boolean isSubscribedTo(ImmutableImplementation mi) {
-        //todo implement (wird hier auch gechecked wenn öffentliche imp?)
         return this.implementations.contains(mi);
     }
 
     @Override
     public Collection<ImmutableImplementation> getSubscribed() {
-        //todo implement (werden hier auch öffentliche imps zurückgegeben?)
         return new HashSet<>(this.implementations);
     }
 
