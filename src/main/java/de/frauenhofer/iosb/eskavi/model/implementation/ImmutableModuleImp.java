@@ -13,7 +13,7 @@ import de.frauenhofer.iosb.eskavi.model.implementation.moduleimp.Serializer;
 import java.util.Collection;
 
 public interface ImmutableModuleImp {
-  // TODO: what is instanceConfiguration here for?
+
   public boolean isCompatible(Collection<ImmutableModuleImp> others, Configuration instanceConfiguration);
 
   public boolean checkCompatibleEndpoint(Endpoint endpoint);
