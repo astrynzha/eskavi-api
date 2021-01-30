@@ -3,6 +3,7 @@ package de.frauenhofer.iosb.eskavi.model.configuration;
 import de.frauenhofer.iosb.eskavi.model.implementation.ImmutableModuleImp;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -59,6 +60,10 @@ public abstract class Configuration {
      */
     public void removeChild(String name) throws IllegalAccessException {
         throw new IllegalAccessException("This type of Configuration doesn't have children");
+    }
+
+    public List<Configuration> getChildren() {
+        return null;
     }
 
     /**
