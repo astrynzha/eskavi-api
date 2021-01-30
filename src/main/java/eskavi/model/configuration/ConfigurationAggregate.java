@@ -6,10 +6,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This class represents an Aggregate of multiple Configuration. This class is part of the composite pattern which makes it
+ * very easy to stack Confiurations as part of others.
+ */
 public class ConfigurationAggregate extends Configuration {
     List<Configuration> children;
     private boolean enforceCompatibility;
 
+    /**
+     * Constructs a new ConfigurationAggregate
+     *
+     * @param name                 the name displayed to the user
+     * @param allowMultiple        whether this aggregate can be added multiple times
+     * @param expression           the {@link KeyExpression} of this Aggregate
+     * @param children             can be empty, list of the configurations inside this Aggregate
+     * @param enforceCompatibility whether the compatibility between the {@link ImmutableModuleImp}s in this
+     *                             Aggregate has to be ensured.
+     */
     public ConfigurationAggregate(String name, boolean allowMultiple, KeyExpression expression,
                                   List<Configuration> children, boolean enforceCompatibility) {
         super(name, allowMultiple, expression);
@@ -17,6 +31,11 @@ public class ConfigurationAggregate extends Configuration {
         this.enforceCompatibility = enforceCompatibility;
     }
 
+    /**
+     * Returns whether the compatibility between the {@link ImmutableModuleImp}s in this Aggregate has to be ensured.
+     *
+     * @return boolean
+     */
     public boolean enforcesCompatibility() {
         return this.enforceCompatibility;
     }
