@@ -13,11 +13,12 @@ import java.util.Collection;
 public class ImpController {
 
     /**
-     * @api{get}/imp/user Get Implementations by user
+     * @api{get}/imp/user/:id Get Implementations by user
      * @apiName GetImplementationByUser
      * @apiGroup Implementation
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiParam {Number} id Implementation unique ID
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 404 Not Found
@@ -95,14 +96,48 @@ public class ImpController {
     public void put(ImmutableImplementation request) {
     }
 
-    @PostMapping("/user")
-    public void addUser(Long implementationId, ImmutableUser user) {
+    /**
+     * @api{post}/imp/:id/user Add User to Implementation
+     * @apiParam {Number} id Implementation unique ID
+     * @apiName AddUserToImplementation
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiError {String} message Errormessage
+     * @apiParam (Request body) {User} user User object
+     */
+    @PostMapping("/{id:[0-9]+}/user")
+    public void addUser(@PathVariable("id") Long implementationId, ImmutableUser user) {
     }
 
+    /**
+     * @api{delete}/imp/:id/user Remove User from Implementation
+     * @apiParam {Number} id Implementation unique ID
+     * @apiName RemoveUserFromImplementation
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiError {String} message Errormessage
+     * @apiParam (Request body) {User} user User object
+     */
     @DeleteMapping("/user")
     public void removeUser(Long implementationId, ImmutableUser user) {
     }
 
+    /**
+     * @api{delete}/imp/:id Delete Implementation
+     * @apiName DeleteImplementation
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiParam {Number} id Implementation unique ID
+     * @apiError {String} message Errormessage
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 404 Not Found
+     * {
+     * "error": "ImplementationNotFound"
+     * }
+     */
     @DeleteMapping("/{id:[0-9]+}")
     public void delete(@PathVariable("id") long impId) {
     }

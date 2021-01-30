@@ -1,5 +1,363 @@
 define({ "api": [
   {
+    "type": "post",
+    "url": "/aas/:id/imp/:impId",
+    "title": "Add ModuleImplementation to Session",
+    "name": "AddModleImp",
+    "group": "AAS",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Session unique ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "impId",
+            "description": "<p>Implementation unique ID</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./AASConfigurationController.java",
+    "groupTitle": "AAS"
+  },
+  {
+    "type": "get",
+    "url": "/aas",
+    "title": "Close AAS session",
+    "name": "CloseSession",
+    "group": "AAS",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Session unique ID</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./AASConfigurationController.java",
+    "groupTitle": "AAS"
+  },
+  {
+    "type": "post",
+    "url": "/aas",
+    "title": "Post AAS session",
+    "name": "CreateSession",
+    "group": "AAS",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./AASConfigurationController.java",
+    "groupTitle": "AAS"
+  },
+  {
+    "type": "delete",
+    "url": "/aas/:id/imp/:impId",
+    "title": "",
+    "name": "DeleteModleImp",
+    "group": "AAS",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Session unique ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "impId",
+            "description": "<p>Implementation unique ID</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./AASConfigurationController.java",
+    "groupTitle": "AAS"
+  },
+  {
+    "type": "get",
+    "url": "/aas/:id/generate",
+    "title": "Generates a .java file which starts the AAS",
+    "name": "GenerateJavaClass",
+    "group": "AAS",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Session unique ID</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./AASConfigurationController.java",
+    "groupTitle": "AAS"
+  },
+  {
+    "type": "get",
+    "url": "/aas/:id/imp/:impId/configuration",
+    "title": "Get Configuration from ModuleImplementation in Session",
+    "name": "GetConfiguration",
+    "group": "AAS",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Session unique ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "impId",
+            "description": "<p>Implementation unique ID</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./AASConfigurationController.java",
+    "groupTitle": "AAS"
+  },
+  {
+    "type": "put",
+    "url": "/aas/:id/imp/:impId/configuration",
+    "title": "Update Configuration from ModuleImplementation in Session",
+    "name": "PutConfiguration",
+    "group": "AAS",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Session unique ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "impId",
+            "description": "<p>Implementation unique ID</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./AASConfigurationController.java",
+    "groupTitle": "AAS"
+  },
+  {
     "success": {
       "fields": {
         "Success 200": [
@@ -26,6 +384,120 @@ define({ "api": [
     "group": "C:\\Users\\maxig\\IdeaProjects\\api-master\\src\\main\\java\\eskavi\\controller\\doc\\main.js",
     "groupTitle": "C:\\Users\\maxig\\IdeaProjects\\api-master\\src\\main\\java\\eskavi\\controller\\doc\\main.js",
     "name": ""
+  },
+  {
+    "type": "post",
+    "url": "/imp/:id/user",
+    "title": "Add User to Implementation",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Implementation unique ID</p>"
+          }
+        ],
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "User",
+            "optional": false,
+            "field": "user",
+            "description": "<p>User object</p>"
+          }
+        ]
+      }
+    },
+    "name": "AddUserToImplementation",
+    "group": "Implementation",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      }
+    },
+    "filename": "./ImpController.java",
+    "groupTitle": "Implementation"
+  },
+  {
+    "type": "delete",
+    "url": "/imp/:id",
+    "title": "Delete Implementation",
+    "name": "DeleteImplementation",
+    "group": "Implementation",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Implementation unique ID</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n\"error\": \"ImplementationNotFound\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./ImpController.java",
+    "groupTitle": "Implementation"
   },
   {
     "type": "get",
@@ -98,7 +570,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/imp/user",
+    "url": "/imp/user/:id",
     "title": "Get Implementations by user",
     "name": "GetImplementationByUser",
     "group": "Implementation",
@@ -112,6 +584,19 @@ define({ "api": [
             "optional": false,
             "field": "Authorization",
             "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Implementation unique ID</p>"
           }
         ]
       }
@@ -174,7 +659,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1-1 201 Created\n{\n\"id\":\"1\"\n}",
+          "content": "HTTP/1.1 201 Created\n{\n\"id\":\"1\"\n}",
           "type": "json"
         }
       ]
@@ -233,14 +718,65 @@ define({ "api": [
             "description": "<p>Errormessage</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "HTTP/1.1 403 Forbidden\n{\n\"error\": \"Access denied for non publishing user\"\n}",
-          "type": "json"
-        }
-      ]
+      }
+    },
+    "filename": "./ImpController.java",
+    "groupTitle": "Implementation"
+  },
+  {
+    "type": "delete",
+    "url": "/imp/:id/user",
+    "title": "Remove User from Implementation",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Implementation unique ID</p>"
+          }
+        ],
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "User",
+            "optional": false,
+            "field": "user",
+            "description": "<p>User object</p>"
+          }
+        ]
+      }
+    },
+    "name": "RemoveUserFromImplementation",
+    "group": "Implementation",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      }
     },
     "filename": "./ImpController.java",
     "groupTitle": "Implementation"
@@ -504,7 +1040,7 @@ define({ "api": [
           },
           {
             "group": "Request body",
-            "type": "Sting",
+            "type": "String",
             "optional": false,
             "field": "password",
             "description": "<p>User password</p>"
@@ -554,7 +1090,7 @@ define({ "api": [
           },
           {
             "group": "Request body",
-            "type": "Sting",
+            "type": "String",
             "optional": false,
             "field": "password",
             "description": "<p>User password</p>"

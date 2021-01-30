@@ -17,7 +17,7 @@ public class UserManagementController {
      * @apiVersion 0.0.1
      * @apiSuccess {String} message Returns whether a request was successful
      * @apiParam (Request body) {String} email User mail
-     * @apiParam (Request body) {Sting} password User password
+     * @apiParam (Request body) {String} password User password
      * @apiParamExample {json} Request-Example:
      * {
      * "email": "test@web.de",
@@ -37,7 +37,7 @@ public class UserManagementController {
      * @apiSuccess {String} jwt Token to authenticate future requests
      * @apiError {String} message Errormessage
      * @apiParam (Request body) {String} email User mail
-     * @apiParam (Request body) {Sting} password User password
+     * @apiParam (Request body) {String} password User password
      * @apiParamExample {json} Request-Example:
      * {
      * "email": "test@web.de",
