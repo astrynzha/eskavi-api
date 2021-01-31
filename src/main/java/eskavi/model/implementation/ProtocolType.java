@@ -4,7 +4,7 @@ import eskavi.model.user.User;
 
 public class ProtocolType extends GenericImp {
 
-    protected ProtocolType(long implementationId, User author, String name, Scope scope) {
+    public ProtocolType(long implementationId, User author, String name, Scope scope) {
         super(implementationId, author, name, scope);
     }
 
