@@ -51,11 +51,45 @@ public class ImpController {
         return null;
     }
 
+    /**
+     * @api{get}/imp/default GetDefaultImplementation for ImplementationType
+     * @apiName getDefaultImplementation
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiParam {ImpType} impType The implementation type
+     * @apiParamExample {josn} RequestExample:
+     * {
+     * "impType":"Handler"
+     * }
+     * @apiSuccess {Implementation} implementation Implementation object
+     * @apiError {String} message Errormessage
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 404 Not Found
+     * {
+     * "error": "UserNotFound"
+     * }
+     */
     @GetMapping("/default")
     public ImmutableImplementation getDefaultImpCreate(@PathParam("type") ImpType type) {
         return null;
     }
 
+    /**
+     * @api{get}/imp/template/:id Get Template from existing Implementation
+     * @apiName GetTemplateImplementation
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiParam {Number} id Implementation unique ID
+     * @apiSuccess {Implementation} implementation Implementation object
+     * @apiError {String} message Errormessage
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 404 Not Found
+     * {
+     * "error": "UserNotFound"
+     * }
+     */
     @GetMapping("/template/{id:[0-9]+}")
     public ImmutableImplementation getTemplateImpCreate(@PathVariable("id") long impId) {
         return null;

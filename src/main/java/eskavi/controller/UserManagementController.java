@@ -115,11 +115,49 @@ public class UserManagementController {
         return null;
     }
 
+    /**
+     * @api{post}/user/reset_password Resets the password after security question was answered
+     * @apiName ResetPasswordQuestion
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiParam (Request body) {String} answer Answer to the security question
+     * @apiParam (Request body) {String} newPassword New password
+     * @apiParamExample {json} Request-Example:
+     * {
+     * "answer": "Jim",
+     * "newPassword": "password"
+     * @apiError {String} message Errormessage
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 401 Unauthorized
+     * {
+     * "error": "Unauthorized please login to your account"
+     * }
+     */
     @PostMapping("/reset_password")
     public void resetPassword(@ModelAttribute String answer, @ModelAttribute String newPassword) {
 
     }
 
+    /**
+     * @api{post}/user/security_question Set a new password
+     * @apiName SetPasswordQuestion
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiParam (Request body) {String} oldPassword Old password
+     * @apiParam (Request body) {String} newPassword New password
+     * @apiParamExample {json} Request-Example:
+     * {
+     * "oldPassword": "12345678",
+     * "newPassword": "password"
+     * @apiError {String} message Errormessage
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 401 Unauthorized
+     * {
+     * "error": "Unauthorized please login to your account"
+     * }
+     */
     @PostMapping("/set_password")
     public void setPassword(@ModelAttribute String oldPassword, @ModelAttribute String newPassword) {
 
