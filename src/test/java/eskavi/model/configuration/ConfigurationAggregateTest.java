@@ -3,6 +3,12 @@ package eskavi.model.configuration;
 import org.junit.jupiter.api.Test;
 
 class ConfigurationAggregateTest {
+    private ConfigurationAggregate testObject;
+
+
+    void setUp() {
+
+    }
 
     @Test
     void enforcesCompatibility() {

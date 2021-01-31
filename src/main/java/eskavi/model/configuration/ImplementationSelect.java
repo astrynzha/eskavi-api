@@ -13,7 +13,7 @@ import java.util.List;
  * This class represents an Implementation select it enables the user to select an Implementation fitting the stored generics and ImpType.
  */
 public class ImplementationSelect extends Configuration {
-    private ModuleInstance implementation;
+    private ModuleInstance instance;
     private HashSet<ImmutableGenericImp> generics;
     private ImpType type;
 
@@ -54,37 +54,48 @@ public class ImplementationSelect extends Configuration {
     /**
      * Sets the selectedImp to the given {@link ModuleInstance}, if it matches the required type and generics.
      *
-     * @param implementation the new instance
+     * @param instance the new instance
      * @throws IllegalArgumentException if the given {@link ModuleInstance} doesn't match the requirements
      */
-    public void setImplementation(ModuleInstance implementation) throws IllegalArgumentException {
-        if (type.matches(implementation.getModuleImp()) && implementation.getModuleImp().getGenerics().equals(generics)) {
-            this.implementation = implementation;
+    //TODO test and add serious if
+    public void setInstance(ModuleInstance instance) throws IllegalArgumentException {
+        if (true/*type.matches(instance.getModuleImp()) && instance.getModuleImp().getGenerics().equals(generics)*/) {
+            this.instance = instance;
         } else {
             throw new IllegalArgumentException("given ModuleImp doesn't match required type or required generics");
         }
     }
 
+    //TODO discuss whether this Exception is meant to be thrown
     @Override
     public String resolveKeyExpression() {
-        return this.implementation.getInstanceConfiguration().resolveKeyExpression();
+        if (instance != null) {
+            return this.getKeyExpression().getExpressionStart() +
+                    this.instance.getInstanceConfiguration().resolveKeyExpression() +
+                    this.getKeyExpression().getExpressionEnd();
+        } else {
+            throw new IllegalStateException("instance has to be set");
+        }
     }
 
     @Override
     public boolean checkCompatible() {
-        return this.implementation.getInstanceConfiguration().checkCompatible();
+        return this.instance != null ? this.instance.getInstanceConfiguration().checkCompatible() : false;
     }
 
     @Override
     public List<Configuration> getChildren() {
         List<Configuration> result = new ArrayList<>();
-        result.add(this.implementation.getInstanceConfiguration());
+        if (instance != null) {
+            result.add(this.instance.getInstanceConfiguration());
+        }
+
         return result;
     }
 
     @Override
     public ImmutableModuleImp getModuleImp() {
-        return implementation.getModuleImp();
+        return (instance != null) ? instance.getModuleImp() : null;
     }
 
     @Override
