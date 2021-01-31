@@ -3,6 +3,7 @@ package eskavi.model.implementation;
 import eskavi.model.configuration.Configuration;
 
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * This class represents the ModuleImp when added to an AASSession. The configuration can only be edited on this type of
@@ -67,5 +68,25 @@ public class ModuleInstance {
      */
     public void setInstanceConfiguration(Configuration instanceConfiguration) {
         this.instanceConfiguration = instanceConfiguration;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(moduleImp, instanceConfiguration);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ModuleInstance that = (ModuleInstance) o;
+        return Objects.equals(moduleImp, that.moduleImp) && Objects.equals(instanceConfiguration, that.instanceConfiguration);
+    }
+
+    @Override
+    public String toString() {
+        return "ModuleInstance{" +
+                ", moduleImp=" + moduleImp.toString() +
+                ", instanceConfiguration=" + instanceConfiguration.toString();
     }
 }

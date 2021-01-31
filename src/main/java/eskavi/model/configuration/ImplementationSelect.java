@@ -5,10 +5,7 @@ import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImpType;
 import eskavi.model.implementation.ModuleInstance;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class represents an Implementation select it enables the user to select an Implementation fitting the stored generics and ImpType.
@@ -108,8 +105,32 @@ public class ImplementationSelect extends Configuration {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), instance, generics, type);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ImplementationSelect that = (ImplementationSelect) o;
+        return Objects.equals(instance, that.instance) && Objects.equals(generics, that.generics) && type == that.type;
+    }
+
+    @Override
     public Configuration clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
         return new ImplementationSelect(this.getName(), this.allowsMultiple(), copy, this.generics, this.type);
+    }
+
+    public String toString() {
+        return "ImplementationSelect{" +
+                "name='" + getName() + "'" +
+                ", allowMultiple=" + allowsMultiple() +
+                ", keyExpression=" + getKeyExpression().toString() +
+                ", generics=" + getGeneric().toString() +
+                ", type=" + type.name() +
+                ", instance=" + instance.toString() + "}";
     }
 }

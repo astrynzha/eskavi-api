@@ -9,7 +9,7 @@ import java.util.*;
  * very easy to stack Confiurations as part of others.
  */
 public class ConfigurationAggregate extends Configuration {
-    List<Configuration> children;
+    private List<Configuration> children;
     private boolean enforceCompatibility;
 
     /**
@@ -115,6 +115,20 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), children, enforceCompatibility);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ConfigurationAggregate that = (ConfigurationAggregate) o;
+        return enforceCompatibility == that.enforceCompatibility && Objects.equals(children, that.children);
+    }
+
+    @Override
     public Configuration clone() {
         List<Configuration> clonedChildren = new ArrayList<>();
         for (Configuration config : children) {
@@ -124,5 +138,15 @@ public class ConfigurationAggregate extends Configuration {
         KeyExpression copy = new KeyExpression(this.getKeyExpression().getExpressionStart(), this.getKeyExpression().getExpressionEnd());
 
         return new ConfigurationAggregate(this.getName(), this.allowsMultiple(), copy, clonedChildren, this.enforcesCompatibility());
+    }
+
+    @Override
+    public String toString() {
+        return "ConfigurationAggregate{" +
+                "name='" + getName() + "'" +
+                ", allowMultiple=" + allowsMultiple() +
+                ", keyExpression=" + getKeyExpression().toString() +
+                ", enforceCompatibility=" + enforceCompatibility +
+                ", children=" + children.toString() + "}";
     }
 }
