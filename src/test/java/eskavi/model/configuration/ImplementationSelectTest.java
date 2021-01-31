@@ -27,7 +27,7 @@ class ImplementationSelectTest {
         testUser = new UserStub();
         generics = new HashSet<>();
         generics.add(new GenericStub("generic"));
-        implementation = new ImplementationStub();
+        implementation = new ImplementationStub(0);
         instanceConfig = new TextField("text", false, new KeyExpression("text:", "."), DataType.TEXT);
         instanceConfig.setValue("value");
         instance = new ModuleInstance(implementation, instanceConfig);
@@ -101,6 +101,23 @@ class ImplementationSelectTest {
     }
 
     @Test
-    void testClone() {
+    void testGetDependentModuleImpsWithoutChild() {
+        testObject.setInstance(instance);
+        HashSet<ImmutableModuleImp> expected = new HashSet<>();
+        expected.add(this.implementation);
+        assertEquals(expected, testObject.getDependentModuleImps());
+    }
+
+    @Test
+    void testGetDependentModuleImpsWithChild() {
+        ImplementationSelect config = new ImplementationSelect("child", false, new KeyExpression("child:", "."),
+                generics, ImpType.ENDPOINT);
+        ImmutableModuleImp newImp = new ImplementationStub(20);
+        config.setInstance(new ModuleInstance(newImp, instanceConfig));
+        testObject.setInstance(new ModuleInstance(implementation, config));
+        HashSet<ImmutableModuleImp> expected = new HashSet<>();
+        expected.add(this.implementation);
+        expected.add(newImp);
+        assertEquals(expected, testObject.getDependentModuleImps());
     }
 }

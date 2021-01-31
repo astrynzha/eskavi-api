@@ -2,9 +2,7 @@ package eskavi.model.configuration;
 
 import eskavi.model.implementation.ImmutableModuleImp;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class represents an Aggregate of multiple Configuration. This class is part of the composite pattern which makes it
@@ -46,7 +44,7 @@ public class ConfigurationAggregate extends Configuration {
             /*config.getModuleImp only returns not null if config is impSelect -> then first child is Configuration
              *attached to moduleInstance. So only implementations added in this Aggregate end up in this Map.
              */
-            moduleImps.put(config.getModuleImp(), config.getChildren().get(0));
+            moduleImps.put(config.getModuleImp(), config.getChildren() != null ? config.getChildren().get(0) : null);
         }
         moduleImps.remove(null);
 
@@ -84,7 +82,7 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
-    public void addChild(Configuration config) {
+    public void addChild(Configuration config) throws IllegalArgumentException {
         if (!children.contains(config) || config.allowsMultiple()) {
             children.add(config);
         } else {
@@ -104,6 +102,16 @@ public class ConfigurationAggregate extends Configuration {
     @Override
     public List<Configuration> getChildren() {
         return children;
+    }
+
+    @Override
+    public Collection<ImmutableModuleImp> getDependentModuleImps() {
+        HashSet<ImmutableModuleImp> result = new HashSet<>();
+        for (Configuration child : children) {
+            result.addAll(child.getDependentModuleImps());
+        }
+        result.remove(null);
+        return result;
     }
 
     @Override

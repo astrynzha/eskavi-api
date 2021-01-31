@@ -6,6 +6,7 @@ import eskavi.model.implementation.ImpType;
 import eskavi.model.implementation.ModuleInstance;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -90,6 +91,14 @@ public class ImplementationSelect extends Configuration {
             result.add(this.instance.getInstanceConfiguration());
         }
 
+        return result;
+    }
+
+    @Override
+    public Collection<ImmutableModuleImp> getDependentModuleImps() {
+        HashSet<ImmutableModuleImp> result = new HashSet<>();
+        result.add(this.instance.getModuleImp());
+        result.addAll(this.instance.getInstanceConfiguration().getDependentModuleImps());
         return result;
     }
 
