@@ -60,15 +60,23 @@ class UserTest {
     /*
     @Test
     void testSubscribe() {
-        Implementation imp = new ImplementationStub(1, this.user, "ImpStub", new Scope(ImplementationScope.SHARED));
+        Implementation imp = new ImplementationStub(1, this.user, "ImpStub", ImplementationScope.SHARED);
         // test subscribe
-        this.user.subscribe(imp);
+        try {
+            this.user.subscribe(imp);
+        } catch (IllegalAccessException e) {
+          fail(e.getMessage());
+        }
         //test isSubscribed to
         assertTrue(this.user.isSubscribedTo(imp));
         //test getSubscribed
         assertTrue(this.user.getSubscribed().contains(imp));
         //test unsubscribe
-        this.user.unsubscribe(imp);
+        try {
+            this.user.unsubscribe(imp);
+        } catch (IllegalAccessException e) {
+          fail(e.getMessage());
+        }
         assertFalse(this.user.isSubscribedTo(imp));
         assertFalse(this.user.getSubscribed().contains(imp));
 
