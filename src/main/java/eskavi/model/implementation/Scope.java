@@ -27,9 +27,6 @@ public class Scope {
         if (!(impScope.equals(ImplementationScope.SHARED))) {
             throw new IllegalAccessException("Could not subscribe a user to scope. Scope is not SHARED");
         }
-        if (user.equals(implementation.getAuthor())) {
-            throw new IllegalAccessException("Cannot unsubscribe an author from the Implementation");
-        }
         grantedUsers.remove(user);
     }
 

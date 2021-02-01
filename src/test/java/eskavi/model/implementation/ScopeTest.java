@@ -62,13 +62,6 @@ class ScopeTest {
       fail(e.getMessage());
     }
     assertFalse(implementationA.isSubscribed(userB), "user is still subscribed after unsubscribe");
-    Exception exception = assertThrows(IllegalAccessException.class, () -> {
-      implementationA.unsubscribe(userA);
-    });
-    String expectedMessage = "Cannot unsubscribe an author from the Implementation";
-    String actualMessage = exception.getMessage();
-
-    assertTrue(actualMessage.contains(expectedMessage));
   }
 
   @Test
