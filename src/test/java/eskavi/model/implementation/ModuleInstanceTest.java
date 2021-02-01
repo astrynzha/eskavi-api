@@ -78,12 +78,12 @@ class ModuleInstanceTest {
         generics.remove(protocolTypeA);
         dispatcherSelect = new ImplementationSelect("dispatcher", false, new KeyExpression("<dispatcher>", "<dispatcher>"),
                 generics, ImpType.DISPATCHER);
-        dispatcherSelect.setInstance(new ModuleInstance(dispatcher, handlerSelect));
         handlerSelect = new ImplementationSelect("handler", false, new KeyExpression("<handler>", "<handler>"),
                 generics, ImpType.HANDLER);
         handlerSelect.setInstance(new ModuleInstance(handler, dummy));
+        dispatcherSelect.setInstance(new ModuleInstance(dispatcher, handlerSelect));
         mapping = new ConfigurationAggregate("mapping", false, new KeyExpression("<mapping>", "<mapping>"),
-                new LinkedList<Configuration>(Arrays.asList(port, serializerSelect, deserializerSelect, dispatcherSelect)), true);
+                new LinkedList<Configuration>(Arrays.asList(dummy, serializerSelect, deserializerSelect, dispatcherSelect)), true);
         configuration = new ConfigurationAggregate("parent", false, new KeyExpression("<parent>", "<parent>"),
                 new LinkedList<Configuration>(Arrays.asList(mapping, port)), false);
         instance = new ModuleInstance(endpoint, configuration);
@@ -91,6 +91,15 @@ class ModuleInstanceTest {
 
     @Test
     void resolveConfiguration() {
+        assertEquals("<parent>" +
+                "<mapping>" +
+                "<dummy>dummy<dummy>" +
+                "<serializer><dummy>dummy<dummy><serializer>" +
+                "<deserializer><dummy>dummy<dummy><deserializer>" +
+                "<dispatcher><handler><dummy>dummy<dummy><handler><dispatcher>" +
+                "<mapping>" +
+                "<port>8080<port>" +
+                "<parent>", instance.resolveConfiguration());
     }
 
     @Test
@@ -99,5 +108,14 @@ class ModuleInstanceTest {
         others.addAll(usedImpCollection);
         others.addAll(instance.getInstanceConfiguration().getDependentModuleImps());
         assertEquals(true, instance.isCompatible(others));
+    }
+
+    @Test
+    void isCompatibleFailure() {
+        serializer.setMessageType(messageTypeB);
+        HashSet<ImmutableModuleImp> others = new HashSet<>();
+        others.addAll(usedImpCollection);
+        others.addAll(instance.getInstanceConfiguration().getDependentModuleImps());
+        assertEquals(false, instance.isCompatible(others));
     }
 }
