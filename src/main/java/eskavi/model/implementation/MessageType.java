@@ -4,20 +4,12 @@ import eskavi.model.user.User;
 
 public class MessageType extends GenericImp {
 
-    public MessageType(long implementationId, User author, String name, Scope scope) {
-        super(implementationId, author, name, scope);
+    public MessageType(long implementationId, User author, String name, ImplementationScope impScope) {
+        super(implementationId, author, name, impScope);
     }
 
     @Override
     public boolean checkCompatibility(ImmutableGenericImp other) {
         return equals(other);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        return obj.getClass() == this.getClass();
     }
 }

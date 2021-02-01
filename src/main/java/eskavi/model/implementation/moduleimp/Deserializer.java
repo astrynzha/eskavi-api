@@ -12,9 +12,9 @@ public class Deserializer extends ModuleImp {
     private ProtocolType protocolType;
     private MessageType messageType;
 
-    public Deserializer(long implementationId, User author, String name, Scope scope,
+    public Deserializer(long implementationId, User author, String name, ImplementationScope impScope,
                         MessageType messageType, ProtocolType protocolType) {
-        super(implementationId, author, name, scope);
+        super(implementationId, author, name, impScope);
         this.protocolType = protocolType;
         this.messageType = messageType;
     }

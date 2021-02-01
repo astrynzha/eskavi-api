@@ -73,8 +73,12 @@ public class ImplementationStub implements ImmutableModuleImp {
 
     @Override
     public HashSet<ImmutableGenericImp> getGenerics() {
+<<<<<<< HEAD
         HashSet<ImmutableGenericImp> result = new HashSet<>();
         result.add(genericImp);
         return result;
+=======
+        return null;
+>>>>>>> 741b17bf2cbbf1ce53acbe3c032023a769cf7888
     }
 }

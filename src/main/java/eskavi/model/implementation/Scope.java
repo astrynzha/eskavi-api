@@ -16,21 +16,19 @@ public class Scope {
         this.implementation = implementation;
     }
 
-    public void subscribe(User user) {
+    public void subscribe(User user) throws IllegalAccessException {
         if (!(impScope == ImplementationScope.SHARED)) {
-            System.out.println("Could not subscribe a user to scope. Scope is not SHARED");
-            return;
+            throw new IllegalAccessException("Could not subscribe a user to scope. Scope is not SHARED");
         }
         grantedUsers.add(user);
     }
 
-    public void unsubscribe(User user) {
+    public void unsubscribe(User user) throws IllegalAccessException {
         if (!(impScope == ImplementationScope.SHARED)) {
-            System.out.println("Could not subscribe a user to scope. Scope is not SHARED");
-            return;
+            throw new IllegalAccessException("Could not subscribe a user to scope. Scope is not SHARED");
         }
         if (user == implementation.getAuthor()) {
-            System.out.println("Cannot unsubscribe an author from the Implementation");
+            throw new IllegalAccessException("Cannot unsubscribe an author from the Implementation");
         }
         grantedUsers.remove(user);
     }
@@ -43,7 +41,14 @@ public class Scope {
     public void setImpScope(ImplementationScope impScope) {
         this.impScope = impScope;
         grantedUsers = new HashSet<>();
-        implementation.subscribe((User) implementation.getAuthor());
+        if (impScope == ImplementationScope.SHARED) {
+            try {
+                implementation.subscribe((User) implementation.getAuthor());
+            } catch (IllegalAccessException e) {
+              throw new IllegalStateException("This should never happen, scope is now SHARED and " +
+                      "the moduleImp can be subscribed to the author", e);
+            }
+        }
     }
 
     public boolean isSubscribed(User user) {

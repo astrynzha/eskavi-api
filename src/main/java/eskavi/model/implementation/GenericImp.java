@@ -4,13 +4,10 @@ import eskavi.model.user.User;
 
 public abstract class GenericImp extends Implementation implements ImmutableGenericImp {
 
-    public GenericImp(long implementationId, User author, String name, Scope scope) {
-        super(implementationId, author, name, scope);
+    public GenericImp(long implementationId, User author, String name, ImplementationScope impScope) {
+        super(implementationId, author, name, impScope);
     }
 
     @Override
     public abstract boolean checkCompatibility(ImmutableGenericImp other);
-
-    @Override
-    public abstract boolean equals(Object obj);
 }

@@ -69,7 +69,6 @@ class ImplementationSelectTest {
     void resolveKeyExpressionWithInstance() {
         testObject.setInstance(instance);
         try {
-            testObject.resolveKeyExpression();
             assertEquals("impSelect:text:value..", testObject.resolveKeyExpression());
         } catch (IllegalStateException e) {
             assertEquals(true, false);
