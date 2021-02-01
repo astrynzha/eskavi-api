@@ -1,6 +1,5 @@
 package eskavi.model.implementation;
 
-import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.User;
 
@@ -13,12 +12,8 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
         super(implementationId, author, name, impScope);
     }
 
-    public HashSet<ImmutableGenericImp> getGenerics() {
-        return new HashSet<>();
-    }
-
     @Override
-    public boolean isCompatible(Collection<ImmutableModuleImp> usedImpCollection, Configuration instanceConfiguration) {
+    public boolean isCompatible(Collection<ImmutableModuleImp> usedImpCollection) {
         return true;
     }
 
@@ -60,5 +55,9 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
     @Override
     public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter) {
         return true;
+    }
+
+    public HashSet<ImmutableGenericImp> getGenerics() {
+        return new HashSet<>();
     }
 }

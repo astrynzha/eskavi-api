@@ -1,13 +1,12 @@
 package eskavi.model.implementation;
 
-import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.moduleimp.*;
 
 import java.util.Collection;
 import java.util.HashSet;
 
 public interface ImmutableModuleImp {
-    public boolean isCompatible(Collection<ImmutableModuleImp> others, Configuration instanceConfiguration);
+    public boolean isCompatible(Collection<ImmutableModuleImp> others);
 
     public boolean checkCompatibleEndpoint(Endpoint endpoint);
 

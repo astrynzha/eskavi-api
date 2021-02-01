@@ -39,17 +39,17 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     private boolean enforceCompatibility() {
-        HashMap<ImmutableModuleImp, Configuration> moduleImps = new HashMap<>();
+        HashSet<ImmutableModuleImp> moduleImps = new HashSet<>();
         for (Configuration config : children) {
             /*config.getModuleImp only returns not null if config is impSelect -> then first child is Configuration
              *attached to moduleInstance. So only implementations added in this Aggregate end up in this Map.
              */
-            moduleImps.put(config.getModuleImp(), config.getChildren() != null ? config.getChildren().get(0) : null);
+            moduleImps.add(config.getModuleImp());
         }
         moduleImps.remove(null);
 
-        for (ImmutableModuleImp moduleImp : moduleImps.keySet()) {
-            if (!moduleImp.isCompatible(moduleImps.keySet(), moduleImps.get(moduleImp))) {
+        for (ImmutableModuleImp moduleImp : moduleImps) {
+            if (!moduleImp.isCompatible(moduleImps)) {
                 return false;
             }
         }

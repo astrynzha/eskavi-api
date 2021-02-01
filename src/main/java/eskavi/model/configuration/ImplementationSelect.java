@@ -57,7 +57,7 @@ public class ImplementationSelect extends Configuration {
      */
     //TODO test and add serious if
     public void setInstance(ModuleInstance instance) throws IllegalArgumentException {
-        if (true/*type.matches(instance.getModuleImp()) && instance.getModuleImp().getGenerics().equals(generics)*/) {
+        if (/*type.matches(instance.getModuleImp()) && */instance.getModuleImp().getGenerics().equals(generics)) {
             this.instance = instance;
         } else {
             throw new IllegalArgumentException("given ModuleImp doesn't match required type or required generics");
@@ -78,7 +78,8 @@ public class ImplementationSelect extends Configuration {
 
     @Override
     public boolean checkCompatible() {
-        return this.instance != null ? this.instance.getInstanceConfiguration().checkCompatible() : false;
+        return this.instance != null && this.instance.getInstanceConfiguration().checkCompatible()
+                && this.instance.getModuleImp().isCompatible(this.instance.getInstanceConfiguration().getDependentModuleImps());
     }
 
     @Override

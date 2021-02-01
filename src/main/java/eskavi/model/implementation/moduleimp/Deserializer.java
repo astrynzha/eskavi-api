@@ -1,6 +1,5 @@
 package eskavi.model.implementation.moduleimp;
 
-import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
@@ -36,8 +35,13 @@ public class Deserializer extends ModuleImp {
     }
 
     @Override
-    public HashSet<ImmutableGenericImp> getGenerics() {
-        return new HashSet<>(Arrays.asList(protocolType, messageType));
+    public boolean isCompatible(Collection<ImmutableModuleImp> usedImpCollection) {
+        for (ImmutableModuleImp usedImp : usedImpCollection) {
+            if (!usedImp.checkCompatibleDeserializer(this)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -67,17 +71,7 @@ public class Deserializer extends ModuleImp {
     }
 
     @Override
-    public boolean isCompatible(Collection<ImmutableModuleImp> usedImpCollection, Configuration instanceConfiguration) {
-        for (ImmutableModuleImp usedImp : usedImpCollection) {
-            if (!usedImp.checkCompatibleDeserializer(this)) {
-                return false;
-            }
-        }
-        for (ImmutableModuleImp usedImp : instanceConfiguration.getDependentModuleImps()) {
-            if (!usedImp.checkCompatibleDeserializer(this)) {
-                return false;
-            }
-        }
-        return instanceConfiguration.checkCompatible();
+    public HashSet<ImmutableGenericImp> getGenerics() {
+        return new HashSet<>(Arrays.asList(protocolType, messageType));
     }
 }
