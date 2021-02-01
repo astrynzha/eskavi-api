@@ -5,12 +5,16 @@ import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.User;
 
 import java.util.Collection;
+import java.util.HashSet;
 
-// TODO: is the Configuration attribute needed?
 public abstract class ModuleImp extends Implementation implements ImmutableModuleImp {
 
     public ModuleImp(long implementationId, User author, String name, Scope scope) {
         super(implementationId, author, name, scope);
+    }
+
+    public HashSet<ImmutableGenericImp> getGenerics() {
+        return new HashSet<>();
     }
 
     @Override

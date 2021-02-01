@@ -1,6 +1,7 @@
 package eskavi.model.implementation.moduleimp;
 
 import eskavi.model.configuration.Configuration;
+import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.MessageType;
 import eskavi.model.implementation.ModuleImp;
@@ -8,6 +9,8 @@ import eskavi.model.implementation.Scope;
 import eskavi.model.user.User;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 public class Handler extends ModuleImp {
     private MessageType messageType;
@@ -23,6 +26,11 @@ public class Handler extends ModuleImp {
 
     public void setMessageType(MessageType messageType) {
         this.messageType = messageType;
+    }
+
+    @Override
+    public HashSet<ImmutableGenericImp> getGenerics() {
+        return new HashSet<>(Collections.singletonList(messageType));
     }
 
     @Override

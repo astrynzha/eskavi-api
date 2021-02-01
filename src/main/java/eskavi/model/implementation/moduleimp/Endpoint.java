@@ -1,6 +1,7 @@
 package eskavi.model.implementation.moduleimp;
 
 import eskavi.model.configuration.Configuration;
+import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ModuleImp;
 import eskavi.model.implementation.ProtocolType;
@@ -8,6 +9,8 @@ import eskavi.model.implementation.Scope;
 import eskavi.model.user.User;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 public class Endpoint extends ModuleImp {
     private ProtocolType protocolType;
@@ -23,6 +26,11 @@ public class Endpoint extends ModuleImp {
 
     public void setProtocolType(ProtocolType protocolType) {
         this.protocolType = protocolType;
+    }
+
+    @Override
+    public HashSet<ImmutableGenericImp> getGenerics() {
+        return new HashSet<>(Collections.singletonList(protocolType));
     }
 
     @Override
