@@ -2,7 +2,6 @@ package eskavi.model.user;
 
 import eskavi.model.implementation.Implementation;
 import eskavi.model.implementation.ImplementationScope;
-import eskavi.model.implementation.Scope;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -17,17 +17,17 @@ public class Scope {
     }
 
     public void subscribe(User user) throws IllegalAccessException {
-        if (!(impScope == ImplementationScope.SHARED)) {
+        if (!(impScope.equals(ImplementationScope.SHARED))) {
             throw new IllegalAccessException("Could not subscribe a user to scope. Scope is not SHARED");
         }
         grantedUsers.add(user);
     }
 
     public void unsubscribe(User user) throws IllegalAccessException {
-        if (!(impScope == ImplementationScope.SHARED)) {
+        if (!(impScope.equals(ImplementationScope.SHARED))) {
             throw new IllegalAccessException("Could not subscribe a user to scope. Scope is not SHARED");
         }
-        if (user == implementation.getAuthor()) {
+        if (user.equals(implementation.getAuthor())) {
             throw new IllegalAccessException("Cannot unsubscribe an author from the Implementation");
         }
         grantedUsers.remove(user);
