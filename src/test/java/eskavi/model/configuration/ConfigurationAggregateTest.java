@@ -7,7 +7,6 @@ import eskavi.model.implementation.ModuleInstance;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.plaf.synth.SynthTabbedPaneUI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,7 +38,7 @@ class ConfigurationAggregateTest {
         children.add(impSelect);
         TextField instanceConfig = new TextField("instanceConfig", false, new KeyExpression("<instanceConfig>", "<instanceConfig>"), DataType.TEXT);
         instanceConfig.setValue("value");
-        impSelect.setInstance(new ModuleInstance(new ImplementationStub(1, new GenericStub("generic")), instanceConfig));
+        impSelect.setInstance(new ModuleInstance(new ConfigurationImplementationStub(1, new GenericStub("generic")), instanceConfig));
         TextField textFieldMultiple = new TextField("multiple", true, new KeyExpression("<multiple>", "<multiple>"), DataType.TEXT);
         textFieldMultiple.setValue("multipleFirstVal");
         children.add(textFieldMultiple);
@@ -63,7 +62,7 @@ class ConfigurationAggregateTest {
         testObject.addChild(impSelect);
         TextField instanceConfig = new TextField("instanceConfig", false, new KeyExpression("<instanceConfig>", "<instanceConfig>"), DataType.TEXT);
         instanceConfig.setValue("value");
-        impSelect.setInstance(new ModuleInstance(new ImplementationStub(2, new GenericStub("generic")), instanceConfig));
+        impSelect.setInstance(new ModuleInstance(new ConfigurationImplementationStub(2, new GenericStub("generic")), instanceConfig));
         assertEquals(true, testObject.checkCompatible());
     }
 
@@ -76,7 +75,7 @@ class ConfigurationAggregateTest {
         testObject.addChild(impSelect);
         TextField instanceConfig = new TextField("instanceConfig", false, new KeyExpression("<instanceConfig>", "<instanceConfig>"), DataType.TEXT);
         instanceConfig.setValue("value");
-        impSelect.setInstance(new ModuleInstance(new ImplementationStub(2, new GenericStub("generic")), instanceConfig));
+        impSelect.setInstance(new ModuleInstance(new ConfigurationImplementationStub(2, new GenericStub("generic")), instanceConfig));
         assertEquals(false, testObject.checkCompatible());
     }
 
@@ -110,7 +109,7 @@ class ConfigurationAggregateTest {
         testObject.addChild(impSelect);
         TextField instanceConfig = new TextField("instanceConfig", false, new KeyExpression("<instanceConfig>", "<instanceConfig>"), DataType.TEXT);
         instanceConfig.setValue("value");
-        ImmutableModuleImp imp = new ImplementationStub(2, new GenericStub("generic"));
+        ImmutableModuleImp imp = new ConfigurationImplementationStub(2, new GenericStub("generic"));
         impSelect.setInstance(new ModuleInstance(imp, instanceConfig));
         expected.add(this.impSelect.getModuleImp());
         expected.add(impSelect.getModuleImp());

@@ -7,11 +7,11 @@ import eskavi.model.implementation.moduleimp.*;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class ImplementationStub implements ImmutableModuleImp {
+public class ConfigurationImplementationStub implements ImmutableModuleImp {
     private int compatible;
     private ImmutableGenericImp genericImp;
 
-    public ImplementationStub(int compatible, ImmutableGenericImp generic) {
+    public ConfigurationImplementationStub(int compatible, ImmutableGenericImp generic) {
         this.compatible = compatible;
         this.genericImp = generic;
     }
@@ -23,7 +23,7 @@ public class ImplementationStub implements ImmutableModuleImp {
     @Override
     public boolean isCompatible(Collection<ImmutableModuleImp> others, Configuration instanceConfiguration) {
         for (ImmutableModuleImp other : others) {
-            ImplementationStub otherStub = (ImplementationStub) other;
+            ConfigurationImplementationStub otherStub = (ConfigurationImplementationStub) other;
             if (this.compatible != otherStub.getCompatible()) {
                 return false;
             }
@@ -73,12 +73,8 @@ public class ImplementationStub implements ImmutableModuleImp {
 
     @Override
     public HashSet<ImmutableGenericImp> getGenerics() {
-<<<<<<< HEAD
         HashSet<ImmutableGenericImp> result = new HashSet<>();
         result.add(genericImp);
         return result;
-=======
-        return null;
->>>>>>> 741b17bf2cbbf1ce53acbe3c032023a769cf7888
     }
 }
