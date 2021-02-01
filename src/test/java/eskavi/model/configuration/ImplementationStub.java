@@ -1,15 +1,19 @@
 package eskavi.model.configuration;
 
+import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.moduleimp.*;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 public class ImplementationStub implements ImmutableModuleImp {
     private int compatible;
+    private ImmutableGenericImp genericImp;
 
-    public ImplementationStub(int compatible) {
+    public ImplementationStub(int compatible, ImmutableGenericImp generic) {
         this.compatible = compatible;
+        this.genericImp = generic;
     }
 
     public int getCompatible() {
@@ -65,5 +69,12 @@ public class ImplementationStub implements ImmutableModuleImp {
     @Override
     public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter) {
         return false;
+    }
+
+    @Override
+    public HashSet<ImmutableGenericImp> getGenerics() {
+        HashSet<ImmutableGenericImp> result = new HashSet<>();
+        result.add(genericImp);
+        return result;
     }
 }

@@ -1,14 +1,9 @@
 package eskavi.model.user;
 
-import eskavi.model.implementation.Implementation;
-import eskavi.model.implementation.ImplementationScope;
-import eskavi.model.implementation.Scope;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.SequenceInputStream;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Niv Adam
@@ -62,6 +57,7 @@ class UserTest {
         assertEquals(UserTest.SECURITY_ANSWER, this.user.getSecurityAnswer());
     }
 
+    /*
     @Test
     void testSubscribe() {
         Implementation imp = new ImplementationStub(1, this.user, "ImpStub", new Scope(ImplementationScope.SHARED));
@@ -76,6 +72,6 @@ class UserTest {
         assertFalse(this.user.isSubscribedTo(imp));
         assertFalse(this.user.getSubscribed().contains(imp));
 
-    }
+    }*/
 
 }
