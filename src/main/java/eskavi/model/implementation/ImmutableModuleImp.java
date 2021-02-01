@@ -4,6 +4,7 @@ import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.moduleimp.*;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 public interface ImmutableModuleImp {
     public boolean isCompatible(Collection<ImmutableModuleImp> others, Configuration instanceConfiguration);
@@ -24,6 +25,5 @@ public interface ImmutableModuleImp {
 
     public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter);
 
-    //TODO: Andrii die Methode habe ich (David) hinzugefügt weil ich sie in der Configuration brauche. die muss in den Unterklassen dann implementiert werden.
-    //HashSet<ImmutableGenericImp> getGenerics();
+    public HashSet<ImmutableGenericImp> getGenerics();
 }

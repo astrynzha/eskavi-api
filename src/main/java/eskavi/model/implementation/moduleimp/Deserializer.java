@@ -4,17 +4,19 @@ import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class Deserializer extends ModuleImp {
-    private MessageType messageType;
     private ProtocolType protocolType;
+    private MessageType messageType;
 
     public Deserializer(long implementationId, User author, String name, Scope scope,
                         MessageType messageType, ProtocolType protocolType) {
         super(implementationId, author, name, scope);
-        this.messageType = messageType;
         this.protocolType = protocolType;
+        this.messageType = messageType;
     }
 
     public MessageType getMessageType() {
@@ -31,6 +33,11 @@ public class Deserializer extends ModuleImp {
 
     public void setProtocolType(ProtocolType protocolType) {
         this.protocolType = protocolType;
+    }
+
+    @Override
+    public HashSet<ImmutableGenericImp> getGenerics() {
+        return new HashSet<>(Arrays.asList(protocolType, messageType));
     }
 
     @Override

@@ -14,7 +14,9 @@ public abstract class Implementation implements ImmutableImplementation {
         this.implementationId = implementationId;
         this.author = author;
         this.name = name;
-        scope.subscribe(author);
+        if (scope.getImpScope() == ImplementationScope.SHARED) {
+            scope.subscribe(author);
+        }
         this.scope = scope;
     }
 
@@ -50,7 +52,7 @@ public abstract class Implementation implements ImmutableImplementation {
 
     @Override
     public ImmutableUser getAuthor() {
-        return (ImmutableUser) author;
+        return (ImmutableUser) author; // TODO: should the cast be here or in view?
     }
 
     @Override

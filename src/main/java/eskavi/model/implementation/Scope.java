@@ -5,26 +5,32 @@ import eskavi.model.user.User;
 import java.util.Collection;
 import java.util.HashSet;
 
-// TODO: update database upon subscribing
 public class Scope {
     private ImplementationScope impScope;
     private Collection<User> grantedUsers;
+    private final Implementation implementation;
 
-    public Scope(ImplementationScope implementationScope) {
+    public Scope(ImplementationScope implementationScope, Implementation implementation) {
         this.impScope = implementationScope;
         this.grantedUsers = new HashSet<>();
+        this.implementation = implementation;
     }
 
     public void subscribe(User user) {
         if (!(impScope == ImplementationScope.SHARED)) {
-            throw new IllegalStateException("Could not subscribe a user to scope. Scope is not SHARED");
+            System.out.println("Could not subscribe a user to scope. Scope is not SHARED");
+            return;
         }
         grantedUsers.add(user);
     }
 
     public void unsubscribe(User user) {
         if (!(impScope == ImplementationScope.SHARED)) {
-            throw new IllegalStateException("Could not subscribe a user to scope. Scope is not SHARED");
+            System.out.println("Could not subscribe a user to scope. Scope is not SHARED");
+            return;
+        }
+        if (user == implementation.getAuthor()) {
+            System.out.println("Cannot unsubscribe an author from the Implementation");
         }
         grantedUsers.remove(user);
     }
@@ -37,6 +43,7 @@ public class Scope {
     public void setImpScope(ImplementationScope impScope) {
         this.impScope = impScope;
         grantedUsers = new HashSet<>();
+        implementation.subscribe((User) implementation.getAuthor());
     }
 
     public boolean isSubscribed(User user) {
