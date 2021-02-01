@@ -1,10 +1,12 @@
 package eskavi.controller;
 
+import com.google.common.io.Files;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.user.ImmutableUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("aas")
@@ -31,65 +33,66 @@ public class AASConfigurationController {
      * @apiSuccess {Number} id Session unique ID
      * @apiError {String} message Errormessage
      */
-    @GetMapping("/{id:[0-9]+}")
+    @DeleteMapping("/{id:[0-9]+}")
     public void closeSession(@PathVariable("id") long sessionId) {
     }
 
     /**
-     * @api{post}/aas/:id/imp/:impId Add ModuleImplementation to Session
+     * @api{post}/aas/imp Add ModuleImplementation to Session
      * @apiName AddModleImp
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiParam {Number} id Session unique ID
-     * @apiParam {Number} impId Implementation unique ID
+     * @apiParam (Request body) {Number} id Session unique ID
+     * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiError {String} message Errormessage
      */
-    @PostMapping("{/id:[0-9]+}/imp/{impId:[0-9]+}")
-    public void addModuleImp(@PathVariable("impId") long moduleId, @PathVariable("id") long sessionId) {
+    @PostMapping("{/imp")
+    public void addModuleImp(@ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
     }
 
     /**
-     * @api{get}/aas/:id/imp/:impId/configuration Get Configuration from ModuleImplementation in Session
+     * @api{get}/aas/imp/configuration Get Configuration from ModuleImplementation in Session
      * @apiName GetConfiguration
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiParam {Number} id Session unique ID
-     * @apiParam {Number} impId Implementation unique ID
+     * @apiParam (Request body) {Number} sessionId Session unique ID
+     * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiError {String} message Errormessage
      */
-    @GetMapping("{/id:[0-9]+}/imp/{impId:[0-9]+}/configuration")
-    public Configuration getConfiguration(@PathVariable("impId") long moduleId, @PathVariable("id") long sessionId) {
+    @GetMapping("/imp/configuration")
+    public Configuration getConfiguration(@ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
         return null;
     }
 
     /**
-     * @api{put}/aas/:id/imp/:impId/configuration Update Configuration from ModuleImplementation in Session
+     * @api{put}/aas/imp/configuration Update Configuration from ModuleImplementation in Session
      * @apiName PutConfiguration
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiParam {Number} id Session unique ID
-     * @apiParam {Number} impId Implementation unique ID
+     * @apiParam (Request body) {Number} sessionId Session unique ID
+     * @apiParam (Request body) {Number} impId Implementation unique ID
+     * @apiParam (Request body) {Configuration} configuration Configuration of the specified Implementation
      * @apiError {String} message Errormessage
      */
-    @PutMapping("{/id:[0-9]+}/imp/{impId:[0-9]+}/configuration")
-    public void updateConfiguration(Configuration configuration, @PathVariable("impId") long moduleId, @PathVariable("id") long sessionId) {
+    @PutMapping("/imp/configuration")
+    public void updateConfiguration(Configuration configuration, @ModelAttribute("impId") long moduleId, @ModelAttribute("id") long sessionId) {
     }
 
     /**
-     * @api{delete}/aas/:id/imp/:impId
+     * @api{delete}/aas/imp
      * @apiName DeleteModleImp
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiParam {Number} id Session unique ID
-     * @apiParam {Number} impId Implementation unique ID
+     * @apiParam (Request body) {Number} id Session unique ID
+     * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiError {String} message Errormessage
      */
-    @DeleteMapping("{/id:[0-9]+}/imp/{impId:[0-9]+}")
-    public void deleteModuleImp(@PathVariable("impId") long moduleId, @PathVariable("id") long sessionId) {
+    @DeleteMapping("{/imp")
+    public void deleteModuleImp(@ModelAttribute("impId") long moduleId, @ModelAttribute("id") long sessionId) {
     }
 
     /**
@@ -102,8 +105,8 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     @GetMapping("{/id:[0-9]+}/generate")
-    public File generateJavaClass(@PathVariable("id") long sessionId) {
-        return null;
+    public byte[] generateJavaClass(@PathVariable("id") long sessionId) throws IOException {
+        return Files.toByteArray(new File(""));
     }
 
     private boolean isAuthorized(long sessionId, ImmutableUser user) {

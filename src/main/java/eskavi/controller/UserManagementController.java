@@ -24,7 +24,7 @@ public class UserManagementController {
      * "password": "12345678"
      * }
      */
-    @GetMapping("/register")
+    @PostMapping("/register")
     public void register(@ModelAttribute("email") String email, @ModelAttribute("password") String password) {
 
     }
@@ -196,28 +196,11 @@ public class UserManagementController {
      * }
      * @apiSuccessExample {json} Success-Response:
      * {
-     * "users":[
-     * "user":{
-     * "email":"test1@web.de",
-     * "password":"$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8",
-     * "securityQuestion":"petName",
-     * "securityAnswer":"Jim"
-     * "userLevel":"BasicUser"
-     * },
-     * "user":{
-     * "email":"test2@web.de",
-     * "password":"$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8",
-     * "securityQuestion":"petName",
-     * "securityAnswer":"Jay"
-     * "userLevel":"BasicUser"
-     * },
-     * "user":{
-     * "email":"test3@web.de",
-     * "password":"$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8",
-     * "securityQuestion":"petName",
-     * "securityAnswer":"John"
-     * "userLevel":"BasicUser"
-     * }]
+     *  "userLevels":[
+     *  "BasicUser",
+     *  "PublishingUser",
+     *  "Administrator"
+     *  ]
      * }
      */
     @GetMapping("/levels")
