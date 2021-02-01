@@ -2,14 +2,26 @@ package eskavi.model.configuration;
 
 import eskavi.model.implementation.ImmutableModuleImp;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
+/**
+ * This class represents an Aggregate of multiple Configuration. This class is part of the composite pattern which makes it
+ * very easy to stack Confiurations as part of others.
+ */
 public class ConfigurationAggregate extends Configuration {
-    List<Configuration> children;
+    private List<Configuration> children;
     private boolean enforceCompatibility;
 
+    /**
+     * Constructs a new ConfigurationAggregate
+     *
+     * @param name                 the name displayed to the user
+     * @param allowMultiple        whether this aggregate can be added multiple times
+     * @param expression           the {@link KeyExpression} of this Aggregate
+     * @param children             can be empty, list of the configurations inside this Aggregate
+     * @param enforceCompatibility whether the compatibility between the {@link ImmutableModuleImp}s in this
+     *                             Aggregate has to be ensured.
+     */
     public ConfigurationAggregate(String name, boolean allowMultiple, KeyExpression expression,
                                   List<Configuration> children, boolean enforceCompatibility) {
         super(name, allowMultiple, expression);
@@ -17,6 +29,11 @@ public class ConfigurationAggregate extends Configuration {
         this.enforceCompatibility = enforceCompatibility;
     }
 
+    /**
+     * Returns whether the compatibility between the {@link ImmutableModuleImp}s in this Aggregate has to be ensured.
+     *
+     * @return boolean
+     */
     public boolean enforcesCompatibility() {
         return this.enforceCompatibility;
     }
@@ -27,7 +44,7 @@ public class ConfigurationAggregate extends Configuration {
             /*config.getModuleImp only returns not null if config is impSelect -> then first child is Configuration
              *attached to moduleInstance. So only implementations added in this Aggregate end up in this Map.
              */
-            moduleImps.put(config.getModuleImp(), config.getChildren().get(0));
+            moduleImps.put(config.getModuleImp(), config.getChildren() != null ? config.getChildren().get(0) : null);
         }
         moduleImps.remove(null);
 
@@ -65,7 +82,7 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
-    public void addChild(Configuration config) {
+    public void addChild(Configuration config) throws IllegalArgumentException {
         if (!children.contains(config) || config.allowsMultiple()) {
             children.add(config);
         } else {
@@ -88,6 +105,30 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
+    public Collection<ImmutableModuleImp> getDependentModuleImps() {
+        HashSet<ImmutableModuleImp> result = new HashSet<>();
+        for (Configuration child : children) {
+            result.addAll(child.getDependentModuleImps());
+        }
+        result.remove(null);
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), children, enforceCompatibility);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ConfigurationAggregate that = (ConfigurationAggregate) o;
+        return enforceCompatibility == that.enforceCompatibility && Objects.equals(children, that.children);
+    }
+
+    @Override
     public Configuration clone() {
         List<Configuration> clonedChildren = new ArrayList<>();
         for (Configuration config : children) {
@@ -97,5 +138,15 @@ public class ConfigurationAggregate extends Configuration {
         KeyExpression copy = new KeyExpression(this.getKeyExpression().getExpressionStart(), this.getKeyExpression().getExpressionEnd());
 
         return new ConfigurationAggregate(this.getName(), this.allowsMultiple(), copy, clonedChildren, this.enforcesCompatibility());
+    }
+
+    @Override
+    public String toString() {
+        return "ConfigurationAggregate{" +
+                "name='" + getName() + "'" +
+                ", allowMultiple=" + allowsMultiple() +
+                ", keyExpression=" + getKeyExpression().toString() +
+                ", enforceCompatibility=" + enforceCompatibility +
+                ", children=" + children.toString() + "}";
     }
 }

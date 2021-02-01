@@ -23,4 +23,7 @@ public interface ImmutableModuleImp {
     public boolean checkCompatiblePersistenceManager(PersistenceManager persistenceManager);
 
     public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter);
+
+    //TODO: Andrii die Methode habe ich (David) hinzugefügt weil ich sie in der Configuration brauche. die muss in den Unterklassen dann implementiert werden.
+    //HashSet<ImmutableGenericImp> getGenerics();
 }

@@ -3,6 +3,7 @@ package eskavi.model.configuration;
 import eskavi.model.implementation.ImmutableModuleImp;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -83,7 +84,7 @@ public abstract class Configuration {
     }
 
     public Collection<ImmutableModuleImp> getDependentModuleImps() {
-        return null;
+        return new HashSet<>();
     }
 
     public ImmutableModuleImp getModuleImp() {

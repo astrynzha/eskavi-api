@@ -4,7 +4,7 @@ import eskavi.model.user.User;
 
 public class MessageType extends GenericImp {
 
-    protected MessageType(long implementationId, User author, String name, Scope scope) {
+    public MessageType(long implementationId, User author, String name, Scope scope) {
         super(implementationId, author, name, scope);
     }
 

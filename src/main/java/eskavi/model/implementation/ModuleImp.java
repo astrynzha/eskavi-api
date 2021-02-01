@@ -9,7 +9,7 @@ import java.util.Collection;
 // TODO: is the Configuration attribute needed?
 public abstract class ModuleImp extends Implementation implements ImmutableModuleImp {
 
-    protected ModuleImp(long implementationId, User author, String name, Scope scope) {
+    public ModuleImp(long implementationId, User author, String name, Scope scope) {
         super(implementationId, author, name, scope);
     }
 
