@@ -1,12 +1,6 @@
 package eskavi.model.implementation.moduleimp;
 
-import eskavi.model.configuration.Configuration;
-import eskavi.model.implementation.ImmutableGenericImp;
-import eskavi.model.implementation.ImmutableModuleImp;
-import eskavi.model.implementation.ImplementationScope;
-import eskavi.model.implementation.ModuleImp;
-import eskavi.model.implementation.ProtocolType;
-import eskavi.model.implementation.Scope;
+import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
 import java.util.Collection;
@@ -31,8 +25,13 @@ public class Endpoint extends ModuleImp {
     }
 
     @Override
-    public HashSet<ImmutableGenericImp> getGenerics() {
-        return new HashSet<>(Collections.singletonList(protocolType));
+    public boolean isCompatible(Collection<ImmutableModuleImp> usedImpCollection) {
+        for (ImmutableModuleImp usedImp : usedImpCollection) {
+            if (!usedImp.checkCompatibleEndpoint(this)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -51,17 +50,7 @@ public class Endpoint extends ModuleImp {
     }
 
     @Override
-    public boolean isCompatible(Collection<ImmutableModuleImp> usedImpCollection, Configuration instanceConfiguration) {
-        for (ImmutableModuleImp usedImp : usedImpCollection) {
-            if (!usedImp.checkCompatibleEndpoint(this)) {
-                return false;
-            }
-        }
-        for (ImmutableModuleImp usedImp : instanceConfiguration.getDependentModuleImps()) {
-            if (!usedImp.checkCompatibleEndpoint(this)) {
-                return false;
-            }
-        }
-        return instanceConfiguration.checkCompatible();
+    public HashSet<ImmutableGenericImp> getGenerics() {
+        return new HashSet<>(Collections.singletonList(protocolType));
     }
 }

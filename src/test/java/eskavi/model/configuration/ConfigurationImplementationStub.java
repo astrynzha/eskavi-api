@@ -21,14 +21,14 @@ public class ConfigurationImplementationStub implements ImmutableModuleImp {
     }
 
     @Override
-    public boolean isCompatible(Collection<ImmutableModuleImp> others, Configuration instanceConfiguration) {
+    public boolean isCompatible(Collection<ImmutableModuleImp> others) {
         for (ImmutableModuleImp other : others) {
             ConfigurationImplementationStub otherStub = (ConfigurationImplementationStub) other;
             if (this.compatible != otherStub.getCompatible()) {
                 return false;
             }
         }
-        return instanceConfiguration.checkCompatible();
+        return true;
     }
 
     @Override
