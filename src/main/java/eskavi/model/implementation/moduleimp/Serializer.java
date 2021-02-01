@@ -12,9 +12,9 @@ public class Serializer extends ModuleImp {
     private ProtocolType protocolType;
     private MessageType messageType;
 
-    public Serializer(long implementationId, User author, String name, Scope scope,
+    public Serializer(long implementationId, User author, String name, ImplementationScope impScope,
                       MessageType messageType, ProtocolType protocolType) {
-        super(implementationId, author, name, scope);
+        super(implementationId, author, name, impScope);
         this.protocolType = protocolType;
         this.messageType = messageType;
     }
@@ -80,4 +80,5 @@ public class Serializer extends ModuleImp {
         }
         return instanceConfiguration.checkCompatible();
     }
+
 }

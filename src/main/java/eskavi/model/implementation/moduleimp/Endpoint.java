@@ -3,6 +3,7 @@ package eskavi.model.implementation.moduleimp;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
+import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.implementation.ModuleImp;
 import eskavi.model.implementation.ProtocolType;
 import eskavi.model.implementation.Scope;
@@ -15,8 +16,9 @@ import java.util.HashSet;
 public class Endpoint extends ModuleImp {
     private ProtocolType protocolType;
 
-    public Endpoint(long implementationId, User author, String name, Scope scope, ProtocolType protocolType) {
-        super(implementationId, author, name, scope);
+    public Endpoint(long implementationId, User author, String name,
+                    ImplementationScope impScope, ProtocolType protocolType) {
+        super(implementationId, author, name, impScope);
         this.protocolType = protocolType;
     }
 

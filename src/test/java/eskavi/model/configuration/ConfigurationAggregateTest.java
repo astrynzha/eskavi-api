@@ -7,6 +7,7 @@ import eskavi.model.implementation.ModuleInstance;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.plaf.synth.SynthTabbedPaneUI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -113,6 +114,7 @@ class ConfigurationAggregateTest {
         impSelect.setInstance(new ModuleInstance(imp, instanceConfig));
         expected.add(this.impSelect.getModuleImp());
         expected.add(impSelect.getModuleImp());
+        System.out.println(testObject.resolveKeyExpression());
         assertEquals(expected, testObject.getDependentModuleImps());
     }
 }

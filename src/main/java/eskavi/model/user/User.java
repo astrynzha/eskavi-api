@@ -43,7 +43,7 @@ public class User implements ImmutableUser {
      *
      * @param mi {@link Implementation} to subscribe to
      */
-    public void subscribe(Implementation mi) {
+    public void subscribe(Implementation mi) throws IllegalAccessException {
         if (this.implementations.contains(mi)) {
             return;
         }
@@ -56,7 +56,7 @@ public class User implements ImmutableUser {
      *
      * @param mi {@link Implementation} to unsubscribe from
      */
-    public void unsubscribe(Implementation mi) {
+    public void unsubscribe(Implementation mi) throws IllegalAccessException {
         if (!this.implementations.contains(mi)) {
             return;
         }

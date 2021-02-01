@@ -10,17 +10,22 @@ public abstract class Implementation implements ImmutableImplementation {
     private Scope scope;
 
     // TODO: where do ID's come from?
-    protected Implementation(long implementationId, User author, String name, Scope scope) {
+    protected Implementation(long implementationId, User author, String name, ImplementationScope impScope) {
         this.implementationId = implementationId;
         this.author = author;
         this.name = name;
-        if (scope.getImpScope() == ImplementationScope.SHARED) {
-            scope.subscribe(author);
+        this.scope = new Scope(impScope, this);
+        if (impScope == ImplementationScope.SHARED) {
+            try {
+                scope.subscribe(author);
+            } catch (IllegalAccessException e) {
+                throw new IllegalStateException("This should never happen, scope is SHARED and " +
+                        "the moduleImp can be subscribed to the author", e);
+            }
         }
-        this.scope = scope;
     }
 
-    public void subscribe(User user) {
+    public void subscribe(User user) throws IllegalAccessException {
         if (isSubscribed(user)) {
             return;
         }
@@ -28,7 +33,7 @@ public abstract class Implementation implements ImmutableImplementation {
         user.subscribe(this);
     }
 
-    public void unsubscribe(User user) {
+    public void unsubscribe(User user) throws IllegalAccessException {
         if (!isSubscribed(user)) {
             return;
         }

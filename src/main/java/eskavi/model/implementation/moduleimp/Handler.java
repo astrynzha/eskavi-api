@@ -3,6 +3,7 @@ package eskavi.model.implementation.moduleimp;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
+import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.implementation.MessageType;
 import eskavi.model.implementation.ModuleImp;
 import eskavi.model.implementation.Scope;
@@ -15,8 +16,8 @@ import java.util.HashSet;
 public class Handler extends ModuleImp {
     private MessageType messageType;
 
-    public Handler(long implementationId, User author, String name, Scope scope, MessageType messageType) {
-        super(implementationId, author, name, scope);
+    public Handler(long implementationId, User author, String name, ImplementationScope impScope, MessageType messageType) {
+        super(implementationId, author, name, impScope);
         this.messageType = messageType;
     }
 
