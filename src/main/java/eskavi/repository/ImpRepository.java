@@ -10,7 +10,4 @@ import java.util.Collection;
 
 @Repository
 public interface ImpRepository extends CrudRepository<Implementation, Long> {
-    Collection<Implementation> findByType(ImpType impType);
-
-    Collection<Implementation> findByGeneric(GenericImp genericType);
 }

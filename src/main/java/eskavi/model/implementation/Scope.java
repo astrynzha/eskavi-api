@@ -4,13 +4,17 @@ import eskavi.model.user.User;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.Collection;
 import java.util.HashSet;
 
 @Embeddable
 public class Scope {
     private ImplementationScope impScope;
+    @OneToMany
     private Collection<User> grantedUsers;
+    @OneToOne
     private Implementation implementation;
 
     public Scope(ImplementationScope implementationScope, Implementation implementation) {
