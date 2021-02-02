@@ -2,15 +2,13 @@ package eskavi.model.implementation;
 
 import eskavi.model.user.User;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 
 @Embeddable
 public class Scope {
+    @Enumerated(EnumType.STRING)
     private ImplementationScope impScope;
     @OneToMany
     private Collection<User> grantedUsers;

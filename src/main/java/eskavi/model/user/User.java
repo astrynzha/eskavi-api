@@ -3,9 +3,7 @@ package eskavi.model.user;
 import eskavi.model.implementation.ImmutableImplementation;
 import eskavi.model.implementation.Implementation;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -20,8 +18,10 @@ public class User implements ImmutableUser {
     @Id
     private String emailAddress;
     private String hashedPassword;
+    @Enumerated(EnumType.STRING)
     private SecurityQuestion securityQuestion;
     private String securityAnswer;
+    @Enumerated(EnumType.STRING)
     private UserLevel userLevel;
     @OneToMany
     private Collection<Implementation> implementations;
