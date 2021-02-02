@@ -16,7 +16,7 @@ public class AASConfigurationController {
      * @apiName CreateSession
      * @apiGroup AAS
      * @apiVersion 0.0.1
-     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
      * @apiSuccess {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
      */
@@ -30,7 +30,7 @@ public class AASConfigurationController {
      * @apiName CloseSession
      * @apiGroup AAS
      * @apiVersion 0.0.1
-     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
      * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
      */
@@ -43,7 +43,7 @@ public class AASConfigurationController {
      * @apiName AddModleImp
      * @apiGroup AAS
      * @apiVersion 0.0.1
-     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
      * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiError {String} message Errormessage
@@ -57,7 +57,7 @@ public class AASConfigurationController {
      * @apiName GetConfiguration
      * @apiGroup AAS
      * @apiVersion 0.0.1
-     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
      * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiSuccessExample Success-Example:
@@ -148,11 +148,11 @@ public class AASConfigurationController {
     }
 
     /**
-     * @api{put}/aas/imp/configuration Update Configuration from ModuleImplementation in Session
+     * @api{put}/aas/imp/configuration Update Configuration of specific ModuleImplementation in Session
      * @apiName PutConfiguration
      * @apiGroup AAS
      * @apiVersion 0.0.1
-     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
      * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiParam (Request body) {Configuration} configuration Configuration of the specified Implementation
@@ -269,7 +269,7 @@ public class AASConfigurationController {
      * @apiName DeleteModleImp
      * @apiGroup AAS
      * @apiVersion 0.0.1
-     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
      * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiError {String} message Errormessage
@@ -283,7 +283,7 @@ public class AASConfigurationController {
      * @apiName GenerateJavaClass
      * @apiGroup AAS
      * @apiVersion 0.0.1
-     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
      * @apiParam {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
      */
