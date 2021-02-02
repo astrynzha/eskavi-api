@@ -30,7 +30,7 @@ public class UserManagementController {
     }
 
     /**
-     * @api{get}/user/login Login for a registered User
+     * @api{post}/user/login Login for a registered User
      * @apiName Login
      * @apiGroup User
      * @apiVersion 0.0.1
@@ -44,7 +44,7 @@ public class UserManagementController {
      * "password": "12345678"
      * }
      */
-    @GetMapping("/login")
+    @PostMapping("/login")
     public String login(@ModelAttribute("email") String email, @ModelAttribute("password") String password) {
         return null;
     }
