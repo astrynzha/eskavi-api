@@ -2,10 +2,17 @@ package eskavi.model.implementation;
 
 import eskavi.model.user.User;
 
+import javax.persistence.Entity;
+
+@Entity
 public class ProtocolType extends GenericImp {
 
     public ProtocolType(long implementationId, User author, String name, ImplementationScope impScope) {
         super(implementationId, author, name, impScope);
+    }
+
+    public ProtocolType() {
+
     }
 
     @Override

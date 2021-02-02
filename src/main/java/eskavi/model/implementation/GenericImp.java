@@ -2,6 +2,9 @@ package eskavi.model.implementation;
 
 import eskavi.model.user.User;
 
+import javax.persistence.Entity;
+
+@Entity
 public abstract class GenericImp extends Implementation implements ImmutableGenericImp {
 
     public GenericImp() {

@@ -4,13 +4,17 @@ import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
+@Entity
 public class Deserializer extends ModuleImp {
+    @OneToOne
     private ProtocolType protocolType;
+    @OneToOne
     private MessageType messageType;
 
     public Deserializer() {

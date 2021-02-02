@@ -3,11 +3,15 @@ package eskavi.model.implementation.moduleimp;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
+@Entity
 public class Dispatcher extends ModuleImp {
+    @OneToOne
     private MessageType messageType;
 
     public Dispatcher(MessageType messageType) {
@@ -18,6 +22,10 @@ public class Dispatcher extends ModuleImp {
                       String name, ImplementationScope impScope, MessageType messageType) {
         super(implementationId, author, name, impScope);
         this.messageType = messageType;
+    }
+
+    public Dispatcher() {
+
     }
 
     public MessageType getMessageType() {

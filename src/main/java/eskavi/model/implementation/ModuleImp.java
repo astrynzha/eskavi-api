@@ -3,9 +3,11 @@ package eskavi.model.implementation;
 import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.User;
 
+import javax.persistence.Entity;
 import java.util.Collection;
 import java.util.HashSet;
 
+@Entity
 public abstract class ModuleImp extends Implementation implements ImmutableModuleImp {
 
     public ModuleImp() {

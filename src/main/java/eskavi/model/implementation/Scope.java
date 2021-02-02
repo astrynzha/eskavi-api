@@ -2,18 +2,25 @@ package eskavi.model.implementation;
 
 import eskavi.model.user.User;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import java.util.Collection;
 import java.util.HashSet;
 
+@Embeddable
 public class Scope {
     private ImplementationScope impScope;
     private Collection<User> grantedUsers;
-    private final Implementation implementation;
+    private Implementation implementation;
 
     public Scope(ImplementationScope implementationScope, Implementation implementation) {
         this.impScope = implementationScope;
         this.grantedUsers = new HashSet<>();
         this.implementation = implementation;
+    }
+
+    public Scope() {
+
     }
 
     public void subscribe(User user) throws IllegalAccessException {

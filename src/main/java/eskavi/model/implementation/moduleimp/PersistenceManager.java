@@ -5,8 +5,10 @@ import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.implementation.ModuleImp;
 import eskavi.model.user.User;
 
+import javax.persistence.Entity;
 import java.util.Collection;
 
+@Entity
 public class PersistenceManager extends ModuleImp {
     public PersistenceManager() {
     }

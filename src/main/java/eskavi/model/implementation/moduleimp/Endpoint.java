@@ -3,11 +3,15 @@ package eskavi.model.implementation.moduleimp;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
+@Entity
 public class Endpoint extends ModuleImp {
+    @OneToOne
     private ProtocolType protocolType;
 
     public Endpoint() {

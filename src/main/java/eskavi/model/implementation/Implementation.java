@@ -5,15 +5,17 @@ import eskavi.model.user.User;
 
 import javax.persistence.*;
 
+@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Implementation implements ImmutableImplementation {
     @Id
     @GeneratedValue
-    @Column(name = "implementation_id")
-    private long implementationId;
+    protected long implementationId;
 
+    @OneToOne
     private User author;
     private String name;
+    @Embedded
     private Scope scope;
 
     public Implementation() {
