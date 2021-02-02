@@ -3,13 +3,21 @@ package eskavi.model.implementation;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Implementation implements ImmutableImplementation {
+    @Id
+    @GeneratedValue
     private long implementationId;
+
     private User author;
     private String name;
     private Scope scope;
 
-    // TODO: where do ID's come from?
     protected Implementation(long implementationId, User author, String name, ImplementationScope impScope) {
         this.implementationId = implementationId;
         this.author = author;
