@@ -3,15 +3,13 @@ package eskavi.model.implementation;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Implementation implements ImmutableImplementation {
     @Id
     @GeneratedValue
+    @Column(name = "implementation_id")
     private long implementationId;
 
     private User author;
