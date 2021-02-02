@@ -15,7 +15,7 @@ public class UserManagementController {
      * @apiName Register
      * @apiGroup User
      * @apiVersion 0.0.1
-     * @apiSuccess {String} message Returns whether a request was successful
+     * @apiSuccess {String} jwt Token to authenticate future requests
      * @apiParam (Request body) {String} email User mail
      * @apiParam (Request body) {String} password User password
      * @apiParamExample {json} Request-Example:
@@ -101,7 +101,7 @@ public class UserManagementController {
      * @apiName GetSecurityQuestion
      * @apiGroup User
      * @apiVersion 0.0.1
-     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiParam (Request-Body) email User mail
      * @apiSuccess {String} securityQuestion Security question to reset the password
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
@@ -111,7 +111,7 @@ public class UserManagementController {
      * }
      */
     @GetMapping("/security_question")
-    public String geSecurityQuestion(@RequestHeader String jwtToken) {
+    public String getSecurityQuestion(@ModelAttribute String email) {
         return null;
     }
 
@@ -120,7 +120,6 @@ public class UserManagementController {
      * @apiName ResetPasswordQuestion
      * @apiGroup User
      * @apiVersion 0.0.1
-     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
      * @apiParam (Request body) {String} answer Answer to the security question
      * @apiParam (Request body) {String} newPassword New password
      * @apiParamExample {json} Request-Example:
@@ -141,7 +140,7 @@ public class UserManagementController {
     }
 
     /**
-     * @api{post}/user/security_question Set a new password
+     * @api{post}/user/change_password Set a new password
      * @apiName SetPasswordQuestion
      * @apiGroup User
      * @apiVersion 0.0.1
@@ -159,7 +158,7 @@ public class UserManagementController {
      * "error": "Unauthorized please login to your account"
      * }
      */
-    @PostMapping("/set_password")
+    @PostMapping("/change_password")
     public void setPassword(@ModelAttribute String oldPassword, @ModelAttribute String newPassword) {
 
     }
