@@ -39,6 +39,60 @@ public class ImpController {
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
      * @apiParam {Number} id Implementation unique ID
      * @apiSuccess {Implementation} implementation Implementation object
+     * @apiSuccessExample Success-Example:
+     * {
+     *    "implementationId":10,
+     *    "author":{
+     *       "emailAddress":"a@gmail.com",
+     *       "securityQuestion":"MAIDEN_NAME",
+     *       "securityAnswer":"Julia",
+     *       "userLevel":"PUBLISHING_USER",
+     *       "password":"dfjask;fj",
+     *       "subscribed":[
+     *
+     *       ]
+     *    },
+     *    "name":"handler_10",
+     *    "scope":{
+     *       "impScope":"SHARED"
+     *    },
+     *    "messageType":{
+     *       "implementationId":3,
+     *       "author":{
+     *          "emailAddress":"a@gmail.com",
+     *          "securityQuestion":"MAIDEN_NAME",
+     *          "securityAnswer":"Julia",
+     *          "userLevel":"PUBLISHING_USER",
+     *          "password":"dfjask;fj",
+     *          "subscribed":[
+     *
+     *          ]
+     *       },
+     *       "name":"messageType_3",
+     *       "scope":{
+     *          "impScope":"SHARED"
+     *       }
+     *    },
+     *    "generics":[
+     *       {
+     *          "implementationId":3,
+     *          "author":{
+     *             "emailAddress":"a@gmail.com",
+     *             "securityQuestion":"MAIDEN_NAME",
+     *             "securityAnswer":"Julia",
+     *             "userLevel":"PUBLISHING_USER",
+     *             "password":"dfjask;fj",
+     *             "subscribed":[
+     *
+     *             ]
+     *          },
+     *          "name":"messageType_3",
+     *          "scope":{
+     *             "impScope":"SHARED"
+     *          }
+     *       }
+     *    ]
+     * }
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 404 Not Found
@@ -58,7 +112,7 @@ public class ImpController {
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
      * @apiParam {ImpType} impType The implementation type
-     * @apiParamExample {josn} RequestExample:
+     * @apiParamExample {json} RequestExample:
      * {
      * "impType":"Handler"
      * }
@@ -101,6 +155,61 @@ public class ImpController {
      * @apiGroup Implementation
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiParam {Implementation} implementation Implementation object
+     * @apiParamExample {json} Request-Example:
+     * {
+     *    "implementationId":10,
+     *    "author":{
+     *       "emailAddress":"a@gmail.com",
+     *       "securityQuestion":"MAIDEN_NAME",
+     *       "securityAnswer":"Julia",
+     *       "userLevel":"PUBLISHING_USER",
+     *       "password":"dfjask;fj",
+     *       "subscribed":[
+     *
+     *       ]
+     *    },
+     *    "name":"handler_10",
+     *    "scope":{
+     *       "impScope":"SHARED"
+     *    },
+     *    "messageType":{
+     *       "implementationId":3,
+     *       "author":{
+     *          "emailAddress":"a@gmail.com",
+     *          "securityQuestion":"MAIDEN_NAME",
+     *          "securityAnswer":"Julia",
+     *          "userLevel":"PUBLISHING_USER",
+     *          "password":"dfjask;fj",
+     *          "subscribed":[
+     *
+     *          ]
+     *       },
+     *       "name":"messageType_3",
+     *       "scope":{
+     *          "impScope":"SHARED"
+     *       }
+     *    },
+     *    "generics":[
+     *       {
+     *          "implementationId":3,
+     *          "author":{
+     *             "emailAddress":"a@gmail.com",
+     *             "securityQuestion":"MAIDEN_NAME",
+     *             "securityAnswer":"Julia",
+     *             "userLevel":"PUBLISHING_USER",
+     *             "password":"dfjask;fj",
+     *             "subscribed":[
+     *
+     *             ]
+     *          },
+     *          "name":"messageType_3",
+     *          "scope":{
+     *             "impScope":"SHARED"
+     *          }
+     *       }
+     *    ]
+     * }
      * @apiSuccess {Number} id Implementation unique ID
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 201 Created

@@ -11,7 +11,7 @@ import java.util.Collection;
 public class UserManagementController {
 
     /**
-     * @api{get}/user/register Register a new User
+     * @api{post}/user/register Register a new User
      * @apiName Register
      * @apiGroup User
      * @apiVersion 0.0.1
@@ -58,13 +58,13 @@ public class UserManagementController {
      * @apiSuccess {User} user User object
      * @apiSuccessExample {json} Success-Example:
      * {
-     * "user":{
-     * "email":"test@web.de",
-     * "password":"$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8",
-     * "securityQuestion":"petName",
-     * "securityAnswer":"Jim"
-     * "userLevel":"BasicUser"
-     * }
+     *   "user":{
+     *     "email":"test@web.de",
+     *     "password":"$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8",
+     *     "securityQuestion":"petName",
+     *     "securityAnswer":"Jim"
+     *     "userLevel":"BasicUser"
+     *   }
      * }
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
@@ -127,6 +127,7 @@ public class UserManagementController {
      * {
      * "answer": "Jim",
      * "newPassword": "password"
+     * }
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 401 Unauthorized

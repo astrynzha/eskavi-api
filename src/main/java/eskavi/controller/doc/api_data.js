@@ -1,7 +1,7 @@
 define({ "api": [
   {
     "type": "post",
-    "url": "/aas/:id/imp/:impId",
+    "url": "/aas/imp",
     "title": "Add ModuleImplementation to Session",
     "name": "AddModleImp",
     "group": "AAS",
@@ -21,16 +21,16 @@ define({ "api": [
     },
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Request body": [
           {
-            "group": "Parameter",
+            "group": "Request body",
             "type": "Number",
             "optional": false,
-            "field": "id",
+            "field": "sessionId",
             "description": "<p>Session unique ID</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Request body",
             "type": "Number",
             "optional": false,
             "field": "impId",
@@ -56,7 +56,7 @@ define({ "api": [
     "groupTitle": "AAS"
   },
   {
-    "type": "get",
+    "type": "delete",
     "url": "/aas",
     "title": "Close AAS session",
     "name": "CloseSession",
@@ -75,11 +75,11 @@ define({ "api": [
         ]
       }
     },
-    "success": {
+    "parameter": {
       "fields": {
-        "Success 200": [
+        "Request body": [
           {
-            "group": "Success 200",
+            "group": "Request body",
             "type": "Number",
             "optional": false,
             "field": "id",
@@ -124,6 +124,19 @@ define({ "api": [
         ]
       }
     },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "sessionId",
+            "description": "<p>Session unique ID</p>"
+          }
+        ]
+      }
+    },
     "error": {
       "fields": {
         "Error 4xx": [
@@ -142,7 +155,7 @@ define({ "api": [
   },
   {
     "type": "delete",
-    "url": "/aas/:id/imp/:impId",
+    "url": "/aas/imp",
     "title": "",
     "name": "DeleteModleImp",
     "group": "AAS",
@@ -162,16 +175,16 @@ define({ "api": [
     },
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Request body": [
           {
-            "group": "Parameter",
+            "group": "Request body",
             "type": "Number",
             "optional": false,
-            "field": "id",
+            "field": "sessionId",
             "description": "<p>Session unique ID</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Request body",
             "type": "Number",
             "optional": false,
             "field": "impId",
@@ -223,7 +236,7 @@ define({ "api": [
             "group": "Parameter",
             "type": "Number",
             "optional": false,
-            "field": "id",
+            "field": "sessionId",
             "description": "<p>Session unique ID</p>"
           }
         ]
@@ -247,7 +260,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/aas/:id/imp/:impId/configuration",
+    "url": "/aas/imp/configuration",
     "title": "Get Configuration from ModuleImplementation in Session",
     "name": "GetConfiguration",
     "group": "AAS",
@@ -267,16 +280,16 @@ define({ "api": [
     },
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Request body": [
           {
-            "group": "Parameter",
+            "group": "Request body",
             "type": "Number",
             "optional": false,
-            "field": "id",
+            "field": "sessionId",
             "description": "<p>Session unique ID</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Request body",
             "type": "Number",
             "optional": false,
             "field": "impId",
@@ -284,6 +297,15 @@ define({ "api": [
           }
         ]
       }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n   \"name\":\"parent\",\n   \"keyExpression\":{\n      \"expressionStart\":\"<parent>\",\n      \"expressionEnd\":\"<parent>\"\n   },\n   \"children\":[],\n   \"dependentModuleImps\":[\n   {\n      \"implementationId\":10,\n      \"author\":{},\n      \"name\":\"handler_10\",\n         \"scope\":{\n            \"impScope\":\"SHARED\"\n         },\n         \"messageType\":{\n            \"implementationId\":3,\n            \"author\":{}\n            \"name\":\"messageType_3\",\n            \"scope\":{\n               \"impScope\":\"SHARED\"\n            }\n         },\n         \"generics\":[\n            {\n               \"implementationId\":3,\n               \"author\":{},\n               \"name\":\"messageType_3\",\n               \"scope\":{\n                  \"impScope\":\"SHARED\"\n               }\n            }\n         ]\n      },\n      {\n         \"implementationId\":7,\n         \"author\":{},\n         \"name\":\"deserializer_7\",\n         \"scope\":{\n            \"impScope\":\"SHARED\"\n         },\n         \"protocolType\":{\n            \"implementationId\":0,\n            \"author\":{},\n            \"name\":\"protocolType_0\",\n            \"scope\":{\n               \"impScope\":\"SHARED\"\n            }\n         },\n         \"messageType\":{\n            \"implementationId\":3,\n            \"author\":{},\n            \"name\":\"messageType_3\",\n            \"scope\":{\n               \"impScope\":\"SHARED\"\n            }\n         },\n         \"generics\":[\n            {\n               \"implementationId\":0,\n               \"author\":{},\n               \"name\":\"protocolType_0\",\n               \"scope\":{\n                  \"impScope\":\"SHARED\"\n               }\n            },\n            {\n               \"implementationId\":3,\n               \"author\":{},\n               \"name\":\"messageType_3\",\n               \"scope\":{\n                  \"impScope\":\"SHARED\"\n               }\n            }\n         ]\n      }\n   ],\n   \"moduleImp\":null\n}",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {
@@ -303,7 +325,7 @@ define({ "api": [
   },
   {
     "type": "put",
-    "url": "/aas/:id/imp/:impId/configuration",
+    "url": "/aas/imp/configuration",
     "title": "Update Configuration from ModuleImplementation in Session",
     "name": "PutConfiguration",
     "group": "AAS",
@@ -323,23 +345,37 @@ define({ "api": [
     },
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Request body": [
           {
-            "group": "Parameter",
+            "group": "Request body",
             "type": "Number",
             "optional": false,
-            "field": "id",
+            "field": "sessionId",
             "description": "<p>Session unique ID</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Request body",
             "type": "Number",
             "optional": false,
             "field": "impId",
             "description": "<p>Implementation unique ID</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "Configuration",
+            "optional": false,
+            "field": "configuration",
+            "description": "<p>Configuration of the specified Implementation</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n   \"sessionId\":1,\n   \"impId\":1,\n   \"configuration\":{\n      \"name\":\"parent\",\n      \"keyExpression\":{\n         \"expressionStart\":\"<parent>\",\n         \"expressionEnd\":\"<parent>\"\n      },\n      \"children\":[\n\n      ],\n      \"dependentModuleImps\":[\n         {\n            \"implementationId\":10,\n            \"author\":{\n\n            },\n            \"name\":\"handler_10\",\n            \"scope\":{\n               \"impScope\":\"SHARED\"\n            },\n            \"messageType\":{\n               \"implementationId\":3,\n               \"author\":{\n\n               },\n               \"name\":\"messageType_3\",\n               \"scope\":{\n                  \"impScope\":\"SHARED\"\n               }\n            },\n            \"generics\":[\n               {\n                  \"implementationId\":3,\n                  \"author\":{\n\n                  },\n                  \"name\":\"messageType_3\",\n                  \"scope\":{\n                     \"impScope\":\"SHARED\"\n                  }\n               }\n            ]\n         },\n         {\n            \"implementationId\":7,\n            \"author\":{\n\n            },\n            \"name\":\"deserializer_7\",\n            \"scope\":{\n               \"impScope\":\"SHARED\"\n            },\n            \"protocolType\":{\n               \"implementationId\":0,\n               \"author\":{\n\n               },\n               \"name\":\"protocolType_0\",\n               \"scope\":{\n                  \"impScope\":\"SHARED\"\n               }\n            },\n            \"messageType\":{\n               \"implementationId\":3,\n               \"author\":{\n\n               },\n               \"name\":\"messageType_3\",\n               \"scope\":{\n                  \"impScope\":\"SHARED\"\n               }\n            },\n            \"generics\":[\n               {\n                  \"implementationId\":0,\n                  \"author\":{\n\n                  },\n                  \"name\":\"protocolType_0\",\n                  \"scope\":{\n                     \"impScope\":\"SHARED\"\n                  }\n               },\n               {\n                  \"implementationId\":3,\n                  \"author\":{\n\n                  },\n                  \"name\":\"messageType_3\",\n                  \"scope\":{\n                     \"impScope\":\"SHARED\"\n                  }\n               }\n            ]\n         }\n      ],\n      \"moduleImp\":null\n   }\n}",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {
@@ -356,6 +392,34 @@ define({ "api": [
     },
     "filename": "./AASConfigurationController.java",
     "groupTitle": "AAS"
+  },
+  {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "./doc/doc/main.js",
+    "group": "C:\\Users\\maxig\\IdeaProjects\\api-master\\src\\main\\java\\eskavi\\controller\\doc\\doc\\main.js",
+    "groupTitle": "C:\\Users\\maxig\\IdeaProjects\\api-master\\src\\main\\java\\eskavi\\controller\\doc\\doc\\main.js",
+    "name": ""
   },
   {
     "success": {
@@ -543,7 +607,14 @@ define({ "api": [
             "description": "<p>Implementation object</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n   \"implementationId\":10,\n   \"author\":{\n      \"emailAddress\":\"a@gmail.com\",\n      \"securityQuestion\":\"MAIDEN_NAME\",\n      \"securityAnswer\":\"Julia\",\n      \"userLevel\":\"PUBLISHING_USER\",\n      \"password\":\"dfjask;fj\",\n      \"subscribed\":[\n\n      ]\n   },\n   \"name\":\"handler_10\",\n   \"scope\":{\n      \"impScope\":\"SHARED\"\n   },\n   \"messageType\":{\n      \"implementationId\":3,\n      \"author\":{\n         \"emailAddress\":\"a@gmail.com\",\n         \"securityQuestion\":\"MAIDEN_NAME\",\n         \"securityAnswer\":\"Julia\",\n         \"userLevel\":\"PUBLISHING_USER\",\n         \"password\":\"dfjask;fj\",\n         \"subscribed\":[\n\n         ]\n      },\n      \"name\":\"messageType_3\",\n      \"scope\":{\n         \"impScope\":\"SHARED\"\n      }\n   },\n   \"generics\":[\n      {\n         \"implementationId\":3,\n         \"author\":{\n            \"emailAddress\":\"a@gmail.com\",\n            \"securityQuestion\":\"MAIDEN_NAME\",\n            \"securityAnswer\":\"Julia\",\n            \"userLevel\":\"PUBLISHING_USER\",\n            \"password\":\"dfjask;fj\",\n            \"subscribed\":[\n\n            ]\n         },\n         \"name\":\"messageType_3\",\n         \"scope\":{\n            \"impScope\":\"SHARED\"\n         }\n      }\n   ]\n}",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {
@@ -625,6 +696,75 @@ define({ "api": [
     "groupTitle": "Implementation"
   },
   {
+    "type": "get",
+    "url": "/imp/template/:id",
+    "title": "Get Template from existing Implementation",
+    "name": "GetTemplateImplementation",
+    "group": "Implementation",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Implementation unique ID</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Implementation",
+            "optional": false,
+            "field": "implementation",
+            "description": "<p>Implementation object</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n\"error\": \"UserNotFound\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./ImpController.java",
+    "groupTitle": "Implementation"
+  },
+  {
     "type": "post",
     "url": "/imp",
     "title": "Post Implementation",
@@ -643,6 +783,26 @@ define({ "api": [
           }
         ]
       }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Implementation",
+            "optional": false,
+            "field": "implementation",
+            "description": "<p>Implementation object</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n   \"implementationId\":10,\n   \"author\":{\n      \"emailAddress\":\"a@gmail.com\",\n      \"securityQuestion\":\"MAIDEN_NAME\",\n      \"securityAnswer\":\"Julia\",\n      \"userLevel\":\"PUBLISHING_USER\",\n      \"password\":\"dfjask;fj\",\n      \"subscribed\":[\n\n      ]\n   },\n   \"name\":\"handler_10\",\n   \"scope\":{\n      \"impScope\":\"SHARED\"\n   },\n   \"messageType\":{\n      \"implementationId\":3,\n      \"author\":{\n         \"emailAddress\":\"a@gmail.com\",\n         \"securityQuestion\":\"MAIDEN_NAME\",\n         \"securityAnswer\":\"Julia\",\n         \"userLevel\":\"PUBLISHING_USER\",\n         \"password\":\"dfjask;fj\",\n         \"subscribed\":[\n\n         ]\n      },\n      \"name\":\"messageType_3\",\n      \"scope\":{\n         \"impScope\":\"SHARED\"\n      }\n   },\n   \"generics\":[\n      {\n         \"implementationId\":3,\n         \"author\":{\n            \"emailAddress\":\"a@gmail.com\",\n            \"securityQuestion\":\"MAIDEN_NAME\",\n            \"securityAnswer\":\"Julia\",\n            \"userLevel\":\"PUBLISHING_USER\",\n            \"password\":\"dfjask;fj\",\n            \"subscribed\":[\n\n            ]\n         },\n         \"name\":\"messageType_3\",\n         \"scope\":{\n            \"impScope\":\"SHARED\"\n         }\n      }\n   ]\n}",
+          "type": "json"
+        }
+      ]
     },
     "success": {
       "fields": {
@@ -777,6 +937,82 @@ define({ "api": [
           }
         ]
       }
+    },
+    "filename": "./ImpController.java",
+    "groupTitle": "Implementation"
+  },
+  {
+    "type": "get",
+    "url": "/imp/default",
+    "title": "GetDefaultImplementation for ImplementationType",
+    "name": "getDefaultImplementation",
+    "group": "Implementation",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "ImpType",
+            "optional": false,
+            "field": "impType",
+            "description": "<p>The implementation type</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "RequestExample:",
+          "content": "{\n\"impType\":\"Handler\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Implementation",
+            "optional": false,
+            "field": "implementation",
+            "description": "<p>Implementation object</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n\"error\": \"UserNotFound\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "filename": "./ImpController.java",
     "groupTitle": "Implementation"
@@ -987,7 +1223,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n\"users\":[\n\"user\":{\n\"email\":\"test1@web.de\",\n\"password\":\"$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8\",\n\"securityQuestion\":\"petName\",\n\"securityAnswer\":\"Jim\"\n\"userLevel\":\"BasicUser\"\n},\n\"user\":{\n\"email\":\"test2@web.de\",\n\"password\":\"$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8\",\n\"securityQuestion\":\"petName\",\n\"securityAnswer\":\"Jay\"\n\"userLevel\":\"BasicUser\"\n},\n\"user\":{\n\"email\":\"test3@web.de\",\n\"password\":\"$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8\",\n\"securityQuestion\":\"petName\",\n\"securityAnswer\":\"John\"\n\"userLevel\":\"BasicUser\"\n}]\n}",
+          "content": "{\n \"userLevels\":[\n \"BasicUser\",\n \"PublishingUser\",\n \"Administrator\"\n ]\n}",
           "type": "json"
         }
       ]
@@ -1059,7 +1295,7 @@ define({ "api": [
     "groupTitle": "User"
   },
   {
-    "type": "get",
+    "type": "post",
     "url": "/user/register",
     "title": "Register a new User",
     "name": "Register",
@@ -1101,6 +1337,146 @@ define({ "api": [
         {
           "title": "Request-Example:",
           "content": "{\n\"email\": \"test@web.de\",\n\"password\": \"12345678\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./UserManagementController.java",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/user/reset_password",
+    "title": "Resets the password after security question was answered",
+    "name": "ResetPasswordQuestion",
+    "group": "User",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "answer",
+            "description": "<p>Answer to the security question</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "newPassword",
+            "description": "<p>New password</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\"answer\": \"Jim\",\n\"newPassword\": \"password\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n\"error\": \"Unauthorized please login to your account\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./UserManagementController.java",
+    "groupTitle": "User"
+  },
+  {
+    "type": "post",
+    "url": "/user/security_question",
+    "title": "Set a new password",
+    "name": "SetPasswordQuestion",
+    "group": "User",
+    "version": "0.0.1",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization header using the Bearer schema: Bearer token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Request body": [
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "oldPassword",
+            "description": "<p>Old password</p>"
+          },
+          {
+            "group": "Request body",
+            "type": "String",
+            "optional": false,
+            "field": "newPassword",
+            "description": "<p>New password</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\"oldPassword\": \"12345678\",\n\"newPassword\": \"password\"",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Errormessage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n\"error\": \"Unauthorized please login to your account\"\n}",
           "type": "json"
         }
       ]

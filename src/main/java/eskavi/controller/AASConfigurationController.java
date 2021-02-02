@@ -17,6 +17,7 @@ public class AASConfigurationController {
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiSuccess {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
      */
     @PostMapping
@@ -25,16 +26,16 @@ public class AASConfigurationController {
     }
 
     /**
-     * @api{get}/aas Close AAS session
+     * @api{delete}/aas Close AAS session
      * @apiName CloseSession
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiSuccess {Number} id Session unique ID
+     * @apiParam (Request body) {Number} id Session unique ID
      * @apiError {String} message Errormessage
      */
-    @DeleteMapping("/{id:[0-9]+}")
-    public void closeSession(@PathVariable("id") long sessionId) {
+    @DeleteMapping()
+    public void closeSession(@ModelAttribute("sessionId") long sessionId) {
     }
 
     /**
@@ -43,7 +44,7 @@ public class AASConfigurationController {
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiParam (Request body) {Number} id Session unique ID
+     * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiError {String} message Errormessage
      */
@@ -59,6 +60,86 @@ public class AASConfigurationController {
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
      * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiParam (Request body) {Number} impId Implementation unique ID
+     * @apiSuccessExample Success-Example:
+     * {
+     *    "name":"parent",
+     *    "keyExpression":{
+     *       "expressionStart":"<parent>",
+     *       "expressionEnd":"<parent>"
+     *    },
+     *    "children":[],
+     *    "dependentModuleImps":[
+     *    {
+     *       "implementationId":10,
+     *       "author":{},
+     *       "name":"handler_10",
+     *          "scope":{
+     *             "impScope":"SHARED"
+     *          },
+     *          "messageType":{
+     *             "implementationId":3,
+     *             "author":{}
+     *             "name":"messageType_3",
+     *             "scope":{
+     *                "impScope":"SHARED"
+     *             }
+     *          },
+     *          "generics":[
+     *             {
+     *                "implementationId":3,
+     *                "author":{},
+     *                "name":"messageType_3",
+     *                "scope":{
+     *                   "impScope":"SHARED"
+     *                }
+     *             }
+     *          ]
+     *       },
+     *       {
+     *          "implementationId":7,
+     *          "author":{},
+     *          "name":"deserializer_7",
+     *          "scope":{
+     *             "impScope":"SHARED"
+     *          },
+     *          "protocolType":{
+     *             "implementationId":0,
+     *             "author":{},
+     *             "name":"protocolType_0",
+     *             "scope":{
+     *                "impScope":"SHARED"
+     *             }
+     *          },
+     *          "messageType":{
+     *             "implementationId":3,
+     *             "author":{},
+     *             "name":"messageType_3",
+     *             "scope":{
+     *                "impScope":"SHARED"
+     *             }
+     *          },
+     *          "generics":[
+     *             {
+     *                "implementationId":0,
+     *                "author":{},
+     *                "name":"protocolType_0",
+     *                "scope":{
+     *                   "impScope":"SHARED"
+     *                }
+     *             },
+     *             {
+     *                "implementationId":3,
+     *                "author":{},
+     *                "name":"messageType_3",
+     *                "scope":{
+     *                   "impScope":"SHARED"
+     *                }
+     *             }
+     *          ]
+     *       }
+     *    ],
+     *    "moduleImp":null
+     * }
      * @apiError {String} message Errormessage
      */
     @GetMapping("/imp/configuration")
@@ -75,10 +156,112 @@ public class AASConfigurationController {
      * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiParam (Request body) {Configuration} configuration Configuration of the specified Implementation
+     * @apiParamExample Request-Example:
+     * {
+     *    "sessionId":1,
+     *    "impId":1,
+     *    "configuration":{
+     *       "name":"parent",
+     *       "keyExpression":{
+     *          "expressionStart":"<parent>",
+     *          "expressionEnd":"<parent>"
+     *       },
+     *       "children":[
+     *
+     *       ],
+     *       "dependentModuleImps":[
+     *          {
+     *             "implementationId":10,
+     *             "author":{
+     *
+     *             },
+     *             "name":"handler_10",
+     *             "scope":{
+     *                "impScope":"SHARED"
+     *             },
+     *             "messageType":{
+     *                "implementationId":3,
+     *                "author":{
+     *
+     *                },
+     *                "name":"messageType_3",
+     *                "scope":{
+     *                   "impScope":"SHARED"
+     *                }
+     *             },
+     *             "generics":[
+     *                {
+     *                   "implementationId":3,
+     *                   "author":{
+     *
+     *                   },
+     *                   "name":"messageType_3",
+     *                   "scope":{
+     *                      "impScope":"SHARED"
+     *                   }
+     *                }
+     *             ]
+     *          },
+     *          {
+     *             "implementationId":7,
+     *             "author":{
+     *
+     *             },
+     *             "name":"deserializer_7",
+     *             "scope":{
+     *                "impScope":"SHARED"
+     *             },
+     *             "protocolType":{
+     *                "implementationId":0,
+     *                "author":{
+     *
+     *                },
+     *                "name":"protocolType_0",
+     *                "scope":{
+     *                   "impScope":"SHARED"
+     *                }
+     *             },
+     *             "messageType":{
+     *                "implementationId":3,
+     *                "author":{
+     *
+     *                },
+     *                "name":"messageType_3",
+     *                "scope":{
+     *                   "impScope":"SHARED"
+     *                }
+     *             },
+     *             "generics":[
+     *                {
+     *                   "implementationId":0,
+     *                   "author":{
+     *
+     *                   },
+     *                   "name":"protocolType_0",
+     *                   "scope":{
+     *                      "impScope":"SHARED"
+     *                   }
+     *                },
+     *                {
+     *                   "implementationId":3,
+     *                   "author":{
+     *
+     *                   },
+     *                   "name":"messageType_3",
+     *                   "scope":{
+     *                      "impScope":"SHARED"
+     *                   }
+     *                }
+     *             ]
+     *          }
+     *       ],
+     *       "moduleImp":null
+     *    }
+     * }
      * @apiError {String} message Errormessage
      */
     @PutMapping("/imp/configuration")
-    public void updateConfiguration(Configuration configuration, @ModelAttribute("impId") long moduleId, @ModelAttribute("id") long sessionId) {
+    public void updateConfiguration(Configuration configuration, @ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
     }
 
     /**
@@ -87,12 +270,12 @@ public class AASConfigurationController {
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiParam (Request body) {Number} id Session unique ID
+     * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiError {String} message Errormessage
      */
     @DeleteMapping("{/imp")
-    public void deleteModuleImp(@ModelAttribute("impId") long moduleId, @ModelAttribute("id") long sessionId) {
+    public void deleteModuleImp(@ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
     }
 
     /**
@@ -101,11 +284,11 @@ public class AASConfigurationController {
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiParam {Number} id Session unique ID
+     * @apiParam {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
      */
-    @GetMapping("{/id:[0-9]+}/generate")
-    public byte[] generateJavaClass(@PathVariable("id") long sessionId) throws IOException {
+    @GetMapping("{/sessionId:[0-9]+}/generate")
+    public byte[] generateJavaClass(@PathVariable("sessionId") long sessionId) throws IOException {
         return Files.toByteArray(new File(""));
     }
 
