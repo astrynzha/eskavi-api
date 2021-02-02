@@ -3,6 +3,8 @@ package eskavi.model.implementation.moduleimp;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -10,6 +12,9 @@ import java.util.HashSet;
 public class Serializer extends ModuleImp {
     private ProtocolType protocolType;
     private MessageType messageType;
+
+    public Serializer() {
+    }
 
     public Serializer(long implementationId, User author, String name, ImplementationScope impScope,
                       MessageType messageType, ProtocolType protocolType) {

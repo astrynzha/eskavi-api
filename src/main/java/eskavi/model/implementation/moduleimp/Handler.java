@@ -10,6 +10,9 @@ import java.util.HashSet;
 public class Handler extends ModuleImp {
     private MessageType messageType;
 
+    public Handler() {
+    }
+
     public Handler(long implementationId, User author, String name, ImplementationScope impScope, MessageType messageType) {
         super(implementationId, author, name, impScope);
         this.messageType = messageType;

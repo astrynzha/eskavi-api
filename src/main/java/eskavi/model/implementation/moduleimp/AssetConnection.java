@@ -7,6 +7,9 @@ import eskavi.model.user.User;
 
 public class AssetConnection extends ModuleImp {
 
+    public AssetConnection() {
+    }
+
     public AssetConnection(long implementationId, User author, String name, ImplementationScope impScope) {
         super(implementationId, author, name, impScope);
     }

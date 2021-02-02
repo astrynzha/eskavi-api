@@ -10,6 +10,10 @@ import java.util.HashSet;
 public class Dispatcher extends ModuleImp {
     private MessageType messageType;
 
+    public Dispatcher(MessageType messageType) {
+        this.messageType = messageType;
+    }
+
     public Dispatcher(long implementationId, User author,
                       String name, ImplementationScope impScope, MessageType messageType) {
         super(implementationId, author, name, impScope);

@@ -4,6 +4,9 @@ import eskavi.model.user.User;
 
 public abstract class GenericImp extends Implementation implements ImmutableGenericImp {
 
+    public GenericImp() {
+    }
+
     public GenericImp(long implementationId, User author, String name, ImplementationScope impScope) {
         super(implementationId, author, name, impScope);
     }

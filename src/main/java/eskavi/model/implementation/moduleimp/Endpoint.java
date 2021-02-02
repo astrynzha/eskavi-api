@@ -10,6 +10,9 @@ import java.util.HashSet;
 public class Endpoint extends ModuleImp {
     private ProtocolType protocolType;
 
+    public Endpoint() {
+    }
+
     public Endpoint(long implementationId, User author, String name,
                     ImplementationScope impScope, ProtocolType protocolType) {
         super(implementationId, author, name, impScope);

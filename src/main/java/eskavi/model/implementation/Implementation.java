@@ -16,6 +16,9 @@ public abstract class Implementation implements ImmutableImplementation {
     private String name;
     private Scope scope;
 
+    public Implementation() {
+    }
+
     protected Implementation(long implementationId, User author, String name, ImplementationScope impScope) {
         this.implementationId = implementationId;
         this.author = author;
@@ -81,5 +84,13 @@ public abstract class Implementation implements ImmutableImplementation {
 
     public void setScope(Scope scope) {
         this.scope = scope;
+    }
+
+    public void setImplementationId(long implementationId) {
+        this.implementationId = implementationId;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }

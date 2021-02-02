@@ -8,6 +8,9 @@ import java.util.HashSet;
 
 public abstract class ModuleImp extends Implementation implements ImmutableModuleImp {
 
+    public ModuleImp() {
+    }
+
     public ModuleImp(long implementationId, User author, String name, ImplementationScope impScope) {
         super(implementationId, author, name, impScope);
     }

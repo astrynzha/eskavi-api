@@ -8,6 +8,9 @@ import eskavi.model.user.User;
 import java.util.Collection;
 
 public class PersistenceManager extends ModuleImp {
+    public PersistenceManager() {
+    }
+
     public PersistenceManager(long implementationId, User author, String name, ImplementationScope impScope) {
         super(implementationId, author, name, impScope);
     }
