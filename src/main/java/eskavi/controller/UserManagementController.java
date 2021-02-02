@@ -169,6 +169,8 @@ public class UserManagementController {
      * @apiGroup User
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiParam (Request Body) email User mail
+     * @apiParam (Request Body) userLevel new user level
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 403 Forbidden
@@ -177,7 +179,7 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/level")
-    public void setUserLevel(@ModelAttribute("email") String email, @ModelAttribute("email") UserLevel userLevel) {
+    public void setUserLevel(@ModelAttribute("email") String email, @ModelAttribute("userLevel") UserLevel userLevel) {
 
     }
 
