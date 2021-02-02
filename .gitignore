@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+#apidoc
+/src/main/java/eskavi/controller/doc/
+
+
 ### STS ###
 .apt_generated
 .classpath

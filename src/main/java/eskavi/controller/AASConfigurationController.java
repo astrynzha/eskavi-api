@@ -31,7 +31,7 @@ public class AASConfigurationController {
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiParam (Request body) {Number} id Session unique ID
+     * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
      */
     @DeleteMapping()
@@ -279,7 +279,7 @@ public class AASConfigurationController {
     }
 
     /**
-     * @api{get}/aas/:id/generate Generates a .java file which starts the AAS
+     * @api{get}/aas/file Generates a .java file which starts the AAS
      * @apiName GenerateJavaClass
      * @apiGroup AAS
      * @apiVersion 0.0.1
