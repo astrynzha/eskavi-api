@@ -1,5 +1,6 @@
 package eskavi.model.configuration;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImpType;
@@ -92,6 +93,7 @@ public class ImplementationSelect extends Configuration {
         return result;
     }
 
+    @JsonIgnore
     @Override
     public Collection<ImmutableModuleImp> getDependentModuleImps() {
         HashSet<ImmutableModuleImp> result = new HashSet<>();
@@ -100,6 +102,7 @@ public class ImplementationSelect extends Configuration {
         return result;
     }
 
+    @JsonIgnore
     @Override
     public ImmutableModuleImp getModuleImp() {
         return (instance != null) ? instance.getModuleImp() : null;

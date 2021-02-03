@@ -1,5 +1,6 @@
 package eskavi.model.configuration;
 
+import com.fasterxml.jackson.annotation.*;
 import eskavi.model.implementation.ImmutableModuleImp;
 
 import java.util.Collection;
@@ -11,6 +12,8 @@ import java.util.Objects;
  * Class represents the most generic abstraction of a Configuration. All subclasses represent a specific type of
  * Configuration
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 public abstract class Configuration {
     private String name;
     private boolean allowMultiple;
@@ -83,10 +86,12 @@ public abstract class Configuration {
         this.keyExpression = expression;
     }
 
+    @JsonIgnore
     public Collection<ImmutableModuleImp> getDependentModuleImps() {
         return new HashSet<>();
     }
 
+    @JsonIgnore
     public ImmutableModuleImp getModuleImp() {
         return null;
     }
@@ -95,6 +100,7 @@ public abstract class Configuration {
      * @return whether this Configuration can be added multiple times. This means multiple times the same fields just
      * different in their value
      */
+    @JsonGetter(value = "allowMultiple")
     public boolean allowsMultiple() {
         return allowMultiple;
     }
@@ -104,6 +110,7 @@ public abstract class Configuration {
      *
      * @param allowMultiple boolean indicting whether this Configuration can be added multiple times
      */
+    @JsonSetter("allowMultiple")
     public void setAllowMultiple(boolean allowMultiple) {
         this.allowMultiple = allowMultiple;
     }

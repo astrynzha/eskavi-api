@@ -1,9 +1,14 @@
 package eskavi.model.implementation;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import eskavi.deserializer.AuthorDeserializer;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -13,8 +18,11 @@ public abstract class Implementation implements ImmutableImplementation {
     protected long implementationId;
 
     @OneToOne
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonDeserialize(using = AuthorDeserializer.class)
     private User author;
     private String name;
+    @JsonManagedReference
     @Embedded
     private Scope scope;
 
@@ -88,11 +96,24 @@ public abstract class Implementation implements ImmutableImplementation {
         this.scope = scope;
     }
 
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
     public void setImplementationId(long implementationId) {
         this.implementationId = implementationId;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
+    @Override
+    public int hashCode() {
+        return Objects.hash(implementationId, author, name, scope);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Implementation that = (Implementation) o;
+        return implementationId == that.implementationId && Objects.equals(author, that.author) && Objects.equals(name, that.name) && Objects.equals(scope, that.scope);
     }
 }

@@ -6,9 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Niv Adam
@@ -69,7 +67,7 @@ class UserTest {
         try {
             this.user.subscribe(imp);
         } catch (IllegalAccessException e) {
-          fail(e.getMessage());
+            fail(e.getMessage());
         }
         //test isSubscribed to
         assertTrue(this.user.isSubscribedTo(imp));
@@ -79,7 +77,7 @@ class UserTest {
         try {
             this.user.unsubscribe(imp);
         } catch (IllegalAccessException e) {
-          fail(e.getMessage());
+            fail(e.getMessage());
         }
         assertFalse(this.user.isSubscribedTo(imp));
         assertFalse(this.user.getSubscribed().contains(imp));

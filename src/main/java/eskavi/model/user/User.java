@@ -1,5 +1,7 @@
 package eskavi.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import eskavi.model.implementation.ImmutableImplementation;
 import eskavi.model.implementation.Implementation;
 
@@ -14,6 +16,8 @@ import java.util.HashSet;
  * @version 1.0.0
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "emailAddress")
 public class User implements ImmutableUser {
     @Id
     private String emailAddress;

@@ -1,10 +1,12 @@
 package eskavi.model.implementation;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import eskavi.model.user.User;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 
 @Embeddable
 public class Scope {
@@ -12,6 +14,7 @@ public class Scope {
     private ImplementationScope impScope;
     @OneToMany
     private Collection<User> grantedUsers;
+    @JsonBackReference
     @OneToOne
     private Implementation implementation;
 
@@ -47,17 +50,40 @@ public class Scope {
     public void setImpScope(ImplementationScope impScope) {
         this.impScope = impScope;
         grantedUsers = new HashSet<>();
+        /*
         if (impScope == ImplementationScope.SHARED) {
             try {
                 implementation.subscribe((User) implementation.getAuthor());
             } catch (IllegalAccessException e) {
-              throw new IllegalStateException("This should never happen, scope is now SHARED and " +
-                      "the moduleImp can be subscribed to the author", e);
+                throw new IllegalStateException("This should never happen, scope is now SHARED and " +
+                        "the moduleImp can be subscribed to the author", e);
             }
-        }
+        }*/
     }
 
     public boolean isSubscribed(User user) {
         return grantedUsers.contains(user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(impScope, grantedUsers, implementation);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Scope scope = (Scope) o;
+        return impScope == scope.impScope && Objects.equals(grantedUsers, scope.grantedUsers) && Objects.equals(implementation, scope.implementation);
+    }
+
+    @Override
+    public String toString() {
+        return "Scope{" +
+                "impScope=" + impScope +
+                ", grantedUsers=" + grantedUsers +
+                ", implementation=" + implementation +
+                '}';
     }
 }

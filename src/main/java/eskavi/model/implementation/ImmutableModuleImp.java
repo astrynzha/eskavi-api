@@ -1,5 +1,6 @@
 package eskavi.model.implementation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import eskavi.model.implementation.moduleimp.*;
 
 import java.util.Collection;
@@ -24,5 +25,6 @@ public interface ImmutableModuleImp {
 
     public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter);
 
+    @JsonIgnore
     public HashSet<ImmutableGenericImp> getGenerics();
 }

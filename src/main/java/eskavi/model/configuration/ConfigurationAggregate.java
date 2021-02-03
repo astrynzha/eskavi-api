@@ -1,5 +1,6 @@
 package eskavi.model.configuration;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import eskavi.model.implementation.ImmutableModuleImp;
 
 import java.util.*;
@@ -104,6 +105,7 @@ public class ConfigurationAggregate extends Configuration {
         return children;
     }
 
+    @JsonIgnore
     @Override
     public Collection<ImmutableModuleImp> getDependentModuleImps() {
         HashSet<ImmutableModuleImp> result = new HashSet<>();
