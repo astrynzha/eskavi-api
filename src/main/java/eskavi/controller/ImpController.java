@@ -88,6 +88,60 @@ public class ImpController {
     }
 
     /**
+     * @api{get}/imp/types Get Implementation types
+     * @apiDescription Gets all types of implementations that can be created.
+     * @apiName getTypes
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiSuccess {String[]} types Array of implementation types
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "types": ["Serializer", "Deserializer", "Handler"]
+     * }
+     * @apiError {String} message Errormessage
+     */
+    @GetMapping("/types")
+    public ImpType getImplementationTypes(ImmutableUser user) {return null;}
+
+    /**
+     * @api{get}/imp/config/data_types Get Data types of Configuration
+     * @apiDescription Gets all types of data that can be used for Configuration fields.
+     * @apiName getConfigDataTypes
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiSuccess {String[]} data_types Array of data types
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "data_types": ["text", "number", "email", "date"]
+     * }
+     * @apiError {String} message Errormessage
+     */
+    @GetMapping("/config/data_types")
+    public ImpType getConfigDataTypes(ImmutableUser user) {return null;}
+
+    /**
+     * @api{get}/imp/scopes Get possible implementation scopes
+     * @apiDescription Gets all accessibility scopes possible for implementations
+     * @apiName getImpScopes
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiSuccess {String[]} impScopes Array of scopes
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "impScopes": ["private", "shared", "public"]
+     * }
+     * @apiError {String} message Errormessage
+     */
+    @GetMapping("/scopes")
+    public ImpType getImpScopes(ImmutableUser user) {return null;}
+
+    /**
      * @api{get}/imp/default GetDefaultImplementation for ImplementationType
      * @apiName getDefaultImplementation
      * @apiGroup Implementation
