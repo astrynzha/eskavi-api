@@ -94,7 +94,7 @@ public class ImpController {
      * @apiGroup Implementation
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiSuccess {String[]} types Array of Strings
+     * @apiSuccess {String[]} types Array of implementation types
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -112,7 +112,7 @@ public class ImpController {
      * @apiGroup Implementation
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiSuccess {String[]} data_types Array of Strings
+     * @apiSuccess {String[]} data_types Array of data types
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -130,7 +130,7 @@ public class ImpController {
      * @apiGroup Implementation
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiSuccess {String[]} impScopes Array of Strings
+     * @apiSuccess {String[]} impScopes Array of scopes
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
