@@ -120,7 +120,7 @@ public class ImpController {
      * }
      * @apiError {String} message Errormessage
      */
-    @GetMapping("/data_types")
+    @GetMapping("/config/data_types")
     public ImpType getConfigDataTypes(ImmutableUser user) {return null;}
 
     /**
