@@ -67,7 +67,7 @@ public class Scope {
 
     @Override
     public int hashCode() {
-        return Objects.hash(impScope, grantedUsers, implementation);
+        return Objects.hash(impScope, grantedUsers);
     }
 
     @Override

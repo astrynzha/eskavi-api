@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 
 @Entity
 public class Endpoint extends ModuleImp {
@@ -59,5 +60,26 @@ public class Endpoint extends ModuleImp {
     @Override
     public HashSet<ImmutableGenericImp> getGenerics() {
         return new HashSet<>(Collections.singletonList(protocolType));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), protocolType);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Endpoint endpoint = (Endpoint) o;
+        return Objects.equals(protocolType, endpoint.protocolType);
+    }
+
+    @Override
+    public String toString() {
+        return "Endpoint" + super.toString() +
+                ", protocolType=" + protocolType +
+                "}";
     }
 }

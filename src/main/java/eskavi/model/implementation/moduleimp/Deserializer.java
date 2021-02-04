@@ -5,10 +5,10 @@ import eskavi.model.user.User;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 
 @Entity
 public class Deserializer extends ModuleImp {
@@ -82,5 +82,27 @@ public class Deserializer extends ModuleImp {
     @Override
     public HashSet<ImmutableGenericImp> getGenerics() {
         return new HashSet<>(Arrays.asList(protocolType, messageType));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), protocolType, messageType);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Deserializer that = (Deserializer) o;
+        return Objects.equals(protocolType, that.protocolType) && Objects.equals(messageType, that.messageType);
+    }
+
+    @Override
+    public String toString() {
+        return "Deserializer" + super.toString() +
+                ", protocolType=" + protocolType +
+                ", messageType=" + messageType +
+                "}";
     }
 }

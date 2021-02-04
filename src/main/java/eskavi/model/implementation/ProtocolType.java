@@ -20,7 +20,12 @@ public class ProtocolType extends GenericImp {
         return equals(other);
     }
 
-//    @Override
+    @Override
+    public String toString() {
+        return "ProtocolType" + super.toString();
+    }
+
+    //    @Override
 //    public boolean equals(Object obj) {
 //        if (obj == null) {
 //            return false;

@@ -31,4 +31,9 @@ public class PersistenceManager extends ModuleImp {
     public boolean checkCompatiblePersistenceManager(PersistenceManager persistenceManager) {
         return persistenceManager.equals(this);
     }
+
+    @Override
+    public String toString() {
+        return "PersistenceManager" + super.toString();
+    }
 }

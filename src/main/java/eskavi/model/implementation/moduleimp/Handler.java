@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 
 @Entity
 public class Handler extends ModuleImp {
@@ -58,5 +59,26 @@ public class Handler extends ModuleImp {
     @Override
     public HashSet<ImmutableGenericImp> getGenerics() {
         return new HashSet<>(Collections.singletonList(messageType));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), messageType);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Handler handler = (Handler) o;
+        return Objects.equals(messageType, handler.messageType);
+    }
+
+    @Override
+    public String toString() {
+        return "Handler" + super.toString() +
+                ", messageType=" + messageType +
+                "}";
     }
 }

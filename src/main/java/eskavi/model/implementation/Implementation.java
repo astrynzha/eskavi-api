@@ -116,4 +116,14 @@ public abstract class Implementation implements ImmutableImplementation {
         Implementation that = (Implementation) o;
         return implementationId == that.implementationId && Objects.equals(author, that.author) && Objects.equals(name, that.name) && Objects.equals(scope, that.scope);
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "implementationId=" + implementationId +
+                ", author=" + author +
+                ", name='" + name + '\'' +
+                ", scope=" + scope +
+                '}';
+    }
 }
