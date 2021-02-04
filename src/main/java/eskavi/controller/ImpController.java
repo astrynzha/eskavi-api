@@ -88,6 +88,24 @@ public class ImpController {
     }
 
     /**
+     * @api{get}/imp/types Get Implementation types
+     * @apiDescription Gets all types of implementations that can be created.
+     * @apiName getTypes
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiSuccess {Implementation} implementation Implementation object
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "types": ["Serializer", "Deserializer", "Handler"]
+     * }
+     * @apiError {String} message Errormessage
+     */
+    @GetMapping("/types")
+    public ImpType getImplementationTypes(ImmutableUser user) {return null;}
+
+    /**
      * @api{get}/imp/default GetDefaultImplementation for ImplementationType
      * @apiName getDefaultImplementation
      * @apiGroup Implementation
