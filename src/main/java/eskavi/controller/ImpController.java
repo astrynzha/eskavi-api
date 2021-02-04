@@ -94,7 +94,7 @@ public class ImpController {
      * @apiGroup Implementation
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiSuccess {Implementation} implementation Implementation object
+     * @apiSuccess {String[]} types Array of implementation types
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
