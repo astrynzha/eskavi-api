@@ -94,7 +94,7 @@ public class ImpController {
      * @apiGroup Implementation
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiSuccess {Implementation} implementation Implementation object
+     * @apiSuccess {String[]} types Array of Strings
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
@@ -104,6 +104,42 @@ public class ImpController {
      */
     @GetMapping("/types")
     public ImpType getImplementationTypes(ImmutableUser user) {return null;}
+
+    /**
+     * @api{get}/imp/config/data_types Get Data types of Configuration
+     * @apiDescription Gets all types of data that can be used for Configuration fields.
+     * @apiName getConfigDataTypes
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiSuccess {String[]} data_types Array of Strings
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "data_types": ["text", "number", "email", "date"]
+     * }
+     * @apiError {String} message Errormessage
+     */
+    @GetMapping("/data_types")
+    public ImpType getConfigDataTypes(ImmutableUser user) {return null;}
+
+    /**
+     * @api{get}/imp/scopes Get possible implementation scopes
+     * @apiDescription Gets all accessibility scopes possible for implementations
+     * @apiName getImpScopes
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiSuccess {String[]} impScopes Array of Strings
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     * {
+     *     "impScopes": ["private", "shared", "public"]
+     * }
+     * @apiError {String} message Errormessage
+     */
+    @GetMapping("/scopes")
+    public ImpType getImpScopes(ImmutableUser user) {return null;}
 
     /**
      * @api{get}/imp/default GetDefaultImplementation for ImplementationType
