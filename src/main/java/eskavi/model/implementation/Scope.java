@@ -1,6 +1,5 @@
 package eskavi.model.implementation;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import eskavi.model.user.User;
 
 import javax.persistence.*;
@@ -8,20 +7,19 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 
-@Embeddable
+@Entity
 public class Scope {
+    @Id
+    @GeneratedValue
+    protected long scopeId;
     @Enumerated(EnumType.STRING)
     private ImplementationScope impScope;
     @OneToMany
     private Collection<User> grantedUsers;
-    @JsonBackReference
-    @OneToOne
-    private Implementation implementation;
 
-    public Scope(ImplementationScope implementationScope, Implementation implementation) {
+    public Scope(ImplementationScope implementationScope) {
         this.impScope = implementationScope;
         this.grantedUsers = new HashSet<>();
-        this.implementation = implementation;
     }
 
     public Scope() {
@@ -50,19 +48,18 @@ public class Scope {
     public void setImpScope(ImplementationScope impScope) {
         this.impScope = impScope;
         grantedUsers = new HashSet<>();
-        /*
-        if (impScope == ImplementationScope.SHARED) {
-            try {
-                implementation.subscribe((User) implementation.getAuthor());
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException("This should never happen, scope is now SHARED and " +
-                        "the moduleImp can be subscribed to the author", e);
-            }
-        }*/
     }
 
     public boolean isSubscribed(User user) {
         return grantedUsers.contains(user);
+    }
+
+    public long getScopeId() {
+        return this.scopeId;
+    }
+
+    public void setScopeId(long id) {
+        this.scopeId = id;
     }
 
     @Override
@@ -75,15 +72,13 @@ public class Scope {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Scope scope = (Scope) o;
-        return impScope == scope.impScope && Objects.equals(grantedUsers, scope.grantedUsers) && Objects.equals(implementation, scope.implementation);
+        return impScope == scope.impScope && Objects.equals(grantedUsers, scope.grantedUsers);
     }
 
     @Override
     public String toString() {
         return "Scope{" +
                 "impScope=" + impScope +
-                ", grantedUsers=" + grantedUsers +
-                ", implementation=" + implementation +
-                '}';
+                ", grantedUsers=" + grantedUsers + "}";
     }
 }

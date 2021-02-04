@@ -1,9 +1,10 @@
 package eskavi.model.implementation;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import eskavi.deserializer.AuthorDeserializer;
+import eskavi.deserializer.UserByIdDeserializer;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 
@@ -12,6 +13,8 @@ import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "implementationId")
 public abstract class Implementation implements ImmutableImplementation {
     @Id
     @GeneratedValue
@@ -19,11 +22,11 @@ public abstract class Implementation implements ImmutableImplementation {
 
     @OneToOne
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonDeserialize(using = AuthorDeserializer.class)
+    @JsonDeserialize(using = UserByIdDeserializer.class)
     private User author;
     private String name;
-    @JsonManagedReference
-    @Embedded
+    //@JsonDeserialize(using = ScopeDeserializer.class)
+    @OneToOne
     private Scope scope;
 
     public Implementation() {
@@ -33,7 +36,7 @@ public abstract class Implementation implements ImmutableImplementation {
         this.implementationId = implementationId;
         this.author = author;
         this.name = name;
-        this.scope = new Scope(impScope, this);
+        this.scope = new Scope(impScope);
         if (impScope == ImplementationScope.SHARED) {
             try {
                 scope.subscribe(author);
@@ -92,8 +95,9 @@ public abstract class Implementation implements ImmutableImplementation {
         return scope.isSubscribed((User) user);
     }
 
-    public void setScope(Scope scope) {
+    public void setScope(Scope scope) throws IllegalAccessException {
         this.scope = scope;
+        scope.subscribe((User) getAuthor());
     }
 
     public void setAuthor(User author) {
@@ -121,9 +125,9 @@ public abstract class Implementation implements ImmutableImplementation {
     public String toString() {
         return "{" +
                 "implementationId=" + implementationId +
-                ", author=" + author +
+                ", author=" + author.toString() +
                 ", name='" + name + '\'' +
-                ", scope=" + scope +
+                ", scope=" + scope.toString() +
                 '}';
     }
 }
