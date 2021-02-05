@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import eskavi.deserializer.UserByIdDeserializer;
+import eskavi.deserializer.AuthorDeserializer;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 
@@ -22,7 +22,7 @@ public abstract class Implementation implements ImmutableImplementation {
 
     @OneToOne
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonDeserialize(using = UserByIdDeserializer.class)
+    @JsonDeserialize(using = AuthorDeserializer.class)
     private User author;
     private String name;
     //@JsonDeserialize(using = ScopeDeserializer.class)

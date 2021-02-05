@@ -13,69 +13,49 @@ import java.util.Collection;
 public class ImpController {
 
     /**
-     * @api{get}/imp/:id Get Implementation
+     * @api{get}/imp Get Implementation
      * @apiName GetImplementation
      * @apiGroup Implementation
-     * @apiDescription Gets all implementations or a specific implementation (if impId is provided), the user (if provided through token) has access to. If token is not provided, only public implementations will be returned/accessible through this call.
+     * @apiDescription Gets all implementations, specific type of implementations or a specific one (if impId is provided), 
+     * the user (if provided through token) has access to. If token is not provided, only public implementations will be returned/accessible through this call.
      * @apiVersion 0.0.1
      * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
-     * @apiParam {Number} [id] Implementation unique ID
-     * @apiSuccess {Implementation} implementation Implementation object
+     * @apiParam (queryStringParameter) {Number} [id] Implementation unique ID
+     * @apiParam (queryStringParameter) {String} [impType] Type of implementation to be displayed, see getImplementationTypes
+     * @apiSuccess {Implementation[]} imps Array of implementation objects. One, if called with specific Id.
      * @apiSuccessExample Success-Example:
      * {
-     *    "implementationId":10,
-     *    "author":{
-     *       "emailAddress":"a@gmail.com",
-     *       "securityQuestion":"MAIDEN_NAME",
-     *       "securityAnswer":"Julia",
-     *       "userLevel":"PUBLISHING_USER",
-     *       "password":"dfjask;fj",
-     *       "subscribed":[
-     *
-     *       ]
-     *    },
-     *    "name":"handler_10",
-     *    "scope":{
-     *       "impScope":"SHARED"
-     *    },
-     *    "messageType":{
-     *       "implementationId":3,
-     *       "author":{
-     *          "emailAddress":"a@gmail.com",
-     *          "securityQuestion":"MAIDEN_NAME",
-     *          "securityAnswer":"Julia",
-     *          "userLevel":"PUBLISHING_USER",
-     *          "password":"dfjask;fj",
-     *          "subscribed":[
-     *
-     *          ]
+     *  imps: [ 
+     *    {
+     *     "impType": "Serializer",
+     *       "implementationId": "12",
+     *         "author": "",
+     *         "name": "",
+     *        "impScope": {
+     *           "scope": ""
      *       },
-     *       "name":"messageType_3",
-     *       "scope":{
-     *          "impScope":"SHARED"
-     *       }
-     *    },
-     *    "generics":[
-     *       {
-     *          "implementationId":3,
-     *          "author":{
-     *             "emailAddress":"a@gmail.com",
-     *             "securityQuestion":"MAIDEN_NAME",
-     *             "securityAnswer":"Julia",
-     *             "userLevel":"PUBLISHING_USER",
-     *             "password":"dfjask;fj",
-     *             "subscribed":[
-     *
-     *             ]
-     *          },
-     *          "name":"messageType_3",
-     *          "scope":{
-     *             "impScope":"SHARED"
-     *          }
-     *       }
-     *    ]
+     *       "protocolType": "",
+     *       "messageType": "",
+     *       "rootConfig": {
+     *           "type": "ConfigurationAggregate",
+     *           "name": "rootConfig",
+     *           "allowMultiple": false,
+     *           "keyExpression": {
+     *           "expressionStart": "",
+     *           "expressionEnd": ""
+     *           },
+     *           "enforceCompatibility": false,
+     *           "childConfigs": [ {
+     *           "type": "TextField",
+     *           "name": "Port",
+     *           "value": "",
+     *           }
+     *   ]
      * }
-     * @apiError {String} message Errormessage
+     *},
+     *  ]
+     * }
+     * @apiError {String} error Errormessage
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 404 Not Found
      * {

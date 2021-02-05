@@ -99,4 +99,5 @@ public class JacksonTests {
         Deserializer copy = new ObjectMapper().readValue(result, Deserializer.class);
         System.out.println(copy);
     }
+
 }

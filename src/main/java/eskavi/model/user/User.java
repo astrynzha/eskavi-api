@@ -48,6 +48,16 @@ public class User implements ImmutableUser {
         this.implementations = new HashSet<>();
     }
 
+    //TODO what are good default values here?
+    public User(String emailAddress, String hashedPassword) {
+        this.emailAddress = emailAddress;
+        this.hashedPassword = hashedPassword;
+        this.userLevel = UserLevel.BASIC_USER;
+        this.securityAnswer = "";
+        this.securityQuestion = SecurityQuestion.MAIDEN_NAME;
+        this.implementations = new HashSet<>();
+    }
+
     public User() {
 
     }
