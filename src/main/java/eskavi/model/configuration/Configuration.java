@@ -14,6 +14,11 @@ import java.util.Objects;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = ConfigurationAggregate.class, name = "ConfigurationAggregate"),
+        @JsonSubTypes.Type(value = TextField.class, name = "TextField"),
+        @JsonSubTypes.Type(value = ImplementationSelect.class, name = "ImplementationSelect")
+})
 public abstract class Configuration {
     private String name;
     private boolean allowMultiple;

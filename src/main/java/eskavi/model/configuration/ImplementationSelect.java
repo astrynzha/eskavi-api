@@ -1,5 +1,6 @@
 package eskavi.model.configuration;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
@@ -37,6 +38,7 @@ public class ImplementationSelect extends Configuration {
      *
      * @return The required generics for this Configuration
      */
+    @JsonIdentityReference(alwaysAsId = true)
     public HashSet<ImmutableGenericImp> getGeneric() {
         return generics;
     }
@@ -102,8 +104,8 @@ public class ImplementationSelect extends Configuration {
         return result;
     }
 
-    @JsonIgnore
     @Override
+    @JsonIdentityReference(alwaysAsId = true)
     public ImmutableModuleImp getModuleImp() {
         return (instance != null) ? instance.getModuleImp() : null;
     }
