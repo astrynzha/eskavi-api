@@ -9,6 +9,8 @@ import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
@@ -88,6 +90,11 @@ public abstract class Implementation implements ImmutableImplementation {
     }
 
     @Override
+    public ImplementationScope getImplementationScope() {
+        return scope.getImpScope();
+    }
+
+    @Override
     public boolean isSubscribed(ImmutableUser user) {
         if (!(user instanceof User)) { // TODO: mehh instanceof. Is it possible to do without it here?
             return false;
@@ -106,6 +113,11 @@ public abstract class Implementation implements ImmutableImplementation {
 
     public void setImplementationId(long implementationId) {
         this.implementationId = implementationId;
+    }
+
+    @Override
+    public Collection<ImmutableUser> getUsers() {
+        return new HashSet<>(scope.getGrantedUsers());
     }
 
     @Override

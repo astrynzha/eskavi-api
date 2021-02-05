@@ -81,4 +81,8 @@ public class Scope {
                 "impScope=" + impScope +
                 ", grantedUsers=" + grantedUsers + "}";
     }
+
+    public Collection<User> getGrantedUsers() {
+        return grantedUsers;
+    }
 }
