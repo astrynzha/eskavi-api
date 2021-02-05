@@ -12,10 +12,10 @@ import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
-import eskavi.repository.ImplementationRepository;
+import eskavi.repository.ImpRepository;
 import eskavi.repository.UserRepository;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -24,14 +24,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 @SpringBootTest
-public class RepositoryTest {
-    private final static String EMAIL = "a@gmail.com";
-    private final static String HASHED_PASSWORT = "noweshogwg389n";
-    private final static String SECURITY_ANSWER = "Mueller";
+public class RepoTests {
     @Autowired
-    private ImplementationRepository _implementationRepository;
+    private UserRepository userRepo;
     @Autowired
-    private UserRepository _userRepository;
+    private ImpRepository impRepo;
     private ProtocolType protocolTypeA;
     private ProtocolType protocolTypeB;
     private MessageType messageTypeA;
@@ -46,13 +43,13 @@ public class RepositoryTest {
     private AssetConnection assetConnection;
     private List<ImmutableModuleImp> usedImpCollection;
     private Configuration trueConfiguration;
-    private User user;
+    private User userA;
 
     @BeforeEach
     public void setUp() {
         trueConfiguration = new TextField("text", false,
                 new KeyExpression("<text>", "<text>"), DataType.TEXT);
-        User userA = new User("a@gmail.com", "dfjask;fj",
+        userA = new User("a@gmail.com", "dfjask;fj",
                 UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
         protocolTypeA = new ProtocolType(0, userA, "protocolType_0", ImplementationScope.SHARED);
         protocolTypeB = new ProtocolType(4, userA, "protocolType_4", ImplementationScope.SHARED);
@@ -72,13 +69,25 @@ public class RepositoryTest {
                 "persistanceManager_12", ImplementationScope.SHARED);
         usedImpCollection = new LinkedList<>(Arrays.asList(endpoint, serializer, deserializer,
                 dispatcher, handler, assetConnection, interactionStarter, persistenceManager));
-        user = new User(EMAIL, HASHED_PASSWORT, UserLevel.BASIC_USER,
-                SecurityQuestion.MAIDEN_NAME, SECURITY_ANSWER);
     }
 
+    //TODO: impRepo forces exception
     @Test
     void myTest() {
-        _userRepository.save(user);
-        _implementationRepository.save(messageTypeA);
+        userRepo.save(userA);
+        //impRepo.save(messageTypeA);
     }
+
+    //TODO:can try but is not working
+    /*
+    @Test
+    void testRepo() {
+        userRepo.save(userA);
+
+        User found = userRepo.findById("a@gmail.com").get();
+        System.out.println(found.toString());
+
+        userRepo.deleteAll();
+    }*/
+
 }

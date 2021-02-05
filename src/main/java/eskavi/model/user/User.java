@@ -8,6 +8,7 @@ import eskavi.model.implementation.Implementation;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * This class represents a user of the ESKAVI web app.
@@ -139,5 +140,32 @@ public class User implements ImmutableUser {
     @Override
     public Collection<ImmutableImplementation> getSubscribed() {
         return new HashSet<>(this.implementations);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(emailAddress, hashedPassword, securityQuestion, securityAnswer, userLevel, implementations);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(emailAddress, user.emailAddress) && Objects.equals(hashedPassword, user.hashedPassword) &&
+                securityQuestion == user.securityQuestion && Objects.equals(securityAnswer, user.securityAnswer) && userLevel == user.userLevel &&
+                Objects.equals(implementations, user.implementations);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "emailAddress='" + emailAddress + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                ", securityQuestion=" + securityQuestion +
+                ", securityAnswer='" + securityAnswer + '\'' +
+                ", userLevel=" + userLevel +
+                ", implementations=" + implementations +
+                '}';
     }
 }
