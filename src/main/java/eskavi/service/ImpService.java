@@ -1,6 +1,5 @@
 package eskavi.service;
 
-import com.sun.istack.Pool;
 import eskavi.model.implementation.*;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
@@ -51,10 +50,10 @@ public class ImpService {
             moduleImp = getMutableImp(mi);
             user = getMutableUser(moduleImp.getAuthor());
         } catch (IllegalAccessException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         if (!isValid(moduleImp)) {
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         if (moduleImp.getImplementationScope().equals(ImplementationScope.SHARED)) {
             try {

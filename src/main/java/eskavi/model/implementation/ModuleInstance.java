@@ -70,6 +70,10 @@ public class ModuleInstance {
         this.instanceConfiguration = instanceConfiguration;
     }
 
+    public long getImpId() {
+        return moduleImp.getImplementationId();
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(moduleImp, instanceConfiguration);

@@ -4,19 +4,18 @@ import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.ModuleInstance;
 import eskavi.model.user.User;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class AASConstructionSession {
     private long sessionId;
     private User owner;
-    private Collection<ModuleInstance> miList;
+    private Map<Long, ModuleInstance> miMap;
 
     public AASConstructionSession(long sessionId, User owner) {
         this.sessionId = sessionId;
         this.owner = owner;
-        this.miList = new LinkedList<>();
+        this.miMap = new LinkedHashMap<>();
     }
 
     public long getSessionId() {
@@ -24,19 +23,34 @@ public class AASConstructionSession {
     }
 
     public void addModuleInstance(ModuleInstance moduleInstance) {
-        miList.add(moduleInstance);
+        miMap.put(moduleInstance.getImpId(), moduleInstance);
     }
 
-    public void updateInstanceConfiguration(long moduleId, Configuration updateConfig) {
-        // TODO
+    public void removeModuleInstance(long moduleId) throws IllegalAccessException {
+        if (!miMap.containsKey(moduleId)) {
+            throw new IllegalAccessException("no MI with id " + moduleId + " is found in session");
+        }
+        miMap.remove(moduleId);
+    }
+
+    public void updateInstanceConfiguration(long moduleId, Configuration updateConfig) throws IllegalAccessException {
+        if (!miMap.containsKey(moduleId)) {
+            throw new IllegalAccessException("no MI with id " + moduleId + " is found in session");
+        }
+        ModuleInstance mi = miMap.get(moduleId);
+        mi.setInstanceConfiguration(updateConfig);
+        miMap.replace(moduleId, mi);
     }
 
     public Configuration getConfiguration(long moduleId) {
-        for (ModuleInstance mi : miList) {
-            if (moduleId == mi.getModuleImp().getImplementationId()) {
-                return mi.getInstanceConfiguration();
-            }
-        }
-        return null;
+        return miMap.get(moduleId).getInstanceConfiguration();
     }
+
+    // TODO public File generateJavaClass()
+
+    private boolean isValid() {
+        //TODO
+        return false;
+    }
+
 }

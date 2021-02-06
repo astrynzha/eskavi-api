@@ -1,4 +1,16 @@
 package eskavi.service.aasconfigurationservice;
 
-public class ModuleInstanceFactory {
+import eskavi.model.implementation.ModuleImp;
+import eskavi.model.implementation.ModuleInstance;
+
+public final class ModuleInstanceFactory{
+    private ModuleInstanceFactory() {
+        throw new AssertionError("Instantiating utility class");
+    }
+
+    public static ModuleInstance build(ModuleImp mi) {
+//       TODO:
+//        return new ModuleInstance(mi, )
+        return null;
+    }
 }
