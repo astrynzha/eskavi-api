@@ -125,7 +125,7 @@ public class ImpService {
             throw new IllegalAccessException("This user cannot update the implementation, he is not it's author");
         }
         // TODO will spring automatically update by id?
-        impRepository.save((Implementation) mi);
+        impRepository.save(getMutableImp(mi));
     }
 
     public void removeImplementation(ImmutableImplementation mi, User user) throws IllegalAccessException {

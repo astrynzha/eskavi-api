@@ -26,14 +26,14 @@ public class UserManagementService {
         return userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public void setUserLevel(ImmutableUser immutableUser, UserLevel level) {
-        User user = getByImmutable(immutableUser);
+    public void setUserLevel(ImmutableUser immutableUser, UserLevel level) throws IllegalAccessException {
+        User user = getMutableUser(immutableUser);
         user.setUserLevel(level);
         userRepository.save(user);
     }
 
-    public void setPassword(ImmutableUser immutableUser, String hashedPassword) {
-        User user = getByImmutable(immutableUser);
+    public void setPassword(ImmutableUser immutableUser, String hashedPassword) throws IllegalAccessException {
+        User user = getMutableUser(immutableUser);
         user.setPassword(hashedPassword);
         userRepository.save(user);
     }
@@ -48,10 +48,13 @@ public class UserManagementService {
 
     //TODO
     public boolean checkPassword(ImmutableUser user, String hashedPassword) {
-        return false;
+        return user.getPassword().equals(hashedPassword);
     }
 
-    private User getByImmutable(ImmutableUser user) {
+    private User getMutableUser(ImmutableUser user) throws IllegalAccessException {
+        if (!(user instanceof User)) {
+            throw new IllegalAccessException("ImmutableUser is not an instance of User!");
+        }
         return (User) user;
     }
 }
