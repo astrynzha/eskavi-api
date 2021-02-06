@@ -6,7 +6,7 @@ import eskavi.model.implementation.moduleimp.*;
 import java.util.Collection;
 import java.util.HashSet;
 
-public interface ImmutableModuleImp {
+public interface ImmutableModuleImp extends ImmutableImplementation {
     public boolean isCompatible(Collection<ImmutableModuleImp> others);
 
     public boolean checkCompatibleEndpoint(Endpoint endpoint);
