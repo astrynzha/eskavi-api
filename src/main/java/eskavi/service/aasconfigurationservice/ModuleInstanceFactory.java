@@ -9,8 +9,6 @@ public final class ModuleInstanceFactory{
     }
 
     public static ModuleInstance build(ModuleImp mi) {
-//       TODO:
-//        return new ModuleInstance(mi, )
-        return null;
+        return new ModuleInstance(mi, mi.getConfiguration().clone());
     }
 }
