@@ -1,20 +1,27 @@
 package eskavi.model.implementation;
 
+import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.User;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.Collection;
 import java.util.HashSet;
 
 @Entity
 public abstract class ModuleImp extends Implementation implements ImmutableModuleImp {
+    // TODO consider making configuration an entity to resolve spring error
+    private Configuration configuration;
 
     public ModuleImp() {
     }
 
-    public ModuleImp(long implementationId, User author, String name, ImplementationScope impScope) {
+    public ModuleImp(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration) {
         super(implementationId, author, name, impScope);
+        this.configuration = templateConfiguration;
     }
 
     @Override
@@ -64,5 +71,23 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
 
     public HashSet<ImmutableGenericImp> getGenerics() {
         return new HashSet<>();
+    }
+
+    /**
+     * Default getter for configuration attribute
+     *
+     * @return configuration
+     */
+    public Configuration getConfiguration() {
+        return this.configuration;
+    }
+
+    /**
+     * Default setter for configuration attribute
+     *
+     * @param configuration configuration to set
+     */
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
     }
 }
