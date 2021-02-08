@@ -20,6 +20,10 @@ public abstract class SingleValueField extends Configuration {
         super(name, allowMultiple, expression);
     }
 
+    protected SingleValueField() {
+
+    }
+
     /**
      * @return the set value of this SingleValueField or NULL if value not set yet
      */

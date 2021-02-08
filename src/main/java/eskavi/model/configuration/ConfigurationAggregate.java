@@ -1,6 +1,5 @@
 package eskavi.model.configuration;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import eskavi.model.implementation.ImmutableModuleImp;
@@ -25,11 +24,13 @@ public class ConfigurationAggregate extends Configuration {
      * @param enforceCompatibility whether the compatibility between the {@link ImmutableModuleImp}s in this
      *                             Aggregate has to be ensured.
      */
-    @JsonCreator
     public ConfigurationAggregate(String name, boolean allowMultiple, KeyExpression expression, List<Configuration> children, boolean enforceCompatibility) {
         super(name, allowMultiple, expression);
         this.children = children;
         this.enforceCompatibility = enforceCompatibility;
+    }
+
+    protected ConfigurationAggregate() {
     }
 
     /**

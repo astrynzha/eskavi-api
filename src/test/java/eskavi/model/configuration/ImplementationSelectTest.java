@@ -36,7 +36,7 @@ class ImplementationSelectTest {
 
     @Test
     void getGeneric() {
-        assertEquals(generics, testObject.getGeneric());
+        assertEquals(generics, testObject.getGenerics());
     }
 
     @Test

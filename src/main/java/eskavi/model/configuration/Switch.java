@@ -30,6 +30,9 @@ public class Switch extends Select {
         this.setValue(FALSE);
     }
 
+    protected Switch() {
+    }
+
     @Override
     public int hashCode() {
         return super.hashCode();

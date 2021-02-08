@@ -22,6 +22,10 @@ public class TextField extends SingleValueField {
         this.dataType = dataType;
     }
 
+    protected TextField() {
+
+    }
+
     /**
      * @return the expected {@link DataType} of this TextField.
      */

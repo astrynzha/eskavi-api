@@ -2,6 +2,9 @@ package eskavi.model.configuration;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import eskavi.deserializer.GenericsDeserializer;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImpType;
@@ -33,14 +36,24 @@ public class ImplementationSelect extends Configuration {
         this.type = type;
     }
 
+    protected ImplementationSelect() {
+
+    }
+
     /**
      * Returns the required {@link ImmutableGenericImp}s as a HashSet to not allow the same generic multiple times.
      *
      * @return The required generics for this Configuration
      */
     @JsonIdentityReference(alwaysAsId = true)
-    public HashSet<ImmutableGenericImp> getGeneric() {
+    public HashSet<ImmutableGenericImp> getGenerics() {
         return generics;
+    }
+
+    @JsonSetter
+    @JsonDeserialize(using = GenericsDeserializer.class)
+    public void setGenerics(HashSet<ImmutableGenericImp> generics) {
+        this.generics = generics;
     }
 
     /**
@@ -135,7 +148,7 @@ public class ImplementationSelect extends Configuration {
                 "name='" + getName() + "'" +
                 ", allowMultiple=" + allowsMultiple() +
                 ", keyExpression=" + getKeyExpression().toString() +
-                ", generics=" + getGeneric().toString() +
+                ", generics=" + getGenerics().toString() +
                 ", type=" + type.name() +
                 ", instance=" + instance.toString() + "}";
     }

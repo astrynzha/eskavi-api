@@ -23,6 +23,9 @@ public class Select extends SingleValueField {
         this.content = content;
     }
 
+    protected Select() {
+    }
+
     /**
      * Returns the Content stored in a Map. The key represents the value to show the User, while the value is inserted
      * into the {@link KeyExpression} when it is resolved

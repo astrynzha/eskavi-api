@@ -41,6 +41,9 @@ public abstract class Configuration {
         this.keyExpression = expression;
     }
 
+    protected Configuration() {
+    }
+
     /**
      * @return String which represents the java Code which has to be included into the Output java Class to use
      * this Configuration.
