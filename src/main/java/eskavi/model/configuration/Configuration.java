@@ -17,7 +17,10 @@ import java.util.Objects;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ConfigurationAggregate.class, name = "ConfigurationAggregate"),
         @JsonSubTypes.Type(value = TextField.class, name = "TextField"),
-        @JsonSubTypes.Type(value = ImplementationSelect.class, name = "ImplementationSelect")
+        @JsonSubTypes.Type(value = ImplementationSelect.class, name = "ImplementationSelect"),
+        @JsonSubTypes.Type(value = Select.class, name = "Select"),
+        @JsonSubTypes.Type(value = Switch.class, name = "Switch"),
+        @JsonSubTypes.Type(value = FileField.class, name = "FileField")
 })
 public abstract class Configuration {
     private String name;
@@ -135,6 +138,7 @@ public abstract class Configuration {
      *
      * @param name the new name of the Configuration
      */
+    @JsonSetter("name")
     public void setName(String name) {
         this.name = name;
     }

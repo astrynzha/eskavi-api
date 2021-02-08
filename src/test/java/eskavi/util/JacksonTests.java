@@ -11,21 +11,16 @@ import eskavi.model.implementation.moduleimp.Serializer;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
-import eskavi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-@SpringBootTest
+
 public class JacksonTests {
-    @Autowired
-    private UserRepository repository;
     private Configuration configuration;
     private ConfigurationAggregate mapping;
     private TextField port;
@@ -103,16 +98,6 @@ public class JacksonTests {
         result = "{\"author\":\"a@gmail.com\",\"name\":\"deserializer_7\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"},\"protocolType\":{\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"messageType\":{\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}}\n";
         Deserializer copy = new ObjectMapper().readValue(result, Deserializer.class);
         System.out.println(copy);
-    }
-
-    @Test
-    void testRepo() {
-        repository.save(userA);
-
-        User found = repository.findById("a@gmail.com").get();
-        System.out.println(found.toString());
-
-        repository.deleteAll();
     }
 
 }

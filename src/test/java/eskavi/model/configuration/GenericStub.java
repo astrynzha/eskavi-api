@@ -1,7 +1,11 @@
 package eskavi.model.configuration;
 
 import eskavi.model.implementation.ImmutableGenericImp;
+import eskavi.model.implementation.ImplementationScope;
+import eskavi.model.implementation.Scope;
+import eskavi.model.user.ImmutableUser;
 
+import java.util.Collection;
 import java.util.Objects;
 
 public class GenericStub implements ImmutableGenericImp {
@@ -9,6 +13,41 @@ public class GenericStub implements ImmutableGenericImp {
 
     public GenericStub(String name) {
         this.name = name;
+    }
+
+    @Override
+    public long getImplementationId() {
+        return 0;
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public ImmutableUser getAuthor() {
+        return null;
+    }
+
+    @Override
+    public Scope getScope() {
+        return null;
+    }
+
+    @Override
+    public Collection<ImmutableUser> getUsers() {
+        return null;
+    }
+
+    @Override
+    public boolean isSubscribed(ImmutableUser user) {
+        return false;
+    }
+
+    @Override
+    public ImplementationScope getImplementationScope() {
+        return null;
     }
 
     @Override

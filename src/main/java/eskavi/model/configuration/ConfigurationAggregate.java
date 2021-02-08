@@ -2,8 +2,7 @@ package eskavi.model.configuration;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import eskavi.model.implementation.ImmutableModuleImp;
 
 import java.util.*;
@@ -27,9 +26,7 @@ public class ConfigurationAggregate extends Configuration {
      *                             Aggregate has to be ensured.
      */
     @JsonCreator
-    public ConfigurationAggregate(@JsonProperty("name") String name, @JsonProperty("allowMultiple") boolean allowMultiple,
-                                  @JsonProperty("KeyExpression") KeyExpression expression,
-                                  @JsonProperty("children") List<Configuration> children, @JsonProperty("enforceConfiguration") boolean enforceCompatibility) {
+    public ConfigurationAggregate(String name, boolean allowMultiple, KeyExpression expression, List<Configuration> children, boolean enforceCompatibility) {
         super(name, allowMultiple, expression);
         this.children = children;
         this.enforceCompatibility = enforceCompatibility;
@@ -111,7 +108,11 @@ public class ConfigurationAggregate extends Configuration {
         return children;
     }
 
-    @JsonIgnore
+    @JsonSetter("children")
+    public void setChildren(List<Configuration> children) {
+        this.children = children;
+    }
+
     @Override
     public Collection<ImmutableModuleImp> getDependentModuleImps() {
         HashSet<ImmutableModuleImp> result = new HashSet<>();
