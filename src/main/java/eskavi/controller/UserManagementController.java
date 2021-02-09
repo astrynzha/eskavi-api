@@ -1,14 +1,28 @@
 package eskavi.controller;
 
 import eskavi.model.user.ImmutableUser;
+import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
+import eskavi.service.UserManagementService;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 
 @RestController
 @RequestMapping("user")
 public class UserManagementController {
+
+    final UserTokenMatcher userTokenMatcher;
+
+    final UserManagementService userManagementService;
+
+    public UserManagementController(UserManagementService userManagementService, UserTokenMatcher userTokenMatcher) {
+        this.userManagementService = userManagementService;
+        this.userTokenMatcher = userTokenMatcher;
+    }
 
     /**
      * @api{post}/user/register Register a new User
@@ -25,8 +39,9 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/register")
-    public void register(@ModelAttribute("email") String email, @ModelAttribute("password") String password) {
-
+    public String register(@ModelAttribute("email") String email, @ModelAttribute("password") String password) {
+        userManagementService.createUser(email, new BCryptPasswordEncoder().encode(password));
+        return userTokenMatcher.generateToken(email);
     }
 
     /**
@@ -46,7 +61,11 @@ public class UserManagementController {
      */
     @PostMapping("/login")
     public String login(@ModelAttribute("email") String email, @ModelAttribute("password") String password) {
-        return null;
+        ImmutableUser user = userManagementService.getUser(email);
+        if (new BCryptPasswordEncoder().encode(password).equals(user.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "wrong Password");
+        }
+        return userTokenMatcher.generateToken(email);
     }
 
     /**
@@ -75,7 +94,8 @@ public class UserManagementController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ImmutableUser getUser(@RequestHeader String jwtToken) {
-        return null;
+        User user = new User();
+        return userManagementService.getUser(user.getEmailAddress());
     }
 
     /**
@@ -93,7 +113,8 @@ public class UserManagementController {
      */
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteUser(@RequestHeader String jwtToken) {
-
+        User user = new User();
+        userManagementService.deleteUser(user);
     }
 
     /**
@@ -101,7 +122,7 @@ public class UserManagementController {
      * @apiName GetSecurityQuestion
      * @apiGroup User
      * @apiVersion 0.0.1
-     * @apiParam (Request-Body) email User mail
+     * @apiParam (Request - Body) email User mail
      * @apiSuccess {String} securityQuestion Security question to reset the password
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
