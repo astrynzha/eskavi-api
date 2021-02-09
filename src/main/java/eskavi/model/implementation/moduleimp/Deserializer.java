@@ -86,6 +86,11 @@ public class Deserializer extends ModuleImp {
     }
 
     @Override
+    public boolean isValid() {
+        return super.isValid() && protocolType != null && messageType != null;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), protocolType, messageType);
     }

@@ -64,6 +64,11 @@ public class Handler extends ModuleImp {
     }
 
     @Override
+    public boolean isValid() {
+        return super.isValid() && messageType != null;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), messageType);
     }

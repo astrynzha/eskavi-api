@@ -84,6 +84,11 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
         return true;
     }
 
+    @Override
+    public boolean isValid() {
+        return super.isValid() && configuration.isValid();
+    }
+
     public HashSet<ImmutableGenericImp> getGenerics() {
         return new HashSet<>();
     }

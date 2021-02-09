@@ -142,4 +142,14 @@ public abstract class Implementation implements ImmutableImplementation {
                 ", scope=" + scope.toString() +
                 '}';
     }
+
+    /**
+     * checks if the Implementation is correctly constructed
+     * @return
+     */
+    public boolean isValid() {
+        return implementationId >= 0 && author != null && name != null && scope != null && scope.getImpScope() != null
+                && scope.getScopeId() >= 0 && scope.getGrantedUsers() != null
+                && scope.getGrantedUsers().size() == 0;
+    }
 }

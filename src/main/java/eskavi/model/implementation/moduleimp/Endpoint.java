@@ -64,6 +64,11 @@ public class Endpoint extends ModuleImp {
     }
 
     @Override
+    public boolean isValid() {
+        return super.isValid() && protocolType != null;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), protocolType);
     }
