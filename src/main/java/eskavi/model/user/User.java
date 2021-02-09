@@ -144,7 +144,7 @@ public class User implements ImmutableUser {
 
     @Override
     public int hashCode() {
-        return Objects.hash(emailAddress, hashedPassword, securityQuestion, securityAnswer, userLevel, implementations);
+        return Objects.hash(emailAddress, hashedPassword, securityQuestion, securityAnswer, userLevel);
     }
 
     @Override
@@ -153,8 +153,7 @@ public class User implements ImmutableUser {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(emailAddress, user.emailAddress) && Objects.equals(hashedPassword, user.hashedPassword) &&
-                securityQuestion == user.securityQuestion && Objects.equals(securityAnswer, user.securityAnswer) && userLevel == user.userLevel &&
-                Objects.equals(implementations, user.implementations);
+                securityQuestion == user.securityQuestion && Objects.equals(securityAnswer, user.securityAnswer) && userLevel == user.userLevel;
     }
 
     @Override

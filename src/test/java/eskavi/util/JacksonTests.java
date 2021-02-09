@@ -40,17 +40,18 @@ public class JacksonTests {
 
     @BeforeEach
     void setUp() throws IOException {
+        TextField template = new TextField("template", false, new KeyExpression("<template>", "<template>"), DataType.TEXT);
         userA = new User("a@gmail.com", "dfjask;fj",
                 UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
         protocolTypeA = new ProtocolType(0, userA, "protocolType_0", ImplementationScope.SHARED);
         messageTypeA = new MessageType(3, userA, "messageType_3", ImplementationScope.SHARED);
 
         deserializer = new Deserializer(7, userA, "deserializer_7",
-                ImplementationScope.SHARED, messageTypeA, protocolTypeA);
+                ImplementationScope.SHARED, template, messageTypeA, protocolTypeA);
         serializer = new Serializer(8, userA,
-                "serializer_8", ImplementationScope.SHARED, messageTypeA, protocolTypeA);
-        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, messageTypeA);
-        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, messageTypeA);
+                "serializer_8", ImplementationScope.SHARED, template, messageTypeA, protocolTypeA);
+        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, template, messageTypeA);
+        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, template, messageTypeA);
 
         dummy = new TextField("dummy", false, new KeyExpression("<dummy>", "<dummy>"), DataType.TEXT);
         dummy.setValue("dummy");
