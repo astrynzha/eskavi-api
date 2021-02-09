@@ -1,5 +1,10 @@
 package eskavi.model.implementation;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import eskavi.deserializer.ImplementationByIdDeserialzer;
 import eskavi.model.configuration.Configuration;
 
 import java.util.Collection;
@@ -10,6 +15,8 @@ import java.util.Objects;
  * ModuleImp. It still holds all the function a ModuleImp has.
  */
 public class ModuleInstance {
+    @JsonDeserialize(using = ImplementationByIdDeserialzer.class)
+    @JsonIdentityReference(alwaysAsId = true)
     private ImmutableModuleImp moduleImp;
     private Configuration instanceConfiguration;
 
@@ -22,6 +29,10 @@ public class ModuleInstance {
     public ModuleInstance(ImmutableModuleImp moduleImp, Configuration instanceConfiguration) {
         this.moduleImp = moduleImp;
         this.instanceConfiguration = instanceConfiguration;
+    }
+
+    protected ModuleInstance() {
+
     }
 
     /**
@@ -57,6 +68,7 @@ public class ModuleInstance {
      *
      * @return the Configuration of this Instance
      */
+    @JsonGetter
     public Configuration getInstanceConfiguration() {
         return this.instanceConfiguration;
     }
@@ -70,6 +82,7 @@ public class ModuleInstance {
         this.instanceConfiguration = instanceConfiguration;
     }
 
+    @JsonIgnore
     public long getImpId() {
         return moduleImp.getImplementationId();
     }

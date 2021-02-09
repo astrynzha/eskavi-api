@@ -1,5 +1,6 @@
 package eskavi.model.configuration;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -66,12 +67,23 @@ public class ImplementationSelect extends Configuration {
     }
 
     /**
+     * Method returns this instance
+     *
+     * @return ModuleInstance
+     */
+    @JsonGetter
+    protected ModuleInstance getInstance() {
+        return this.instance;
+    }
+
+    /**
      * Sets the selectedImp to the given {@link ModuleInstance}, if it matches the required type and generics.
      *
      * @param instance the new instance
      * @throws IllegalArgumentException if the given {@link ModuleInstance} doesn't match the requirements
      */
     //TODO test and add serious if
+    @JsonSetter
     public void setInstance(ModuleInstance instance) throws IllegalArgumentException {
         if (/*type.matches(instance.getModuleImp()) && */instance.getModuleImp().getGenerics().equals(generics)) {
             this.instance = instance;
@@ -103,6 +115,7 @@ public class ImplementationSelect extends Configuration {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public List<Configuration> getChildren() {
         List<Configuration> result = new ArrayList<>();
@@ -123,7 +136,6 @@ public class ImplementationSelect extends Configuration {
     }
 
     @Override
-    @JsonIdentityReference(alwaysAsId = true)
     public ImmutableModuleImp getModuleImp() {
         return (instance != null) ? instance.getModuleImp() : null;
     }

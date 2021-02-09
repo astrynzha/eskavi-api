@@ -58,6 +58,7 @@ public abstract class Configuration {
     /**
      * @return boolean whether this configuration allows values, which make {@code checkCompatible} return true
      */
+    @JsonIgnore
     public abstract boolean isValid();
 
     /**
