@@ -155,9 +155,11 @@ public class ImplementationSelect extends Configuration {
     }
 
     @Override
-    public Configuration clone() {
+    public ImplementationSelect clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
-        return new ImplementationSelect(this.getName(), this.allowsMultiple(), copy, this.generics, this.type);
+        ImplementationSelect result = new ImplementationSelect(this.getName(), this.allowsMultiple(), copy, this.generics, this.type);
+        result.setInstance(this.instance);
+        return result;
     }
 
     public String toString() {

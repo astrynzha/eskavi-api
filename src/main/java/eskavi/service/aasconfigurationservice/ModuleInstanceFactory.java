@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @author Niv Adam
  */
 @Component
-public final class ModuleInstanceFactory{
+public final class ModuleInstanceFactory {
     private ModuleInstanceFactory() {
         throw new AssertionError("Instantiating utility class");
     }
@@ -22,6 +22,6 @@ public final class ModuleInstanceFactory{
      * @return the instance
      */
     public static ModuleInstance build(ModuleImp mi) {
-        return new ModuleInstance(mi, mi.getConfiguration().clone());
+        return new ModuleInstance(mi);
     }
 }

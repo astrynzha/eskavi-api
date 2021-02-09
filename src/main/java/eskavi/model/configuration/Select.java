@@ -82,6 +82,8 @@ public class Select extends SingleValueField {
     @Override
     public Select clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
-        return new Select(getName(), allowsMultiple(), copy, getContent());
+        Select result = new Select(getName(), allowsMultiple(), copy, getContent());
+        result.setValue(getValue());
+        return result;
     }
 }

@@ -11,12 +11,14 @@ import java.util.Collection;
 import java.util.HashSet;
 
 public class ConfigurationImplementationStub implements ImmutableModuleImp {
+    private Configuration instanceConfig;
     private int compatible;
     private ImmutableGenericImp genericImp;
 
-    public ConfigurationImplementationStub(int compatible, ImmutableGenericImp generic) {
+    public ConfigurationImplementationStub(int compatible, ImmutableGenericImp generic, Configuration instanceConfig) {
         this.compatible = compatible;
         this.genericImp = generic;
+        this.instanceConfig = instanceConfig;
     }
 
     public int getCompatible() {
@@ -107,6 +109,11 @@ public class ConfigurationImplementationStub implements ImmutableModuleImp {
     @Override
     public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter) {
         return false;
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        return instanceConfig;
     }
 
     @Override

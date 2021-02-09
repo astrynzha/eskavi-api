@@ -38,7 +38,7 @@ class ConfigurationAggregateTest {
         children.add(impSelect);
         TextField instanceConfig = new TextField("instanceConfig", false, new KeyExpression("<instanceConfig>", "<instanceConfig>"), DataType.TEXT);
         instanceConfig.setValue("value");
-        impSelect.setInstance(new ModuleInstance(new ConfigurationImplementationStub(1, new GenericStub("generic")), instanceConfig));
+        impSelect.setInstance(new ModuleInstance(new ConfigurationImplementationStub(1, new GenericStub("generic"), instanceConfig)));
         TextField textFieldMultiple = new TextField("multiple", true, new KeyExpression("<multiple>", "<multiple>"), DataType.TEXT);
         textFieldMultiple.setValue("multipleFirstVal");
         children.add(textFieldMultiple);
@@ -62,7 +62,7 @@ class ConfigurationAggregateTest {
         testObject.addChild(impSelect);
         TextField instanceConfig = new TextField("instanceConfig", false, new KeyExpression("<instanceConfig>", "<instanceConfig>"), DataType.TEXT);
         instanceConfig.setValue("value");
-        impSelect.setInstance(new ModuleInstance(new ConfigurationImplementationStub(2, new GenericStub("generic")), instanceConfig));
+        impSelect.setInstance(new ModuleInstance(new ConfigurationImplementationStub(2, new GenericStub("generic"), instanceConfig)));
         assertEquals(true, testObject.checkCompatible());
     }
 
@@ -75,7 +75,7 @@ class ConfigurationAggregateTest {
         testObject.addChild(impSelect);
         TextField instanceConfig = new TextField("instanceConfig", false, new KeyExpression("<instanceConfig>", "<instanceConfig>"), DataType.TEXT);
         instanceConfig.setValue("value");
-        impSelect.setInstance(new ModuleInstance(new ConfigurationImplementationStub(2, new GenericStub("generic")), instanceConfig));
+        impSelect.setInstance(new ModuleInstance(new ConfigurationImplementationStub(2, new GenericStub("generic"), instanceConfig)));
         assertEquals(false, testObject.checkCompatible());
     }
 
@@ -109,8 +109,8 @@ class ConfigurationAggregateTest {
         testObject.addChild(impSelect);
         TextField instanceConfig = new TextField("instanceConfig", false, new KeyExpression("<instanceConfig>", "<instanceConfig>"), DataType.TEXT);
         instanceConfig.setValue("value");
-        ImmutableModuleImp imp = new ConfigurationImplementationStub(2, new GenericStub("generic"));
-        impSelect.setInstance(new ModuleInstance(imp, instanceConfig));
+        ImmutableModuleImp imp = new ConfigurationImplementationStub(2, new GenericStub("generic"), instanceConfig);
+        impSelect.setInstance(new ModuleInstance(imp));
         expected.add(this.impSelect.getModuleImp());
         expected.add(impSelect.getModuleImp());
         System.out.println(testObject.resolveKeyExpression());

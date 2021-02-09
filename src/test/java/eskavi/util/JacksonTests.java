@@ -40,21 +40,21 @@ public class JacksonTests {
 
     @BeforeEach
     void setUp() throws IOException {
-        TextField template = new TextField("template", false, new KeyExpression("<template>", "<template>"), DataType.TEXT);
+        dummy = new TextField("dummy", false, new KeyExpression("<dummy>", "<dummy>"), DataType.TEXT);
+        dummy.setValue("dummy");
         userA = new User("a@gmail.com", "dfjask;fj",
                 UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
         protocolTypeA = new ProtocolType(0, userA, "protocolType_0", ImplementationScope.SHARED);
         messageTypeA = new MessageType(3, userA, "messageType_3", ImplementationScope.SHARED);
 
         deserializer = new Deserializer(7, userA, "deserializer_7",
-                ImplementationScope.SHARED, template, messageTypeA, protocolTypeA);
+                ImplementationScope.SHARED, dummy, messageTypeA, protocolTypeA);
         serializer = new Serializer(8, userA,
-                "serializer_8", ImplementationScope.SHARED, template, messageTypeA, protocolTypeA);
-        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, template, messageTypeA);
-        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, template, messageTypeA);
+                "serializer_8", ImplementationScope.SHARED, dummy, messageTypeA, protocolTypeA);
+        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, dummy, messageTypeA);
+        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, dummy, messageTypeA);
 
-        dummy = new TextField("dummy", false, new KeyExpression("<dummy>", "<dummy>"), DataType.TEXT);
-        dummy.setValue("dummy");
+
         port = new TextField("port", false, new KeyExpression("<port>", "<port>"), DataType.NUMBER);
         port.setValue("8080");
         HashSet<ImmutableGenericImp> generics = new HashSet<>();
@@ -62,18 +62,19 @@ public class JacksonTests {
         generics.add(protocolTypeA);
         serializerSelect = new ImplementationSelect("serializer", false, new KeyExpression("<serializer>", "<serializer>"),
                 generics, ImpType.SERIALIZER);
-        serializerSelect.setInstance(new ModuleInstance(serializer, dummy));
+        serializerSelect.setInstance(new ModuleInstance(serializer));
         deserializerSelect = new ImplementationSelect("deserializer", false, new KeyExpression("<deserializer>", "<deserializer>"),
                 generics, ImpType.DESERIALIZER);
-        deserializerSelect.setInstance(new ModuleInstance(deserializer, dummy));
+        deserializerSelect.setInstance(new ModuleInstance(deserializer));
         generics = new HashSet<>();
         generics.add(messageTypeA);
         dispatcherSelect = new ImplementationSelect("dispatcher", false, new KeyExpression("<dispatcher>", "<dispatcher>"),
                 generics, ImpType.DISPATCHER);
         handlerSelect = new ImplementationSelect("handler", false, new KeyExpression("<handler>", "<handler>"),
                 generics, ImpType.HANDLER);
-        handlerSelect.setInstance(new ModuleInstance(handler, dummy));
-        dispatcherSelect.setInstance(new ModuleInstance(dispatcher, handlerSelect));
+        handlerSelect.setInstance(new ModuleInstance(handler));
+        dispatcher.setConfiguration(handlerSelect);
+        dispatcherSelect.setInstance(new ModuleInstance(dispatcher));
         mapping = new ConfigurationAggregate("mapping", false, new KeyExpression("<mapping>", "<mapping>"),
                 new LinkedList<Configuration>(Arrays.asList(dummy, serializerSelect, deserializerSelect, dispatcherSelect)), true);
         configuration = new ConfigurationAggregate("parent", false, new KeyExpression("<parent>", "<parent>"),

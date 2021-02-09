@@ -23,12 +23,11 @@ public class ModuleInstance {
     /**
      * Constructs a new ModuleInstance
      *
-     * @param moduleImp             the ModuleImp it is an instance of
-     * @param instanceConfiguration the cloned Configuration which is editable
+     * @param moduleImp the ModuleImp it is an instance of
      */
-    public ModuleInstance(ImmutableModuleImp moduleImp, Configuration instanceConfiguration) {
+    public ModuleInstance(ImmutableModuleImp moduleImp) {
         this.moduleImp = moduleImp;
-        this.instanceConfiguration = instanceConfiguration;
+        this.instanceConfiguration = moduleImp.getConfiguration().clone();
     }
 
     protected ModuleInstance() {
