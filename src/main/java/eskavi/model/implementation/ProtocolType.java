@@ -23,11 +23,6 @@ public class ProtocolType extends GenericImp {
     }
 
     @Override
-    public boolean checkCompatibility(ImmutableGenericImp other) {
-        return equals(other);
-    }
-
-    @Override
     public String toString() {
         return "ProtocolType" + super.toString();
     }

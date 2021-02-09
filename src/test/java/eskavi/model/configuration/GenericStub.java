@@ -50,9 +50,11 @@ public class GenericStub implements ImmutableGenericImp {
         return null;
     }
 
-    @Override
     public boolean checkCompatibility(ImmutableGenericImp other) {
-        return other.equals(this);
+        if (other.getClass() == getClass()) {
+            return equals(other);
+        }
+        return true;
     }
 
     @Override

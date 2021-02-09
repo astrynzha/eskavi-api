@@ -58,9 +58,7 @@ public abstract class Configuration {
     /**
      * @return boolean whether this configuration allows values, which make {@code checkCompatible} return true
      */
-    public abstract boolean shallowCompatible();
-
-    public abstract boolean shallowEqual(Object other);
+    public abstract boolean isValid();
 
     /**
      * Adds a child Configuration if this Configuration is of type {@link ConfigurationAggregate}, otherwise exception is thrown

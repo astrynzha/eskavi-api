@@ -116,4 +116,32 @@ class ConfigurationAggregateTest {
         System.out.println(testObject.resolveKeyExpression());
         assertEquals(expected, testObject.getDependentModuleImps());
     }
+
+    @Test
+    void testIsValid() {
+        assertEquals(true, testObject.isValid());
+    }
+
+    @Test
+    void testValidDiffGenericNoEnforce() {
+        HashSet<ImmutableGenericImp> newGeneric = new HashSet<>();
+        newGeneric.add(new GenericStub("other"));
+        ImplementationSelect impSelect = new ImplementationSelect("diffSelect", false,
+                new KeyExpression("<diffSelect>", "<diffSelect>"), generics, ImpType.ENDPOINT);
+        testObject.addChild(impSelect);
+
+        assertEquals(true, testObject.isValid());
+    }
+
+    @Test
+    void testIsValidDiffGenericEnforce() {
+        testObject.setEnforceCompatibility(true);
+        HashSet<ImmutableGenericImp> newGeneric = new HashSet<>();
+        newGeneric.add(new GenericStub("other"));
+        ImplementationSelect impSelect = new ImplementationSelect("diffSelect", false,
+                new KeyExpression("<diffSelect>", "<diffSelect>"), newGeneric, ImpType.ENDPOINT);
+        testObject.addChild(impSelect);
+
+        assertEquals(false, testObject.isValid());
+    }
 }

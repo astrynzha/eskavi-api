@@ -2,6 +2,7 @@ package eskavi.model.configuration;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 
 import java.util.*;
@@ -50,7 +51,7 @@ public class ConfigurationAggregate extends Configuration {
     private boolean enforceCompatibility() {
         HashSet<ImmutableModuleImp> moduleImps = new HashSet<>();
         for (Configuration config : children) {
-            /*config.getModuleImp only returns not null if config is impSelect -> then first child is Configuration
+            /*config.getModuleImp only returns not null if config is impSelect -> then returns imp
              *attached to moduleInstance. So only implementations added in this Aggregate end up in this Map.
              */
             moduleImps.add(config.getModuleImp());
@@ -88,6 +89,29 @@ public class ConfigurationAggregate extends Configuration {
         } else {
             return true;
         }
+    }
+
+    @Override
+    public boolean isValid() {
+        for (Configuration config : children) {
+            if (!config.isValid()) return false;
+        }
+
+        if (enforceCompatibility) {
+            HashSet<ImmutableGenericImp> allGenerics = new HashSet<>();
+            for (Configuration config : children) {
+                if (config.getClass() == ImplementationSelect.class) {
+                    ImplementationSelect impSelect = (ImplementationSelect) config;
+                    allGenerics.addAll(impSelect.getGenerics());
+                }
+            }
+            for (ImmutableGenericImp generic : allGenerics) {
+                for (ImmutableGenericImp other : allGenerics) {
+                    if (!generic.checkCompatibility(other)) return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override

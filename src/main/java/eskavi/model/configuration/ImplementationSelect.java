@@ -99,6 +99,11 @@ public class ImplementationSelect extends Configuration {
     }
 
     @Override
+    public boolean isValid() {
+        return true;
+    }
+
+    @Override
     public List<Configuration> getChildren() {
         List<Configuration> result = new ArrayList<>();
         if (instance != null) {

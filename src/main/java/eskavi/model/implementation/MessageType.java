@@ -23,11 +23,6 @@ public class MessageType extends GenericImp {
     }
 
     @Override
-    public boolean checkCompatibility(ImmutableGenericImp other) {
-        return equals(other);
-    }
-
-    @Override
     public String toString() {
         return "MessageType" + super.toString();
     }
