@@ -1,5 +1,6 @@
 package eskavi.model.implementation.moduleimp;
 
+import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
@@ -20,9 +21,9 @@ public class Deserializer extends ModuleImp {
     public Deserializer() {
     }
 
-    public Deserializer(long implementationId, User author, String name, ImplementationScope impScope,
+    public Deserializer(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration,
                         MessageType messageType, ProtocolType protocolType) {
-        super(implementationId, author, name, impScope);
+        super(implementationId, author, name, impScope, templateConfiguration);
         this.protocolType = protocolType;
         this.messageType = messageType;
     }

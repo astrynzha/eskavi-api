@@ -1,5 +1,6 @@
 package eskavi.model.implementation.moduleimp;
 
+import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
@@ -19,9 +20,9 @@ public class Dispatcher extends ModuleImp {
         this.messageType = messageType;
     }
 
-    public Dispatcher(long implementationId, User author,
-                      String name, ImplementationScope impScope, MessageType messageType) {
-        super(implementationId, author, name, impScope);
+    public Dispatcher(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration,
+                      MessageType messageType) {
+        super(implementationId, author, name, impScope, templateConfiguration);
         this.messageType = messageType;
     }
 

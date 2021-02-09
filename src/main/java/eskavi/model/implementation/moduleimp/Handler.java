@@ -1,5 +1,6 @@
 package eskavi.model.implementation.moduleimp;
 
+import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
@@ -18,8 +19,9 @@ public class Handler extends ModuleImp {
     public Handler() {
     }
 
-    public Handler(long implementationId, User author, String name, ImplementationScope impScope, MessageType messageType) {
-        super(implementationId, author, name, impScope);
+    public Handler(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration,
+                   MessageType messageType) {
+        super(implementationId, author, name, impScope, templateConfiguration);
         this.messageType = messageType;
     }
 

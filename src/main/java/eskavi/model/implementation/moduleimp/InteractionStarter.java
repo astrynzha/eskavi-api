@@ -1,5 +1,6 @@
 package eskavi.model.implementation.moduleimp;
 
+import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.implementation.ModuleImp;
 import eskavi.model.user.User;
@@ -11,8 +12,8 @@ public class InteractionStarter extends ModuleImp {
     public InteractionStarter() {
     }
 
-    public InteractionStarter(long implementationId, User author, String name, ImplementationScope impScope) {
-        super(implementationId, author, name, impScope);
+    public InteractionStarter(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration) {
+        super(implementationId, author, name, impScope, templateConfiguration);
     }
 
     @Override

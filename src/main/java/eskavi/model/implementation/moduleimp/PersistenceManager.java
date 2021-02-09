@@ -1,5 +1,6 @@
 package eskavi.model.implementation.moduleimp;
 
+import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.implementation.ModuleImp;
@@ -13,8 +14,8 @@ public class PersistenceManager extends ModuleImp {
     public PersistenceManager() {
     }
 
-    public PersistenceManager(long implementationId, User author, String name, ImplementationScope impScope) {
-        super(implementationId, author, name, impScope);
+    public PersistenceManager(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration) {
+        super(implementationId, author, name, impScope, templateConfiguration);
     }
 
     @Override

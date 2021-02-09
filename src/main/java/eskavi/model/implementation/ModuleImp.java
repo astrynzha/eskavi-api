@@ -5,9 +5,6 @@ import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.User;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -18,10 +15,28 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
 
     public ModuleImp() {
     }
-
+    
     public ModuleImp(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration) {
         super(implementationId, author, name, impScope);
         this.configuration = templateConfiguration;
+    }
+
+    /**
+     * Default getter for configuration attribute
+     *
+     * @return configuration
+     */
+    public Configuration getConfiguration() {
+        return this.configuration;
+    }
+
+    /**
+     * Default setter for configuration attribute
+     *
+     * @param configuration configuration to set
+     */
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
@@ -71,23 +86,5 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
 
     public HashSet<ImmutableGenericImp> getGenerics() {
         return new HashSet<>();
-    }
-
-    /**
-     * Default getter for configuration attribute
-     *
-     * @return configuration
-     */
-    public Configuration getConfiguration() {
-        return this.configuration;
-    }
-
-    /**
-     * Default setter for configuration attribute
-     *
-     * @param configuration configuration to set
-     */
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
     }
 }
