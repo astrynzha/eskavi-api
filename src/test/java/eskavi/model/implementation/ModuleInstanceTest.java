@@ -77,12 +77,14 @@ class ModuleInstanceTest {
         deserializerSelect = new ImplementationSelect("deserializer", false, new KeyExpression("<deserializer>", "<deserializer>"),
                 generics, ImpType.DESERIALIZER);
         deserializerSelect.setInstance(new ModuleInstance(deserializer));
-        generics.remove(protocolTypeA);
+        generics = new HashSet<>();
+        generics.add(messageTypeA);
         dispatcherSelect = new ImplementationSelect("dispatcher", false, new KeyExpression("<dispatcher>", "<dispatcher>"),
                 generics, ImpType.DISPATCHER);
         handlerSelect = new ImplementationSelect("handler", false, new KeyExpression("<handler>", "<handler>"),
                 generics, ImpType.HANDLER);
         handlerSelect.setInstance(new ModuleInstance(handler));
+        dispatcher.setConfiguration(handlerSelect);
         dispatcherSelect.setInstance(new ModuleInstance(dispatcher));
         mapping = new ConfigurationAggregate("mapping", false, new KeyExpression("<mapping>", "<mapping>"),
                 new LinkedList<Configuration>(Arrays.asList(this.dummy, serializerSelect, deserializerSelect, dispatcherSelect)), true);
