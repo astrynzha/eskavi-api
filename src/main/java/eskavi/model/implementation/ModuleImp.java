@@ -8,6 +8,13 @@ import javax.persistence.Entity;
 import java.util.Collection;
 import java.util.HashSet;
 
+/**
+ * This abstract class inherits the class Implementation and implements the interface ImmutableModuleImp.
+ * It serves as a representation of module implementations that can be used as part of an AAS.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
 @Entity
 public abstract class ModuleImp extends Implementation implements ImmutableModuleImp {
     // TODO consider making configuration an entity to resolve spring

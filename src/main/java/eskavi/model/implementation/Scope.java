@@ -7,6 +7,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 
+/**
+ * This class describes if this MI is shared with other users
+ * and exactly which user groups have access to this MI.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
 @Entity
 public class Scope {
     @Id

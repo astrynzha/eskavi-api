@@ -1,14 +1,6 @@
 package eskavi.service;
 
 import eskavi.model.implementation.*;
-import eskavi.model.implementation.moduleimp.AssetConnection;
-import eskavi.model.implementation.moduleimp.Deserializer;
-import eskavi.model.implementation.moduleimp.Dispatcher;
-import eskavi.model.implementation.moduleimp.Endpoint;
-import eskavi.model.implementation.moduleimp.Handler;
-import eskavi.model.implementation.moduleimp.InteractionStarter;
-import eskavi.model.implementation.moduleimp.PersistenceManager;
-import eskavi.model.implementation.moduleimp.Serializer;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
@@ -74,14 +66,21 @@ public class ImpService {
     }
 
     //TODO who checks if the initiator is the author of this implementation? Controller?
-    public void addUser(long implementationId, ImmutableUser user) throws IllegalAccessException {
+    public void addUser(long implementationId, String userId, String callerId) throws IllegalAccessException {
         Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
-        if (optionalImplementation.isEmpty()) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<User> optionalCaller = userRepository.findById(callerId);
+        if (optionalImplementation.isEmpty() || optionalUser.isEmpty() || optionalCaller.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         Implementation imp = optionalImplementation.get();
+        User user = optionalUser.get();
+        User caller = optionalCaller.get();
         if (!imp.getImplementationScope().equals(ImplementationScope.SHARED)) {
             throw new IllegalAccessException("ImplementationScope is not SHARED");
+        }
+        if (!imp.getAuthor().equals(caller)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         updateScope(getMutableUser(user), getMutableImp(imp)); // TODO discuss how to handle exceptions on this example
     }
