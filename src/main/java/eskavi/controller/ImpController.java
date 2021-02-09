@@ -84,7 +84,16 @@ public class ImpController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     *     "types": ["Serializer", "Deserializer", "Handler"]
+     *     "types": [{
+     *         type: "Serializer",
+     *         topLevel: false
+     *     }, {
+     *         type: "Deserializer",
+     *         topLevel: false
+     *     }, {
+     *         type: "Handler",
+     *         topLevel: true
+     *     }]
      * }
      * @apiError {String} message Errormessage
      */
