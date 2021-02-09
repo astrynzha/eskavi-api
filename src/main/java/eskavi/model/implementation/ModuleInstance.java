@@ -76,9 +76,14 @@ public class ModuleInstance {
      * Sets this Instances Configuration to the given one
      *
      * @param instanceConfiguration new Configuration
+     * @throws IllegalArgumentException if the given configuration doesnt match this imps template configuration
      */
     public void setInstanceConfiguration(Configuration instanceConfiguration) {
-        this.instanceConfiguration = instanceConfiguration;
+        if (instanceConfiguration.equals(this.moduleImp.getConfiguration())) {
+            this.instanceConfiguration = instanceConfiguration;
+        } else {
+            throw new IllegalArgumentException("Configuration has to match the template configuration.");
+        }
     }
 
     @JsonIgnore
