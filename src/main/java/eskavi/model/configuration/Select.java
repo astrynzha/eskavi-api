@@ -83,7 +83,14 @@ public class Select extends SingleValueField {
     public Select clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
         Select result = new Select(getName(), allowsMultiple(), copy, getContent());
-        result.setValue(getValue());
+        if (getValue() != null) {
+            for (String value : getContent().values()) {
+                if (value.equals(getValue())) {
+                    result.setValue(value);
+                    return result;
+                }
+            }
+        }
         return result;
     }
 }
