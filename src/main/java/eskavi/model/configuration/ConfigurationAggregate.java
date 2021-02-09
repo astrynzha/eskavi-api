@@ -43,6 +43,10 @@ public class ConfigurationAggregate extends Configuration {
         return this.enforceCompatibility;
     }
 
+    protected void setEnforceCompatibility(boolean enforceCompatibility) {
+        this.enforceCompatibility = enforceCompatibility;
+    }
+
     private boolean enforceCompatibility() {
         HashSet<ImmutableModuleImp> moduleImps = new HashSet<>();
         for (Configuration config : children) {

@@ -10,12 +10,12 @@ import java.util.HashSet;
 
 @Entity
 public abstract class ModuleImp extends Implementation implements ImmutableModuleImp {
-    // TODO consider making configuration an entity to resolve spring error
+    // TODO consider making configuration an entity to resolve spring
     private Configuration configuration;
 
     public ModuleImp() {
     }
-    
+
     public ModuleImp(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration) {
         super(implementationId, author, name, impScope);
         this.configuration = templateConfiguration;

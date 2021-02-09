@@ -41,24 +41,25 @@ class ModuleInstanceTest {
 
     @BeforeEach
     void setUp() {
+        TextField template = new TextField("template", false, new KeyExpression("<template>", "<template>"), DataType.TEXT);
         User userA = new User("a@gmail.com", "dfjask;fj",
                 UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
         protocolTypeA = new ProtocolType(0, userA, "protocolType_0", ImplementationScope.SHARED);
         protocolTypeB = new ProtocolType(4, userA, "protocolType_4", ImplementationScope.SHARED);
         messageTypeA = new MessageType(3, userA, "messageType_3", ImplementationScope.SHARED);
         messageTypeB = new MessageType(5, userA, "messageType_5", ImplementationScope.SHARED);
-        endpoint = new Endpoint(1, userA, "endpoint_1", ImplementationScope.SHARED, protocolTypeA);
-        assetConnection = new AssetConnection(6, userA, "assetconnection", ImplementationScope.PUBLIC);
+        endpoint = new Endpoint(1, userA, "endpoint_1", ImplementationScope.SHARED, template, protocolTypeA);
+        assetConnection = new AssetConnection(6, userA, "assetconnection", ImplementationScope.PUBLIC, template);
         deserializer = new Deserializer(7, userA, "deserializer_7",
-                ImplementationScope.SHARED, messageTypeA, protocolTypeA);
+                ImplementationScope.SHARED, template, messageTypeA, protocolTypeA);
         serializer = new Serializer(8, userA,
-                "serializer_8", ImplementationScope.SHARED, messageTypeA, protocolTypeA);
-        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, messageTypeA);
-        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, messageTypeA);
+                "serializer_8", ImplementationScope.SHARED, template, messageTypeA, protocolTypeA);
+        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, template, messageTypeA);
+        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, template, messageTypeA);
         interactionStarter = new InteractionStarter(11, userA,
-                "interactionStarter11", ImplementationScope.SHARED);
+                "interactionStarter11", ImplementationScope.SHARED, template);
         persistenceManager = new PersistenceManager(12, userA,
-                "persistanceManager_12", ImplementationScope.SHARED);
+                "persistanceManager_12", ImplementationScope.SHARED, template);
         usedImpCollection = new LinkedList<>(Arrays.asList(endpoint, assetConnection, interactionStarter, persistenceManager));
 
         dummy = new TextField("dummy", false, new KeyExpression("<dummy>", "<dummy>"), DataType.TEXT);

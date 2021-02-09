@@ -58,18 +58,18 @@ public class RepositoryTest {
         protocolTypeB = new ProtocolType(4, userA, "protocolType_4", ImplementationScope.SHARED);
         messageTypeA = new MessageType(3, userA, "messageType_3", ImplementationScope.SHARED);
         messageTypeB = new MessageType(5, userA, "messageType_5", ImplementationScope.SHARED);
-        endpoint = new Endpoint(1, userA, "endpoint_1", ImplementationScope.SHARED, protocolTypeA);
-        assetConnection = new AssetConnection(6, userA, "assetconnection", ImplementationScope.PUBLIC);
+        endpoint = new Endpoint(1, userA, "endpoint_1", ImplementationScope.SHARED, trueConfiguration, protocolTypeA);
+        assetConnection = new AssetConnection(6, userA, "assetconnection", ImplementationScope.PUBLIC, trueConfiguration);
         deserializer = new Deserializer(7, userA, "deserializer_7",
-                ImplementationScope.SHARED, messageTypeA, protocolTypeA);
+                ImplementationScope.SHARED, trueConfiguration, messageTypeA, protocolTypeA);
         serializer = new Serializer(8, userA,
-                "serializer_8", ImplementationScope.SHARED, messageTypeA, protocolTypeA);
-        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, messageTypeA);
-        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, messageTypeA);
+                "serializer_8", ImplementationScope.SHARED, trueConfiguration, messageTypeA, protocolTypeA);
+        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, trueConfiguration, messageTypeA);
+        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, trueConfiguration, messageTypeA);
         interactionStarter = new InteractionStarter(11, userA,
-                "interactionStarter11", ImplementationScope.SHARED);
+                "interactionStarter11", ImplementationScope.SHARED, trueConfiguration);
         persistenceManager = new PersistenceManager(12, userA,
-                "persistanceManager_12", ImplementationScope.SHARED);
+                "persistanceManager_12", ImplementationScope.SHARED, trueConfiguration);
         usedImpCollection = new LinkedList<>(Arrays.asList(endpoint, serializer, deserializer,
                 dispatcher, handler, assetConnection, interactionStarter, persistenceManager));
         user = new User(EMAIL, HASHED_PASSWORT, UserLevel.BASIC_USER,
