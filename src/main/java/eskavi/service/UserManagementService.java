@@ -32,6 +32,10 @@ public class UserManagementService {
         userRepository.save(user);
     }
 
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
     public void setPassword(ImmutableUser immutableUser, String hashedPassword) throws IllegalAccessException {
         User user = getMutableUser(immutableUser);
         user.setPassword(hashedPassword);
