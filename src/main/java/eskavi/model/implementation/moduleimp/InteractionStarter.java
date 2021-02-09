@@ -7,6 +7,12 @@ import eskavi.model.user.User;
 
 import javax.persistence.Entity;
 
+/**
+ * This class inherits the abstract class ModuleImp and represents an MI of the type InteractionStarter.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
 @Entity
 public class InteractionStarter extends ModuleImp {
     public InteractionStarter() {

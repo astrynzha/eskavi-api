@@ -11,6 +11,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 
+/**
+ * This class inherits the abstract class ModuleImp and represents an MI of the type Serializer.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
 @Entity
 public class Serializer extends ModuleImp {
     @OneToOne

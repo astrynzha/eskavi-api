@@ -6,6 +6,13 @@ import eskavi.model.implementation.moduleimp.*;
 import java.util.Collection;
 import java.util.HashSet;
 
+/**
+ * This interface inherits ImmutableImplementation and makes Module Implementations available.
+ * However, the Module Implementations cannot be changed via this interface.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
 public interface ImmutableModuleImp extends ImmutableImplementation {
     public boolean isCompatible(Collection<ImmutableModuleImp> others);
 

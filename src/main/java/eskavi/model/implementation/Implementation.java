@@ -13,6 +13,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 
+/**
+ * This abstract class implements the ImmutableImplementation interface and serves as a common
+ * representation of any implementation. It abstracts the common features of GenericImp and ModuleImp,
+ * making it a central entity of our business logic.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,

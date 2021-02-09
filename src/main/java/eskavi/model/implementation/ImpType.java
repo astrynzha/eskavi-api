@@ -2,6 +2,13 @@ package eskavi.model.implementation;
 
 import eskavi.model.implementation.moduleimp.*;
 
+/**
+ * This enumeration lists all available subclasses of Implementation and enables
+ * communication regarding subclasses with the frontend.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
 public enum ImpType {
     ASSET_CONNECTION(AssetConnection.class),
     DESERIALIZER(Deserializer.class),
