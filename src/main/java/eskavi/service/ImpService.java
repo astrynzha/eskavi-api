@@ -1,6 +1,14 @@
 package eskavi.service;
 
 import eskavi.model.implementation.*;
+import eskavi.model.implementation.moduleimp.AssetConnection;
+import eskavi.model.implementation.moduleimp.Deserializer;
+import eskavi.model.implementation.moduleimp.Dispatcher;
+import eskavi.model.implementation.moduleimp.Endpoint;
+import eskavi.model.implementation.moduleimp.Handler;
+import eskavi.model.implementation.moduleimp.InteractionStarter;
+import eskavi.model.implementation.moduleimp.PersistenceManager;
+import eskavi.model.implementation.moduleimp.Serializer;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
@@ -43,27 +51,25 @@ public class ImpService {
         return null;
     }
 
-    public void addImplementation(ImmutableImplementation mi) {
-        ModuleImp moduleImp = null;
-        User user = null;
-        try {
-            moduleImp = getMutableImp(mi);
-            user = getMutableUser(moduleImp.getAuthor());
-        } catch (IllegalAccessException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-        if (!isValid(moduleImp)) {
+    /**
+     * @param mi implementation that the module developer has built in frontend
+     * @param caller module developer that wants to add an implementation
+     */
+    public void addImplementation(Implementation mi, User caller) {
+        if (!mi.isValid()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        if (moduleImp.getImplementationScope().equals(ImplementationScope.SHARED)) {
+        mi.setAuthor(caller);
+        if (mi.getImplementationScope().equals(ImplementationScope.SHARED)) {
             try {
-                updateScope(user, moduleImp);
+                updateScope(caller, mi);
             } catch (IllegalAccessException e) {
                 throw new IllegalStateException("this should never happen, scope is SHARED " +
                         "and thus subscribe is possible");
             }
+            // moduleImp is persisted inside updateScope
         } else {
-            impRepository.save(moduleImp); // in first case moduleImp is persisted inside updateScope
+            impRepository.save(mi);
         }
     }
 
@@ -149,11 +155,6 @@ public class ImpService {
         user.subscribe(imp);
         userRepository.save(user);
         impRepository.save(imp);
-    }
-
-    // TODO: was soll hier gechecked werden?
-    private boolean isValid(ModuleImp mi) {
-        return false;
     }
 
     private ModuleImp getMutableImp(ImmutableImplementation mi) throws IllegalAccessException {

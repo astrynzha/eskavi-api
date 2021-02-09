@@ -2,10 +2,12 @@ package eskavi.service.aasconfigurationservice;
 
 
 import eskavi.model.user.User;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class AASSessionHandler {
     private Map<Long, AASConstructionSession> sessionMap;
     private long nextFreeId;
