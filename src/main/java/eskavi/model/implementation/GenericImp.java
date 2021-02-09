@@ -15,5 +15,10 @@ public abstract class GenericImp extends Implementation implements ImmutableGene
     }
 
     @Override
-    public abstract boolean checkCompatibility(ImmutableGenericImp other);
+    public boolean checkCompatibility(ImmutableGenericImp other) {
+        if (other.getClass() == getClass()) {
+            return equals(other);
+        }
+        return true;
+    }
 }

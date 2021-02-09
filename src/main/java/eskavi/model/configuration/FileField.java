@@ -32,6 +32,11 @@ public class FileField extends SingleValueField {
     }
 
     @Override
+    public boolean isValid() {
+        return false;
+    }
+
+    @Override
     public Configuration clone() {
         return null;
     }

@@ -55,6 +55,17 @@ public class Select extends SingleValueField {
     }
 
     @Override
+    public String toString() {
+        return "Select{" +
+                "name='" + getName() + "'" +
+                ", allowMultiple=" + allowsMultiple() +
+                ", keyExpression=" + getKeyExpression().toString() +
+                ", value='" + getValue() + "'" +
+                ", content=" + getContent() +
+                "}";
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getContent());
     }
@@ -66,17 +77,6 @@ public class Select extends SingleValueField {
         if (!super.equals(o)) return false;
         Select select = (Select) o;
         return Objects.equals(getContent(), select.getContent());
-    }
-
-    @Override
-    public String toString() {
-        return "Select{" +
-                "name='" + getName() + "'" +
-                ", allowMultiple=" + allowsMultiple() +
-                ", keyExpression=" + getKeyExpression().toString() +
-                ", value='" + getValue() + "'" +
-                ", content=" + getContent() +
-                "}";
     }
 
     @Override
