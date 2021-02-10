@@ -359,16 +359,40 @@ public class ImpController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     * "types": [{
-     * type: "Serializer",
-     * topLevel: false
-     * }, {
-     * type: "Deserializer",
-     * topLevel: false
-     * }, {
-     * type: "Handler",
-     * topLevel: true
-     * }]
+     * [
+     * {
+     * "topLevel":true,
+     * "name":"ASSET_CONNECTION"
+     * },
+     * {
+     * "topLevel":false,
+     * "name":"DESERIALIZER"
+     * },
+     * {
+     * "topLevel":false,
+     * "name":"DISPATCHER"
+     * },
+     * {
+     * "topLevel":true,
+     * "name":"ENDPOINT"
+     * },
+     * {
+     * "topLevel":false,
+     * "name":"HANDLER"
+     * },
+     * {
+     * "topLevel":true,
+     * "name":"INTERACTION_STARTER"
+     * },
+     * {
+     * "topLevel":true,
+     * "name":"PERSISTENCE_MANAGER"
+     * },
+     * {
+     * "topLevel":false,
+     * "name":"SERIALIZER"
+     * }
+     * ]
      * }
      * @apiError {String} message Errormessage
      */
