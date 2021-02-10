@@ -31,307 +31,307 @@ public class ImpController {
      * @apiSuccess {Implementation[]} imps Array of implementation objects. One, if called with specific Id.
      * @apiSuccessExample Success-Example:
      * {
-     *  implementations: [
-      {
-        '@type': 'PersistenceManager',
-        implementationId: 13,
-        author: 'a@gmail.com',
-        name: 'manager',
-        scope: {
-          scopeId: 0,
-          impScope: 'SHARED',
-        },
-        configurationRoot: {
-          '@type': 'ConfigurationAggregate',
-          keyExpression: {
-            expressionStart: '',
-            expressionEnd: '',
-          },
-          enforceCompatibility: false,
-          name: 'root',
-          allowMultiple: false,
-          children: [
-            {
-              '@type': 'TextField',
-              keyExpression: {
-                expressionStart: '<dummy>',
-                expressionEnd: '<dummy>',
-              },
-              value: 'dummy',
-              dataType: 'TEXT',
-              name: 'dummy',
-              allowMultiple: false,
-            },
-          ],
-        },
-      },
-      {
-        '@type': 'Deserializer',
-        implementationId: 7,
-        author: 'a@gmail.com',
-        name: 'deserializer_7',
-        scope: {
-          scopeId: 0,
-          impScope: 'SHARED',
-        },
-        configurationRoot: {
-          '@type': 'ConfigurationAggregate',
-          keyExpression: {
-            expressionStart: '',
-            expressionEnd: '',
-          },
-          enforceCompatibility: false,
-          name: 'root',
-          allowMultiple: false,
-          children: [
-            {
-              '@type': 'TextField',
-              keyExpression: {
-                expressionStart: '<dummy>',
-                expressionEnd: '<dummy>',
-              },
-              value: 'dummy',
-              dataType: 'TEXT',
-              name: 'dummy',
-              allowMultiple: false,
-            },
-          ],
-        },
-        protocolType: {
-          '@type': 'ProtocolType',
-          implementationId: 0,
-          author: 'a@gmail.com',
-          name: 'protocolType_0',
-          scope: {
-            scopeId: 0,
-            impScope: 'SHARED',
-          },
-        },
-        messageType: {
-          '@type': 'MessageType',
-          implementationId: 3,
-          author: 'a@gmail.com',
-          name: 'messageType_3',
-          scope: {
-            scopeId: 0,
-            impScope: 'SHARED',
-          },
-        },
-      },
-      {
-        '@type': 'ProtocolType',
-        implementationId: 0,
-        author: 'a@gmail.com',
-        name: 'protocolType_0',
-        scope: {
-          scopeId: 0,
-          impScope: 'SHARED',
-        },
-      },
-      {
-        '@type': 'Endpoint',
-        implementationId: 11,
-        author: 'a@gmail.com',
-        name: 'endpoint',
-        scope: {
-          scopeId: 0,
-          impScope: 'SHARED',
-        },
-        configurationRoot: {
-          '@type': 'ConfigurationAggregate',
-          keyExpression: {
-            expressionStart: '<parent>',
-            expressionEnd: '<parent>',
-          },
-          enforceCompatibility: false,
-          name: 'parent',
-          allowMultiple: false,
-          children: [
-            {
-              '@type': 'ConfigurationAggregate',
-              keyExpression: {
-                expressionStart: '<mapping>',
-                expressionEnd: '<mapping>',
-              },
-              enforceCompatibility: true,
-              name: 'mapping',
-              allowMultiple: false,
-              children: [
-                {
-                  '@type': 'TextField',
-                  keyExpression: {
-                    expressionStart: '<dummy>',
-                    expressionEnd: '<dummy>',
-                  },
-                  value: 'dummy',
-                  dataType: 'TEXT',
-                  name: 'dummy',
-                  allowMultiple: false,
-                },
-                {
-                  '@type': 'ImplementationSelect',
-                  keyExpression: {
-                    expressionStart: '<serializer>',
-                    expressionEnd: '<serializer>',
-                  },
-                  instance: {
-                    moduleImp: 8,
-                    instanceConfiguration: {
-                      '@type': 'ConfigurationAggregate',
-                      keyExpression: {
-                        expressionStart: '',
-                        expressionEnd: '',
-                      },
-                      enforceCompatibility: false,
-                      name: 'root',
-                      allowMultiple: false,
-                      children: [
-                        {
-                          '@type': 'TextField',
-                          keyExpression: {
-                            expressionStart: '<dummy>',
-                            expressionEnd: '<dummy>',
-                          },
-                          value: 'dummy',
-                          dataType: 'TEXT',
-                          name: 'dummy',
-                          allowMultiple: false,
-                        },
-                      ],
-                    },
-                  },
-                  generics: [3, 0],
-                  type: 'SERIALIZER',
-                  name: 'serializer',
-                  allowMultiple: false,
-                },
-                {
-                  '@type': 'ImplementationSelect',
-                  keyExpression: {
-                    expressionStart: '<deserializer>',
-                    expressionEnd: '<deserializer>',
-                  },
-                  instance: {
-                    moduleImp: 7,
-                    instanceConfiguration: {
-                      '@type': 'ConfigurationAggregate',
-                      keyExpression: {
-                        expressionStart: '',
-                        expressionEnd: '',
-                      },
-                      enforceCompatibility: false,
-                      name: 'root',
-                      allowMultiple: false,
-                      children: [
-                        {
-                          '@type': 'TextField',
-                          keyExpression: {
-                            expressionStart: '<dummy>',
-                            expressionEnd: '<dummy>',
-                          },
-                          value: 'dummy',
-                          dataType: 'TEXT',
-                          name: 'dummy',
-                          allowMultiple: false,
-                        },
-                      ],
-                    },
-                  },
-                  generics: [3, 0],
-                  type: 'DESERIALIZER',
-                  name: 'deserializer',
-                  allowMultiple: false,
-                },
-                {
-                  '@type': 'ImplementationSelect',
-                  keyExpression: {
-                    expressionStart: '<dispatcher>',
-                    expressionEnd: '<dispatcher>',
-                  },
-                  instance: {
-                    moduleImp: 9,
-                    instanceConfiguration: {
-                      '@type': 'ConfigurationAggregate',
-                      keyExpression: {
-                        expressionStart: '',
-                        expressionEnd: '',
-                      },
-                      enforceCompatibility: false,
-                      name: 'root',
-                      allowMultiple: false,
-                      children: [
-                        {
-                          '@type': 'ImplementationSelect',
-                          keyExpression: {
-                            expressionStart: '<handler>',
-                            expressionEnd: '<handler>',
-                          },
-                          instance: {
-                            moduleImp: 10,
-                            instanceConfiguration: {
-                              '@type': 'ConfigurationAggregate',
-                              keyExpression: {
-                                expressionStart: '',
-                                expressionEnd: '',
-                              },
-                              enforceCompatibility: false,
-                              name: 'root',
-                              allowMultiple: false,
-                              children: [
-                                {
-                                  '@type': 'TextField',
-                                  keyExpression: {
-                                    expressionStart: '<dummy>',
-                                    expressionEnd: '<dummy>',
-                                  },
-                                  value: 'dummy',
-                                  dataType: 'TEXT',
-                                  name: 'dummy',
-                                  allowMultiple: false,
-                                },
-                              ],
-                            },
-                          },
-                          generics: [3],
-                          type: 'HANDLER',
-                          name: 'handler',
-                          allowMultiple: false,
-                        },
-                      ],
-                    },
-                  },
-                  generics: [3],
-                  type: 'DISPATCHER',
-                  name: 'dispatcher',
-                  allowMultiple: false,
-                },
-              ],
-            },
-            {
-              '@type': 'TextField',
-              keyExpression: {
-                expressionStart: '<port>',
-                expressionEnd: '<port>',
-              },
-              value: '8080',
-              dataType: 'NUMBER',
-              name: 'port',
-              allowMultiple: false,
-            },
-          ],
-        },
-        protocolType: {
-          '@type': 'ProtocolType',
-          implementationId: 0,
-          author: 'a@gmail.com',
-          name: 'protocolType_0',
-          scope: {
-            scopeId: 0,
-            impScope: 'SHARED',
-          },
-        },
-      },
-    ];
+     * implementations: [
+     * {
+     * '@type': 'PersistenceManager',
+     * implementationId: 13,
+     * author: 'a@gmail.com',
+     * name: 'manager',
+     * scope: {
+     * scopeId: 0,
+     * impScope: 'SHARED',
+     * },
+     * configurationRoot: {
+     * '@type': 'ConfigurationAggregate',
+     * keyExpression: {
+     * expressionStart: '',
+     * expressionEnd: '',
+     * },
+     * enforceCompatibility: false,
+     * name: 'root',
+     * allowMultiple: false,
+     * children: [
+     * {
+     * '@type': 'TextField',
+     * keyExpression: {
+     * expressionStart: '<dummy>',
+     * expressionEnd: '<dummy>',
+     * },
+     * value: 'dummy',
+     * dataType: 'TEXT',
+     * name: 'dummy',
+     * allowMultiple: false,
+     * },
+     * ],
+     * },
+     * },
+     * {
+     * '@type': 'Deserializer',
+     * implementationId: 7,
+     * author: 'a@gmail.com',
+     * name: 'deserializer_7',
+     * scope: {
+     * scopeId: 0,
+     * impScope: 'SHARED',
+     * },
+     * configurationRoot: {
+     * '@type': 'ConfigurationAggregate',
+     * keyExpression: {
+     * expressionStart: '',
+     * expressionEnd: '',
+     * },
+     * enforceCompatibility: false,
+     * name: 'root',
+     * allowMultiple: false,
+     * children: [
+     * {
+     * '@type': 'TextField',
+     * keyExpression: {
+     * expressionStart: '<dummy>',
+     * expressionEnd: '<dummy>',
+     * },
+     * value: 'dummy',
+     * dataType: 'TEXT',
+     * name: 'dummy',
+     * allowMultiple: false,
+     * },
+     * ],
+     * },
+     * protocolType: {
+     * '@type': 'ProtocolType',
+     * implementationId: 0,
+     * author: 'a@gmail.com',
+     * name: 'protocolType_0',
+     * scope: {
+     * scopeId: 0,
+     * impScope: 'SHARED',
+     * },
+     * },
+     * messageType: {
+     * '@type': 'MessageType',
+     * implementationId: 3,
+     * author: 'a@gmail.com',
+     * name: 'messageType_3',
+     * scope: {
+     * scopeId: 0,
+     * impScope: 'SHARED',
+     * },
+     * },
+     * },
+     * {
+     * '@type': 'ProtocolType',
+     * implementationId: 0,
+     * author: 'a@gmail.com',
+     * name: 'protocolType_0',
+     * scope: {
+     * scopeId: 0,
+     * impScope: 'SHARED',
+     * },
+     * },
+     * {
+     * '@type': 'Endpoint',
+     * implementationId: 11,
+     * author: 'a@gmail.com',
+     * name: 'endpoint',
+     * scope: {
+     * scopeId: 0,
+     * impScope: 'SHARED',
+     * },
+     * configurationRoot: {
+     * '@type': 'ConfigurationAggregate',
+     * keyExpression: {
+     * expressionStart: '<parent>',
+     * expressionEnd: '<parent>',
+     * },
+     * enforceCompatibility: false,
+     * name: 'parent',
+     * allowMultiple: false,
+     * children: [
+     * {
+     * '@type': 'ConfigurationAggregate',
+     * keyExpression: {
+     * expressionStart: '<mapping>',
+     * expressionEnd: '<mapping>',
+     * },
+     * enforceCompatibility: true,
+     * name: 'mapping',
+     * allowMultiple: false,
+     * children: [
+     * {
+     * '@type': 'TextField',
+     * keyExpression: {
+     * expressionStart: '<dummy>',
+     * expressionEnd: '<dummy>',
+     * },
+     * value: 'dummy',
+     * dataType: 'TEXT',
+     * name: 'dummy',
+     * allowMultiple: false,
+     * },
+     * {
+     * '@type': 'ImplementationSelect',
+     * keyExpression: {
+     * expressionStart: '<serializer>',
+     * expressionEnd: '<serializer>',
+     * },
+     * instance: {
+     * moduleImp: 8,
+     * instanceConfiguration: {
+     * '@type': 'ConfigurationAggregate',
+     * keyExpression: {
+     * expressionStart: '',
+     * expressionEnd: '',
+     * },
+     * enforceCompatibility: false,
+     * name: 'root',
+     * allowMultiple: false,
+     * children: [
+     * {
+     * '@type': 'TextField',
+     * keyExpression: {
+     * expressionStart: '<dummy>',
+     * expressionEnd: '<dummy>',
+     * },
+     * value: 'dummy',
+     * dataType: 'TEXT',
+     * name: 'dummy',
+     * allowMultiple: false,
+     * },
+     * ],
+     * },
+     * },
+     * generics: [3, 0],
+     * type: 'SERIALIZER',
+     * name: 'serializer',
+     * allowMultiple: false,
+     * },
+     * {
+     * '@type': 'ImplementationSelect',
+     * keyExpression: {
+     * expressionStart: '<deserializer>',
+     * expressionEnd: '<deserializer>',
+     * },
+     * instance: {
+     * moduleImp: 7,
+     * instanceConfiguration: {
+     * '@type': 'ConfigurationAggregate',
+     * keyExpression: {
+     * expressionStart: '',
+     * expressionEnd: '',
+     * },
+     * enforceCompatibility: false,
+     * name: 'root',
+     * allowMultiple: false,
+     * children: [
+     * {
+     * '@type': 'TextField',
+     * keyExpression: {
+     * expressionStart: '<dummy>',
+     * expressionEnd: '<dummy>',
+     * },
+     * value: 'dummy',
+     * dataType: 'TEXT',
+     * name: 'dummy',
+     * allowMultiple: false,
+     * },
+     * ],
+     * },
+     * },
+     * generics: [3, 0],
+     * type: 'DESERIALIZER',
+     * name: 'deserializer',
+     * allowMultiple: false,
+     * },
+     * {
+     * '@type': 'ImplementationSelect',
+     * keyExpression: {
+     * expressionStart: '<dispatcher>',
+     * expressionEnd: '<dispatcher>',
+     * },
+     * instance: {
+     * moduleImp: 9,
+     * instanceConfiguration: {
+     * '@type': 'ConfigurationAggregate',
+     * keyExpression: {
+     * expressionStart: '',
+     * expressionEnd: '',
+     * },
+     * enforceCompatibility: false,
+     * name: 'root',
+     * allowMultiple: false,
+     * children: [
+     * {
+     * '@type': 'ImplementationSelect',
+     * keyExpression: {
+     * expressionStart: '<handler>',
+     * expressionEnd: '<handler>',
+     * },
+     * instance: {
+     * moduleImp: 10,
+     * instanceConfiguration: {
+     * '@type': 'ConfigurationAggregate',
+     * keyExpression: {
+     * expressionStart: '',
+     * expressionEnd: '',
+     * },
+     * enforceCompatibility: false,
+     * name: 'root',
+     * allowMultiple: false,
+     * children: [
+     * {
+     * '@type': 'TextField',
+     * keyExpression: {
+     * expressionStart: '<dummy>',
+     * expressionEnd: '<dummy>',
+     * },
+     * value: 'dummy',
+     * dataType: 'TEXT',
+     * name: 'dummy',
+     * allowMultiple: false,
+     * },
+     * ],
+     * },
+     * },
+     * generics: [3],
+     * type: 'HANDLER',
+     * name: 'handler',
+     * allowMultiple: false,
+     * },
+     * ],
+     * },
+     * },
+     * generics: [3],
+     * type: 'DISPATCHER',
+     * name: 'dispatcher',
+     * allowMultiple: false,
+     * },
+     * ],
+     * },
+     * {
+     * '@type': 'TextField',
+     * keyExpression: {
+     * expressionStart: '<port>',
+     * expressionEnd: '<port>',
+     * },
+     * value: '8080',
+     * dataType: 'NUMBER',
+     * name: 'port',
+     * allowMultiple: false,
+     * },
+     * ],
+     * },
+     * protocolType: {
+     * '@type': 'ProtocolType',
+     * implementationId: 0,
+     * author: 'a@gmail.com',
+     * name: 'protocolType_0',
+     * scope: {
+     * scopeId: 0,
+     * impScope: 'SHARED',
+     * },
+     * },
+     * },
+     * ];
      * }
      * },
      * ]
@@ -359,16 +359,16 @@ public class ImpController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     *     "types": [{
-     *         type: "Serializer",
-     *         topLevel: false
-     *     }, {
-     *         type: "Deserializer",
-     *         topLevel: false
-     *     }, {
-     *         type: "Handler",
-     *         topLevel: true
-     *     }]
+     * "types": [{
+     * type: "Serializer",
+     * topLevel: false
+     * }, {
+     * type: "Deserializer",
+     * topLevel: false
+     * }, {
+     * type: "Handler",
+     * topLevel: true
+     * }]
      * }
      * @apiError {String} message Errormessage
      */
@@ -388,7 +388,7 @@ public class ImpController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     *     "data_types": ["text", "number", "email", "date"]
+     * "data_types": ["text", "number", "email", "date"]
      * }
      * @apiError {String} message Errormessage
      */
@@ -408,7 +408,7 @@ public class ImpController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     *     "impScopes": ["private", "shared", "public"]
+     * "impScopes": ["private", "shared", "public"]
      * }
      * @apiError {String} message Errormessage
      */
@@ -451,57 +451,57 @@ public class ImpController {
      * @apiParam (Request body) {Implementation} implementation Implementation object
      * @apiParamExample {json} Request-Example:
      * {
-     *    "implementationId":10,
-     *    "author":{
-     *       "emailAddress":"a@gmail.com",
-     *       "securityQuestion":"MAIDEN_NAME",
-     *       "securityAnswer":"Julia",
-     *       "userLevel":"PUBLISHING_USER",
-     *       "password":"dfjask;fj",
-     *       "subscribed":[
-     *
-     *       ]
-     *    },
-     *    "name":"handler_10",
-     *    "scope":{
-     *       "impScope":"SHARED"
-     *    },
-     *    "messageType":{
-     *       "implementationId":3,
-     *       "author":{
-     *          "emailAddress":"a@gmail.com",
-     *          "securityQuestion":"MAIDEN_NAME",
-     *          "securityAnswer":"Julia",
-     *          "userLevel":"PUBLISHING_USER",
-     *          "password":"dfjask;fj",
-     *          "subscribed":[
-     *
-     *          ]
-     *       },
-     *       "name":"messageType_3",
-     *       "scope":{
-     *          "impScope":"SHARED"
-     *       }
-     *    },
-     *    "generics":[
-     *       {
-     *          "implementationId":3,
-     *          "author":{
-     *             "emailAddress":"a@gmail.com",
-     *             "securityQuestion":"MAIDEN_NAME",
-     *             "securityAnswer":"Julia",
-     *             "userLevel":"PUBLISHING_USER",
-     *             "password":"dfjask;fj",
-     *             "subscribed":[
-     *
-     *             ]
-     *          },
-     *          "name":"messageType_3",
-     *          "scope":{
-     *             "impScope":"SHARED"
-     *          }
-     *       }
-     *    ]
+     * "@type":"Deserializer",
+     * "implementationId":7,
+     * "author":"a@gmail.com",
+     * "name":"deserializer_7",
+     * "scope":{
+     * "scopeId":0,
+     * "impScope":"SHARED"
+     * },
+     * "configurationRoot":{
+     * "@type":"ConfigurationAggregate",
+     * "keyExpression":{
+     * "expressionStart":"",
+     * "expressionEnd":""
+     * },
+     * "enforceCompatibility":false,
+     * "name":"root",
+     * "allowMultiple":false,
+     * "children":[
+     * {
+     * "@type":"TextField",
+     * "keyExpression":{
+     * "expressionStart":"<dummy>",
+     * "expressionEnd":"<dummy>"
+     * },
+     * "value":"dummy",
+     * "dataType":"TEXT",
+     * "name":"dummy",
+     * "allowMultiple":false
+     * }
+     * ]
+     * },
+     * "protocolType":{
+     * "@type":"ProtocolType",
+     * "implementationId":0,
+     * "author":"a@gmail.com",
+     * "name":"protocolType_0",
+     * "scope":{
+     * "scopeId":0,
+     * "impScope":"SHARED"
+     * }
+     * },
+     * "messageType":{
+     * "@type":"MessageType",
+     * "implementationId":3,
+     * "author":"a@gmail.com",
+     * "name":"messageType_3",
+     * "scope":{
+     * "scopeId":0,
+     * "impScope":"SHARED"
+     * }
+     * }
      * }
      * @apiSuccess {Number} impId Implementation unique ID
      * @apiSuccessExample {json} Success-Response:
@@ -526,7 +526,7 @@ public class ImpController {
      * @apiGroup Implementation
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiParam (Request body) {Implementation} implementation Implementation object
+     * @apiParam (Request body) {Implementation} implementation Implementation object for example view PostImplementation
      * @apiSuccess {Number} impId Implementation unique ID
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 201 Created
