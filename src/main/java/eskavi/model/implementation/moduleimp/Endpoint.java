@@ -1,5 +1,6 @@
 package eskavi.model.implementation.moduleimp;
 
+import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
@@ -10,6 +11,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 
+/**
+ * This class inherits the abstract class ModuleImp and represents an MI of the type Endpoint.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
 @Entity
 public class Endpoint extends ModuleImp {
     @OneToOne
@@ -19,8 +26,8 @@ public class Endpoint extends ModuleImp {
     }
 
     public Endpoint(long implementationId, User author, String name,
-                    ImplementationScope impScope, ProtocolType protocolType) {
-        super(implementationId, author, name, impScope);
+                    ImplementationScope impScope, Configuration templateConfiguration, ProtocolType protocolType) {
+        super(implementationId, author, name, impScope, templateConfiguration);
         this.protocolType = protocolType;
     }
 
@@ -60,6 +67,11 @@ public class Endpoint extends ModuleImp {
     @Override
     public HashSet<ImmutableGenericImp> getGenerics() {
         return new HashSet<>(Collections.singletonList(protocolType));
+    }
+
+    @Override
+    public boolean isValid() {
+        return super.isValid() && protocolType != null;
     }
 
     @Override

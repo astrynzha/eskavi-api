@@ -1,6 +1,11 @@
 package eskavi.model.configuration;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import eskavi.deserializer.GenericsDeserializer;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImpType;
@@ -32,13 +37,24 @@ public class ImplementationSelect extends Configuration {
         this.type = type;
     }
 
+    protected ImplementationSelect() {
+
+    }
+
     /**
      * Returns the required {@link ImmutableGenericImp}s as a HashSet to not allow the same generic multiple times.
      *
      * @return The required generics for this Configuration
      */
-    public HashSet<ImmutableGenericImp> getGeneric() {
+    @JsonIdentityReference(alwaysAsId = true)
+    public HashSet<ImmutableGenericImp> getGenerics() {
         return generics;
+    }
+
+    @JsonSetter
+    @JsonDeserialize(using = GenericsDeserializer.class)
+    public void setGenerics(HashSet<ImmutableGenericImp> generics) {
+        this.generics = generics;
     }
 
     /**
@@ -51,12 +67,23 @@ public class ImplementationSelect extends Configuration {
     }
 
     /**
+     * Method returns this instance
+     *
+     * @return ModuleInstance
+     */
+    @JsonGetter
+    protected ModuleInstance getInstance() {
+        return this.instance;
+    }
+
+    /**
      * Sets the selectedImp to the given {@link ModuleInstance}, if it matches the required type and generics.
      *
      * @param instance the new instance
      * @throws IllegalArgumentException if the given {@link ModuleInstance} doesn't match the requirements
      */
     //TODO test and add serious if
+    @JsonSetter
     public void setInstance(ModuleInstance instance) throws IllegalArgumentException {
         if (/*type.matches(instance.getModuleImp()) && */instance.getModuleImp().getGenerics().equals(generics)) {
             this.instance = instance;
@@ -84,6 +111,12 @@ public class ImplementationSelect extends Configuration {
     }
 
     @Override
+    public boolean isValid() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
     public List<Configuration> getChildren() {
         List<Configuration> result = new ArrayList<>();
         if (instance != null) {
@@ -102,7 +135,6 @@ public class ImplementationSelect extends Configuration {
         return result;
     }
 
-    @JsonIgnore
     @Override
     public ImmutableModuleImp getModuleImp() {
         return (instance != null) ? instance.getModuleImp() : null;
@@ -123,9 +155,11 @@ public class ImplementationSelect extends Configuration {
     }
 
     @Override
-    public Configuration clone() {
+    public ImplementationSelect clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
-        return new ImplementationSelect(this.getName(), this.allowsMultiple(), copy, this.generics, this.type);
+        ImplementationSelect result = new ImplementationSelect(this.getName(), this.allowsMultiple(), copy, this.generics, this.type);
+        result.setInstance(this.instance);
+        return result;
     }
 
     public String toString() {
@@ -133,7 +167,7 @@ public class ImplementationSelect extends Configuration {
                 "name='" + getName() + "'" +
                 ", allowMultiple=" + allowsMultiple() +
                 ", keyExpression=" + getKeyExpression().toString() +
-                ", generics=" + getGeneric().toString() +
+                ", generics=" + getGenerics().toString() +
                 ", type=" + type.name() +
                 ", instance=" + instance.toString() + "}";
     }

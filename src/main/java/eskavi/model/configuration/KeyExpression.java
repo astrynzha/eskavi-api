@@ -20,6 +20,10 @@ public class KeyExpression {
         setExpressionEnd(expressionEnd);
     }
 
+    protected KeyExpression() {
+
+    }
+
     /**
      * Returns the part of the KeyExpression to be added in front of the value
      *

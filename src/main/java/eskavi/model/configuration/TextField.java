@@ -22,6 +22,10 @@ public class TextField extends SingleValueField {
         this.dataType = dataType;
     }
 
+    protected TextField() {
+
+    }
+
     /**
      * @return the expected {@link DataType} of this TextField.
      */
@@ -39,12 +43,6 @@ public class TextField extends SingleValueField {
     }
 
     @Override
-    public TextField clone() {
-        KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
-        return new TextField(getName(), allowsMultiple(), copy, getDataType());
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getDataType());
     }
@@ -56,6 +54,14 @@ public class TextField extends SingleValueField {
         if (!super.equals(o)) return false;
         TextField textField = (TextField) o;
         return getDataType() == textField.getDataType();
+    }
+
+    @Override
+    public TextField clone() {
+        KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
+        TextField result = new TextField(getName(), allowsMultiple(), copy, getDataType());
+        result.setValue(getValue());
+        return result;
     }
 
     @Override

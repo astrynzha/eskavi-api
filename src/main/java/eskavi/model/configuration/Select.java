@@ -23,6 +23,9 @@ public class Select extends SingleValueField {
         this.content = content;
     }
 
+    protected Select() {
+    }
+
     /**
      * Returns the Content stored in a Map. The key represents the value to show the User, while the value is inserted
      * into the {@link KeyExpression} when it is resolved
@@ -52,6 +55,17 @@ public class Select extends SingleValueField {
     }
 
     @Override
+    public String toString() {
+        return "Select{" +
+                "name='" + getName() + "'" +
+                ", allowMultiple=" + allowsMultiple() +
+                ", keyExpression=" + getKeyExpression().toString() +
+                ", value='" + getValue() + "'" +
+                ", content=" + getContent() +
+                "}";
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getContent());
     }
@@ -66,19 +80,17 @@ public class Select extends SingleValueField {
     }
 
     @Override
-    public String toString() {
-        return "Select{" +
-                "name='" + getName() + "'" +
-                ", allowMultiple=" + allowsMultiple() +
-                ", keyExpression=" + getKeyExpression().toString() +
-                ", value='" + getValue() + "'" +
-                ", content=" + getContent() +
-                "}";
-    }
-
-    @Override
     public Select clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
-        return new Select(getName(), allowsMultiple(), copy, getContent());
+        Select result = new Select(getName(), allowsMultiple(), copy, getContent());
+        if (getValue() != null) {
+            for (String value : getContent().values()) {
+                if (value.equals(getValue())) {
+                    result.setValue(value);
+                    return result;
+                }
+            }
+        }
+        return result;
     }
 }

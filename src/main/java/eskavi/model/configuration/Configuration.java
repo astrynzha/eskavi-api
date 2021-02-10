@@ -14,6 +14,14 @@ import java.util.Objects;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = ConfigurationAggregate.class, name = "ConfigurationAggregate"),
+        @JsonSubTypes.Type(value = TextField.class, name = "TextField"),
+        @JsonSubTypes.Type(value = ImplementationSelect.class, name = "ImplementationSelect"),
+        @JsonSubTypes.Type(value = Select.class, name = "Select"),
+        @JsonSubTypes.Type(value = Switch.class, name = "Switch"),
+        @JsonSubTypes.Type(value = FileField.class, name = "FileField")
+})
 public abstract class Configuration {
     private String name;
     private boolean allowMultiple;
@@ -33,6 +41,9 @@ public abstract class Configuration {
         this.keyExpression = expression;
     }
 
+    protected Configuration() {
+    }
+
     /**
      * @return String which represents the java Code which has to be included into the Output java Class to use
      * this Configuration.
@@ -43,6 +54,12 @@ public abstract class Configuration {
      * @return boolean whether this Configuration is functional with the given value
      */
     public abstract boolean checkCompatible();
+
+    /**
+     * @return boolean whether this configuration allows values, which make {@code checkCompatible} return true
+     */
+    @JsonIgnore
+    public abstract boolean isValid();
 
     /**
      * Adds a child Configuration if this Configuration is of type {@link ConfigurationAggregate}, otherwise exception is thrown
@@ -130,6 +147,7 @@ public abstract class Configuration {
      *
      * @param name the new name of the Configuration
      */
+    @JsonSetter("name")
     public void setName(String name) {
         this.name = name;
     }

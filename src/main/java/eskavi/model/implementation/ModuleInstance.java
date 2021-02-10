@@ -1,5 +1,10 @@
 package eskavi.model.implementation;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import eskavi.deserializer.ImplementationByIdDeserialzer;
 import eskavi.model.configuration.Configuration;
 
 import java.util.Collection;
@@ -10,18 +15,23 @@ import java.util.Objects;
  * ModuleImp. It still holds all the function a ModuleImp has.
  */
 public class ModuleInstance {
+    @JsonDeserialize(using = ImplementationByIdDeserialzer.class)
+    @JsonIdentityReference(alwaysAsId = true)
     private ImmutableModuleImp moduleImp;
     private Configuration instanceConfiguration;
 
     /**
      * Constructs a new ModuleInstance
      *
-     * @param moduleImp             the ModuleImp it is an instance of
-     * @param instanceConfiguration the cloned Configuration which is editable
+     * @param moduleImp the ModuleImp it is an instance of
      */
-    public ModuleInstance(ImmutableModuleImp moduleImp, Configuration instanceConfiguration) {
+    public ModuleInstance(ImmutableModuleImp moduleImp) {
         this.moduleImp = moduleImp;
-        this.instanceConfiguration = instanceConfiguration;
+        this.instanceConfiguration = moduleImp.getConfigurationRoot().clone();
+    }
+
+    protected ModuleInstance() {
+
     }
 
     /**
@@ -57,6 +67,7 @@ public class ModuleInstance {
      *
      * @return the Configuration of this Instance
      */
+    @JsonGetter
     public Configuration getInstanceConfiguration() {
         return this.instanceConfiguration;
     }
@@ -65,9 +76,19 @@ public class ModuleInstance {
      * Sets this Instances Configuration to the given one
      *
      * @param instanceConfiguration new Configuration
+     * @throws IllegalArgumentException if the given configuration doesnt match this imps template configuration
      */
     public void setInstanceConfiguration(Configuration instanceConfiguration) {
-        this.instanceConfiguration = instanceConfiguration;
+        if (instanceConfiguration.equals(this.moduleImp.getConfigurationRoot())) {
+            this.instanceConfiguration = instanceConfiguration;
+        } else {
+            throw new IllegalArgumentException("Configuration has to match the template configuration.");
+        }
+    }
+
+    @JsonIgnore
+    public long getImpId() {
+        return moduleImp.getImplementationId();
     }
 
     @Override

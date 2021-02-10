@@ -1,7 +1,5 @@
 package eskavi.model.configuration;
 
-import java.util.Objects;
-
 /**
  * Class extends {@link Configuration} and is an abstraction of all Configurations just containing one value
  */
@@ -18,6 +16,10 @@ public abstract class SingleValueField extends Configuration {
      */
     public SingleValueField(String name, boolean allowMultiple, KeyExpression expression) {
         super(name, allowMultiple, expression);
+    }
+
+    protected SingleValueField() {
+
     }
 
     /**
@@ -51,17 +53,8 @@ public abstract class SingleValueField extends Configuration {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getValue());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        SingleValueField that = (SingleValueField) o;
-        return Objects.equals(getValue(), that.getValue());
+    public boolean isValid() {
+        return true;
     }
 
     @Override

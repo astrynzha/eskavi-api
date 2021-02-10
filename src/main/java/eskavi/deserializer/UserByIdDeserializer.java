@@ -13,21 +13,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-public class AuthorDeserializer extends StdDeserializer<User> {
+public class UserByIdDeserializer extends StdDeserializer<User> {
     @Autowired
     UserRepository repository;
 
-    public AuthorDeserializer() {
+    public UserByIdDeserializer() {
         this(null);
     }
 
-    public AuthorDeserializer(Class<?> vc) {
+    public UserByIdDeserializer(Class<?> vc) {
         super(vc);
     }
 
     @Override
     public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-        //exclude after testing
+        //TODO:exclude after testing
         User userA = new User("a@gmail.com", "dfjask;fj",
                 UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);

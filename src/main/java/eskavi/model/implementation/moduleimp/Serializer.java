@@ -1,5 +1,6 @@
 package eskavi.model.implementation.moduleimp;
 
+import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
@@ -10,6 +11,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 
+/**
+ * This class inherits the abstract class ModuleImp and represents an MI of the type Serializer.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
 @Entity
 public class Serializer extends ModuleImp {
     @OneToOne
@@ -20,9 +27,9 @@ public class Serializer extends ModuleImp {
     public Serializer() {
     }
 
-    public Serializer(long implementationId, User author, String name, ImplementationScope impScope,
+    public Serializer(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration,
                       MessageType messageType, ProtocolType protocolType) {
-        super(implementationId, author, name, impScope);
+        super(implementationId, author, name, impScope, templateConfiguration);
         this.protocolType = protocolType;
         this.messageType = messageType;
     }
@@ -82,6 +89,11 @@ public class Serializer extends ModuleImp {
     @Override
     public HashSet<ImmutableGenericImp> getGenerics() {
         return new HashSet<>(Arrays.asList(protocolType, messageType));
+    }
+
+    @Override
+    public boolean isValid() {
+        return super.isValid() && protocolType != null && messageType != null;
     }
 
     @Override

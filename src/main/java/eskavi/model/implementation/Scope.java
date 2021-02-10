@@ -1,5 +1,6 @@
 package eskavi.model.implementation;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import eskavi.model.user.User;
 
 import javax.persistence.*;
@@ -7,6 +8,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 
+/**
+ * This class describes if this MI is shared with other users
+ * and exactly which user groups have access to this MI.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
 @Entity
 public class Scope {
     @Id
@@ -14,6 +22,7 @@ public class Scope {
     protected long scopeId;
     @Enumerated(EnumType.STRING)
     private ImplementationScope impScope;
+    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany
     private Collection<User> grantedUsers;
 
@@ -60,6 +69,10 @@ public class Scope {
 
     public void setScopeId(long id) {
         this.scopeId = id;
+    }
+
+    public Collection<User> getGrantedUsers() {
+        return grantedUsers;
     }
 
     @Override

@@ -2,22 +2,62 @@ package eskavi.model.configuration;
 
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
+import eskavi.model.implementation.ImplementationScope;
+import eskavi.model.implementation.Scope;
 import eskavi.model.implementation.moduleimp.*;
+import eskavi.model.user.ImmutableUser;
 
 import java.util.Collection;
 import java.util.HashSet;
 
 public class ConfigurationImplementationStub implements ImmutableModuleImp {
+    private Configuration instanceConfig;
     private int compatible;
     private ImmutableGenericImp genericImp;
 
-    public ConfigurationImplementationStub(int compatible, ImmutableGenericImp generic) {
+    public ConfigurationImplementationStub(int compatible, ImmutableGenericImp generic, Configuration instanceConfig) {
         this.compatible = compatible;
         this.genericImp = generic;
+        this.instanceConfig = instanceConfig;
     }
 
     public int getCompatible() {
         return compatible;
+    }
+
+    @Override
+    public long getImplementationId() {
+        return 0;
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public ImmutableUser getAuthor() {
+        return null;
+    }
+
+    @Override
+    public Scope getScope() {
+        return null;
+    }
+
+    @Override
+    public Collection<ImmutableUser> getUsers() {
+        return null;
+    }
+
+    @Override
+    public boolean isSubscribed(ImmutableUser user) {
+        return false;
+    }
+
+    @Override
+    public ImplementationScope getImplementationScope() {
+        return null;
     }
 
     @Override
@@ -69,6 +109,11 @@ public class ConfigurationImplementationStub implements ImmutableModuleImp {
     @Override
     public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter) {
         return false;
+    }
+
+    @Override
+    public Configuration getConfigurationRoot() {
+        return instanceConfig;
     }
 
     @Override

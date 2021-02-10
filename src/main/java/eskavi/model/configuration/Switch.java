@@ -30,14 +30,7 @@ public class Switch extends Select {
         this.setValue(FALSE);
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+    protected Switch() {
     }
 
     @Override
@@ -52,8 +45,21 @@ public class Switch extends Select {
     }
 
     @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
     public Switch clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
-        return new Switch(getName(), allowsMultiple(), copy, getContent().get(TRUE), getContent().get(FALSE));
+        Switch result = new Switch(getName(), allowsMultiple(), copy, getContent().get(TRUE), getContent().get(FALSE));
+        // needed to be able to set value to previously set value
+        result.setValue(getValue().equals(getContent().get(TRUE)) ? TRUE : FALSE);
+        return result;
     }
 }

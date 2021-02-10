@@ -1,12 +1,20 @@
 package eskavi.model.implementation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.moduleimp.*;
 
 import java.util.Collection;
 import java.util.HashSet;
 
-public interface ImmutableModuleImp {
+/**
+ * This interface inherits ImmutableImplementation and makes Module Implementations available.
+ * However, the Module Implementations cannot be changed via this interface.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
+public interface ImmutableModuleImp extends ImmutableImplementation {
     public boolean isCompatible(Collection<ImmutableModuleImp> others);
 
     public boolean checkCompatibleEndpoint(Endpoint endpoint);
@@ -24,6 +32,13 @@ public interface ImmutableModuleImp {
     public boolean checkCompatiblePersistenceManager(PersistenceManager persistenceManager);
 
     public boolean checkCompatibleInteractionStarter(InteractionStarter interactionStarter);
+
+    /**
+     * Default getter for configuration attribute
+     *
+     * @return configuration
+     */
+    public Configuration getConfigurationRoot();
 
     @JsonIgnore
     public HashSet<ImmutableGenericImp> getGenerics();

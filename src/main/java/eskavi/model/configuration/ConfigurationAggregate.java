@@ -1,6 +1,8 @@
 package eskavi.model.configuration;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 
 import java.util.*;
@@ -23,11 +25,13 @@ public class ConfigurationAggregate extends Configuration {
      * @param enforceCompatibility whether the compatibility between the {@link ImmutableModuleImp}s in this
      *                             Aggregate has to be ensured.
      */
-    public ConfigurationAggregate(String name, boolean allowMultiple, KeyExpression expression,
-                                  List<Configuration> children, boolean enforceCompatibility) {
+    public ConfigurationAggregate(String name, boolean allowMultiple, KeyExpression expression, List<Configuration> children, boolean enforceCompatibility) {
         super(name, allowMultiple, expression);
         this.children = children;
         this.enforceCompatibility = enforceCompatibility;
+    }
+
+    protected ConfigurationAggregate() {
     }
 
     /**
@@ -35,14 +39,19 @@ public class ConfigurationAggregate extends Configuration {
      *
      * @return boolean
      */
+    @JsonGetter("enforceCompatibility")
     public boolean enforcesCompatibility() {
         return this.enforceCompatibility;
+    }
+
+    protected void setEnforceCompatibility(boolean enforceCompatibility) {
+        this.enforceCompatibility = enforceCompatibility;
     }
 
     private boolean enforceCompatibility() {
         HashSet<ImmutableModuleImp> moduleImps = new HashSet<>();
         for (Configuration config : children) {
-            /*config.getModuleImp only returns not null if config is impSelect -> then first child is Configuration
+            /*config.getModuleImp only returns not null if config is impSelect -> then returns imp
              *attached to moduleInstance. So only implementations added in this Aggregate end up in this Map.
              */
             moduleImps.add(config.getModuleImp());
@@ -83,6 +92,29 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
+    public boolean isValid() {
+        for (Configuration config : children) {
+            if (!config.isValid()) return false;
+        }
+
+        if (enforceCompatibility) {
+            HashSet<ImmutableGenericImp> allGenerics = new HashSet<>();
+            for (Configuration config : children) {
+                if (config.getClass() == ImplementationSelect.class) {
+                    ImplementationSelect impSelect = (ImplementationSelect) config;
+                    allGenerics.addAll(impSelect.getGenerics());
+                }
+            }
+            for (ImmutableGenericImp generic : allGenerics) {
+                for (ImmutableGenericImp other : allGenerics) {
+                    if (!generic.checkCompatibility(other)) return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
     public void addChild(Configuration config) throws IllegalArgumentException {
         if (!children.contains(config) || config.allowsMultiple()) {
             children.add(config);
@@ -105,7 +137,11 @@ public class ConfigurationAggregate extends Configuration {
         return children;
     }
 
-    @JsonIgnore
+    @JsonSetter("children")
+    public void setChildren(List<Configuration> children) {
+        this.children = children;
+    }
+
     @Override
     public Collection<ImmutableModuleImp> getDependentModuleImps() {
         HashSet<ImmutableModuleImp> result = new HashSet<>();

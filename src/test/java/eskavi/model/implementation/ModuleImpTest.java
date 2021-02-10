@@ -44,18 +44,18 @@ class ModuleImpTest {
         protocolTypeB = new ProtocolType(4, userA, "protocolType_4", ImplementationScope.SHARED);
         messageTypeA = new MessageType(3, userA, "messageType_3", ImplementationScope.SHARED);
         messageTypeB = new MessageType(5, userA, "messageType_5", ImplementationScope.SHARED);
-        endpoint = new Endpoint(1, userA, "endpoint_1", ImplementationScope.SHARED, protocolTypeA);
-        assetConnection = new AssetConnection(6, userA, "assetconnection", ImplementationScope.PUBLIC);
+        endpoint = new Endpoint(1, userA, "endpoint_1", ImplementationScope.SHARED, trueConfiguration, protocolTypeA);
+        assetConnection = new AssetConnection(6, userA, "assetconnection", ImplementationScope.PUBLIC, trueConfiguration);
         deserializer = new Deserializer(7, userA, "deserializer_7",
-                ImplementationScope.SHARED, messageTypeA, protocolTypeA);
+                ImplementationScope.SHARED, trueConfiguration, messageTypeA, protocolTypeA);
         serializer = new Serializer(8, userA,
-                "serializer_8", ImplementationScope.SHARED, messageTypeA, protocolTypeA);
-        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, messageTypeA);
-        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, messageTypeA);
+                "serializer_8", ImplementationScope.SHARED, trueConfiguration, messageTypeA, protocolTypeA);
+        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, trueConfiguration, messageTypeA);
+        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, trueConfiguration, messageTypeA);
         interactionStarter = new InteractionStarter(11, userA,
-                "interactionStarter11", ImplementationScope.SHARED);
+                "interactionStarter11", ImplementationScope.SHARED, trueConfiguration);
         persistenceManager = new PersistenceManager(12, userA,
-                "persistanceManager_12", ImplementationScope.SHARED);
+                "persistanceManager_12", ImplementationScope.SHARED, trueConfiguration);
         usedImpCollection = new LinkedList<>(Arrays.asList(endpoint, serializer, deserializer,
                 dispatcher, handler, assetConnection, interactionStarter, persistenceManager));
     }
@@ -63,7 +63,7 @@ class ModuleImpTest {
     @Test
     void isCompatibleSerializer() {
         Serializer serializer1 = new Serializer(serializer.getImplementationId(), (User) serializer.getAuthor(),
-                "serializer_copy", serializer.getScope().getImpScope(), serializer.getMessageType(),
+                "serializer_copy", serializer.getScope().getImpScope(), trueConfiguration, serializer.getMessageType(),
                 serializer.getProtocolType());
         assertTrue(serializer.isCompatible(usedImpCollection));
         assertFalse(serializer1.isCompatible(usedImpCollection));
@@ -87,7 +87,7 @@ class ModuleImpTest {
     @Test
     void isCompatibleDeserializer() {
         Serializer deserializer1 = new Serializer(deserializer.getImplementationId(), (User) deserializer.getAuthor(),
-                "deserializer_copy", deserializer.getScope().getImpScope(), deserializer.getMessageType(),
+                "deserializer_copy", deserializer.getScope().getImpScope(), trueConfiguration, deserializer.getMessageType(),
                 deserializer.getProtocolType());
         assertTrue(deserializer.isCompatible(usedImpCollection));
         assertFalse(deserializer1.isCompatible(usedImpCollection));
@@ -111,7 +111,7 @@ class ModuleImpTest {
     @Test
     void isCompatibleEndpoint() {
         Endpoint endpoint1 = new Endpoint(endpoint.getImplementationId(), (User) endpoint.getAuthor(),
-                "endpoint_copy", endpoint.getScope().getImpScope(), endpoint.getProtocolType());
+                "endpoint_copy", endpoint.getScope().getImpScope(), trueConfiguration, endpoint.getProtocolType());
         assertTrue(endpoint.isCompatible(usedImpCollection));
         assertFalse(endpoint1.isCompatible(usedImpCollection));
         serializer.setMessageType(messageTypeB);
@@ -137,7 +137,7 @@ class ModuleImpTest {
     @Test
     void isCompatibleDispatcher() {
         Dispatcher dispatcher1 = new Dispatcher(dispatcher.getImplementationId(), (User) dispatcher.getAuthor(),
-                "dispatcher_copy", dispatcher.getScope().getImpScope(), dispatcher.getMessageType());
+                "dispatcher_copy", dispatcher.getScope().getImpScope(), trueConfiguration, dispatcher.getMessageType());
         assertTrue(dispatcher.isCompatible(usedImpCollection));
         assertFalse(dispatcher1.isCompatible(usedImpCollection));
         endpoint.setProtocolType(protocolTypeB);
@@ -163,7 +163,7 @@ class ModuleImpTest {
     @Test
     void isCompatibleHandler() {
         Handler handler1 = new Handler(handler.getImplementationId(), (User) handler.getAuthor(),
-                "handler_copy", handler.getScope().getImpScope(), handler.getMessageType());
+                "handler_copy", handler.getScope().getImpScope(), trueConfiguration, handler.getMessageType());
         assertTrue(handler.isCompatible(usedImpCollection));
         assertTrue(handler1.isCompatible(usedImpCollection));
         endpoint.setProtocolType(protocolTypeB);
@@ -189,7 +189,7 @@ class ModuleImpTest {
     @Test
     void isCompatibleAssetConnection() {
         AssetConnection assetConnection1 = new AssetConnection(assetConnection.getImplementationId(), (User) assetConnection.getAuthor(),
-                "AC_copy", assetConnection.getScope().getImpScope());
+                "AC_copy", assetConnection.getScope().getImpScope(), trueConfiguration);
         assertTrue(assetConnection.isCompatible(usedImpCollection));
         assertTrue(assetConnection1.isCompatible(usedImpCollection));
         endpoint.setProtocolType(protocolTypeB);
@@ -218,7 +218,7 @@ class ModuleImpTest {
     @Test
     void isCompatibleInteractionStarter() {
         InteractionStarter interactionStarter1 = new InteractionStarter(interactionStarter.getImplementationId(),
-                (User) interactionStarter.getAuthor(), "IS_copy", interactionStarter.getScope().getImpScope());
+                (User) interactionStarter.getAuthor(), "IS_copy", interactionStarter.getScope().getImpScope(), trueConfiguration);
         assertTrue(interactionStarter.isCompatible(usedImpCollection));
         assertTrue(interactionStarter1.isCompatible(usedImpCollection));
         endpoint.setProtocolType(protocolTypeB);
@@ -247,7 +247,7 @@ class ModuleImpTest {
     @Test
     void isCompatiblePersistenceManager() {
         PersistenceManager persistenceManager1 = new PersistenceManager(persistenceManager.getImplementationId(),
-                (User) persistenceManager.getAuthor(), "PM_copy", persistenceManager.getScope().getImpScope());
+                (User) persistenceManager.getAuthor(), "PM_copy", persistenceManager.getScope().getImpScope(), trueConfiguration);
         assertTrue(persistenceManager.isCompatible(usedImpCollection));
         assertFalse(persistenceManager1.isCompatible(usedImpCollection));
         endpoint.setProtocolType(protocolTypeB);

@@ -10,6 +10,9 @@ public class FileField extends SingleValueField {
         super(name, allowMultiple, expression);
     }
 
+    protected FileField() {
+    }
+
     @Override
     public String resolveKeyExpression() {
         if (getValue() != null) {
@@ -26,6 +29,11 @@ public class FileField extends SingleValueField {
                 ", allowMultiple=" + allowsMultiple() +
                 ", keyExpression=" + getKeyExpression().toString() +
                 ", filename='" + getValue() + "'}";
+    }
+
+    @Override
+    public boolean isValid() {
+        return false;
     }
 
     @Override

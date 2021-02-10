@@ -2,6 +2,15 @@ package eskavi.model.implementation;
 
 import eskavi.model.user.ImmutableUser;
 
+import java.util.Collection;
+
+/**
+ * This interface is used to work with implementations.
+ * However, it is not possible to change the implementation via the interface.
+ *
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0.0
+ */
 public interface ImmutableImplementation {
     public long getImplementationId();
 
@@ -11,5 +20,9 @@ public interface ImmutableImplementation {
 
     public Scope getScope(); // TODO: or getSubscribed():List<ImmutableUser> ?
 
+    public Collection<ImmutableUser> getUsers();
+
     public boolean isSubscribed(ImmutableUser user);
+
+    public ImplementationScope getImplementationScope();
 }

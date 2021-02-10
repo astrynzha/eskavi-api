@@ -3,20 +3,26 @@ package eskavi.controller;
 import eskavi.model.implementation.ImmutableImplementation;
 import eskavi.model.implementation.ImpType;
 import eskavi.model.user.ImmutableUser;
+import eskavi.service.ImpService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
-import java.util.Collection;
 
 @RestController
 @RequestMapping("imp")
 public class ImpController {
 
+    final ImpService impService;
+
+    public ImpController(ImpService impService) {
+        this.impService = impService;
+    }
+
     /**
      * @api{get}/imp Get Implementation
      * @apiName GetImplementation
      * @apiGroup Implementation
-     * @apiDescription Gets all implementations, specific type of implementations or a specific one (if impId is provided), 
+     * @apiDescription Gets all implementations, specific type of implementations or a specific one (if impId is provided),
      * the user (if provided through token) has access to. If token is not provided, only public implementations will be returned/accessible through this call.
      * @apiVersion 0.0.1
      * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
@@ -327,8 +333,8 @@ public class ImpController {
       },
     ];
      * }
-     *},
-     *  ]
+     * },
+     * ]
      * }
      * @apiError {String} error Errormessage
      * @apiErrorExample {json} Error-Response:
@@ -353,12 +359,23 @@ public class ImpController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     *     "types": ["Serializer", "Deserializer", "Handler"]
+     *     "types": [{
+     *         type: "Serializer",
+     *         topLevel: false
+     *     }, {
+     *         type: "Deserializer",
+     *         topLevel: false
+     *     }, {
+     *         type: "Handler",
+     *         topLevel: true
+     *     }]
      * }
      * @apiError {String} message Errormessage
      */
     @GetMapping("/types")
-    public ImpType getImplementationTypes(ImmutableUser user) {return null;}
+    public ImpType getImplementationTypes(ImmutableUser user) {
+        return null;
+    }
 
     /**
      * @api{get}/imp/config/data_types Get Data types of Configuration
@@ -376,7 +393,9 @@ public class ImpController {
      * @apiError {String} message Errormessage
      */
     @GetMapping("/config/data_types")
-    public ImpType getConfigDataTypes(ImmutableUser user) {return null;}
+    public ImpType getConfigDataTypes(ImmutableUser user) {
+        return null;
+    }
 
     /**
      * @api{get}/imp/scopes Get possible implementation scopes
@@ -394,7 +413,9 @@ public class ImpController {
      * @apiError {String} message Errormessage
      */
     @GetMapping("/scopes")
-    public ImpType getImpScopes(ImmutableUser user) {return null;}
+    public ImpType getImpScopes(ImmutableUser user) {
+        return null;
+    }
 
     /**
      * @api{get}/imp/default GetDefaultImplementation for ImplementationType
@@ -530,11 +551,11 @@ public class ImpController {
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
      * @apiError {String} message Errormessage
-     * @apiParam (Request body) {User} user User object
+     * @apiParam (Request body) {String} userId User unique ID
      * @apiParam (Request body) {Number} impId Implementation unique ID
      */
     @PostMapping("/{id:[0-9]+}/user")
-    public void addUser(@PathVariable("id") Long implementationId, ImmutableUser user) {
+    public void addUser(@PathVariable("id") Long implementationId, String userId) {
     }
 
     /**
@@ -544,11 +565,11 @@ public class ImpController {
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
      * @apiError {String} message Errormessage
-     * @apiParam (Request body) {User} user User object
+     * @apiParam (Request body) {String} userId User unique ID
      * @apiParam (Request body) {Number} impId Implementation unique ID
      */
     @DeleteMapping("/user")
-    public void removeUser(Long implementationId, ImmutableUser user) {
+    public void removeUser(Long implementationId, String userId) {
     }
 
     /**

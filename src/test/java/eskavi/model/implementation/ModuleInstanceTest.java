@@ -41,28 +41,30 @@ class ModuleInstanceTest {
 
     @BeforeEach
     void setUp() {
+        dummy = new TextField("dummy", false, new KeyExpression("<dummy>", "<dummy>"), DataType.TEXT);
+        dummy.setValue("dummy");
         User userA = new User("a@gmail.com", "dfjask;fj",
                 UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
         protocolTypeA = new ProtocolType(0, userA, "protocolType_0", ImplementationScope.SHARED);
         protocolTypeB = new ProtocolType(4, userA, "protocolType_4", ImplementationScope.SHARED);
         messageTypeA = new MessageType(3, userA, "messageType_3", ImplementationScope.SHARED);
         messageTypeB = new MessageType(5, userA, "messageType_5", ImplementationScope.SHARED);
-        endpoint = new Endpoint(1, userA, "endpoint_1", ImplementationScope.SHARED, protocolTypeA);
-        assetConnection = new AssetConnection(6, userA, "assetconnection", ImplementationScope.PUBLIC);
+        endpoint = new Endpoint(1, userA, "endpoint_1", ImplementationScope.SHARED, dummy, protocolTypeA);
+        assetConnection = new AssetConnection(6, userA, "assetconnection", ImplementationScope.PUBLIC, dummy);
         deserializer = new Deserializer(7, userA, "deserializer_7",
-                ImplementationScope.SHARED, messageTypeA, protocolTypeA);
+                ImplementationScope.SHARED, dummy, messageTypeA, protocolTypeA);
         serializer = new Serializer(8, userA,
-                "serializer_8", ImplementationScope.SHARED, messageTypeA, protocolTypeA);
-        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, messageTypeA);
-        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, messageTypeA);
+                "serializer_8", ImplementationScope.SHARED, dummy, messageTypeA, protocolTypeA);
+        dispatcher = new Dispatcher(9, userA, "dispatcher_9", ImplementationScope.SHARED, dummy, messageTypeA);
+        handler = new Handler(10, userA, "handler_10", ImplementationScope.SHARED, dummy, messageTypeA);
         interactionStarter = new InteractionStarter(11, userA,
-                "interactionStarter11", ImplementationScope.SHARED);
+                "interactionStarter11", ImplementationScope.SHARED, dummy);
         persistenceManager = new PersistenceManager(12, userA,
-                "persistanceManager_12", ImplementationScope.SHARED);
+                "persistanceManager_12", ImplementationScope.SHARED, dummy);
         usedImpCollection = new LinkedList<>(Arrays.asList(endpoint, assetConnection, interactionStarter, persistenceManager));
 
-        dummy = new TextField("dummy", false, new KeyExpression("<dummy>", "<dummy>"), DataType.TEXT);
-        dummy.setValue("dummy");
+        this.dummy = new TextField("dummy", false, new KeyExpression("<dummy>", "<dummy>"), DataType.TEXT);
+        this.dummy.setValue("dummy");
 
         port = new TextField("port", false, new KeyExpression("<port>", "<port>"), DataType.NUMBER);
         port.setValue("8080");
@@ -71,22 +73,25 @@ class ModuleInstanceTest {
         generics.add(protocolTypeA);
         serializerSelect = new ImplementationSelect("serializer", false, new KeyExpression("<serializer>", "<serializer>"),
                 generics, ImpType.SERIALIZER);
-        serializerSelect.setInstance(new ModuleInstance(serializer, dummy));
+        serializerSelect.setInstance(new ModuleInstance(serializer));
         deserializerSelect = new ImplementationSelect("deserializer", false, new KeyExpression("<deserializer>", "<deserializer>"),
                 generics, ImpType.DESERIALIZER);
-        deserializerSelect.setInstance(new ModuleInstance(deserializer, dummy));
-        generics.remove(protocolTypeA);
+        deserializerSelect.setInstance(new ModuleInstance(deserializer));
+        generics = new HashSet<>();
+        generics.add(messageTypeA);
         dispatcherSelect = new ImplementationSelect("dispatcher", false, new KeyExpression("<dispatcher>", "<dispatcher>"),
                 generics, ImpType.DISPATCHER);
         handlerSelect = new ImplementationSelect("handler", false, new KeyExpression("<handler>", "<handler>"),
                 generics, ImpType.HANDLER);
-        handlerSelect.setInstance(new ModuleInstance(handler, dummy));
-        dispatcherSelect.setInstance(new ModuleInstance(dispatcher, handlerSelect));
+        handlerSelect.setInstance(new ModuleInstance(handler));
+        dispatcher.setConfigurationRoot(handlerSelect);
+        dispatcherSelect.setInstance(new ModuleInstance(dispatcher));
         mapping = new ConfigurationAggregate("mapping", false, new KeyExpression("<mapping>", "<mapping>"),
-                new LinkedList<Configuration>(Arrays.asList(dummy, serializerSelect, deserializerSelect, dispatcherSelect)), true);
+                new LinkedList<Configuration>(Arrays.asList(this.dummy, serializerSelect, deserializerSelect, dispatcherSelect)), true);
         configuration = new ConfigurationAggregate("parent", false, new KeyExpression("<parent>", "<parent>"),
                 new LinkedList<Configuration>(Arrays.asList(mapping, port)), false);
-        instance = new ModuleInstance(endpoint, configuration);
+        endpoint.setConfigurationRoot(configuration);
+        instance = new ModuleInstance(endpoint);
     }
 
     @Test
