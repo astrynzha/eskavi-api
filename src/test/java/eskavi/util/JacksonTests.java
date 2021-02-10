@@ -96,7 +96,7 @@ public class JacksonTests {
     void testImplementation() throws JsonProcessingException {
         String result = new ObjectMapper().writeValueAsString(deserializer);
         System.out.println(result);
-        result = "{\"author\":\"a@gmail.com\",\"name\":\"deserializer_7\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"},\"protocolType\":{\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"messageType\":{\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}}\n";
+        //result = "{\"author\":\"a@gmail.com\",\"name\":\"deserializer_7\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"},\"protocolType\":{\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"messageType\":{\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}}\n";
         Deserializer copy = new ObjectMapper().readValue(result, Deserializer.class);
         System.out.println(copy);
     }
@@ -119,4 +119,10 @@ public class JacksonTests {
         System.out.println(result);
     }
 
+    @Test
+    void testPersistenceManager() throws JsonProcessingException {
+        PersistenceManager manager = new PersistenceManager(13, userA, "manager", ImplementationScope.SHARED, dummy);
+        String result = new ObjectMapper().writeValueAsString(manager);
+        System.out.println(result);
+    }
 }

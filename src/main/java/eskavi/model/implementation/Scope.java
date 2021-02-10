@@ -1,6 +1,6 @@
 package eskavi.model.implementation;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import eskavi.model.user.User;
 
 import javax.persistence.*;
@@ -22,7 +22,7 @@ public class Scope {
     protected long scopeId;
     @Enumerated(EnumType.STRING)
     private ImplementationScope impScope;
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIgnore
     @OneToMany
     private Collection<User> grantedUsers;
 

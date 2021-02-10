@@ -88,6 +88,7 @@ public abstract class Implementation implements ImmutableImplementation {
      *
      * @return
      */
+    @JsonIgnore
     public boolean isValid() {
         return implementationId >= 0 && author != null && name != null && scope != null && scope.getImpScope() != null
                 && scope.getScopeId() >= 0 && scope.getGrantedUsers() != null
@@ -123,6 +124,7 @@ public abstract class Implementation implements ImmutableImplementation {
         scope.subscribe((User) getAuthor());
     }
 
+    @JsonIgnore
     @Override
     public Collection<ImmutableUser> getUsers() {
         return new HashSet<>(scope.getGrantedUsers());
@@ -136,6 +138,7 @@ public abstract class Implementation implements ImmutableImplementation {
         return scope.isSubscribed((User) user);
     }
 
+    @JsonIgnore
     @Override
     public ImplementationScope getImplementationScope() {
         return scope.getImpScope();

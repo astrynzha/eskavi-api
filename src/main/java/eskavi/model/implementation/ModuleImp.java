@@ -1,6 +1,5 @@
 package eskavi.model.implementation;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.configuration.ConfigurationAggregate;
 import eskavi.model.configuration.KeyExpression;
@@ -104,7 +103,6 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
         return new HashSet<>();
     }
 
-    @JsonIgnore
     @Override
     public boolean isValid() {
         return super.isValid() && configurationRoot.isValid();
