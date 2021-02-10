@@ -1,5 +1,6 @@
 package eskavi.model.implementation;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import eskavi.model.user.User;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Scope {
     protected long scopeId;
     @Enumerated(EnumType.STRING)
     private ImplementationScope impScope;
+    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany
     private Collection<User> grantedUsers;
 
@@ -69,6 +71,10 @@ public class Scope {
         this.scopeId = id;
     }
 
+    public Collection<User> getGrantedUsers() {
+        return grantedUsers;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(impScope, grantedUsers);
@@ -87,9 +93,5 @@ public class Scope {
         return "Scope{" +
                 "impScope=" + impScope +
                 ", grantedUsers=" + grantedUsers + "}";
-    }
-
-    public Collection<User> getGrantedUsers() {
-        return grantedUsers;
     }
 }

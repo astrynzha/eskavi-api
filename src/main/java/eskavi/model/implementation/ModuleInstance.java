@@ -27,7 +27,7 @@ public class ModuleInstance {
      */
     public ModuleInstance(ImmutableModuleImp moduleImp) {
         this.moduleImp = moduleImp;
-        this.instanceConfiguration = moduleImp.getConfiguration().clone();
+        this.instanceConfiguration = moduleImp.getConfigurationRoot().clone();
     }
 
     protected ModuleInstance() {
@@ -79,7 +79,7 @@ public class ModuleInstance {
      * @throws IllegalArgumentException if the given configuration doesnt match this imps template configuration
      */
     public void setInstanceConfiguration(Configuration instanceConfiguration) {
-        if (instanceConfiguration.equals(this.moduleImp.getConfiguration())) {
+        if (instanceConfiguration.equals(this.moduleImp.getConfigurationRoot())) {
             this.instanceConfiguration = instanceConfiguration;
         } else {
             throw new IllegalArgumentException("Configuration has to match the template configuration.");

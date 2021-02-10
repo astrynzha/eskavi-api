@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eskavi.model.configuration.*;
 import eskavi.model.implementation.*;
-import eskavi.model.implementation.moduleimp.Deserializer;
-import eskavi.model.implementation.moduleimp.Dispatcher;
-import eskavi.model.implementation.moduleimp.Handler;
-import eskavi.model.implementation.moduleimp.Serializer;
+import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
@@ -36,6 +33,7 @@ public class JacksonTests {
     private Dispatcher dispatcher;
     private Handler handler;
     private User userA;
+    private Endpoint endpoint;
 
 
     @BeforeEach
@@ -73,12 +71,13 @@ public class JacksonTests {
         handlerSelect = new ImplementationSelect("handler", false, new KeyExpression("<handler>", "<handler>"),
                 generics, ImpType.HANDLER);
         handlerSelect.setInstance(new ModuleInstance(handler));
-        dispatcher.setConfiguration(handlerSelect);
+        dispatcher.setConfigurationRoot(handlerSelect);
         dispatcherSelect.setInstance(new ModuleInstance(dispatcher));
         mapping = new ConfigurationAggregate("mapping", false, new KeyExpression("<mapping>", "<mapping>"),
                 new LinkedList<Configuration>(Arrays.asList(dummy, serializerSelect, deserializerSelect, dispatcherSelect)), true);
         configuration = new ConfigurationAggregate("parent", false, new KeyExpression("<parent>", "<parent>"),
                 new LinkedList<Configuration>(Arrays.asList(mapping, port)), false);
+        endpoint = new Endpoint(11, userA, "endpoint", ImplementationScope.SHARED, configuration, protocolTypeA);
     }
 
     @Test
@@ -100,6 +99,24 @@ public class JacksonTests {
         result = "{\"author\":\"a@gmail.com\",\"name\":\"deserializer_7\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"},\"protocolType\":{\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"messageType\":{\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}}\n";
         Deserializer copy = new ObjectMapper().readValue(result, Deserializer.class);
         System.out.println(copy);
+    }
+
+    @Test
+    void testImpTypesToJson() throws JsonProcessingException {
+        String result = new ObjectMapper().writeValueAsString(ImpType.values());
+        System.out.println(result);
+    }
+
+    @Test
+    void testEndpoint() throws JsonProcessingException {
+        String result = new ObjectMapper().writeValueAsString(endpoint);
+        System.out.println(result);
+    }
+
+    @Test
+    void testGeneric() throws JsonProcessingException {
+        String result = new ObjectMapper().writeValueAsString(protocolTypeA);
+        System.out.println(result);
     }
 
 }

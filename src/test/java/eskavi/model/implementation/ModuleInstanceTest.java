@@ -84,13 +84,13 @@ class ModuleInstanceTest {
         handlerSelect = new ImplementationSelect("handler", false, new KeyExpression("<handler>", "<handler>"),
                 generics, ImpType.HANDLER);
         handlerSelect.setInstance(new ModuleInstance(handler));
-        dispatcher.setConfiguration(handlerSelect);
+        dispatcher.setConfigurationRoot(handlerSelect);
         dispatcherSelect.setInstance(new ModuleInstance(dispatcher));
         mapping = new ConfigurationAggregate("mapping", false, new KeyExpression("<mapping>", "<mapping>"),
                 new LinkedList<Configuration>(Arrays.asList(this.dummy, serializerSelect, deserializerSelect, dispatcherSelect)), true);
         configuration = new ConfigurationAggregate("parent", false, new KeyExpression("<parent>", "<parent>"),
                 new LinkedList<Configuration>(Arrays.asList(mapping, port)), false);
-        endpoint.setConfiguration(configuration);
+        endpoint.setConfigurationRoot(configuration);
         instance = new ModuleInstance(endpoint);
     }
 

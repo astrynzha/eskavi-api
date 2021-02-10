@@ -38,7 +38,7 @@ public interface ImmutableModuleImp extends ImmutableImplementation {
      *
      * @return configuration
      */
-    public Configuration getConfiguration();
+    public Configuration getConfigurationRoot();
 
     @JsonIgnore
     public HashSet<ImmutableGenericImp> getGenerics();

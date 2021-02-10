@@ -112,7 +112,7 @@ public class ConfigurationImplementationStub implements ImmutableModuleImp {
     }
 
     @Override
-    public Configuration getConfiguration() {
+    public Configuration getConfigurationRoot() {
         return instanceConfig;
     }
 
