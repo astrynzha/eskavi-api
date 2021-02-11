@@ -107,6 +107,7 @@ class ImpServiceTest {
     void getDefaultImpCreate() {
     }
 
+    // TODO test isValid()
     @Test
     void addImplementation() {
         impService.addImplementation(endpoint, "a.str@gmail.com");
@@ -183,11 +184,6 @@ class ImpServiceTest {
     }
 
     @Test
-    void updateImplementation() {
-        // TODO
-    }
-
-    @Test
     void removeImplementation() {
         impService.addImplementation(endpoint, "a.str@gmail.com");
         assertEquals(impService.getImp(endpoint.getImplementationId()), endpoint);
@@ -205,5 +201,15 @@ class ImpServiceTest {
         }
         Collection<ImmutableImplementation> imps = impService.getImps();
         assertTrue(imps.isEmpty());
+    }
+
+    @Test
+    void updateImplementation() {
+        // TODO
+    }
+
+    @Test
+    void isValidTest() {
+        // TODO
     }
 }
