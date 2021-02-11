@@ -1,16 +1,15 @@
 package eskavi.service.mockrepo;
 
-import eskavi.model.implementation.Implementation;
 import eskavi.model.user.User;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class MockUserRepositry {
+public class MockUserRepository {
     Map<String, User> repo;
 
-    public MockUserRepositry() {
+    public MockUserRepository() {
         this.repo = new HashMap<>();
     }
 
