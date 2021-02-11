@@ -52,6 +52,14 @@ public abstract class Implementation implements ImmutableImplementation {
     public Implementation() {
     }
 
+    /**
+     * Create an implementation object.
+     * If the scope is shared - author is added to the scope object here.
+     * @param implementationId id of this object
+     * @param author author of this object
+     * @param name name of this object
+     * @param impScope implementation scope of this object
+     */
     protected Implementation(long implementationId, User author, String name, ImplementationScope impScope) {
         this.implementationId = implementationId;
         this.author = author;
@@ -67,6 +75,12 @@ public abstract class Implementation implements ImmutableImplementation {
         }
     }
 
+    /**
+     * Subscribes a user to the scope object of this implementation and makes sure that the implementation
+     * is subscribed to the user as well
+     * @param user User to subscribe
+     * @throws IllegalAccessException if the scope is not SHARED
+     */
     public void subscribe(User user) throws IllegalAccessException {
         if (isSubscribed(user)) {
             return;
@@ -75,6 +89,12 @@ public abstract class Implementation implements ImmutableImplementation {
         user.subscribe(this);
     }
 
+    /**
+     * Unsubscribes a user from the scope object of this implementation and makes sure that the implementation
+     * is unsubscribed from the user as well
+     * @param user User to subscribe
+     * @throws IllegalAccessException if the scope is not SHARED
+     */
     public void unsubscribe(User user) throws IllegalAccessException {
         if (!isSubscribed(user)) {
             return;
@@ -119,9 +139,20 @@ public abstract class Implementation implements ImmutableImplementation {
         return scope;
     }
 
-    public void setScope(Scope scope) throws IllegalAccessException {
+    /**
+     * Assign a new scope object to this implementation object.
+     * If the scope is shared -> subscribes the author
+     * @param scope new scope object
+     */
+    public void setScope(Scope scope) {
         this.scope = scope;
-        scope.subscribe((User) getAuthor());
+        if (scope.getImpScope().equals(ImplementationScope.SHARED)) {
+            try {
+                scope.subscribe((User) getAuthor());
+            } catch (IllegalAccessException e) {
+                throw new IllegalStateException("this cannot happen, scope is checked, before adding a new user");
+            }
+        }
     }
 
     @JsonIgnore

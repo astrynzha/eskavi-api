@@ -25,6 +25,15 @@ public class Endpoint extends ModuleImp {
     public Endpoint() {
     }
 
+    /**
+     * Constructs an endpoint object.
+     * @param implementationId id
+     * @param author author
+     * @param name name
+     * @param impScope implementation Scope
+     * @param templateConfiguration configuration of this moduleImp
+     * @param protocolType protocol type generic
+     */
     public Endpoint(long implementationId, User author, String name,
                     ImplementationScope impScope, Configuration templateConfiguration, ProtocolType protocolType) {
         super(implementationId, author, name, impScope, templateConfiguration);

@@ -20,6 +20,14 @@ public class PersistenceManager extends ModuleImp {
     public PersistenceManager() {
     }
 
+    /**
+     * Constructs a persistance manager object.
+     * @param implementationId id
+     * @param author author
+     * @param name name
+     * @param impScope implementation Scope
+     * @param templateConfiguration configuration of this moduleImp
+     */
     public PersistenceManager(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration) {
         super(implementationId, author, name, impScope, templateConfiguration);
     }

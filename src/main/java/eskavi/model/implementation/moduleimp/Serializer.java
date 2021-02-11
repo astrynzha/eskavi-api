@@ -27,8 +27,18 @@ public class Serializer extends ModuleImp {
     public Serializer() {
     }
 
-    public Serializer(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration,
-                      MessageType messageType, ProtocolType protocolType) {
+    /**
+     * Constructs a serializer object.
+     * @param implementationId id
+     * @param author author
+     * @param name name
+     * @param impScope implementation Scope
+     * @param templateConfiguration configuration of this moduleImp
+     * @param messageType message type generic
+     * @param protocolType protocol type generic
+     */
+    public Serializer(long implementationId, User author, String name, ImplementationScope impScope,
+                      Configuration templateConfiguration, MessageType messageType, ProtocolType protocolType) {
         super(implementationId, author, name, impScope, templateConfiguration);
         this.protocolType = protocolType;
         this.messageType = messageType;

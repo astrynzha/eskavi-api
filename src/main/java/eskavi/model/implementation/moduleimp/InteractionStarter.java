@@ -18,7 +18,16 @@ public class InteractionStarter extends ModuleImp {
     public InteractionStarter() {
     }
 
-    public InteractionStarter(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration) {
+    /**
+     * Constructs an interaction starter object.
+     * @param implementationId id
+     * @param author author
+     * @param name name
+     * @param impScope implementation Scope
+     * @param templateConfiguration configuration of this moduleImp
+     */
+    public InteractionStarter(long implementationId, User author, String name, ImplementationScope impScope,
+                              Configuration templateConfiguration) {
         super(implementationId, author, name, impScope, templateConfiguration);
     }
 

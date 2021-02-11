@@ -14,6 +14,13 @@ import javax.persistence.Entity;
 @Entity
 public class MessageType extends GenericImp {
 
+    /**
+     * Create an message type object.
+     * @param implementationId id of this object
+     * @param author author of this object
+     * @param name name of this object
+     * @param impScope implementation scope of this object
+     */
     public MessageType(long implementationId, User author, String name, ImplementationScope impScope) {
         super(implementationId, author, name, impScope);
     }

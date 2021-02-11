@@ -26,7 +26,17 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
     public ModuleImp() {
     }
 
-    public ModuleImp(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration) {
+    /**
+     * Create a module implementation object.
+     * If the scope is shared - author is added to the scope object here.
+     * @param implementationId id of this object
+     * @param author author of this object
+     * @param name name of this object
+     * @param impScope implementation scope of this object
+     * @param templateConfiguration configuration of this moduleImp
+     */
+    public ModuleImp(long implementationId, User author, String name, ImplementationScope impScope,
+                     Configuration templateConfiguration) {
         super(implementationId, author, name, impScope);
         setConfigurationRoot(templateConfiguration);
     }
@@ -81,6 +91,7 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
      *
      * @return configuration
      */
+    @Override
     public Configuration getConfigurationRoot() {
         return this.configurationRoot;
     }
@@ -99,6 +110,7 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
         }
     }
 
+    @Override
     public HashSet<ImmutableGenericImp> getGenerics() {
         return new HashSet<>();
     }

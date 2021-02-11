@@ -26,6 +26,10 @@ public class Scope {
     @OneToMany
     private Collection<User> grantedUsers;
 
+    /**
+     * Creates a scope object
+     * @param implementationScope PUBLIC, SHARED or PRIVATE
+     */
     public Scope(ImplementationScope implementationScope) {
         this.impScope = implementationScope;
         this.grantedUsers = new HashSet<>();
@@ -35,6 +39,11 @@ public class Scope {
 
     }
 
+    /**
+     * subscribes a user to the scope
+     * @param user user to subscribe
+     * @throws IllegalAccessException if the scope is not SHARED
+     */
     public void subscribe(User user) throws IllegalAccessException {
         if (!(impScope.equals(ImplementationScope.SHARED))) {
             throw new IllegalAccessException("Could not subscribe a user to scope. Scope is not SHARED");
@@ -42,6 +51,11 @@ public class Scope {
         grantedUsers.add(user);
     }
 
+    /**
+     * unsubscribes a user from the scope
+     * @param user user to unsubscribe
+     * @throws IllegalAccessException if the scope is not SHARED
+     */
     public void unsubscribe(User user) throws IllegalAccessException {
         if (!(impScope.equals(ImplementationScope.SHARED))) {
             throw new IllegalAccessException("Could not subscribe a user to scope. Scope is not SHARED");
@@ -53,12 +67,21 @@ public class Scope {
         return impScope;
     }
 
+    /**
+     * sets the new Implementation scope and empties the grantedUsers set if the new scope is private or public
+     * @param impScope new implementation scope
+     */
     // TODO: in front end warn that you will lose all the currently chosen shared users before changing scope from shared
     public void setImpScope(ImplementationScope impScope) {
         this.impScope = impScope;
         grantedUsers = new HashSet<>();
     }
 
+    /**
+     * checks if the user is subscribed to this scope, i.e. has access to the MI, to which this scope belongs
+     * @param user user to check
+     * @return true if subscribed
+     */
     public boolean isSubscribed(User user) {
         return grantedUsers.contains(user);
     }

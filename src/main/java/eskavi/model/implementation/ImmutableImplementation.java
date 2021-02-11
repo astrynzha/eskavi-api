@@ -20,6 +20,9 @@ public interface ImmutableImplementation {
 
     public Scope getScope(); // TODO: or getSubscribed():List<ImmutableUser> ?
 
+    /**
+     * @return list of all the users that are subscribed to this Implementation
+     */
     public Collection<ImmutableUser> getUsers();
 
     public boolean isSubscribed(ImmutableUser user);

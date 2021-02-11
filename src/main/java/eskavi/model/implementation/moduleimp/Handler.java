@@ -25,7 +25,17 @@ public class Handler extends ModuleImp {
     public Handler() {
     }
 
-    public Handler(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration,
+    /**
+     * Constructs a Handler object.
+     * @param implementationId id
+     * @param author author
+     * @param name name
+     * @param impScope implementation Scope
+     * @param templateConfiguration configuration of this moduleImp
+     * @param messageType message type generic
+     */
+    public Handler(long implementationId, User author, String name, ImplementationScope impScope,
+                   Configuration templateConfiguration,
                    MessageType messageType) {
         super(implementationId, author, name, impScope, templateConfiguration);
         this.messageType = messageType;

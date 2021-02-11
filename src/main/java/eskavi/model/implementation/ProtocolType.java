@@ -14,6 +14,13 @@ import javax.persistence.Entity;
 @Entity
 public class ProtocolType extends GenericImp {
 
+    /**
+     * Create a protocol type object.
+     * @param implementationId id of this object
+     * @param author author of this object
+     * @param name name of this object
+     * @param impScope implementation scope of this object
+     */
     public ProtocolType(long implementationId, User author, String name, ImplementationScope impScope) {
         super(implementationId, author, name, impScope);
     }

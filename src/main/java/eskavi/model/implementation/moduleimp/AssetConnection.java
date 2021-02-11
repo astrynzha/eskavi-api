@@ -30,7 +30,8 @@ public class AssetConnection extends ModuleImp {
      * @param impScope implementation Scope
      * @param templateConfiguration configuration of this moduleImp
      */
-    public AssetConnection(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration) {
+    public AssetConnection(long implementationId, User author, String name, ImplementationScope impScope,
+                           Configuration templateConfiguration) {
         super(implementationId, author, name, impScope, templateConfiguration);
     }
 

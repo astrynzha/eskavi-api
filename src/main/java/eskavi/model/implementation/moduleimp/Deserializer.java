@@ -27,7 +27,18 @@ public class Deserializer extends ModuleImp {
     public Deserializer() {
     }
 
-    public Deserializer(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration,
+    /**
+     * Constructs a deserializer object.
+     * @param implementationId id
+     * @param author author
+     * @param name name
+     * @param impScope implementation Scope
+     * @param templateConfiguration configuration of this moduleImp
+     * @param messageType message type generic
+     * @param protocolType protocol type generic
+     */
+    public Deserializer(long implementationId, User author, String name, ImplementationScope impScope,
+                        Configuration templateConfiguration,
                         MessageType messageType, ProtocolType protocolType) {
         super(implementationId, author, name, impScope, templateConfiguration);
         this.protocolType = protocolType;

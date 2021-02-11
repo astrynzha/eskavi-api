@@ -26,6 +26,15 @@ public class Dispatcher extends ModuleImp {
         this.messageType = messageType;
     }
 
+    /**
+     * Constructs a dispatcher object.
+     * @param implementationId id
+     * @param author author
+     * @param name name
+     * @param impScope implementation Scope
+     * @param templateConfiguration configuration of this moduleImp
+     * @param messageType message type generic
+     */
     public Dispatcher(long implementationId, User author, String name, ImplementationScope impScope, Configuration templateConfiguration,
                       MessageType messageType) {
         super(implementationId, author, name, impScope, templateConfiguration);
@@ -33,7 +42,6 @@ public class Dispatcher extends ModuleImp {
     }
 
     public Dispatcher() {
-
     }
 
     public MessageType getMessageType() {
