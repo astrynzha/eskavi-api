@@ -6,10 +6,16 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import eskavi.model.implementation.Scope;
+import eskavi.repository.ScopeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
 public class ScopeDeserializer extends StdDeserializer<Scope> {
+
+    @Autowired
+    ScopeRepository repository;
+
     public ScopeDeserializer() {
         this(null);
     }
@@ -22,6 +28,7 @@ public class ScopeDeserializer extends StdDeserializer<Scope> {
     public Scope deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         long id = node.findValue("id").asLong();
-        return null;//TODO: database access
+
+        return repository.findById(id).get();
     }
 }
