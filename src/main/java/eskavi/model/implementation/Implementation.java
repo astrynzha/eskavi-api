@@ -24,7 +24,7 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "implementationId")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = AssetConnection.class, name = "AssetConnection"),
         @JsonSubTypes.Type(value = Deserializer.class, name = "Deserializer"),

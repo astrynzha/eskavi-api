@@ -1,5 +1,7 @@
 package eskavi.model.implementation;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eskavi.model.implementation.moduleimp.*;
 
 /**
@@ -9,20 +11,28 @@ import eskavi.model.implementation.moduleimp.*;
  * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
  * @version 1.0.0
  */
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ImpType {
-    ASSET_CONNECTION(AssetConnection.class),
-    DESERIALIZER(Deserializer.class),
-    DISPATCHER(Dispatcher.class),
-    ENDPOINT(Endpoint.class),
-    HANDLER(Handler.class),
-    INTERACTION_STARTER(InteractionStarter.class),
-    PERSISTENCE_MANAGER(PersistenceManager.class),
-    SERIALIZER(Serializer.class);
+    ASSET_CONNECTION(AssetConnection.class, true),
+    DESERIALIZER(Deserializer.class, false),
+    DISPATCHER(Dispatcher.class, false),
+    ENDPOINT(Endpoint.class, true),
+    HANDLER(Handler.class, false),
+    INTERACTION_STARTER(InteractionStarter.class, true),
+    PERSISTENCE_MANAGER(PersistenceManager.class, true),
+    SERIALIZER(Serializer.class, false);
 
     private Class matchingClass;
+    @JsonProperty
+    private boolean topLevel;
 
-    private ImpType(Class moduleImp) {
+    private ImpType(Class moduleImp, boolean topLevel) {
         this.matchingClass = moduleImp;
+        this.topLevel = topLevel;
+    }
+
+    public String getName() {
+        return this.name();
     }
 
     public boolean matches(ImmutableModuleImp input) {
