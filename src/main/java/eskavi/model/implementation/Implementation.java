@@ -65,14 +65,14 @@ public abstract class Implementation implements ImmutableImplementation {
         this.author = author;
         this.name = name;
         this.scope = new Scope(impScope);
-        if (impScope == ImplementationScope.SHARED) {
-            try {
-                scope.subscribe(author);
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException("This should never happen, scope is SHARED and " +
-                        "the moduleImp can be subscribed to the author", e);
-            }
-        }
+//        if (impScope == ImplementationScope.SHARED) {
+//            try {
+//                scope.subscribe(author);
+//            } catch (IllegalAccessException e) {
+//                throw new IllegalStateException("This should never happen, scope is SHARED and " +
+//                        "the moduleImp can be subscribed to the author", e);
+//            }
+//        }
     }
 
     /**

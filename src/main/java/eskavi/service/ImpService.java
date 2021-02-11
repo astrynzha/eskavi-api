@@ -3,8 +3,8 @@ package eskavi.service;
 import eskavi.model.implementation.*;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
-import eskavi.repository.ImplementationRepository;
-import eskavi.repository.UserRepository;
+import eskavi.service.mockrepo.MockImplementationRepository;
+import eskavi.service.mockrepo.MockUserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,16 +16,25 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class ImpService {
+//    private final ImplementationRepository impRepository;
+//    private final UserRepository userRepository;
+//
+//    public ImpService(ImplementationRepository impRepository, UserRepository userRepository) {
+//        this.impRepository = impRepository;
+//        this.userRepository = userRepository; // TODO: ausreichend, um eine userRepositry von springboot zu kriegen?
+//    }
 
-    private final ImplementationRepository impRepository;
-    private final UserRepository userRepository;
+private final MockImplementationRepository impRepository;
+private final MockUserRepository userRepository;
 
-    public ImpService(ImplementationRepository impRepository, UserRepository userRepository) {
-        this.impRepository = impRepository;
-        this.userRepository = userRepository; // TODO: ausreichend, um eine userRepositry von springboot zu kriegen?
-    }
+public ImpService(MockImplementationRepository impRepository, MockUserRepository userRepository) {
+    this.impRepository = impRepository;
+    this.userRepository = userRepository;
+}
 
-    public ImmutableImplementation getImp(Long id) {
+
+//TODO should the access of the caller to the Imp be checked here?
+public ImmutableImplementation getImp(Long id) {
         return impRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
@@ -38,6 +47,11 @@ public class ImpService {
         return user.getSubscribed();
     }
 
+    // TODO
+    public ImmutableModuleImp getTemplateImpCreate(Long id) {
+        return null;
+    }
+    // TODO
     public ImmutableModuleImp getDefaultImpCreate(ImpType type) {
         //Check config to get id of ImpType
         return null;
@@ -45,12 +59,17 @@ public class ImpService {
 
     /**
      * @param mi     implementation that the module developer has built in frontend
-     * @param caller module developer that wants to add an implementation
+     * @param callerId Id of module developer that wants to add an implementation
      */
-    public void addImplementation(Implementation mi, User caller) {
+    public void addImplementation(Implementation mi, String callerId) {
         if (!mi.isValid()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+        Optional<User> optionalCaller = userRepository.findById(callerId);
+        if (optionalCaller.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        User caller = optionalCaller.get();
         mi.setAuthor(caller);
         if (mi.getImplementationScope().equals(ImplementationScope.SHARED)) {
             try {
@@ -76,27 +95,29 @@ public class ImpService {
         Implementation imp = optionalImplementation.get();
         User user = optionalUser.get();
         User caller = optionalCaller.get();
-        if (!imp.getImplementationScope().equals(ImplementationScope.SHARED)) {
-            throw new IllegalAccessException("ImplementationScope is not SHARED");
-        }
         if (!imp.getAuthor().equals(caller)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-        updateScope(getMutableUser(user), getMutableImp(imp)); // TODO discuss how to handle exceptions on this example
+        if (!imp.getImplementationScope().equals(ImplementationScope.SHARED)) {
+            throw new IllegalAccessException("ImplementationScope is not SHARED");
+        }
+        updateScope(user, imp); // TODO discuss how to handle exceptions on this example
     }
 
     //TODO check subscribe/unsubscribe
-    public void removeUser(long implementationId, ImmutableUser immutableUser) throws IllegalAccessException {
+    public void removeUser(long implementationId, String userId, String callerId) throws IllegalAccessException {
         Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
-        Optional<User> optionalUser = userRepository.findById(immutableUser.getEmailAddress());
-        if (optionalImplementation.isEmpty()) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<User> optionalCaller = userRepository.findById(callerId);
+        if (optionalImplementation.isEmpty() || optionalUser.isEmpty() || optionalCaller.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        if (optionalUser.isEmpty()) {
-            throw new IllegalAccessException("User is not in the database");
         }
         Implementation imp = optionalImplementation.get();
         User user = optionalUser.get();
+        User caller = optionalCaller.get();
+        if (!imp.getAuthor().equals(caller)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
         if (imp.getImplementationScope().equals(ImplementationScope.SHARED)) {
             throw new IllegalAccessException("ImplementationScope is not SHARED");
         }
@@ -107,8 +128,8 @@ public class ImpService {
     }
 
     //TODO wieso nicht nur id?
-    public Collection<ImmutableUser> getUsers(ImmutableImplementation mi) {
-        Optional<Implementation> optionalImplementation = impRepository.findById(mi.getImplementationId());
+    public Collection<ImmutableUser> getUsers(Long implementationId) {
+        Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
         if (optionalImplementation.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -116,15 +137,17 @@ public class ImpService {
         return imp.getUsers();
     }
 
-    // TODO: 1. darf nur der author eine Implementation editieren?
-    //  2. Is unchecked exception RespoinseStatusException OK here?
-    //  3. Check that the author is subscribed when the scope is changed!!
-    public void updateImplementation(ImmutableImplementation mi, User user) throws IllegalAccessException {
+    // TODO: 1. Is unchecked exception RespoinseStatusException OK here?
+    //  2. Check that the author is subscribed when the scope is changed!!
+    //  3. Soll man hier isValid auf die übergebene MI aufrufen?
+    public void updateImplementation(ImmutableImplementation mi, String userId) throws IllegalAccessException {
+        Optional<User> optionalUser = userRepository.findById(userId);
         Optional<Implementation> optionalImplementation = impRepository.findById(mi.getImplementationId());
-        if (optionalImplementation.isEmpty()) {
+        if (optionalImplementation.isEmpty() || optionalUser.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         Implementation imp = optionalImplementation.get();
+        User user = optionalUser.get();
         if (!imp.getAuthor().equals(user)) {
             throw new IllegalAccessException("This user cannot update the implementation, he is not it's author");
         }
@@ -132,13 +155,14 @@ public class ImpService {
         impRepository.save(getMutableImp(mi));
     }
 
-    public void removeImplementation(ImmutableImplementation mi, User user) throws IllegalAccessException {
+    public void removeImplementation(ImmutableImplementation mi, String userId) throws IllegalAccessException {
         Optional<Implementation> optionalImplementation = impRepository.findById(mi.getImplementationId());
-        if (optionalImplementation.isEmpty()) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalImplementation.isEmpty() || optionalUser.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         Implementation imp = optionalImplementation.get();
-        // TODO is needed here?
+        User user = optionalUser.get();
         if (!imp.getAuthor().equals(user)) {
             throw new IllegalAccessException("This user cannot remove the implementation, he is not it's author");
         }

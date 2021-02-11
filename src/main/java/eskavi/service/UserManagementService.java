@@ -5,6 +5,7 @@ import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
 import eskavi.repository.UserRepository;
+import eskavi.service.mockrepo.MockUserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,9 +13,15 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class UserManagementService {
 
-    final UserRepository userRepository;
+//    final UserRepository userRepository;
+//
+//    public UserManagementService(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
 
-    public UserManagementService(UserRepository userRepository) {
+    final MockUserRepository userRepository;
+
+    public UserManagementService(MockUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
