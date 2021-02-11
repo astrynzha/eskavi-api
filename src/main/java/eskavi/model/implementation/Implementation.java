@@ -65,14 +65,14 @@ public abstract class Implementation implements ImmutableImplementation {
         this.author = author;
         this.name = name;
         this.scope = new Scope(impScope);
-//        if (impScope == ImplementationScope.SHARED) {
-//            try {
-//                scope.subscribe(author);
-//            } catch (IllegalAccessException e) {
-//                throw new IllegalStateException("This should never happen, scope is SHARED and " +
-//                        "the moduleImp can be subscribed to the author", e);
-//            }
-//        }
+        if (impScope == ImplementationScope.SHARED) {
+            try {
+                scope.subscribe(author);
+            } catch (IllegalAccessException e) {
+                throw new IllegalStateException("This should never happen, scope is SHARED and " +
+                        "the moduleImp can be subscribed to the author", e);
+            }
+        }
     }
 
     /**
@@ -112,7 +112,10 @@ public abstract class Implementation implements ImmutableImplementation {
     public boolean isValid() {
         return implementationId >= 0 && author != null && name != null && scope != null && scope.getImpScope() != null
                 && scope.getScopeId() >= 0 && scope.getGrantedUsers() != null
-                && scope.getGrantedUsers().size() == 0;
+                // when the scope is SHARED -> author has to be subscribed, otherwise grantedUsers is empty
+                && (((scope.getImpScope().equals(ImplementationScope.SHARED)) && scope.getGrantedUsers().size() == 1
+                       && scope.getGrantedUsers().contains(author))
+                    || (!scope.getImpScope().equals(ImplementationScope.SHARED) && scope.getGrantedUsers().size() == 0));
     }
 
     @Override

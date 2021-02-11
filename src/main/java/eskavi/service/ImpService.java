@@ -58,6 +58,7 @@ public ImmutableImplementation getImp(Long id) {
     }
 
     /**
+     * Scope of the implementation has to be empty. All the users have to be subscribed through addUser API call.
      * @param mi     implementation that the module developer has built in frontend
      * @param callerId Id of module developer that wants to add an implementation
      */
@@ -71,6 +72,7 @@ public ImmutableImplementation getImp(Long id) {
         }
         User caller = optionalCaller.get();
         mi.setAuthor(caller);
+        // add author to scope if SHARED
         if (mi.getImplementationScope().equals(ImplementationScope.SHARED)) {
             try {
                 updateScope(caller, mi);
@@ -118,8 +120,11 @@ public ImmutableImplementation getImp(Long id) {
         if (!imp.getAuthor().equals(caller)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
-        if (imp.getImplementationScope().equals(ImplementationScope.SHARED)) {
+        if (!imp.getImplementationScope().equals(ImplementationScope.SHARED)) {
             throw new IllegalAccessException("ImplementationScope is not SHARED");
+        }
+        if (imp.getAuthor().equals(user)) { // cannot remove the author
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         imp.unsubscribe(user);
         user.unsubscribe(imp);
@@ -138,25 +143,25 @@ public ImmutableImplementation getImp(Long id) {
     }
 
     // TODO: 1. Is unchecked exception RespoinseStatusException OK here?
-    //  2. Check that the author is subscribed when the scope is changed!!
+    //  2. Check that the author is subscribed when the scope is changed?!
     //  3. Soll man hier isValid auf die übergebene MI aufrufen?
-    public void updateImplementation(ImmutableImplementation mi, String userId) throws IllegalAccessException {
-        Optional<User> optionalUser = userRepository.findById(userId);
+    public void updateImplementation(ImmutableImplementation mi, String callerId) throws IllegalAccessException {
+        Optional<User> optionalCaller = userRepository.findById(callerId);
         Optional<Implementation> optionalImplementation = impRepository.findById(mi.getImplementationId());
-        if (optionalImplementation.isEmpty() || optionalUser.isEmpty()) {
+        if (optionalImplementation.isEmpty() || optionalCaller.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         Implementation imp = optionalImplementation.get();
-        User user = optionalUser.get();
+        User user = optionalCaller.get();
         if (!imp.getAuthor().equals(user)) {
-            throw new IllegalAccessException("This user cannot update the implementation, he is not it's author");
+            throw new IllegalAccessException("This caller cannot update the implementation, he is not it's author");
         }
         // TODO will spring automatically update by id?
         impRepository.save(getMutableImp(mi));
     }
 
-    public void removeImplementation(ImmutableImplementation mi, String userId) throws IllegalAccessException {
-        Optional<Implementation> optionalImplementation = impRepository.findById(mi.getImplementationId());
+    public void removeImplementation(Long implementationId, String userId) throws IllegalAccessException {
+        Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalImplementation.isEmpty() || optionalUser.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
