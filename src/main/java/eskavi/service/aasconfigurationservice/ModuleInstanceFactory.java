@@ -2,14 +2,12 @@ package eskavi.service.aasconfigurationservice;
 
 import eskavi.model.implementation.ModuleImp;
 import eskavi.model.implementation.ModuleInstance;
-import org.springframework.stereotype.Component;
 
 /**
  * This is a utility class offering a factory method to create {@link ModuleInstance} based on a passed {@link ModuleImp}.
  *
  * @author Niv Adam
  */
-@Component
 public final class ModuleInstanceFactory {
     private ModuleInstanceFactory() {
         throw new AssertionError("Instantiating utility class");

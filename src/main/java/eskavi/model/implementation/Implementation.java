@@ -46,7 +46,7 @@ public abstract class Implementation implements ImmutableImplementation {
     private User author;
     private String name;
     //@JsonDeserialize(using = ScopeDeserializer.class)
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Scope scope;
 
     public Implementation() {

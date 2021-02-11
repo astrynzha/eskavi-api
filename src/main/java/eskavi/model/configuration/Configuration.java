@@ -3,6 +3,7 @@ package eskavi.model.configuration;
 import com.fasterxml.jackson.annotation.*;
 import eskavi.model.implementation.ImmutableModuleImp;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -22,9 +23,15 @@ import java.util.Objects;
         @JsonSubTypes.Type(value = Switch.class, name = "Switch"),
         @JsonSubTypes.Type(value = FileField.class, name = "FileField")
 })
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Configuration {
+    @Id
+    @GeneratedValue
+    private long id;
     private String name;
     private boolean allowMultiple;
+    @Embedded
     private KeyExpression keyExpression;
 
 

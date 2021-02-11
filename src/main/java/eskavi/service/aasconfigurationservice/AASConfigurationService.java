@@ -5,7 +5,7 @@ import eskavi.model.implementation.Implementation;
 import eskavi.model.implementation.ModuleImp;
 import eskavi.model.implementation.ModuleInstance;
 import eskavi.model.user.User;
-import eskavi.repository.ImplementationRepository;
+import eskavi.repository.ImpRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,15 +14,13 @@ import java.util.Optional;
 
 @Service
 public class AASConfigurationService {
-    private final ImplementationRepository impRepository;
-    private final ModuleInstanceFactory miFactory;
+    private final ImpRepository impRepository;
     private final AASSessionHandler sessionHandler;
 
     //TODO Autowire miFactory & sessionHanlder
-    public AASConfigurationService(ImplementationRepository impRepository, ModuleInstanceFactory miFactory,
+    public AASConfigurationService(ImpRepository impRepository,
                                    AASSessionHandler sessionHandler) {
         this.impRepository = impRepository;
-        this.miFactory = miFactory;
         this.sessionHandler = sessionHandler;
     }
 

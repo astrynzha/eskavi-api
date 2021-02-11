@@ -1,13 +1,18 @@
 package eskavi.model.configuration;
 
+import javax.persistence.*;
 import java.util.Map;
 import java.util.Objects;
 
 /**
  * Class extends {@link SingleValueField} and represents a Configuration, in which the value has to be contained in a predefined list
  */
+@Entity
 public class Select extends SingleValueField {
-
+    @ElementCollection(targetClass = String.class)
+    @CollectionTable(name = "MAP")
+    @MapKeyColumn(name = "key")
+    @Column(name = "value")
     private Map<String, String> content;
 
     /**

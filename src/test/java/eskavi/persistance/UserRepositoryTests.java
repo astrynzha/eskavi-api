@@ -22,9 +22,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-public class RepoTests {
+public class UserRepositoryTests {
     @Autowired
     private UserRepository userRepo;
     @Autowired
@@ -71,23 +75,14 @@ public class RepoTests {
                 dispatcher, handler, assetConnection, interactionStarter, persistenceManager));
     }
 
-    //TODO: impRepo forces exception
     @Test
-    void myTest() {
-        userRepo.save(userA);
-        //impRepo.save(messageTypeA);
-    }
-
-    //TODO:can try but is not working
-    /*
-    @Test
-    void testRepo() {
+    void happyPath() {
         userRepo.save(userA);
 
         User found = userRepo.findById("a@gmail.com").get();
-        System.out.println(found.toString());
-
-        userRepo.deleteAll();
-    }*/
-
+        assertEquals(found, userA);
+        userRepo.delete(userA);
+        Optional<User> optional = userRepo.findById("a@gmail.com");
+        assertTrue(optional.isEmpty());
+    }
 }

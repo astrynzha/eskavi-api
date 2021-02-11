@@ -44,7 +44,7 @@ public class ImpService {
     }
 
     /**
-     * @param mi implementation that the module developer has built in frontend
+     * @param mi     implementation that the module developer has built in frontend
      * @param caller module developer that wants to add an implementation
      */
     public void addImplementation(Implementation mi, User caller) {

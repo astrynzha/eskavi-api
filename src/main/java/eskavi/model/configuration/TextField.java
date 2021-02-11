@@ -1,10 +1,12 @@
 package eskavi.model.configuration;
 
+import javax.persistence.Entity;
 import java.util.Objects;
 
 /**
  * Class extends {@link SingleValueField} and represents a Configuration expecting a free text entry
  */
+@Entity
 public class TextField extends SingleValueField {
 
     private DataType dataType;

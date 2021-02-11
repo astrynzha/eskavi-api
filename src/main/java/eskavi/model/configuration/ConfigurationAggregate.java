@@ -5,13 +5,18 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.*;
 
 /**
  * This class represents an Aggregate of multiple Configuration. This class is part of the composite pattern which makes it
  * very easy to stack Confiurations as part of others.
  */
+@Entity
 public class ConfigurationAggregate extends Configuration {
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Configuration> children;
     private boolean enforceCompatibility;
 

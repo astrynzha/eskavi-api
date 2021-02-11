@@ -1,10 +1,12 @@
 package eskavi.model.configuration;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 
 /**
  * Represents the invariant parts of the KeyExpression of a Configuration. Is a simple storage class
  */
+@Embeddable
 public class KeyExpression {
     private String expressionStart;
     private String expressionEnd;

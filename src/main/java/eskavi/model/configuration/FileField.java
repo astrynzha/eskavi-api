@@ -2,6 +2,9 @@ package eskavi.model.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.persistence.Entity;
+
+@Entity
 public class FileField extends SingleValueField {
     @Value("${file.defaultpath}")
     private static String defaultPath;
