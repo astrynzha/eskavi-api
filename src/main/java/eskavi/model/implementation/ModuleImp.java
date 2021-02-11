@@ -6,7 +6,9 @@ import eskavi.model.configuration.KeyExpression;
 import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.User;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 @Entity
 public abstract class ModuleImp extends Implementation implements ImmutableModuleImp {
     // TODO consider making configuration an entity to resolve spring
+    @OneToOne(cascade = {CascadeType.ALL})
     private ConfigurationAggregate configurationRoot;
 
     public ModuleImp() {

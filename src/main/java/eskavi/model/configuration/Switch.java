@@ -1,5 +1,6 @@
 package eskavi.model.configuration;
 
+import javax.persistence.Entity;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import java.util.Map;
  * Class extends {@link Select} and only allows two values. If the Switch is set the true value will be used otherwise the
  * false value. Because of that Switch always has a value.
  */
+@Entity
 public class Switch extends Select {
     public static String TRUE = "trueValue";
     public static String FALSE = "falseValue";

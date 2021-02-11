@@ -11,13 +11,18 @@ import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImpType;
 import eskavi.model.implementation.ModuleInstance;
 
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.util.*;
 
 /**
  * This class represents an Implementation select it enables the user to select an Implementation fitting the stored generics and ImpType.
  */
+@Entity
 public class ImplementationSelect extends Configuration {
+    @Transient
     private ModuleInstance instance;
+    @Transient
     private HashSet<ImmutableGenericImp> generics;
     private ImpType type;
 
