@@ -13,7 +13,7 @@ import java.util.Objects;
  * Configuration
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ConfigurationAggregate.class, name = "ConfigurationAggregate"),
         @JsonSubTypes.Type(value = TextField.class, name = "TextField"),
