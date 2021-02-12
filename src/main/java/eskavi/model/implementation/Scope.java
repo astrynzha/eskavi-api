@@ -23,7 +23,7 @@ public class Scope {
     @Enumerated(EnumType.STRING)
     private ImplementationScope impScope;
     @JsonIgnore
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<User> grantedUsers;
 
     /**

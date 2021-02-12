@@ -3,8 +3,8 @@ package eskavi.service;
 import eskavi.model.implementation.*;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
-import eskavi.service.mockrepo.MockImplementationRepository;
-import eskavi.service.mockrepo.MockUserRepository;
+import eskavi.repository.ImplementationRepository;
+import eskavi.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,25 +16,17 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class ImpService {
-//    private final ImplementationRepository impRepository;
-//    private final UserRepository userRepository;
-//
-//    public ImpService(ImplementationRepository impRepository, UserRepository userRepository) {
-//        this.impRepository = impRepository;
-//        this.userRepository = userRepository; // TODO: ausreichend, um eine userRepositry von springboot zu kriegen?
-//    }
+    private final ImplementationRepository impRepository;
+    private final UserRepository userRepository;
 
-private final MockImplementationRepository impRepository;
-private final MockUserRepository userRepository;
-
-public ImpService(MockImplementationRepository impRepository, MockUserRepository userRepository) {
-    this.impRepository = impRepository;
-    this.userRepository = userRepository;
-}
+    public ImpService(ImplementationRepository impRepository, UserRepository userRepository) {
+        this.impRepository = impRepository;
+        this.userRepository = userRepository; // TODO: ausreichend, um eine userRepositry von springboot zu kriegen?
+    }
 
 
-//TODO should the access of the caller to the Imp be checked here?
-public ImmutableImplementation getImp(Long id) {
+    //TODO should the access of the caller to the Imp be checked here?
+    public ImmutableImplementation getImp(Long id) {
         return impRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
@@ -51,6 +43,7 @@ public ImmutableImplementation getImp(Long id) {
     public ImmutableModuleImp getTemplateImpCreate(Long id) {
         return null;
     }
+
     // TODO
     public ImmutableModuleImp getDefaultImpCreate(ImpType type) {
         //Check config to get id of ImpType
@@ -59,7 +52,8 @@ public ImmutableImplementation getImp(Long id) {
 
     /**
      * Scope of the implementation has to be empty. All the users have to be subscribed through addUser API call.
-     * @param mi     implementation that the module developer has built in frontend
+     *
+     * @param mi       implementation that the module developer has built in frontend
      * @param callerId Id of module developer that wants to add an implementation
      */
     public void addImplementation(Implementation mi, String callerId) {

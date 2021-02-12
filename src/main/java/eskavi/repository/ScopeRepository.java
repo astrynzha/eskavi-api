@@ -1,9 +1,9 @@
 package eskavi.repository;
 
-import eskavi.model.implementation.Implementation;
+import eskavi.model.implementation.Scope;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ImplementationRepository extends CrudRepository<Implementation, Long> {
+public interface ScopeRepository extends CrudRepository<Scope, Long> {
 }

@@ -12,7 +12,7 @@ import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
-import eskavi.repository.ImpRepository;
+import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ public class UserRepositoryTests {
     @Autowired
     private UserRepository userRepo;
     @Autowired
-    private ImpRepository impRepo;
+    private ImplementationRepository impRepo;
     private ProtocolType protocolTypeA;
     private ProtocolType protocolTypeB;
     private MessageType messageTypeA;

@@ -164,7 +164,7 @@ public class User implements ImmutableUser {
                 ", securityQuestion=" + securityQuestion +
                 ", securityAnswer='" + securityAnswer + '\'' +
                 ", userLevel=" + userLevel +
-                ", implementations=" + implementations +
+                //", implementations=" + implementations +
                 '}';
     }
 }

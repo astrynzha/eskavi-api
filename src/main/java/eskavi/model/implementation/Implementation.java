@@ -40,13 +40,13 @@ public abstract class Implementation implements ImmutableImplementation {
     @GeneratedValue
     protected long implementationId;
 
-    @OneToOne
+    @ManyToOne
     @JsonIdentityReference(alwaysAsId = true)
     @JsonDeserialize(using = UserByIdDeserializer.class)
     private User author;
     private String name;
     //@JsonDeserialize(using = ScopeDeserializer.class)
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Scope scope;
 
     public Implementation() {
@@ -55,10 +55,11 @@ public abstract class Implementation implements ImmutableImplementation {
     /**
      * Create an implementation object.
      * If the scope is shared - author is added to the scope object here.
+     *
      * @param implementationId id of this object
-     * @param author author of this object
-     * @param name name of this object
-     * @param impScope implementation scope of this object
+     * @param author           author of this object
+     * @param name             name of this object
+     * @param impScope         implementation scope of this object
      */
     protected Implementation(long implementationId, User author, String name, ImplementationScope impScope) {
         this.implementationId = implementationId;
@@ -78,6 +79,7 @@ public abstract class Implementation implements ImmutableImplementation {
     /**
      * Subscribes a user to the scope object of this implementation and makes sure that the implementation
      * is subscribed to the user as well
+     *
      * @param user User to subscribe
      * @throws IllegalAccessException if the scope is not SHARED
      */
@@ -92,6 +94,7 @@ public abstract class Implementation implements ImmutableImplementation {
     /**
      * Unsubscribes a user from the scope object of this implementation and makes sure that the implementation
      * is unsubscribed from the user as well
+     *
      * @param user User to subscribe
      * @throws IllegalAccessException if the scope is not SHARED
      */
@@ -114,8 +117,8 @@ public abstract class Implementation implements ImmutableImplementation {
                 && scope.getScopeId() >= 0 && scope.getGrantedUsers() != null
                 // when the scope is SHARED -> author has to be subscribed, otherwise grantedUsers is empty
                 && (((scope.getImpScope().equals(ImplementationScope.SHARED)) && scope.getGrantedUsers().size() == 1
-                       && scope.getGrantedUsers().contains(author))
-                    || (!scope.getImpScope().equals(ImplementationScope.SHARED) && scope.getGrantedUsers().size() == 0));
+                && scope.getGrantedUsers().contains(author))
+                || (!scope.getImpScope().equals(ImplementationScope.SHARED) && scope.getGrantedUsers().size() == 0));
     }
 
     @Override
@@ -145,6 +148,7 @@ public abstract class Implementation implements ImmutableImplementation {
     /**
      * Assign a new scope object to this implementation object.
      * If the scope is shared -> subscribes the author
+     *
      * @param scope new scope object
      */
     public void setScope(Scope scope) {
