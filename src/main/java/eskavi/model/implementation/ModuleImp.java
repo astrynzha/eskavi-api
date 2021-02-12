@@ -22,7 +22,6 @@ import java.util.List;
  */
 @Entity
 public abstract class ModuleImp extends Implementation implements ImmutableModuleImp {
-    // TODO consider making configuration an entity to resolve spring
     @OneToOne(cascade = {CascadeType.ALL})
     private ConfigurationAggregate configurationRoot;
 
