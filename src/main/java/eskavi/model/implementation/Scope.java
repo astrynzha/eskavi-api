@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import eskavi.model.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -28,6 +29,7 @@ public class Scope {
 
     /**
      * Creates a scope object
+     *
      * @param implementationScope PUBLIC, SHARED or PRIVATE
      */
     public Scope(ImplementationScope implementationScope) {
@@ -41,6 +43,7 @@ public class Scope {
 
     /**
      * subscribes a user to the scope
+     *
      * @param user user to subscribe
      * @throws IllegalAccessException if the scope is not SHARED
      */
@@ -53,6 +56,7 @@ public class Scope {
 
     /**
      * unsubscribes a user from the scope
+     *
      * @param user user to unsubscribe
      * @throws IllegalAccessException if the scope is not SHARED
      */
@@ -69,6 +73,7 @@ public class Scope {
 
     /**
      * sets the new Implementation scope and empties the grantedUsers set if the new scope is private or public
+     *
      * @param impScope new implementation scope
      */
     // TODO: in front end warn that you will lose all the currently chosen shared users before changing scope from shared
@@ -79,6 +84,7 @@ public class Scope {
 
     /**
      * checks if the user is subscribed to this scope, i.e. has access to the MI, to which this scope belongs
+     *
      * @param user user to check
      * @return true if subscribed
      */
@@ -108,7 +114,9 @@ public class Scope {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Scope scope = (Scope) o;
-        return impScope == scope.impScope && Objects.equals(grantedUsers, scope.grantedUsers);
+        //TODO really ugly work around because hibernate persistance bag is broken!
+        return impScope == scope.impScope && (getGrantedUsers() != null ? new ArrayList(getGrantedUsers()) : new ArrayList())
+                .equals(scope.getGrantedUsers() != null ? new ArrayList(scope.getGrantedUsers()) : new ArrayList());
     }
 
     @Override
