@@ -4,7 +4,7 @@ import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
-import eskavi.service.mockrepo.MockUserRepository;
+import eskavi.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,15 +12,9 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class UserManagementService {
 
-//    final UserRepository userRepository;
-//
-//    public UserManagementService(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
+    final UserRepository userRepository;
 
-    final MockUserRepository userRepository;
-
-    public UserManagementService(MockUserRepository userRepository) {
+    public UserManagementService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -31,13 +25,14 @@ public class UserManagementService {
     public ImmutableUser getUser(String userId) {
         return userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
-
+    
     public void setUserLevel(ImmutableUser immutableUser, UserLevel level) throws IllegalAccessException {
         User user = getMutableUser(immutableUser);
         user.setUserLevel(level);
         userRepository.save(user);
     }
 
+    //TODO why dont user ImmutableUser as param
     public void deleteUser(User user) {
         userRepository.delete(user);
     }

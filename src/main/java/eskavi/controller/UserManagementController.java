@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("user")
@@ -77,13 +80,13 @@ public class UserManagementController {
      * @apiSuccess {User} user User object
      * @apiSuccessExample {json} Success-Example:
      * {
-     *   "user":{
-     *     "email":"test@web.de",
-     *     "password":"$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8",
-     *     "securityQuestion":"petName",
-     *     "securityAnswer":"Jim"
-     *     "userLevel":"BasicUser"
-     *   }
+     * "user":{
+     * "email":"test@web.de",
+     * "password":"$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8",
+     * "securityQuestion":"petName",
+     * "securityAnswer":"Jim"
+     * "userLevel":"BasicUser"
+     * }
      * }
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
@@ -94,7 +97,7 @@ public class UserManagementController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public ImmutableUser getUser(@RequestHeader String jwtToken) {
-        User user = new User();
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
         return userManagementService.getUser(user.getEmailAddress());
     }
 
@@ -113,7 +116,7 @@ public class UserManagementController {
      */
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteUser(@RequestHeader String jwtToken) {
-        User user = new User();
+        User user = (User) userManagementService.getUser(jwtToken);
         userManagementService.deleteUser(user);
     }
 
@@ -133,7 +136,8 @@ public class UserManagementController {
      */
     @GetMapping("/security_question")
     public String getSecurityQuestion(@ModelAttribute String email) {
-        return null;
+        ImmutableUser user = userManagementService.getUser(email);
+        return userManagementService.getSecurityQuestion(user).getQuestion();
     }
 
     /**
@@ -156,8 +160,14 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/reset_password")
-    public void resetPassword(@ModelAttribute String answer, @ModelAttribute String newPassword) {
-
+    public void resetPassword(@RequestHeader String jwtToken, @ModelAttribute String answer, @ModelAttribute String newPassword) throws IllegalAccessException {
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+        if (userManagementService.checkSecurityQuestion(user, answer)) {
+            userManagementService.setPassword(user, new BCryptPasswordEncoder().encode(newPassword));
+        } else {
+            //TODO Which Status code is good here 400/409/422?
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -180,8 +190,14 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/change_password")
-    public void setPassword(@ModelAttribute String oldPassword, @ModelAttribute String newPassword) {
-
+    public void setPassword(@RequestHeader String jwtToken, @ModelAttribute String oldPassword, @ModelAttribute String newPassword) throws IllegalAccessException {
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+        if (userManagementService.checkPassword(user, new BCryptPasswordEncoder().encode(oldPassword))) {
+            userManagementService.setPassword(user, new BCryptPasswordEncoder().encode(newPassword));
+        } else {
+            //TODO Which Status code is good here 400/409/422?
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -200,8 +216,10 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/level")
-    public void setUserLevel(@ModelAttribute("email") String email, @ModelAttribute("userLevel") UserLevel userLevel) {
-
+    public void setUserLevel(@RequestHeader String jwtToken, @ModelAttribute("email") String email, @ModelAttribute("userLevel") UserLevel userLevel) throws IllegalAccessException {
+        //TODO Check if the user is a admin -> in Service!?
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+        userManagementService.setUserLevel(user, userLevel);
     }
 
 
@@ -219,15 +237,17 @@ public class UserManagementController {
      * }
      * @apiSuccessExample {json} Success-Response:
      * {
-     *  "userLevels":[
-     *  "BasicUser",
-     *  "PublishingUser",
-     *  "Administrator"
-     *  ]
+     * "userLevels":[
+     * "BasicUser",
+     * "PublishingUser",
+     * "Administrator"
+     * ]
      * }
      */
     @GetMapping("/levels")
     public Collection<String> getUserLevels() {
-        return null;
+        EnumSet<UserLevel> enumValues = EnumSet.allOf(UserLevel.class);
+        List<String> userLevels = enumValues.stream().map(Enum::toString).collect(Collectors.toList());
+        return userLevels;
     }
 }

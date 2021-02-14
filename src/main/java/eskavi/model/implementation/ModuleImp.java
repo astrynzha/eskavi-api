@@ -31,10 +31,11 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
     /**
      * Create a module implementation object.
      * If the scope is shared - author is added to the scope object here.
-     * @param implementationId id of this object
-     * @param author author of this object
-     * @param name name of this object
-     * @param impScope implementation scope of this object
+     *
+     * @param implementationId      id of this object
+     * @param author                author of this object
+     * @param name                  name of this object
+     * @param impScope              implementation scope of this object
      * @param templateConfiguration configuration of this moduleImp
      */
     public ModuleImp(long implementationId, User author, String name, ImplementationScope impScope,

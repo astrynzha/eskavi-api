@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static junit.framework.TestCase.assertEquals;
 
 @SpringBootTest
 public class ImplementationRepositoryTest {
@@ -48,11 +48,12 @@ public class ImplementationRepositoryTest {
     }
 
     @Test
-    void happyPath() {
+    void happyPath() throws IllegalAccessException {
 
         userRepo.save(userA);
         endpoint = impRepo.save(endpoint);
         Implementation implementation = impRepo.findById(endpoint.getImplementationId()).get();
+        userA.subscribe(implementation);
         assertEquals(implementation, endpoint);
     }
 }

@@ -4,41 +4,31 @@ import eskavi.model.configuration.Configuration;
 import eskavi.model.configuration.DataType;
 import eskavi.model.configuration.KeyExpression;
 import eskavi.model.configuration.TextField;
-import eskavi.model.implementation.ImmutableImplementation;
-import eskavi.model.implementation.ImmutableModuleImp;
-import eskavi.model.implementation.Implementation;
-import eskavi.model.implementation.ImplementationScope;
-import eskavi.model.implementation.MessageType;
-import eskavi.model.implementation.ProtocolType;
-import eskavi.model.implementation.Scope;
-import eskavi.model.implementation.moduleimp.AssetConnection;
-import eskavi.model.implementation.moduleimp.Deserializer;
-import eskavi.model.implementation.moduleimp.Dispatcher;
-import eskavi.model.implementation.moduleimp.Endpoint;
-import eskavi.model.implementation.moduleimp.Handler;
-import eskavi.model.implementation.moduleimp.InteractionStarter;
-import eskavi.model.implementation.moduleimp.PersistenceManager;
-import eskavi.model.implementation.moduleimp.Serializer;
+import eskavi.model.implementation.*;
+import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.ImmutableUser;
-import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
-import eskavi.model.user.UserLevel;
-import eskavi.service.mockrepo.MockImplementationRepository;
-import eskavi.service.mockrepo.MockUserRepository;
+import eskavi.repository.ImplementationRepository;
+import eskavi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.text.CollationElementIterator;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class ImpServiceTest {
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    ImplementationRepository implementationRepository;
     private ImpService impService;
     private UserManagementService userService;
     private ProtocolType protocolTypeA;
@@ -62,8 +52,6 @@ class ImpServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockUserRepository userRepository = new MockUserRepository();
-        MockImplementationRepository implementationRepository = new MockImplementationRepository();
         impService = new ImpService(implementationRepository, userRepository);
         userService = new UserManagementService(userRepository);
         userA = userService.createUser("a.str@gmail.com", "dja;lsfkdjsafk");
