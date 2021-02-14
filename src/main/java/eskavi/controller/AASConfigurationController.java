@@ -3,14 +3,24 @@ package eskavi.controller;
 import com.google.common.io.Files;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.user.ImmutableUser;
+import eskavi.model.user.User;
+import eskavi.service.aasconfigurationservice.AASConfigurationService;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.io.IOException;
 
 @RestController
 @RequestMapping("aas")
 public class AASConfigurationController {
+
+    final AASConfigurationService aasConfigurationService;
+    final UserTokenMatcher userTokenMatcher;
+
+    public AASConfigurationController(AASConfigurationService aasConfigurationService, UserTokenMatcher userTokenMatcher) {
+        this.aasConfigurationService = aasConfigurationService;
+        this.userTokenMatcher = userTokenMatcher;
+    }
+
     /**
      * @api{post}/aas Post AAS session
      * @apiName CreateSession
@@ -21,8 +31,9 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     @PostMapping
-    public long createSession() {
-        return 0;
+    public long createSession(@RequestHeader String jwtToken) {
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+        return aasConfigurationService.createAASConstructionSession((User) user);
     }
 
     /**
@@ -35,7 +46,10 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     @DeleteMapping()
-    public void closeSession(@ModelAttribute("sessionId") long sessionId) {
+    public void closeSession(@RequestHeader String jwtToken, @ModelAttribute("sessionId") long sessionId) {
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+        //TODO not every one should be able to randomly close sessions
+        aasConfigurationService.removeAASConstructionSession(sessionId);
     }
 
     /**
@@ -50,6 +64,8 @@ public class AASConfigurationController {
      */
     @PostMapping("{/imp")
     public void addModuleImp(@ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
+        //TODO order of Parameters is annoying :D
+        aasConfigurationService.addModuleInstance(sessionId, moduleId);
     }
 
     /**
@@ -258,7 +274,7 @@ public class AASConfigurationController {
      */
     @GetMapping("/imp/configuration")
     public Configuration getConfiguration(@ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
-        return null;
+        return aasConfigurationService.getConfiguration(sessionId, moduleId);
     }
 
     /**
@@ -471,7 +487,8 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     @PutMapping("/imp/configuration")
-    public void updateConfiguration(Configuration configuration, @ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
+    public void updateConfiguration(@ModelAttribute Configuration configuration, @ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
+        aasConfigurationService.updateConfiguration(sessionId, configuration, moduleId);
     }
 
     /**
@@ -486,6 +503,7 @@ public class AASConfigurationController {
      */
     @DeleteMapping("{/imp")
     public void deleteModuleImp(@ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
+        aasConfigurationService.removeModuleInstance(sessionId, moduleId);
     }
 
     /**
@@ -499,7 +517,7 @@ public class AASConfigurationController {
      */
     @GetMapping("{/sessionId:[0-9]+}/generate")
     public byte[] generateJavaClass(@PathVariable("sessionId") long sessionId) throws IOException {
-        return Files.toByteArray(new File(""));
+        return Files.toByteArray(aasConfigurationService.generateJavaClass(sessionId));
     }
 
     private boolean isAuthorized(long sessionId, ImmutableUser user) {

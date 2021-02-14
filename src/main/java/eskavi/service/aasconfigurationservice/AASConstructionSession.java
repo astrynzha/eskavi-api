@@ -3,7 +3,9 @@ package eskavi.service.aasconfigurationservice;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.ModuleInstance;
 import eskavi.model.user.User;
+import eskavi.util.JavaClassGenerator;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -46,7 +48,12 @@ public class AASConstructionSession {
         return miMap.get(moduleId).getInstanceConfiguration();
     }
 
-    // TODO public File generateJavaClass()
+    public File generateJavaClass() {
+        //TODO does this look good?
+        StringBuilder codeBuilder = new StringBuilder();
+        miMap.values().forEach(mi -> codeBuilder.append(mi.resolveConfiguration()));
+        return JavaClassGenerator.generateClassFile(codeBuilder.toString());
+    }
 
     private boolean isValid() {
         //TODO

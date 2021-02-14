@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
 import java.util.Optional;
 
 @Service
@@ -92,6 +93,14 @@ public class AASConfigurationService {
         }
     }
 
-    // TODO: generateJavaClass(long sessionId): File
+    public File generateJavaClass(long sessionId) {
+        AASConstructionSession session = null;
+        try {
+            session = sessionHandler.getAASConstructionSession(sessionId);
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+        return session.generateJavaClass();
+    }
 
 }
