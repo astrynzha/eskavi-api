@@ -3,6 +3,7 @@ package eskavi.controller;
 import eskavi.model.configuration.DataType;
 import eskavi.model.implementation.ImmutableImplementation;
 import eskavi.model.implementation.ImpType;
+import eskavi.model.implementation.Implementation;
 import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.user.ImmutableUser;
 import eskavi.service.ImpService;
@@ -351,6 +352,7 @@ public class ImpController {
      */
     @GetMapping("/{id:[0-9]+}")
     public ImmutableImplementation get(@PathVariable("id") long impId, @RequestHeader String jwtToken) {
+        //TODO who checks if caller has access
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
         return impService.getImp(impId);
     }
@@ -471,7 +473,7 @@ public class ImpController {
      */
     @GetMapping("/default")
     public ImmutableImplementation getDefaultImpCreate(@PathParam("type") ImpType type) {
-        return null;
+        return impService.getDefaultImpCreate(type);
     }
 
 
@@ -550,7 +552,10 @@ public class ImpController {
      * }
      */
     @PostMapping
-    public void add(ImmutableImplementation mi) {
+    public void add(@RequestHeader String jwtToken, ImmutableImplementation mi) {
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+        impService.addImplementation((Implementation) mi, user.getEmailAddress());
+
     }
 
     /**
@@ -574,7 +579,9 @@ public class ImpController {
      * }
      */
     @PutMapping
-    public void put(ImmutableImplementation request) {
+    public void put(@RequestHeader String jwtToken, ImmutableImplementation request) throws IllegalAccessException {
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+        impService.updateImplementation(request, user.getEmailAddress());
     }
 
     /**
@@ -588,7 +595,9 @@ public class ImpController {
      * @apiParam (Request body) {Number} impId Implementation unique ID
      */
     @PostMapping("/{id:[0-9]+}/user")
-    public void addUser(@PathVariable("id") Long implementationId, String userId) {
+    public void addUser(@RequestHeader String jwtToken, @PathVariable("id") Long implementationId, String userId) throws IllegalAccessException {
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+        impService.addUser(implementationId, userId, user.getEmailAddress());
     }
 
     /**
@@ -602,7 +611,9 @@ public class ImpController {
      * @apiParam (Request body) {Number} impId Implementation unique ID
      */
     @DeleteMapping("/user")
-    public void removeUser(Long implementationId, String userId) {
+    public void removeUser(@RequestHeader String jwtToken, Long implementationId, String userId) throws IllegalAccessException {
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+        impService.removeUser(implementationId, userId, user.getEmailAddress());
     }
 
     /**
@@ -620,6 +631,8 @@ public class ImpController {
      * }
      */
     @DeleteMapping("/{id:[0-9]+}")
-    public void delete(@PathVariable("id") long impId) {
+    public void delete(@RequestHeader String jwtToken, @PathVariable("id") long impId) throws IllegalAccessException {
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+        impService.removeImplementation(impId, user.getEmailAddress());
     }
 }
