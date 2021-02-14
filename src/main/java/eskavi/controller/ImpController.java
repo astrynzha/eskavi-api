@@ -1,21 +1,27 @@
 package eskavi.controller;
 
+import eskavi.model.configuration.DataType;
 import eskavi.model.implementation.ImmutableImplementation;
 import eskavi.model.implementation.ImpType;
+import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.user.ImmutableUser;
 import eskavi.service.ImpService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.util.Collection;
+import java.util.EnumSet;
 
 @RestController
 @RequestMapping("imp")
 public class ImpController {
 
     final ImpService impService;
+    final UserTokenMatcher userTokenMatcher;
 
-    public ImpController(ImpService impService) {
+    public ImpController(ImpService impService, UserTokenMatcher userTokenMatcher) {
         this.impService = impService;
+        this.userTokenMatcher = userTokenMatcher;
     }
 
     /**
@@ -344,8 +350,9 @@ public class ImpController {
      * }
      */
     @GetMapping("/{id:[0-9]+}")
-    public ImmutableImplementation get(@PathVariable("id") long impId, ImmutableUser user) {
-        return null;
+    public ImmutableImplementation get(@PathVariable("id") long impId, @RequestHeader String jwtToken) {
+        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+        return impService.getImp(impId);
     }
 
     /**
@@ -397,11 +404,12 @@ public class ImpController {
      * @apiError {String} message Errormessage
      */
     @GetMapping("/types")
-    public ImpType getImplementationTypes(ImmutableUser user) {
-        return null;
+    public Collection<ImpType> getImplementationTypes() {
+        return EnumSet.allOf(ImpType.class);
     }
 
     /**
+     * @return
      * @api{get}/imp/config/data_types Get Data types of Configuration
      * @apiDescription Gets all types of data that can be used for Configuration fields.
      * @apiName getConfigDataTypes
@@ -417,11 +425,12 @@ public class ImpController {
      * @apiError {String} message Errormessage
      */
     @GetMapping("/config/data_types")
-    public ImpType getConfigDataTypes(ImmutableUser user) {
-        return null;
+    public Collection<DataType> getConfigDataTypes(ImmutableUser user) {
+        return EnumSet.allOf(DataType.class);
     }
 
     /**
+     * @return
      * @api{get}/imp/scopes Get possible implementation scopes
      * @apiDescription Gets all accessibility scopes possible for implementations
      * @apiName getImpScopes
@@ -437,8 +446,8 @@ public class ImpController {
      * @apiError {String} message Errormessage
      */
     @GetMapping("/scopes")
-    public ImpType getImpScopes(ImmutableUser user) {
-        return null;
+    public Collection<ImplementationScope> getImpScopes(ImmutableUser user) {
+        return EnumSet.allOf(ImplementationScope.class);
     }
 
     /**
