@@ -78,7 +78,7 @@ public class AASConfigurationController {
      * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiSuccessExample Success-Example:
      * {
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"<parent>",
      * "expressionEnd":"<parent>"
@@ -88,7 +88,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"<mapping>",
      * "expressionEnd":"<mapping>"
@@ -98,7 +98,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"TextField",
+     * "jsonTypeInfo":"TextField",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -109,7 +109,7 @@ public class AASConfigurationController {
      * "allowMultiple":false
      * },
      * {
-     * "@type":"ImplementationSelect",
+     * "jsonTypeInfo":"ImplementationSelect",
      * "keyExpression":{
      * "expressionStart":"<serializer>",
      * "expressionEnd":"<serializer>"
@@ -117,7 +117,7 @@ public class AASConfigurationController {
      * "instance":{
      * "moduleImp":8,
      * "instanceConfiguration":{
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -127,7 +127,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"TextField",
+     * "jsonTypeInfo":"TextField",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -149,7 +149,7 @@ public class AASConfigurationController {
      * "allowMultiple":false
      * },
      * {
-     * "@type":"ImplementationSelect",
+     * "jsonTypeInfo":"ImplementationSelect",
      * "keyExpression":{
      * "expressionStart":"<deserializer>",
      * "expressionEnd":"<deserializer>"
@@ -157,7 +157,7 @@ public class AASConfigurationController {
      * "instance":{
      * "moduleImp":7,
      * "instanceConfiguration":{
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -167,7 +167,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"TextField",
+     * "jsonTypeInfo":"TextField",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -189,7 +189,7 @@ public class AASConfigurationController {
      * "allowMultiple":false
      * },
      * {
-     * "@type":"ImplementationSelect",
+     * "jsonTypeInfo":"ImplementationSelect",
      * "keyExpression":{
      * "expressionStart":"<dispatcher>",
      * "expressionEnd":"<dispatcher>"
@@ -197,7 +197,7 @@ public class AASConfigurationController {
      * "instance":{
      * "moduleImp":9,
      * "instanceConfiguration":{
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -207,7 +207,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"ImplementationSelect",
+     * "jsonTypeInfo":"ImplementationSelect",
      * "keyExpression":{
      * "expressionStart":"<handler>",
      * "expressionEnd":"<handler>"
@@ -215,7 +215,7 @@ public class AASConfigurationController {
      * "instance":{
      * "moduleImp":10,
      * "instanceConfiguration":{
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -225,7 +225,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"TextField",
+     * "jsonTypeInfo":"TextField",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -258,7 +258,7 @@ public class AASConfigurationController {
      * ]
      * },
      * {
-     * "@type":"TextField",
+     * "jsonTypeInfo":"TextField",
      * "keyExpression":{
      * "expressionStart":"<port>",
      * "expressionEnd":"<port>"
@@ -291,7 +291,7 @@ public class AASConfigurationController {
      * "sessionId":1,
      * "impId":1,
      * {
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"<parent>",
      * "expressionEnd":"<parent>"
@@ -301,7 +301,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"<mapping>",
      * "expressionEnd":"<mapping>"
@@ -311,7 +311,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"TextField",
+     * "jsonTypeInfo":"TextField",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -322,7 +322,7 @@ public class AASConfigurationController {
      * "allowMultiple":false
      * },
      * {
-     * "@type":"ImplementationSelect",
+     * "jsonTypeInfo":"ImplementationSelect",
      * "keyExpression":{
      * "expressionStart":"<serializer>",
      * "expressionEnd":"<serializer>"
@@ -330,7 +330,7 @@ public class AASConfigurationController {
      * "instance":{
      * "moduleImp":8,
      * "instanceConfiguration":{
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -340,7 +340,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"TextField",
+     * "jsonTypeInfo":"TextField",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -362,7 +362,7 @@ public class AASConfigurationController {
      * "allowMultiple":false
      * },
      * {
-     * "@type":"ImplementationSelect",
+     * "jsonTypeInfo":"ImplementationSelect",
      * "keyExpression":{
      * "expressionStart":"<deserializer>",
      * "expressionEnd":"<deserializer>"
@@ -370,7 +370,7 @@ public class AASConfigurationController {
      * "instance":{
      * "moduleImp":7,
      * "instanceConfiguration":{
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -380,7 +380,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"TextField",
+     * "jsonTypeInfo":"TextField",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -402,7 +402,7 @@ public class AASConfigurationController {
      * "allowMultiple":false
      * },
      * {
-     * "@type":"ImplementationSelect",
+     * "jsonTypeInfo":"ImplementationSelect",
      * "keyExpression":{
      * "expressionStart":"<dispatcher>",
      * "expressionEnd":"<dispatcher>"
@@ -410,7 +410,7 @@ public class AASConfigurationController {
      * "instance":{
      * "moduleImp":9,
      * "instanceConfiguration":{
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -420,7 +420,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"ImplementationSelect",
+     * "jsonTypeInfo":"ImplementationSelect",
      * "keyExpression":{
      * "expressionStart":"<handler>",
      * "expressionEnd":"<handler>"
@@ -428,7 +428,7 @@ public class AASConfigurationController {
      * "instance":{
      * "moduleImp":10,
      * "instanceConfiguration":{
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -438,7 +438,7 @@ public class AASConfigurationController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"TextField",
+     * "jsonTypeInfo":"TextField",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -471,7 +471,7 @@ public class AASConfigurationController {
      * ]
      * },
      * {
-     * "@type":"TextField",
+     * "jsonTypeInfo":"TextField",
      * "keyExpression":{
      * "expressionStart":"<port>",
      * "expressionEnd":"<port>"

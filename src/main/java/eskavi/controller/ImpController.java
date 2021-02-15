@@ -40,7 +40,7 @@ public class ImpController {
      * {
      * implementations: [
      * {
-     * '@type': 'PersistenceManager',
+     * 'jsonTypeInfo': 'PersistenceManager',
      * implementationId: 13,
      * author: 'a@gmail.com',
      * name: 'manager',
@@ -49,7 +49,7 @@ public class ImpController {
      * impScope: 'SHARED',
      * },
      * configurationRoot: {
-     * '@type': 'ConfigurationAggregate',
+     * 'jsonTypeInfo': 'ConfigurationAggregate',
      * keyExpression: {
      * expressionStart: '',
      * expressionEnd: '',
@@ -59,7 +59,7 @@ public class ImpController {
      * allowMultiple: false,
      * children: [
      * {
-     * '@type': 'TextField',
+     * 'jsonTypeInfo': 'TextField',
      * keyExpression: {
      * expressionStart: '<dummy>',
      * expressionEnd: '<dummy>',
@@ -73,7 +73,7 @@ public class ImpController {
      * },
      * },
      * {
-     * '@type': 'Deserializer',
+     * 'jsonTypeInfo': 'Deserializer',
      * implementationId: 7,
      * author: 'a@gmail.com',
      * name: 'deserializer_7',
@@ -82,7 +82,7 @@ public class ImpController {
      * impScope: 'SHARED',
      * },
      * configurationRoot: {
-     * '@type': 'ConfigurationAggregate',
+     * 'jsonTypeInfo': 'ConfigurationAggregate',
      * keyExpression: {
      * expressionStart: '',
      * expressionEnd: '',
@@ -92,7 +92,7 @@ public class ImpController {
      * allowMultiple: false,
      * children: [
      * {
-     * '@type': 'TextField',
+     * 'jsonTypeInfo': 'TextField',
      * keyExpression: {
      * expressionStart: '<dummy>',
      * expressionEnd: '<dummy>',
@@ -105,7 +105,7 @@ public class ImpController {
      * ],
      * },
      * protocolType: {
-     * '@type': 'ProtocolType',
+     * 'jsonTypeInfo': 'ProtocolType',
      * implementationId: 0,
      * author: 'a@gmail.com',
      * name: 'protocolType_0',
@@ -115,7 +115,7 @@ public class ImpController {
      * },
      * },
      * messageType: {
-     * '@type': 'MessageType',
+     * 'jsonTypeInfo': 'MessageType',
      * implementationId: 3,
      * author: 'a@gmail.com',
      * name: 'messageType_3',
@@ -126,7 +126,7 @@ public class ImpController {
      * },
      * },
      * {
-     * '@type': 'ProtocolType',
+     * 'jsonTypeInfo': 'ProtocolType',
      * implementationId: 0,
      * author: 'a@gmail.com',
      * name: 'protocolType_0',
@@ -136,7 +136,7 @@ public class ImpController {
      * },
      * },
      * {
-     * '@type': 'Endpoint',
+     * 'jsonTypeInfo': 'Endpoint',
      * implementationId: 11,
      * author: 'a@gmail.com',
      * name: 'endpoint',
@@ -145,7 +145,7 @@ public class ImpController {
      * impScope: 'SHARED',
      * },
      * configurationRoot: {
-     * '@type': 'ConfigurationAggregate',
+     * 'jsonTypeInfo': 'ConfigurationAggregate',
      * keyExpression: {
      * expressionStart: '<parent>',
      * expressionEnd: '<parent>',
@@ -155,7 +155,7 @@ public class ImpController {
      * allowMultiple: false,
      * children: [
      * {
-     * '@type': 'ConfigurationAggregate',
+     * 'jsonTypeInfo': 'ConfigurationAggregate',
      * keyExpression: {
      * expressionStart: '<mapping>',
      * expressionEnd: '<mapping>',
@@ -165,7 +165,7 @@ public class ImpController {
      * allowMultiple: false,
      * children: [
      * {
-     * '@type': 'TextField',
+     * 'jsonTypeInfo': 'TextField',
      * keyExpression: {
      * expressionStart: '<dummy>',
      * expressionEnd: '<dummy>',
@@ -176,7 +176,7 @@ public class ImpController {
      * allowMultiple: false,
      * },
      * {
-     * '@type': 'ImplementationSelect',
+     * 'jsonTypeInfo': 'ImplementationSelect',
      * keyExpression: {
      * expressionStart: '<serializer>',
      * expressionEnd: '<serializer>',
@@ -184,7 +184,7 @@ public class ImpController {
      * instance: {
      * moduleImp: 8,
      * instanceConfiguration: {
-     * '@type': 'ConfigurationAggregate',
+     * 'jsonTypeInfo': 'ConfigurationAggregate',
      * keyExpression: {
      * expressionStart: '',
      * expressionEnd: '',
@@ -194,7 +194,7 @@ public class ImpController {
      * allowMultiple: false,
      * children: [
      * {
-     * '@type': 'TextField',
+     * 'jsonTypeInfo': 'TextField',
      * keyExpression: {
      * expressionStart: '<dummy>',
      * expressionEnd: '<dummy>',
@@ -213,7 +213,7 @@ public class ImpController {
      * allowMultiple: false,
      * },
      * {
-     * '@type': 'ImplementationSelect',
+     * 'jsonTypeInfo': 'ImplementationSelect',
      * keyExpression: {
      * expressionStart: '<deserializer>',
      * expressionEnd: '<deserializer>',
@@ -221,7 +221,7 @@ public class ImpController {
      * instance: {
      * moduleImp: 7,
      * instanceConfiguration: {
-     * '@type': 'ConfigurationAggregate',
+     * 'jsonTypeInfo': 'ConfigurationAggregate',
      * keyExpression: {
      * expressionStart: '',
      * expressionEnd: '',
@@ -231,7 +231,7 @@ public class ImpController {
      * allowMultiple: false,
      * children: [
      * {
-     * '@type': 'TextField',
+     * 'jsonTypeInfo': 'TextField',
      * keyExpression: {
      * expressionStart: '<dummy>',
      * expressionEnd: '<dummy>',
@@ -250,7 +250,7 @@ public class ImpController {
      * allowMultiple: false,
      * },
      * {
-     * '@type': 'ImplementationSelect',
+     * 'jsonTypeInfo': 'ImplementationSelect',
      * keyExpression: {
      * expressionStart: '<dispatcher>',
      * expressionEnd: '<dispatcher>',
@@ -258,7 +258,7 @@ public class ImpController {
      * instance: {
      * moduleImp: 9,
      * instanceConfiguration: {
-     * '@type': 'ConfigurationAggregate',
+     * 'jsonTypeInfo': 'ConfigurationAggregate',
      * keyExpression: {
      * expressionStart: '',
      * expressionEnd: '',
@@ -268,7 +268,7 @@ public class ImpController {
      * allowMultiple: false,
      * children: [
      * {
-     * '@type': 'ImplementationSelect',
+     * 'jsonTypeInfo': 'ImplementationSelect',
      * keyExpression: {
      * expressionStart: '<handler>',
      * expressionEnd: '<handler>',
@@ -276,7 +276,7 @@ public class ImpController {
      * instance: {
      * moduleImp: 10,
      * instanceConfiguration: {
-     * '@type': 'ConfigurationAggregate',
+     * 'jsonTypeInfo': 'ConfigurationAggregate',
      * keyExpression: {
      * expressionStart: '',
      * expressionEnd: '',
@@ -286,7 +286,7 @@ public class ImpController {
      * allowMultiple: false,
      * children: [
      * {
-     * '@type': 'TextField',
+     * 'jsonTypeInfo': 'TextField',
      * keyExpression: {
      * expressionStart: '<dummy>',
      * expressionEnd: '<dummy>',
@@ -315,7 +315,7 @@ public class ImpController {
      * ],
      * },
      * {
-     * '@type': 'TextField',
+     * 'jsonTypeInfo': 'TextField',
      * keyExpression: {
      * expressionStart: '<port>',
      * expressionEnd: '<port>',
@@ -328,7 +328,7 @@ public class ImpController {
      * ],
      * },
      * protocolType: {
-     * '@type': 'ProtocolType',
+     * 'jsonTypeInfo': 'ProtocolType',
      * implementationId: 0,
      * author: 'a@gmail.com',
      * name: 'protocolType_0',
@@ -431,6 +431,13 @@ public class ImpController {
         return EnumSet.allOf(DataType.class);
     }
 
+    /*
+    TODO worked on
+    @GetMapping("/configTemplates")
+    public Collection<ConfigType> getConfigTemplates()
+
+     */
+
     /**
      * @return
      * @api{get}/imp/scopes Get possible implementation scopes
@@ -486,7 +493,7 @@ public class ImpController {
      * @apiParam (Request body) {Implementation} implementation Implementation object
      * @apiParamExample {json} Request-Example:
      * {
-     * "@type":"Deserializer",
+     * "jsonTypeInfo":"Deserializer",
      * "implementationId":7,
      * "author":"a@gmail.com",
      * "name":"deserializer_7",
@@ -495,7 +502,7 @@ public class ImpController {
      * "impScope":"SHARED"
      * },
      * "configurationRoot":{
-     * "@type":"ConfigurationAggregate",
+     * "jsonTypeInfo":"ConfigurationAggregate",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -505,7 +512,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "@type":"TextField",
+     * "jsonTypeInfo":"TextField",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -518,7 +525,7 @@ public class ImpController {
      * ]
      * },
      * "protocolType":{
-     * "@type":"ProtocolType",
+     * "jsonTypeInfo":"ProtocolType",
      * "implementationId":0,
      * "author":"a@gmail.com",
      * "name":"protocolType_0",
@@ -528,7 +535,7 @@ public class ImpController {
      * }
      * },
      * "messageType":{
-     * "@type":"MessageType",
+     * "jsonTypeInfo":"MessageType",
      * "implementationId":3,
      * "author":"a@gmail.com",
      * "name":"messageType_3",
