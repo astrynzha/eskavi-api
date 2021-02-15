@@ -10,6 +10,7 @@ import java.util.Map;
 @Component
 public class AASSessionHandler {
     private Map<Long, AASConstructionSession> sessionMap;
+    // TODO die IDs irgendwie mit dem springboot verteilen?
     private long nextFreeId;
 
     public AASSessionHandler() {

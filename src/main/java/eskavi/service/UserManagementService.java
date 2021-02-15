@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+//TODO all parameters as ids
 @Service
 public class UserManagementService {
 
@@ -51,7 +52,6 @@ public class UserManagementService {
         return user.getSecurityAnswer().equals(answer);
     }
 
-    //TODO
     public boolean checkPassword(ImmutableUser user, String hashedPassword) {
         return user.getPassword().equals(hashedPassword);
     }

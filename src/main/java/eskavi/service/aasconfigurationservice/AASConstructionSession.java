@@ -35,6 +35,7 @@ public class AASConstructionSession {
         miMap.remove(moduleId);
     }
 
+    // TODO check if the new configuration is valid
     public void updateInstanceConfiguration(long moduleId, Configuration updateConfig) throws IllegalAccessException {
         if (!miMap.containsKey(moduleId)) {
             throw new IllegalAccessException("no MI with id " + moduleId + " is found in session");
