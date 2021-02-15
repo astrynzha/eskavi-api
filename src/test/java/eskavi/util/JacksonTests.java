@@ -12,9 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.*;
 
 
 public class JacksonTests {
@@ -130,5 +128,27 @@ public class JacksonTests {
     void testConfigType() throws JsonProcessingException {
         String result = new ObjectMapper().writeValueAsString(ConfigurationType.values());
         System.out.println(result);
+    }
+
+    @Test
+    void testSelectToJson() throws JsonProcessingException {
+        Map<String, String> content = new HashMap<>();
+        content.put("first", "value1");
+        content.put("second", "value2");
+        Select select = new Select("name", false, new KeyExpression("<select>", "<select>"), content);
+
+        String result = new ObjectMapper().writeValueAsString(select);
+        System.out.println(result);
+        Select copy = new ObjectMapper().readValue(result, Select.class);
+        System.out.println(copy.toString());
+    }
+
+    @Test
+    void testSwitchToJson() throws JsonProcessingException {
+        Switch switch_ = new Switch("name", false, new KeyExpression("<switch>", "<switch>"), "true", "false");
+        String result = new ObjectMapper().writeValueAsString(switch_);
+        System.out.println(result);
+        Select copy = new ObjectMapper().readValue(result, Switch.class);
+        System.out.println(copy.toString());
     }
 }

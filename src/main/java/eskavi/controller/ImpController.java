@@ -445,7 +445,6 @@ public class ImpController {
      * HTTP/1.1 200 OK
      *[
      *    {
-     *       "name":"CONFIGURATION_AGGREGATE",
      *       "template":{
      *          "jsonTypeInfo":"ConfigurationAggregate",
      *          "keyExpression":{
@@ -461,7 +460,6 @@ public class ImpController {
      *       }
      *    },
      *    {
-     *       "name":"TEXT_FIELD",
      *       "template":{
      *          "jsonTypeInfo":"TextField",
      *          "keyExpression":{
@@ -474,7 +472,6 @@ public class ImpController {
      *       }
      *    },
      *    {
-     *       "name":"IMPLEMENTATION_SELECT",
      *       "template":{
      *          "jsonTypeInfo":"ImplementationSelect",
      *          "keyExpression":{
@@ -490,7 +487,6 @@ public class ImpController {
      *       }
      *    },
      *    {
-     *       "name":"SELECT",
      *       "template":{
      *          "jsonTypeInfo":"Select",
      *          "keyExpression":{
@@ -505,7 +501,6 @@ public class ImpController {
      *       }
      *    },
      *    {
-     *       "name":"FILE_FIELD",
      *       "template":{
      *          "jsonTypeInfo":"FileField",
      *          "keyExpression":{
@@ -517,7 +512,6 @@ public class ImpController {
      *       }
      *    },
      *    {
-     *       "name":"SWITCH",
      *       "template":{
      *          "jsonTypeInfo":"Switch",
      *          "keyExpression":{

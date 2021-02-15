@@ -1,5 +1,9 @@
 package eskavi.model.configuration;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import java.util.HashMap;
 import java.util.Map;

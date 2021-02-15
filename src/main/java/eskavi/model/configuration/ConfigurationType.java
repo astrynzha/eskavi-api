@@ -9,8 +9,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+
+/**
+ * This enumeration lists all the available types of configuration fields. It's used to provide the callers of the api
+ * with templates of the expected json format.
+ * @version 1.0.0
+ * @author David Kaufmann
+ */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-@JsonPropertyOrder(alphabetic = true)
 public enum ConfigurationType {
     CONFIGURATION_AGGREGATE(new ConfigurationAggregate("", false, new KeyExpression("",""), new ArrayList<>(), false)),
     TEXT_FIELD(new TextField("", false, new KeyExpression("",""), DataType.TEXT)),
@@ -24,9 +30,5 @@ public enum ConfigurationType {
 
     private ConfigurationType(Configuration template) {
         this.template = template;
-    }
-
-    public String getName() {
-        return this.name();
     }
 }
