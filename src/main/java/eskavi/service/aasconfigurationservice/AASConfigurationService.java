@@ -18,7 +18,6 @@ public class AASConfigurationService {
     private final ImplementationRepository impRepository;
     private final AASSessionHandler sessionHandler;
 
-    //TODO Autowire miFactory & sessionHanlder
     public AASConfigurationService(ImplementationRepository impRepository,
                                    AASSessionHandler sessionHandler) {
         this.impRepository = impRepository;

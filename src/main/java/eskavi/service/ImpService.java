@@ -34,6 +34,7 @@ public class ImpService {
                 .collect(Collectors.toList());
     }
 
+    // TODO User id als parameter?
     public Collection<ImmutableImplementation> getImps(ImmutableUser user) {
         return user.getSubscribed();
     }
@@ -79,7 +80,6 @@ public class ImpService {
         }
     }
 
-    //TODO who checks if the initiator is the author of this implementation? Controller?
     public void addUser(long implementationId, String userId, String callerId) throws IllegalAccessException {
         Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -99,7 +99,6 @@ public class ImpService {
         updateScope(user, imp); // TODO discuss how to handle exceptions on this example
     }
 
-    //TODO check subscribe/unsubscribe
     public void removeUser(long implementationId, String userId, String callerId) throws IllegalAccessException {
         Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -125,7 +124,6 @@ public class ImpService {
         userRepository.save(user);
     }
 
-    //TODO wieso nicht nur id?
     public Collection<ImmutableUser> getUsers(Long implementationId) {
         Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
         if (optionalImplementation.isEmpty()) {
@@ -135,9 +133,9 @@ public class ImpService {
         return imp.getUsers();
     }
 
-    // TODO: 1. Is unchecked exception RespoinseStatusException OK here?
+    // TODO: 3. Is unchecked exception RespoinseStatusException OK here?
     //  2. Check that the author is subscribed when the scope is changed?!
-    //  3. Soll man hier isValid auf die übergebene MI aufrufen?
+    //  1. Soll man hier isValid auf die übergebene MI aufrufen?
     public void updateImplementation(ImmutableImplementation mi, String callerId) throws IllegalAccessException {
         Optional<User> optionalCaller = userRepository.findById(callerId);
         Optional<Implementation> optionalImplementation = impRepository.findById(mi.getImplementationId());
@@ -167,8 +165,7 @@ public class ImpService {
         impRepository.delete(imp);
     }
 
-    //TODO 1. wieso nicht nur die id?
-    //  tut die Methode das gedachte?
+    //  TODO: tut die Methode das gedachte?
     private void updateScope(User user, Implementation imp) throws IllegalAccessException {
         // need here both subscribe calls, because in addModuleImp(), it might happen that
         // the MI is already subscribed to the author but the user is not to the MI
@@ -179,7 +176,6 @@ public class ImpService {
     }
 
     private ModuleImp getMutableImp(ImmutableImplementation mi) throws IllegalAccessException {
-        // TODO: something else?
         if (!(mi instanceof ModuleImp)) {
             throw new IllegalAccessException("ImmutableImplementation is not an instance of ModuleImp!");
         }
