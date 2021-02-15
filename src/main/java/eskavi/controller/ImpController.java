@@ -1,5 +1,6 @@
 package eskavi.controller;
 
+import eskavi.model.configuration.ConfigurationType;
 import eskavi.model.configuration.DataType;
 import eskavi.model.implementation.ImmutableImplementation;
 import eskavi.model.implementation.ImpType;
@@ -431,12 +432,114 @@ public class ImpController {
         return EnumSet.allOf(DataType.class);
     }
 
-    /*
-    TODO worked on
-    @GetMapping("/configTemplates")
-    public Collection<ConfigType> getConfigTemplates()
 
+    /**
+     * @api{get}/imp/types Get ConfigurationTe Templates
+     * @apiDescription Gets templates for all possible configuration types.
+     * @apiName getConfigTemplates
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiSuccess {String[]} types Array of implementation types
+     * @apiSuccessExample {json} Success-Response:
+     * HTTP/1.1 200 OK
+     *[
+     *    {
+     *       "name":"CONFIGURATION_AGGREGATE",
+     *       "template":{
+     *          "jsonTypeInfo":"ConfigurationAggregate",
+     *          "keyExpression":{
+     *             "expressionStart":"",
+     *             "expressionEnd":""
+     *          },
+     *          "enforceCompatibility":false,
+     *          "name":"",
+     *          "allowMultiple":false,
+     *          "children":[
+     *
+     *          ]
+     *       }
+     *    },
+     *    {
+     *       "name":"TEXT_FIELD",
+     *       "template":{
+     *          "jsonTypeInfo":"TextField",
+     *          "keyExpression":{
+     *             "expressionStart":"",
+     *             "expressionEnd":""
+     *          },
+     *          "dataType":"TEXT",
+     *          "name":"",
+     *          "allowMultiple":false
+     *       }
+     *    },
+     *    {
+     *       "name":"IMPLEMENTATION_SELECT",
+     *       "template":{
+     *          "jsonTypeInfo":"ImplementationSelect",
+     *          "keyExpression":{
+     *             "expressionStart":"",
+     *             "expressionEnd":""
+     *          },
+     *          "generics":[
+     *
+     *          ],
+     *          "type":"SERIALIZER",
+     *          "name":"",
+     *          "allowMultiple":false
+     *       }
+     *    },
+     *    {
+     *       "name":"SELECT",
+     *       "template":{
+     *          "jsonTypeInfo":"Select",
+     *          "keyExpression":{
+     *             "expressionStart":"",
+     *             "expressionEnd":""
+     *          },
+     *          "content":{
+     *
+     *          },
+     *          "name":"",
+     *          "allowMultiple":false
+     *       }
+     *    },
+     *    {
+     *       "name":"FILE_FIELD",
+     *       "template":{
+     *          "jsonTypeInfo":"FileField",
+     *          "keyExpression":{
+     *             "expressionStart":"",
+     *             "expressionEnd":""
+     *          },
+     *          "name":"",
+     *          "allowMultiple":false
+     *       }
+     *    },
+     *    {
+     *       "name":"SWITCH",
+     *       "template":{
+     *          "jsonTypeInfo":"Switch",
+     *          "keyExpression":{
+     *             "expressionStart":"",
+     *             "expressionEnd":""
+     *          },
+     *          "value":"",
+     *          "content":{
+     *             "falseValue":"",
+     *             "trueValue":""
+     *          },
+     *          "name":"",
+     *          "allowMultiple":false
+     *       }
+     *    }
+     * ]
+     * @apiError {String} message Errormessage
      */
+    @GetMapping("/configTemplates")
+    public Collection<ConfigurationType> getConfigTemplates() {
+        return EnumSet.allOf(ConfigurationType.class);
+    }
 
     /**
      * @return

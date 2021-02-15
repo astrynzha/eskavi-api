@@ -24,6 +24,7 @@ public class ImplementationSelect extends Configuration {
     private ModuleInstance instance;
     @Transient
     private HashSet<ImmutableGenericImp> generics;
+    @JsonIdentityReference(alwaysAsId = true)
     private ImpType type;
 
     /**

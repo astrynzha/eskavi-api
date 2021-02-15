@@ -125,4 +125,10 @@ public class JacksonTests {
         String result = new ObjectMapper().writeValueAsString(manager);
         System.out.println(result);
     }
+
+    @Test
+    void testConfigType() throws JsonProcessingException {
+        String result = new ObjectMapper().writeValueAsString(ConfigurationType.values());
+        System.out.println(result);
+    }
 }

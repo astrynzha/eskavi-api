@@ -1,7 +1,6 @@
 package eskavi.model.implementation;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import eskavi.model.implementation.moduleimp.*;
 
 /**
@@ -12,6 +11,8 @@ import eskavi.model.implementation.moduleimp.*;
  * @version 1.0.0
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "name")
 public enum ImpType {
     ASSET_CONNECTION(AssetConnection.class, true),
     DESERIALIZER(Deserializer.class, false),
