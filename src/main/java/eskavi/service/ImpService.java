@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+// TODO: change all optional isEmpty checks to .orElseThrow()
 @Service
 public class ImpService {
     private final ImplementationRepository impRepository;
@@ -96,7 +97,7 @@ public class ImpService {
         if (!imp.getImplementationScope().equals(ImplementationScope.SHARED)) {
             throw new IllegalAccessException("ImplementationScope is not SHARED");
         }
-        updateScope(user, imp); // TODO discuss how to handle exceptions on this example
+        updateScope(user, imp);
     }
 
     public void removeUser(long implementationId, String userId, String callerId) throws IllegalAccessException {
@@ -133,8 +134,8 @@ public class ImpService {
         return imp.getUsers();
     }
 
-    // TODO: 3. Is unchecked exception RespoinseStatusException OK here?
-    //  2. Check that the author is subscribed when the scope is changed?!
+    // TODO:
+    //  2. Check that the scope is not changed upon update
     //  1. Soll man hier isValid auf die übergebene MI aufrufen?
     public void updateImplementation(ImmutableImplementation mi, String callerId) throws IllegalAccessException {
         Optional<User> optionalCaller = userRepository.findById(callerId);
@@ -148,6 +149,7 @@ public class ImpService {
             throw new IllegalAccessException("This caller cannot update the implementation, he is not it's author");
         }
         // TODO will spring automatically update by id?
+        // TODO test it
         impRepository.save(getMutableImp(mi));
     }
 
@@ -165,7 +167,6 @@ public class ImpService {
         impRepository.delete(imp);
     }
 
-    //  TODO: tut die Methode das gedachte?
     private void updateScope(User user, Implementation imp) throws IllegalAccessException {
         // need here both subscribe calls, because in addModuleImp(), it might happen that
         // the MI is already subscribed to the author but the user is not to the MI

@@ -31,4 +31,8 @@ public class MockUserRepository {
     public void delete(User user) {
         repo.remove(user.getEmailAddress());
     }
+
+    public void deleteById(String userId) {
+        repo.remove(userId);
+    }
 }

@@ -117,7 +117,7 @@ public class UserManagementController {
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteUser(@RequestHeader String jwtToken) {
         User user = (User) userManagementService.getUser(jwtToken);
-        userManagementService.deleteUser(user);
+        userManagementService.deleteUser(user.getEmailAddress());
     }
 
     /**
@@ -137,7 +137,7 @@ public class UserManagementController {
     @GetMapping("/security_question")
     public String getSecurityQuestion(@ModelAttribute String email) {
         ImmutableUser user = userManagementService.getUser(email);
-        return userManagementService.getSecurityQuestion(user).getQuestion();
+        return userManagementService.getSecurityQuestion(user.getEmailAddress()).getQuestion();
     }
 
     /**
@@ -162,8 +162,8 @@ public class UserManagementController {
     @PostMapping("/reset_password")
     public void resetPassword(@RequestHeader String jwtToken, @ModelAttribute String answer, @ModelAttribute String newPassword) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        if (userManagementService.checkSecurityQuestion(user, answer)) {
-            userManagementService.setPassword(user, new BCryptPasswordEncoder().encode(newPassword));
+        if (userManagementService.checkSecurityQuestion(user.getEmailAddress(), answer)) {
+            userManagementService.setPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(newPassword));
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -191,8 +191,8 @@ public class UserManagementController {
     @PostMapping("/change_password")
     public void setPassword(@RequestHeader String jwtToken, @ModelAttribute String oldPassword, @ModelAttribute String newPassword) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        if (userManagementService.checkPassword(user, new BCryptPasswordEncoder().encode(oldPassword))) {
-            userManagementService.setPassword(user, new BCryptPasswordEncoder().encode(newPassword));
+        if (userManagementService.checkPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(oldPassword))) {
+            userManagementService.setPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(newPassword));
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -216,7 +216,7 @@ public class UserManagementController {
     @PostMapping("/level")
     public void setUserLevel(@RequestHeader String jwtToken, @ModelAttribute("email") String email, @ModelAttribute("userLevel") UserLevel userLevel) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        userManagementService.setUserLevel(user, userLevel);
+        userManagementService.setUserLevel(user.getEmailAddress(), userLevel, email);
     }
 
 
