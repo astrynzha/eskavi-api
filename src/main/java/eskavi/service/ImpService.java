@@ -67,6 +67,7 @@ public class ImpService {
         }
         User caller = optionalCaller.get();
         mi.setAuthor(caller);
+        mi = impRepository.save(mi);
         // add author to scope if SHARED
         if (mi.getImplementationScope().equals(ImplementationScope.SHARED)) {
             try {
