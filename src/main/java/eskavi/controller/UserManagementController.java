@@ -165,7 +165,6 @@ public class UserManagementController {
         if (userManagementService.checkSecurityQuestion(user, answer)) {
             userManagementService.setPassword(user, new BCryptPasswordEncoder().encode(newPassword));
         } else {
-            //TODO Which Status code is good here 400/409/422?
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
@@ -195,7 +194,6 @@ public class UserManagementController {
         if (userManagementService.checkPassword(user, new BCryptPasswordEncoder().encode(oldPassword))) {
             userManagementService.setPassword(user, new BCryptPasswordEncoder().encode(newPassword));
         } else {
-            //TODO Which Status code is good here 400/409/422?
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
@@ -217,7 +215,6 @@ public class UserManagementController {
      */
     @PostMapping("/level")
     public void setUserLevel(@RequestHeader String jwtToken, @ModelAttribute("email") String email, @ModelAttribute("userLevel") UserLevel userLevel) throws IllegalAccessException {
-        //TODO Check if the user is a admin -> in Service!?
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
         userManagementService.setUserLevel(user, userLevel);
     }
@@ -245,9 +242,9 @@ public class UserManagementController {
      * }
      */
     @GetMapping("/levels")
-    public Collection<String> getUserLevels() {
+    public Collection<UserLevel> getUserLevels() {
         EnumSet<UserLevel> enumValues = EnumSet.allOf(UserLevel.class);
-        List<String> userLevels = enumValues.stream().map(Enum::toString).collect(Collectors.toList());
+        List<UserLevel> userLevels = enumValues.stream().collect(Collectors.toList());
         return userLevels;
     }
 }

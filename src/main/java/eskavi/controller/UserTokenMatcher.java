@@ -26,14 +26,14 @@ public class UserTokenMatcher {
         JWTVerifier verifier = JWT.require(algorithm)
                 .build(); //Reusable verifier instance
         DecodedJWT jwt = verifier.verify(token);
-        String userId = jwt.getHeaderClaim("subject").asString();
+        String userId = jwt.getHeaderClaim("email").asString();
         return userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
     }
 
     public String generateToken(String userId) {
-        Algorithm algorithm = Algorithm.HMAC256("eskaviSecret");
+        Algorithm algorithm = Algorithm.HMAC256("secret");
         String token = JWT.create()
-                .withSubject(userId)
+                .withClaim("email", userId)
                 .withExpiresAt(new Date(new Date().getTime() + 2 * 3600 * 1000))
                 .sign(algorithm);
         return token;
