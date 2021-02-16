@@ -6,6 +6,7 @@ import eskavi.deserializer.UserByIdDeserializer;
 import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Collection;

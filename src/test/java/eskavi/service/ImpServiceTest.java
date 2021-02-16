@@ -191,7 +191,7 @@ class ImpServiceTest {
             fail(e.getMessage());
         }
         Collection<ImmutableImplementation> imps = impService.getImps();
-        assertTrue(imps.isEmpty());
+        assertTrue(!imps.contains(endpoint));
     }
 
     @Test

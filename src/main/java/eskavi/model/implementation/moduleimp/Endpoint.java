@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 @Entity
 public class Endpoint extends ModuleImp {
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private ProtocolType protocolType;
 
     public Endpoint() {

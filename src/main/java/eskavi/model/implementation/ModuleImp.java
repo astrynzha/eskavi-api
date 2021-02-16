@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Entity
 public abstract class ModuleImp extends Implementation implements ImmutableModuleImp {
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
     private ConfigurationAggregate configurationRoot;
 
     public ModuleImp() {

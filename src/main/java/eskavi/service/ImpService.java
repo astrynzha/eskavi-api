@@ -171,6 +171,7 @@ public class ImpService {
             subscriber.unsubscribe(imp);
             userRepository.save(subscriber);
         }
+        impRepository.save(imp);
         impRepository.delete(imp);
     }
 
