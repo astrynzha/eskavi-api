@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -150,5 +151,15 @@ public class JacksonTests {
         System.out.println(result);
         Select copy = new ObjectMapper().readValue(result, Switch.class);
         System.out.println(copy.toString());
+    }
+
+    @Test
+    void testMultipleImps() throws JsonProcessingException {
+        PersistenceManager manager = new PersistenceManager(13, userA, "manager", ImplementationScope.SHARED, dummy);
+        List<Implementation> imps = new ArrayList<>();
+        imps.add(manager);
+        imps.add(deserializer);
+        String result = new ObjectMapper().writeValueAsString(imps);
+        System.out.println(result);
     }
 }
