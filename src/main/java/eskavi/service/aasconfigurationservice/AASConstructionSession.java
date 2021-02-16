@@ -45,7 +45,11 @@ public class AASConstructionSession {
         miMap.replace(moduleId, mi);
     }
 
-    public Configuration getConfiguration(long moduleId) {
+    public Configuration getConfiguration(long moduleId) throws IllegalAccessException {
+        if (!miMap.containsKey(moduleId)) {
+            throw new IllegalAccessException("ModuleInstance " + moduleId +
+                    " is not found in the constructions session " + sessionId);
+        }
         return miMap.get(moduleId).getInstanceConfiguration();
     }
 
