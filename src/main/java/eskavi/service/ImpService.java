@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -56,7 +58,7 @@ public class ImpService {
      * @param mi       implementation that the module developer has built in frontend
      * @param callerId Id of module developer that wants to add an implementation
      */
-    public void addImplementation(Implementation mi, String callerId) {
+    public ImmutableImplementation addImplementation(Implementation mi, String callerId) {
         if (!mi.isValid()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -76,9 +78,8 @@ public class ImpService {
                         "and thus subscribe is possible");
             }
             // moduleImp is persisted inside updateScope
-        } else {
-            impRepository.save(mi);
         }
+        return mi;
     }
 
     public void addUser(long implementationId, String userId, String callerId) throws IllegalAccessException {
@@ -162,6 +163,13 @@ public class ImpService {
         User user = optionalUser.get();
         if (!imp.getAuthor().equals(user)) {
             throw new IllegalAccessException("This user cannot remove the implementation, he is not it's author");
+        }
+        //unsubscribe from all
+        Collection<User> subscribers = new ArrayList();
+        subscribers.addAll(imp.getScope().getGrantedUsers());
+        for (User subscriber : subscribers) {
+            subscriber.unsubscribe(imp);
+            userRepository.save(subscriber);
         }
         impRepository.delete(imp);
     }

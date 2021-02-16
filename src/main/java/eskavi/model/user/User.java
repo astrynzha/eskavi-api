@@ -28,7 +28,7 @@ public class User implements ImmutableUser {
     private String securityAnswer;
     @Enumerated(EnumType.STRING)
     private UserLevel userLevel;
-    @OneToMany
+    @ManyToMany
     private Collection<Implementation> implementations;
 
     /**

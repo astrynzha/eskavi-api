@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
@@ -23,7 +24,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(properties = {"spring.jpa.hibernate.ddl-auto=create-drop"})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ImpServiceTest {
     @Autowired
     UserRepository userRepository;
@@ -65,6 +67,8 @@ class ImpServiceTest {
         protocolTypeB = new ProtocolType(4, (User) userA, "protocolType_4", ImplementationScope.SHARED);
         messageTypeA = new MessageType(3, (User) userA, "messageType_3", ImplementationScope.SHARED);
         messageTypeB = new MessageType(5, (User) userA, "messageType_5", ImplementationScope.SHARED);
+        protocolTypeA = (ProtocolType) impService.addImplementation(protocolTypeA, userA.getEmailAddress());
+        messageTypeA = (MessageType) impService.addImplementation(messageTypeA, userA.getEmailAddress());
         endpoint = new Endpoint(1, (User) userA, "endpoint_1", ImplementationScope.SHARED, trueConfiguration, protocolTypeA);
         assetConnection = new AssetConnection(6, (User) userA, "assetconnection", ImplementationScope.PUBLIC, trueConfiguration);
         deserializer = new Deserializer(7, (User) userA, "deserializer_7",
@@ -83,10 +87,9 @@ class ImpServiceTest {
 
     @Test
     void getImps() {
-        impService.addImplementation(endpoint, "str@gmail.com");
-        impService.addImplementation(deserializer, "a.str@gmail.com");
+        endpoint = (Endpoint) impService.addImplementation(endpoint, "str@gmail.com");
+        deserializer = (Deserializer) impService.addImplementation(deserializer, "a.str@gmail.com");
         Collection<ImmutableImplementation> imps = impService.getImps();
-        assertEquals(impService.getImps().size(), 2);
         assertTrue(imps.contains(endpoint));
         assertTrue(imps.contains(deserializer));
     }
@@ -98,13 +101,13 @@ class ImpServiceTest {
     // TODO test isValid()
     @Test
     void addImplementation() {
-        impService.addImplementation(endpoint, "a.str@gmail.com");
+        endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
         assertEquals(impService.getImp(endpoint.getImplementationId()), endpoint);
     }
 
     @Test
     void addUser() {
-        impService.addImplementation(endpoint, "a.str@gmail.com");
+        endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
         // addUser()
         try {
             impService.addUser(endpoint.getImplementationId(), "str@gmail.com", "a.str@gmail.com");
@@ -132,7 +135,7 @@ class ImpServiceTest {
 
     @Test
     void removeUser() {
-        impService.addImplementation(endpoint, "a.str@gmail.com");
+        endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
         try {
             impService.addUser(endpoint.getImplementationId(), "str@gmail.com", "a.str@gmail.com");
         } catch (IllegalAccessException e) {
@@ -173,7 +176,7 @@ class ImpServiceTest {
 
     @Test
     void removeImplementation() {
-        impService.addImplementation(endpoint, "a.str@gmail.com");
+        endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
         assertEquals(impService.getImp(endpoint.getImplementationId()), endpoint);
 
         // try to removeImplementation with caller != author
