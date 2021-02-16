@@ -519,8 +519,4 @@ public class AASConfigurationController {
     public byte[] generateJavaClass(@PathVariable("sessionId") long sessionId) throws IOException {
         return Files.toByteArray(aasConfigurationService.generateJavaClass(sessionId));
     }
-
-    private boolean isAuthorized(long sessionId, ImmutableUser user) {
-        return false;
-    }
 }

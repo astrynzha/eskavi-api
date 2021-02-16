@@ -26,9 +26,12 @@ public class UserManagementService {
     public ImmutableUser getUser(String userId) {
         return userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
-    
+
     public void setUserLevel(ImmutableUser immutableUser, UserLevel level) throws IllegalAccessException {
         User user = getMutableUser(immutableUser);
+        if (user.getUserLevel().equals(UserLevel.ADMINISTRATOR)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
         user.setUserLevel(level);
         userRepository.save(user);
     }
