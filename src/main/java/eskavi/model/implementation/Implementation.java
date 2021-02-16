@@ -26,14 +26,14 @@ import java.util.Objects;
         property = "implementationId")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "jsonTypeInfo")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = AssetConnection.class, name = "AssetConnection"),
-        @JsonSubTypes.Type(value = Deserializer.class, name = "Deserializer"),
-        @JsonSubTypes.Type(value = Dispatcher.class, name = "Dispatcher"),
-        @JsonSubTypes.Type(value = Endpoint.class, name = "Endpoint"),
-        @JsonSubTypes.Type(value = Handler.class, name = "Handler"),
-        @JsonSubTypes.Type(value = InteractionStarter.class, name = "InteractionStarter"),
-        @JsonSubTypes.Type(value = PersistenceManager.class, name = "PersistenceManager"),
-        @JsonSubTypes.Type(value = Serializer.class, name = "Serializer")
+        @JsonSubTypes.Type(value = AssetConnection.class, name = "ASSET_CONNECTION"),
+        @JsonSubTypes.Type(value = Deserializer.class, name = "DESERIALIZER"),
+        @JsonSubTypes.Type(value = Dispatcher.class, name = "DISPATCHER"),
+        @JsonSubTypes.Type(value = Endpoint.class, name = "ENDPOINT"),
+        @JsonSubTypes.Type(value = Handler.class, name = "HANDLER"),
+        @JsonSubTypes.Type(value = InteractionStarter.class, name = "INTERACTION_STARTER"),
+        @JsonSubTypes.Type(value = PersistenceManager.class, name = "PERSISTENCE_MANAGER"),
+        @JsonSubTypes.Type(value = Serializer.class, name = "SERIALIZER")
 })
 public abstract class Implementation implements ImmutableImplementation {
     @Id

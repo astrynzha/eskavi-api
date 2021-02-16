@@ -16,12 +16,12 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "jsonTypeInfo")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = ConfigurationAggregate.class, name = "ConfigurationAggregate"),
-        @JsonSubTypes.Type(value = TextField.class, name = "TextField"),
-        @JsonSubTypes.Type(value = ImplementationSelect.class, name = "ImplementationSelect"),
-        @JsonSubTypes.Type(value = Select.class, name = "Select"),
-        @JsonSubTypes.Type(value = Switch.class, name = "Switch"),
-        @JsonSubTypes.Type(value = FileField.class, name = "FileField")
+        @JsonSubTypes.Type(value = ConfigurationAggregate.class, name = "CONFIGURATION_AGGREGATE"),
+        @JsonSubTypes.Type(value = TextField.class, name = "TEXT_FIELD"),
+        @JsonSubTypes.Type(value = ImplementationSelect.class, name = "IMPLEMENTATION_SELECT"),
+        @JsonSubTypes.Type(value = Select.class, name = "SELECT"),
+        @JsonSubTypes.Type(value = Switch.class, name = "SWITCH"),
+        @JsonSubTypes.Type(value = FileField.class, name = "FILE_FIELD")
 })
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
