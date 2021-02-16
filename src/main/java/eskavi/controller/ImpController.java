@@ -40,310 +40,253 @@ public class ImpController {
      * @apiSuccessExample Success-Example:
      * {
      * implementations: [
-     * {
-     * 'jsonTypeInfo': 'PersistenceManager',
-     * implementationId: 13,
-     * author: 'a@gmail.com',
-     * name: 'manager',
-     * scope: {
-     * scopeId: 0,
-     * impScope: 'SHARED',
-     * },
-     * configurationRoot: {
-     * 'jsonTypeInfo': 'ConfigurationAggregate',
-     * keyExpression: {
-     * expressionStart: '',
-     * expressionEnd: '',
-     * },
-     * enforceCompatibility: false,
-     * name: 'root',
-     * allowMultiple: false,
-     * children: [
-     * {
-     * 'jsonTypeInfo': 'TextField',
-     * keyExpression: {
-     * expressionStart: '<dummy>',
-     * expressionEnd: '<dummy>',
-     * },
-     * value: 'dummy',
-     * dataType: 'TEXT',
-     * name: 'dummy',
-     * allowMultiple: false,
-     * },
-     * ],
-     * },
-     * },
-     * {
-     * 'jsonTypeInfo': 'Deserializer',
-     * implementationId: 7,
-     * author: 'a@gmail.com',
-     * name: 'deserializer_7',
-     * scope: {
-     * scopeId: 0,
-     * impScope: 'SHARED',
-     * },
-     * configurationRoot: {
-     * 'jsonTypeInfo': 'ConfigurationAggregate',
-     * keyExpression: {
-     * expressionStart: '',
-     * expressionEnd: '',
-     * },
-     * enforceCompatibility: false,
-     * name: 'root',
-     * allowMultiple: false,
-     * children: [
-     * {
-     * 'jsonTypeInfo': 'TextField',
-     * keyExpression: {
-     * expressionStart: '<dummy>',
-     * expressionEnd: '<dummy>',
-     * },
-     * value: 'dummy',
-     * dataType: 'TEXT',
-     * name: 'dummy',
-     * allowMultiple: false,
-     * },
-     * ],
-     * },
-     * protocolType: {
-     * 'jsonTypeInfo': 'ProtocolType',
-     * implementationId: 0,
-     * author: 'a@gmail.com',
-     * name: 'protocolType_0',
-     * scope: {
-     * scopeId: 0,
-     * impScope: 'SHARED',
-     * },
-     * },
-     * messageType: {
-     * 'jsonTypeInfo': 'MessageType',
-     * implementationId: 3,
-     * author: 'a@gmail.com',
-     * name: 'messageType_3',
-     * scope: {
-     * scopeId: 0,
-     * impScope: 'SHARED',
-     * },
-     * },
-     * },
-     * {
-     * 'jsonTypeInfo': 'ProtocolType',
-     * implementationId: 0,
-     * author: 'a@gmail.com',
-     * name: 'protocolType_0',
-     * scope: {
-     * scopeId: 0,
-     * impScope: 'SHARED',
-     * },
-     * },
-     * {
-     * 'jsonTypeInfo': 'Endpoint',
-     * implementationId: 11,
-     * author: 'a@gmail.com',
-     * name: 'endpoint',
-     * scope: {
-     * scopeId: 0,
-     * impScope: 'SHARED',
-     * },
-     * configurationRoot: {
-     * 'jsonTypeInfo': 'ConfigurationAggregate',
-     * keyExpression: {
-     * expressionStart: '<parent>',
-     * expressionEnd: '<parent>',
-     * },
-     * enforceCompatibility: false,
-     * name: 'parent',
-     * allowMultiple: false,
-     * children: [
-     * {
-     * 'jsonTypeInfo': 'ConfigurationAggregate',
-     * keyExpression: {
-     * expressionStart: '<mapping>',
-     * expressionEnd: '<mapping>',
-     * },
-     * enforceCompatibility: true,
-     * name: 'mapping',
-     * allowMultiple: false,
-     * children: [
-     * {
-     * 'jsonTypeInfo': 'TextField',
-     * keyExpression: {
-     * expressionStart: '<dummy>',
-     * expressionEnd: '<dummy>',
-     * },
-     * value: 'dummy',
-     * dataType: 'TEXT',
-     * name: 'dummy',
-     * allowMultiple: false,
-     * },
-     * {
-     * 'jsonTypeInfo': 'ImplementationSelect',
-     * keyExpression: {
-     * expressionStart: '<serializer>',
-     * expressionEnd: '<serializer>',
-     * },
-     * instance: {
-     * moduleImp: 8,
-     * instanceConfiguration: {
-     * 'jsonTypeInfo': 'ConfigurationAggregate',
-     * keyExpression: {
-     * expressionStart: '',
-     * expressionEnd: '',
-     * },
-     * enforceCompatibility: false,
-     * name: 'root',
-     * allowMultiple: false,
-     * children: [
-     * {
-     * 'jsonTypeInfo': 'TextField',
-     * keyExpression: {
-     * expressionStart: '<dummy>',
-     * expressionEnd: '<dummy>',
-     * },
-     * value: 'dummy',
-     * dataType: 'TEXT',
-     * name: 'dummy',
-     * allowMultiple: false,
-     * },
-     * ],
-     * },
-     * },
-     * generics: [3, 0],
-     * type: 'SERIALIZER',
-     * name: 'serializer',
-     * allowMultiple: false,
-     * },
-     * {
-     * 'jsonTypeInfo': 'ImplementationSelect',
-     * keyExpression: {
-     * expressionStart: '<deserializer>',
-     * expressionEnd: '<deserializer>',
-     * },
-     * instance: {
-     * moduleImp: 7,
-     * instanceConfiguration: {
-     * 'jsonTypeInfo': 'ConfigurationAggregate',
-     * keyExpression: {
-     * expressionStart: '',
-     * expressionEnd: '',
-     * },
-     * enforceCompatibility: false,
-     * name: 'root',
-     * allowMultiple: false,
-     * children: [
-     * {
-     * 'jsonTypeInfo': 'TextField',
-     * keyExpression: {
-     * expressionStart: '<dummy>',
-     * expressionEnd: '<dummy>',
-     * },
-     * value: 'dummy',
-     * dataType: 'TEXT',
-     * name: 'dummy',
-     * allowMultiple: false,
-     * },
-     * ],
-     * },
-     * },
-     * generics: [3, 0],
-     * type: 'DESERIALIZER',
-     * name: 'deserializer',
-     * allowMultiple: false,
-     * },
-     * {
-     * 'jsonTypeInfo': 'ImplementationSelect',
-     * keyExpression: {
-     * expressionStart: '<dispatcher>',
-     * expressionEnd: '<dispatcher>',
-     * },
-     * instance: {
-     * moduleImp: 9,
-     * instanceConfiguration: {
-     * 'jsonTypeInfo': 'ConfigurationAggregate',
-     * keyExpression: {
-     * expressionStart: '',
-     * expressionEnd: '',
-     * },
-     * enforceCompatibility: false,
-     * name: 'root',
-     * allowMultiple: false,
-     * children: [
-     * {
-     * 'jsonTypeInfo': 'ImplementationSelect',
-     * keyExpression: {
-     * expressionStart: '<handler>',
-     * expressionEnd: '<handler>',
-     * },
-     * instance: {
-     * moduleImp: 10,
-     * instanceConfiguration: {
-     * 'jsonTypeInfo': 'ConfigurationAggregate',
-     * keyExpression: {
-     * expressionStart: '',
-     * expressionEnd: '',
-     * },
-     * enforceCompatibility: false,
-     * name: 'root',
-     * allowMultiple: false,
-     * children: [
-     * {
-     * 'jsonTypeInfo': 'TextField',
-     * keyExpression: {
-     * expressionStart: '<dummy>',
-     * expressionEnd: '<dummy>',
-     * },
-     * value: 'dummy',
-     * dataType: 'TEXT',
-     * name: 'dummy',
-     * allowMultiple: false,
-     * },
-     * ],
-     * },
-     * },
-     * generics: [3],
-     * type: 'HANDLER',
-     * name: 'handler',
-     * allowMultiple: false,
-     * },
-     * ],
-     * },
-     * },
-     * generics: [3],
-     * type: 'DISPATCHER',
-     * name: 'dispatcher',
-     * allowMultiple: false,
-     * },
-     * ],
-     * },
-     * {
-     * 'jsonTypeInfo': 'TextField',
-     * keyExpression: {
-     * expressionStart: '<port>',
-     * expressionEnd: '<port>',
-     * },
-     * value: '8080',
-     * dataType: 'NUMBER',
-     * name: 'port',
-     * allowMultiple: false,
-     * },
-     * ],
-     * },
-     * protocolType: {
-     * 'jsonTypeInfo': 'ProtocolType',
-     * implementationId: 0,
-     * author: 'a@gmail.com',
-     * name: 'protocolType_0',
-     * scope: {
-     * scopeId: 0,
-     * impScope: 'SHARED',
-     * },
-     * },
-     * },
-     * ];
-     * }
-     * },
+     *    {
+     *       "jsonTypeInfo":"PersistenceManager",
+     *       "implementationId":13,
+     *       "author":"a@gmail.com",
+     *       "name":"manager",
+     *       "scope":{
+     *          "scopeId":0,
+     *          "impScope":"SHARED"
+     *       },
+     *       "configurationRoot":{
+     *          "jsonTypeInfo":"ConfigurationAggregate",
+     *          "keyExpression":{
+     *             "expressionStart":"",
+     *             "expressionEnd":""
+     *          },
+     *          "enforceCompatibility":false,
+     *          "name":"root",
+     *          "allowMultiple":false,
+     *          "children":[
+     *             {
+     *                "jsonTypeInfo":"TextField",
+     *                "keyExpression":{
+     *                   "expressionStart":"<dummy>",
+     *                   "expressionEnd":"<dummy>"
+     *                },
+     *                "value":"dummy",
+     *                "dataType":"TEXT",
+     *                "name":"dummy",
+     *                "allowMultiple":false
+     *             }
+     *          ]
+     *       }
+     *    },
+     *    {
+     *       "jsonTypeInfo":"Endpoint",
+     *       "implementationId":11,
+     *       "author":"a@gmail.com",
+     *       "name":"endpoint",
+     *       "scope":{
+     *          "scopeId":0,
+     *          "impScope":"SHARED"
+     *       },
+     *       "configurationRoot":{
+     *          "jsonTypeInfo":"ConfigurationAggregate",
+     *          "keyExpression":{
+     *             "expressionStart":"<parent>",
+     *             "expressionEnd":"<parent>"
+     *          },
+     *          "enforceCompatibility":false,
+     *          "name":"parent",
+     *          "allowMultiple":false,
+     *          "children":[
+     *             {
+     *                "jsonTypeInfo":"ConfigurationAggregate",
+     *                "keyExpression":{
+     *                   "expressionStart":"<mapping>",
+     *                   "expressionEnd":"<mapping>"
+     *                },
+     *                "enforceCompatibility":true,
+     *                "name":"mapping",
+     *                "allowMultiple":false,
+     *                "children":[
+     *                   {
+     *                      "jsonTypeInfo":"TextField",
+     *                      "keyExpression":{
+     *                         "expressionStart":"<dummy>",
+     *                         "expressionEnd":"<dummy>"
+     *                      },
+     *                      "value":"dummy",
+     *                      "dataType":"TEXT",
+     *                      "name":"dummy",
+     *                      "allowMultiple":false
+     *                   },
+     *                   {
+     *                      "jsonTypeInfo":"ImplementationSelect",
+     *                      "keyExpression":{
+     *                         "expressionStart":"<serializer>",
+     *                         "expressionEnd":"<serializer>"
+     *                      },
+     *                      "instance":{
+     *                         "moduleImp":8,
+     *                         "instanceConfiguration":{
+     *                            "jsonTypeInfo":"ConfigurationAggregate",
+     *                            "keyExpression":{
+     *                               "expressionStart":"",
+     *                               "expressionEnd":""
+     *                            },
+     *                            "enforceCompatibility":false,
+     *                            "name":"root",
+     *                            "allowMultiple":false,
+     *                            "children":[
+     *                               {
+     *                                  "jsonTypeInfo":"TextField",
+     *                                  "keyExpression":{
+     *                                     "expressionStart":"<dummy>",
+     *                                     "expressionEnd":"<dummy>"
+     *                                  },
+     *                                  "value":"dummy",
+     *                                  "dataType":"TEXT",
+     *                                  "name":"dummy",
+     *                                  "allowMultiple":false
+     *                               }
+     *                            ]
+     *                         }
+     *                      },
+     *                      "generics":[
+     *                         3,
+     *                         0
+     *                      ],
+     *                      "type":"SERIALIZER",
+     *                      "name":"serializer",
+     *                      "allowMultiple":false
+     *                   },
+     *                   {
+     *                      "jsonTypeInfo":"ImplementationSelect",
+     *                      "keyExpression":{
+     *                         "expressionStart":"<deserializer>",
+     *                         "expressionEnd":"<deserializer>"
+     *                      },
+     *                      "instance":{
+     *                         "moduleImp":7,
+     *                         "instanceConfiguration":{
+     *                            "jsonTypeInfo":"ConfigurationAggregate",
+     *                            "keyExpression":{
+     *                               "expressionStart":"",
+     *                               "expressionEnd":""
+     *                            },
+     *                            "enforceCompatibility":false,
+     *                            "name":"root",
+     *                            "allowMultiple":false,
+     *                            "children":[
+     *                               {
+     *                                  "jsonTypeInfo":"TextField",
+     *                                  "keyExpression":{
+     *                                     "expressionStart":"<dummy>",
+     *                                     "expressionEnd":"<dummy>"
+     *                                  },
+     *                                  "value":"dummy",
+     *                                  "dataType":"TEXT",
+     *                                  "name":"dummy",
+     *                                  "allowMultiple":false
+     *                               }
+     *                            ]
+     *                         }
+     *                      },
+     *                      "generics":[
+     *                         3,
+     *                         0
+     *                      ],
+     *                      "type":"DESERIALIZER",
+     *                      "name":"deserializer",
+     *                      "allowMultiple":false
+     *                   },
+     *                   {
+     *                      "jsonTypeInfo":"ImplementationSelect",
+     *                      "keyExpression":{
+     *                         "expressionStart":"<dispatcher>",
+     *                         "expressionEnd":"<dispatcher>"
+     *                      },
+     *                      "instance":{
+     *                         "moduleImp":9,
+     *                         "instanceConfiguration":{
+     *                            "jsonTypeInfo":"ConfigurationAggregate",
+     *                            "keyExpression":{
+     *                               "expressionStart":"",
+     *                               "expressionEnd":""
+     *                            },
+     *                            "enforceCompatibility":false,
+     *                            "name":"root",
+     *                            "allowMultiple":false,
+     *                            "children":[
+     *                               {
+     *                                  "jsonTypeInfo":"ImplementationSelect",
+     *                                  "keyExpression":{
+     *                                     "expressionStart":"<handler>",
+     *                                     "expressionEnd":"<handler>"
+     *                                  },
+     *                                  "instance":{
+     *                                     "moduleImp":10,
+     *                                     "instanceConfiguration":{
+     *                                        "jsonTypeInfo":"ConfigurationAggregate",
+     *                                        "keyExpression":{
+     *                                           "expressionStart":"",
+     *                                           "expressionEnd":""
+     *                                        },
+     *                                        "enforceCompatibility":false,
+     *                                        "name":"root",
+     *                                        "allowMultiple":false,
+     *                                        "children":[
+     *                                           {
+     *                                              "jsonTypeInfo":"TextField",
+     *                                              "keyExpression":{
+     *                                                 "expressionStart":"<dummy>",
+     *                                                 "expressionEnd":"<dummy>"
+     *                                              },
+     *                                              "value":"dummy",
+     *                                              "dataType":"TEXT",
+     *                                              "name":"dummy",
+     *                                              "allowMultiple":false
+     *                                           }
+     *                                        ]
+     *                                     }
+     *                                  },
+     *                                  "generics":[
+     *                                     3
+     *                                  ],
+     *                                  "type":"HANDLER",
+     *                                  "name":"handler",
+     *                                  "allowMultiple":false
+     *                               }
+     *                            ]
+     *                         }
+     *                      },
+     *                      "generics":[
+     *                         3
+     *                      ],
+     *                      "type":"DISPATCHER",
+     *                      "name":"dispatcher",
+     *                      "allowMultiple":false
+     *                   }
+     *                ]
+     *             },
+     *             {
+     *                "jsonTypeInfo":"TextField",
+     *                "keyExpression":{
+     *                   "expressionStart":"<port>",
+     *                   "expressionEnd":"<port>"
+     *                },
+     *                "value":"8080",
+     *                "dataType":"NUMBER",
+     *                "name":"port",
+     *                "allowMultiple":false
+     *             }
+     *          ]
+     *       },
+     *       "protocolType":{
+     *          "jsonTypeInfo":"ProtocolType",
+     *          "implementationId":0,
+     *          "author":"a@gmail.com",
+     *          "name":"protocolType_0",
+     *          "scope":{
+     *             "scopeId":0,
+     *             "impScope":"SHARED"
+     *          }
+     *       }
+     *    }
      * ]
-     * }
      * @apiError {String} error Errormessage
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 404 Not Found
