@@ -5,10 +5,6 @@ import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
 import eskavi.repository.UserRepository;
-<<<<<<< HEAD
-=======
-import eskavi.service.mockrepo.MockUserRepository;
->>>>>>> 40f814831d367b4db656f07ba3bf8c5bde44622d
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
