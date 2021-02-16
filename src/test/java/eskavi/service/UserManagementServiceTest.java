@@ -6,11 +6,9 @@ import eskavi.service.mockrepo.MockUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-=======
->>>>>>> 40f814831d367b4db656f07ba3bf8c5bde44622d
+
 import org.springframework.web.server.ResponseStatusException;
 
 
@@ -21,12 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserManagementServiceTest {
 
     @Autowired
-<<<<<<< HEAD
+
     private UserRepository repository;
 
-=======
-    UserRepository userRepository;
->>>>>>> 40f814831d367b4db656f07ba3bf8c5bde44622d
     private UserManagementService userService;
     private String someEmail1;
     private String someEmail2;
@@ -38,12 +33,7 @@ class UserManagementServiceTest {
     void setUp() {
         someEmail1 = "a.str@gmail.com";
         someEmail2 = "a.str@gmail.com";
-<<<<<<< HEAD
         userService = new UserManagementService(repository);
-=======
-        userService = new UserManagementService(new MockUserRepository());
-//        userService = new UserManagementService(userRepository);
->>>>>>> 40f814831d367b4db656f07ba3bf8c5bde44622d
 //        userA = userService.createUser("a.str@gmail.com", "dja;lsfkdjsafk");
 //        userB = userService.createUser("str@gmail.com", "dsa;lfj[b");
 //        userC = userService.createUser("str1@gmail.com", "dsa;lfj[b");

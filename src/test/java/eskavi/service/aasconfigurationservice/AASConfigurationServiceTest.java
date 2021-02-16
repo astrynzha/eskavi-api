@@ -39,10 +39,10 @@ class AASConfigurationServiceTest {
     void setUp() {
         MockUserRepository userRepo = new MockUserRepository(); // TODO: replace
         MockImplementationRepository impRepo = new MockImplementationRepository(); // TODO: replace
-        impService = new ImpService(impRepo, userRepo);
-        aasService = new AASConfigurationService(impRepo, userRepo,
-                new AASSessionHandler()); // TODO: replace
-        userManagementService = new UserManagementService(userRepo);
+        //impService = new ImpService(impRepo, userRepo);
+        //aasService = new AASConfigurationService(impRepo, userRepo,
+        //        new AASSessionHandler()); // TODO: replace
+        //userManagementService = new UserManagementService(userRepo);
         someEmail = "a.str@gmail.com";
         userManagementService.createUser(someEmail, "dka;fj");
         configuration1 = new ConfigurationAggregate("first", false,

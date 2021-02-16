@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 
-=======
-/*
->>>>>>> 40f814831d367b4db656f07ba3bf8c5bde44622d
 package eskavi.service;
 
 import eskavi.model.configuration.Configuration;
@@ -208,11 +204,4 @@ class ImpServiceTest {
     void isValidTest() {
         // TODO
     }
-<<<<<<< HEAD
 }
-=======
-}
-
-
- */
->>>>>>> 40f814831d367b4db656f07ba3bf8c5bde44622d
