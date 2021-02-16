@@ -4,6 +4,7 @@ import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.util.Collection;
@@ -19,7 +20,7 @@ import java.util.Objects;
  */
 @Entity
 public class Handler extends ModuleImp {
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private MessageType messageType;
 
     public Handler() {

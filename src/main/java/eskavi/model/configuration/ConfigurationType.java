@@ -3,6 +3,7 @@ package eskavi.model.configuration;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonValue;
 import eskavi.model.implementation.ImpType;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public enum ConfigurationType {
     FILE_FIELD(new FileField("", false, new KeyExpression("",""))),
     SWITCH(new Switch("", false, new KeyExpression("",""), "", ""));
 
-    @JsonProperty
+    @JsonValue
     private Configuration template;
 
     private ConfigurationType(Configuration template) {

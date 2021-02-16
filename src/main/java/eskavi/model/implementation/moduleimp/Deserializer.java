@@ -4,6 +4,7 @@ import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.util.Arrays;
@@ -19,9 +20,9 @@ import java.util.Objects;
  */
 @Entity
 public class Deserializer extends ModuleImp {
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private ProtocolType protocolType;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private MessageType messageType;
 
     public Deserializer() {
