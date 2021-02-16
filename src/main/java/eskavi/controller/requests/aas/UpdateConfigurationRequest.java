@@ -4,7 +4,7 @@ import eskavi.model.configuration.Configuration;
 
 public class UpdateConfigurationRequest {
     private Configuration configuration;
-    private long impeId;
+    private long impId;
 
     public Configuration getConfiguration() {
         return configuration;
@@ -14,12 +14,12 @@ public class UpdateConfigurationRequest {
         this.configuration = configuration;
     }
 
-    public long getImpeId() {
-        return impeId;
+    public long getImpId() {
+        return impId;
     }
 
-    public void setImpeId(long impeId) {
-        this.impeId = impeId;
+    public void setImpId(long impId) {
+        this.impId = impId;
     }
 
     public long getSessionId() {

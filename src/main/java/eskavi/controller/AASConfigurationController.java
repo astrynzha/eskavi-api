@@ -491,7 +491,7 @@ public class AASConfigurationController {
      */
     @PutMapping("/imp/configuration")
     public void updateConfiguration(@RequestBody UpdateConfigurationRequest request) {
-        aasConfigurationService.updateConfiguration(request.getSessionId(), request.getConfiguration(), request.getImpeId());
+        aasConfigurationService.updateConfiguration(request.getSessionId(), request.getConfiguration(), request.getImpId());
     }
 
     /**
