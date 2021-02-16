@@ -1,15 +1,24 @@
 package eskavi.service;
 
 import eskavi.model.user.SecurityQuestion;
+import eskavi.repository.UserRepository;
 import eskavi.service.mockrepo.MockUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.server.ResponseStatusException;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest(properties = {"spring.jpa.hibernate.ddl-auto=create-drop"})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class UserManagementServiceTest {
+
+    @Autowired
+    private UserRepository repository;
 
     private UserManagementService userService;
     private String someEmail1;
@@ -22,7 +31,7 @@ class UserManagementServiceTest {
     void setUp() {
         someEmail1 = "a.str@gmail.com";
         someEmail2 = "a.str@gmail.com";
-        userService = new UserManagementService(new MockUserRepository());
+        userService = new UserManagementService(repository);
 //        userA = userService.createUser("a.str@gmail.com", "dja;lsfkdjsafk");
 //        userB = userService.createUser("str@gmail.com", "dsa;lfj[b");
 //        userC = userService.createUser("str1@gmail.com", "dsa;lfj[b");

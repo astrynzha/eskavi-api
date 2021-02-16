@@ -4,7 +4,7 @@ import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
-import eskavi.service.mockrepo.MockUserRepository;
+import eskavi.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,17 +13,11 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class UserManagementService {
 
-//    final UserRepository userRepository;
-    final MockUserRepository userRepository;
+    final UserRepository userRepository;
 
-//    public UserManagementService(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
-
-    public UserManagementService(MockUserRepository userRepository) {
+    public UserManagementService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
 
     // TODO other constructor of User
     public ImmutableUser createUser(String email, String hashedPassword) {
