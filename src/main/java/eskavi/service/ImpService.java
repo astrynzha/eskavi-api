@@ -69,18 +69,18 @@ public class ImpService {
         }
         User caller = optionalCaller.get();
         mi.setAuthor(caller);
-        mi = impRepository.save(mi);
+        Implementation savedMi = impRepository.save(mi);
         // add author to scope if SHARED
-        if (mi.getImplementationScope().equals(ImplementationScope.SHARED)) {
+        if (savedMi.getImplementationScope().equals(ImplementationScope.SHARED)) {
             try {
-                updateScope(caller, mi);
+                updateScope(caller, savedMi);
             } catch (IllegalAccessException e) {
                 throw new IllegalStateException("this should never happen, scope is SHARED " +
                         "and thus subscribe is possible");
             }
             // moduleImp is persisted inside updateScope
         }
-        return mi;
+        return savedMi;
     }
 
     public void addUser(long implementationId, String userId, String callerId) throws IllegalAccessException {
