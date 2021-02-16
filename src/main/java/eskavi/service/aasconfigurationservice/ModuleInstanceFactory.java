@@ -7,6 +7,7 @@ import eskavi.model.implementation.ModuleInstance;
  * This is a utility class offering a factory method to create {@link ModuleInstance} based on a passed {@link ModuleImp}.
  *
  * @author Niv Adam
+ * @author Andrii Strynzha
  */
 public final class ModuleInstanceFactory {
     private ModuleInstanceFactory() {

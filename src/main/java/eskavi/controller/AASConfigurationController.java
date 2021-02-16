@@ -33,7 +33,7 @@ public class AASConfigurationController {
     @PostMapping
     public long createSession(@RequestHeader String jwtToken) {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        return aasConfigurationService.createAASConstructionSession((User) user);
+        return aasConfigurationService.createAASConstructionSession(user.getEmailAddress());
     }
 
     /**

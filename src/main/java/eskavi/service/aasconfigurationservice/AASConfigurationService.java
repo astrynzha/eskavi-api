@@ -6,6 +6,9 @@ import eskavi.model.implementation.ModuleImp;
 import eskavi.model.implementation.ModuleInstance;
 import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
+import eskavi.repository.UserRepository;
+import eskavi.service.mockrepo.MockImplementationRepository;
+import eskavi.service.mockrepo.MockUserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,16 +18,29 @@ import java.util.Optional;
 
 @Service
 public class AASConfigurationService {
-    private final ImplementationRepository impRepository;
+//    private final ImplementationRepository impRepository;
+//    private final AASSessionHandler sessionHandler;
+//
+//    public AASConfigurationService(ImplementationRepository impRepository,
+//                                   AASSessionHandler sessionHandler) {
+//        this.impRepository = impRepository;
+//        this.sessionHandler = sessionHandler;
+//    }
+
+    private final MockImplementationRepository impRepository;
+    private final MockUserRepository userRepository;
     private final AASSessionHandler sessionHandler;
 
-    public AASConfigurationService(ImplementationRepository impRepository,
+    public AASConfigurationService(MockImplementationRepository impRepository, MockUserRepository userRepository,
                                    AASSessionHandler sessionHandler) {
         this.impRepository = impRepository;
+        this.userRepository = userRepository;
         this.sessionHandler = sessionHandler;
     }
 
-    public long createAASConstructionSession(User user) {
+    public long createAASConstructionSession(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return sessionHandler.createAASConstructionSession(user);
     }
 
@@ -64,7 +80,11 @@ public class AASConfigurationService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
 
-        return session.getConfiguration(moduleId);
+        try {
+            return session.getConfiguration(moduleId);
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
     public void updateConfiguration(long sessionId, Configuration configuration, long moduleId) {
@@ -82,6 +102,7 @@ public class AASConfigurationService {
         }
     }
 
+    // TODO caller == session creator?
     public void removeModuleInstance(long sessionId, long moduleId) {
         AASConstructionSession session = null;
         try {

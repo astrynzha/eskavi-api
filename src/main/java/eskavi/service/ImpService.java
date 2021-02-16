@@ -5,6 +5,8 @@ import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
+import eskavi.service.mockrepo.MockImplementationRepository;
+import eskavi.service.mockrepo.MockUserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,12 +19,20 @@ import java.util.stream.StreamSupport;
 // TODO: change all optional isEmpty checks to .orElseThrow()
 @Service
 public class ImpService {
-    private final ImplementationRepository impRepository;
-    private final UserRepository userRepository;
+//    private final ImplementationRepository impRepository;
+//    private final UserRepository userRepository;
+//
+//    public ImpService(ImplementationRepository impRepository, UserRepository userRepository) {
+//        this.impRepository = impRepository;
+//        this.userRepository = userRepository; // TODO: ausreichend, um eine userRepositry von springboot zu kriegen?
+//    }
 
-    public ImpService(ImplementationRepository impRepository, UserRepository userRepository) {
+    private final MockImplementationRepository impRepository;
+    private final MockUserRepository userRepository;
+
+    public ImpService(MockImplementationRepository impRepository, MockUserRepository userRepository) {
         this.impRepository = impRepository;
-        this.userRepository = userRepository; // TODO: ausreichend, um eine userRepositry von springboot zu kriegen?
+        this.userRepository = userRepository;
     }
 
     //TODO should the access of the caller to the Imp be checked here?

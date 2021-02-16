@@ -1,9 +1,11 @@
 package eskavi.service;
 
 import eskavi.model.user.SecurityQuestion;
+import eskavi.repository.UserRepository;
 import eskavi.service.mockrepo.MockUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.server.ResponseStatusException;
 
 
@@ -11,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserManagementServiceTest {
 
+    @Autowired
+    UserRepository userRepository;
     private UserManagementService userService;
     private String someEmail1;
     private String someEmail2;
@@ -23,6 +27,7 @@ class UserManagementServiceTest {
         someEmail1 = "a.str@gmail.com";
         someEmail2 = "a.str@gmail.com";
         userService = new UserManagementService(new MockUserRepository());
+//        userService = new UserManagementService(userRepository);
 //        userA = userService.createUser("a.str@gmail.com", "dja;lsfkdjsafk");
 //        userB = userService.createUser("str@gmail.com", "dsa;lfj[b");
 //        userC = userService.createUser("str1@gmail.com", "dsa;lfj[b");
