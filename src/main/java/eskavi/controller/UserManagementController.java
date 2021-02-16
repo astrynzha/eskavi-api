@@ -1,5 +1,6 @@
 package eskavi.controller;
 
+import eskavi.controller.requests.user.*;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
@@ -42,9 +43,9 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/register")
-    public String register(@ModelAttribute("email") String email, @ModelAttribute("password") String password) {
-        userManagementService.createUser(email, new BCryptPasswordEncoder().encode(password));
-        return userTokenMatcher.generateToken(email);
+    public String register(@RequestBody RegisterRequest request) {
+        userManagementService.createUser(request.getEmail(), new BCryptPasswordEncoder().encode(request.getEmail()));
+        return userTokenMatcher.generateToken(request.getEmail());
     }
 
     /**
@@ -63,12 +64,12 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/login")
-    public String login(@ModelAttribute("email") String email, @ModelAttribute("password") String password) {
-        ImmutableUser user = userManagementService.getUser(email);
-        if (new BCryptPasswordEncoder().encode(password).equals(user.getPassword())) {
+    public String login(@RequestBody LoginRequest request) {
+        ImmutableUser user = userManagementService.getUser(request.getEmail());
+        if (new BCryptPasswordEncoder().encode(request.getPassword()).equals(user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "wrong Password");
         }
-        return userTokenMatcher.generateToken(email);
+        return userTokenMatcher.generateToken(request.getEmail());
     }
 
     /**
@@ -135,7 +136,7 @@ public class UserManagementController {
      * }
      */
     @GetMapping("/security_question")
-    public String getSecurityQuestion(@ModelAttribute String email) {
+    public String getSecurityQuestion(@RequestBody String email) {
         ImmutableUser user = userManagementService.getUser(email);
         return userManagementService.getSecurityQuestion(user.getEmailAddress()).getQuestion();
     }
@@ -160,10 +161,10 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/reset_password")
-    public void resetPassword(@RequestHeader String jwtToken, @ModelAttribute String answer, @ModelAttribute String newPassword) throws IllegalAccessException {
+    public void resetPassword(@RequestHeader String jwtToken, @RequestBody ResetPasswordRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        if (userManagementService.checkSecurityQuestion(user.getEmailAddress(), answer)) {
-            userManagementService.setPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(newPassword));
+        if (userManagementService.checkSecurityQuestion(user.getEmailAddress(), request.getAnswer())) {
+            userManagementService.setPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(request.getNewPassword()));
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -189,10 +190,10 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/change_password")
-    public void setPassword(@RequestHeader String jwtToken, @ModelAttribute String oldPassword, @ModelAttribute String newPassword) throws IllegalAccessException {
+    public void setPassword(@RequestHeader String jwtToken, @RequestBody SetPasswordRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        if (userManagementService.checkPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(oldPassword))) {
-            userManagementService.setPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(newPassword));
+        if (userManagementService.checkPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(request.getOldPassword()))) {
+            userManagementService.setPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(request.getNewPassword()));
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -214,9 +215,9 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/level")
-    public void setUserLevel(@RequestHeader String jwtToken, @ModelAttribute("email") String email, @ModelAttribute("userLevel") UserLevel userLevel) throws IllegalAccessException {
+    public void setUserLevel(@RequestHeader String jwtToken, @RequestBody SetUserLevelRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        userManagementService.setUserLevel(user.getEmailAddress(), userLevel, email);
+        userManagementService.setUserLevel(user.getEmailAddress(), request.getUserLevel(), request.getEmail());
     }
 
 

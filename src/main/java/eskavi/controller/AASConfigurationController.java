@@ -1,6 +1,8 @@
 package eskavi.controller;
 
 import com.google.common.io.Files;
+import eskavi.controller.requests.aas.AddModuleImpRequest;
+import eskavi.controller.requests.aas.UpdateConfigurationRequest;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
@@ -45,6 +47,7 @@ public class AASConfigurationController {
      * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
      */
+    //TODO Path Param?!
     @DeleteMapping()
     public void closeSession(@RequestHeader String jwtToken, @ModelAttribute("sessionId") long sessionId) {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
@@ -63,9 +66,8 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     @PostMapping("{/imp")
-    public void addModuleImp(@ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
-        //TODO order of Parameters is annoying :D
-        aasConfigurationService.addModuleInstance(sessionId, moduleId);
+    public void addModuleImp(@RequestBody AddModuleImpRequest request) {
+        aasConfigurationService.addModuleInstance(request.getSessionId(), request.getImpId());
     }
 
     /**
@@ -272,8 +274,9 @@ public class AASConfigurationController {
      * }
      * @apiError {String} message Errormessage
      */
+    //TODO Path param?
     @GetMapping("/imp/configuration")
-    public Configuration getConfiguration(@ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
+    public Configuration getConfiguration(@PathVariable long sessionId, @PathVariable long moduleId) {
         return aasConfigurationService.getConfiguration(sessionId, moduleId);
     }
 
@@ -487,8 +490,8 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     @PutMapping("/imp/configuration")
-    public void updateConfiguration(@ModelAttribute Configuration configuration, @ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
-        aasConfigurationService.updateConfiguration(sessionId, configuration, moduleId);
+    public void updateConfiguration(@RequestBody UpdateConfigurationRequest request) {
+        aasConfigurationService.updateConfiguration(request.getSessionId(), request.getConfiguration(), request.getImpId());
     }
 
     /**
@@ -501,8 +504,9 @@ public class AASConfigurationController {
      * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiError {String} message Errormessage
      */
+    //TODO Path Variable?
     @DeleteMapping("{/imp")
-    public void deleteModuleImp(@ModelAttribute("impId") long moduleId, @ModelAttribute("sessionId") long sessionId) {
+    public void deleteModuleImp(@PathVariable long moduleId, @PathVariable long sessionId) {
         aasConfigurationService.removeModuleInstance(sessionId, moduleId);
     }
 
