@@ -12,8 +12,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("user")
@@ -235,7 +233,7 @@ public class UserManagementController {
      * }
      * @apiSuccessExample {json} Success-Response:
      * {
-     * "userLevels":[
+     * [
      * "BasicUser",
      * "PublishingUser",
      * "Administrator"
@@ -244,8 +242,6 @@ public class UserManagementController {
      */
     @GetMapping("/levels")
     public Collection<UserLevel> getUserLevels() {
-        EnumSet<UserLevel> enumValues = EnumSet.allOf(UserLevel.class);
-        List<UserLevel> userLevels = enumValues.stream().collect(Collectors.toList());
-        return userLevels;
+        return EnumSet.allOf(UserLevel.class);
     }
 }

@@ -5,10 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
-import eskavi.model.user.UserLevel;
-import eskavi.repository.UserRepository;
 import eskavi.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,6 +27,10 @@ public class UserByIdDeserializer extends StdDeserializer<User> {
     public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         String email = node.asText();
+        //TODO is this correct?
+        if (email.isEmpty()) {
+            return null;
+        }
         return (User) service.getUser(email);
     }
 }

@@ -1,12 +1,14 @@
 package eskavi.model.implementation;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import eskavi.deserializer.ScopeDeserializer;
 import eskavi.deserializer.UserByIdDeserializer;
-import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -25,17 +27,6 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "implementationId")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "jsonTypeInfo")
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = AssetConnection.class, name = "ASSET_CONNECTION"),
-        @JsonSubTypes.Type(value = Deserializer.class, name = "DESERIALIZER"),
-        @JsonSubTypes.Type(value = Dispatcher.class, name = "DISPATCHER"),
-        @JsonSubTypes.Type(value = Endpoint.class, name = "ENDPOINT"),
-        @JsonSubTypes.Type(value = Handler.class, name = "HANDLER"),
-        @JsonSubTypes.Type(value = InteractionStarter.class, name = "INTERACTION_STARTER"),
-        @JsonSubTypes.Type(value = PersistenceManager.class, name = "PERSISTENCE_MANAGER"),
-        @JsonSubTypes.Type(value = Serializer.class, name = "SERIALIZER")
-})
 public abstract class Implementation implements ImmutableImplementation {
     @Id
     @GeneratedValue
@@ -46,7 +37,7 @@ public abstract class Implementation implements ImmutableImplementation {
     @JsonDeserialize(using = UserByIdDeserializer.class)
     private User author;
     private String name;
-    //@JsonDeserialize(using = ScopeDeserializer.class)
+    @JsonDeserialize(using = ScopeDeserializer.class)
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Scope scope;
 
