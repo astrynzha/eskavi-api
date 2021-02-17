@@ -45,7 +45,7 @@ public class ImpController {
      * {
      * implementations: [
      * {
-     * "jsonTypeInfo":"PersistenceManager",
+     * "jsonTypeInfo":"PERSISTENCE_MANAGER",
      * "implementationId":13,
      * "author":"a@gmail.com",
      * "name":"manager",
@@ -54,7 +54,7 @@ public class ImpController {
      * "impScope":"SHARED"
      * },
      * "configurationRoot":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -64,7 +64,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -78,7 +78,7 @@ public class ImpController {
      * }
      * },
      * {
-     * "jsonTypeInfo":"Endpoint",
+     * "jsonTypeInfo":"ENDPOINT",
      * "implementationId":11,
      * "author":"a@gmail.com",
      * "name":"endpoint",
@@ -87,7 +87,7 @@ public class ImpController {
      * "impScope":"SHARED"
      * },
      * "configurationRoot":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"<parent>",
      * "expressionEnd":"<parent>"
@@ -97,7 +97,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"<mapping>",
      * "expressionEnd":"<mapping>"
@@ -107,7 +107,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -118,7 +118,7 @@ public class ImpController {
      * "allowMultiple":false
      * },
      * {
-     * "jsonTypeInfo":"ImplementationSelect",
+     * "jsonTypeInfo":"IMPLEMENTATION_SELECT",
      * "keyExpression":{
      * "expressionStart":"<serializer>",
      * "expressionEnd":"<serializer>"
@@ -126,7 +126,7 @@ public class ImpController {
      * "instance":{
      * "moduleImp":8,
      * "instanceConfiguration":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -136,7 +136,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -158,7 +158,7 @@ public class ImpController {
      * "allowMultiple":false
      * },
      * {
-     * "jsonTypeInfo":"ImplementationSelect",
+     * "jsonTypeInfo":"IMPLEMENTATION_SELECT",
      * "keyExpression":{
      * "expressionStart":"<deserializer>",
      * "expressionEnd":"<deserializer>"
@@ -166,7 +166,7 @@ public class ImpController {
      * "instance":{
      * "moduleImp":7,
      * "instanceConfiguration":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -176,7 +176,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -198,7 +198,7 @@ public class ImpController {
      * "allowMultiple":false
      * },
      * {
-     * "jsonTypeInfo":"ImplementationSelect",
+     * "jsonTypeInfo":"IMPLEMENTATION_SELECT",
      * "keyExpression":{
      * "expressionStart":"<dispatcher>",
      * "expressionEnd":"<dispatcher>"
@@ -206,7 +206,7 @@ public class ImpController {
      * "instance":{
      * "moduleImp":9,
      * "instanceConfiguration":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -216,7 +216,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"ImplementationSelect",
+     * "jsonTypeInfo":"IMPLEMENTATION_SELECT",
      * "keyExpression":{
      * "expressionStart":"<handler>",
      * "expressionEnd":"<handler>"
@@ -224,7 +224,7 @@ public class ImpController {
      * "instance":{
      * "moduleImp":10,
      * "instanceConfiguration":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -234,7 +234,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -267,7 +267,7 @@ public class ImpController {
      * ]
      * },
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<port>",
      * "expressionEnd":"<port>"
@@ -280,7 +280,7 @@ public class ImpController {
      * ]
      * },
      * "protocolType":{
-     * "jsonTypeInfo":"ProtocolType",
+     * "jsonTypeInfo":"PROTOCOL_TYPE",
      * "implementationId":0,
      * "author":"a@gmail.com",
      * "name":"protocolType_0",
@@ -324,38 +324,56 @@ public class ImpController {
      * HTTP/1.1 200 OK
      * {
      * [
-     * {
-     * "topLevel":true,
-     * "name":"ASSET_CONNECTION"
-     * },
-     * {
-     * "topLevel":false,
-     * "name":"DESERIALIZER"
-     * },
-     * {
-     * "topLevel":false,
-     * "name":"DISPATCHER"
-     * },
-     * {
-     * "topLevel":true,
-     * "name":"ENDPOINT"
-     * },
-     * {
-     * "topLevel":false,
-     * "name":"HANDLER"
-     * },
-     * {
-     * "topLevel":true,
-     * "name":"INTERACTION_STARTER"
-     * },
-     * {
-     * "topLevel":true,
-     * "name":"PERSISTENCE_MANAGER"
-     * },
-     * {
-     * "topLevel":false,
-     * "name":"SERIALIZER"
-     * }
+     *    {
+     *       "name":"ASSET_CONNECTION",
+     *       "topLevel":true,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"DESERIALIZER",
+     *       "topLevel":false,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"DISPATCHER",
+     *       "topLevel":false,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"ENDPOINT",
+     *       "topLevel":true,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"HANDLER",
+     *       "topLevel":false,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"INTERACTION_STARTER",
+     *       "topLevel":true,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"PERSISTENCE_MANAGER",
+     *       "topLevel":true,
+     *       "maxUse":1
+     *    },
+     *    {
+     *       "name":"SERIALIZER",
+     *       "topLevel":false,
+     *       "maxUse":1
+     *    },
+     *    {
+     *       "name":"PROTOCOL_TYPE",
+     *       "topLevel":false,
+     *       "maxUse":0
+     *    },
+     *    {
+     *       "name":"MESSAGE_TYPE",
+     *       "topLevel":false,
+     *       "maxUse":0
+     *    }
      * ]
      * }
      * @apiError {String} message Errormessage
@@ -377,7 +395,7 @@ public class ImpController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     * "data_types": ["text", "number", "email", "date"]
+     * ["TEXT","NUMBER","EMAIL","PASSWORD","DATE","DATETIME"]
      * }
      * @apiError {String} message Errormessage
      */
@@ -400,7 +418,7 @@ public class ImpController {
      * [
      * {
      * "template":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -415,7 +433,7 @@ public class ImpController {
      * },
      * {
      * "template":{
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -427,7 +445,7 @@ public class ImpController {
      * },
      * {
      * "template":{
-     * "jsonTypeInfo":"ImplementationSelect",
+     * "jsonTypeInfo":"IMPLEMENTATION_SELECT",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -442,7 +460,7 @@ public class ImpController {
      * },
      * {
      * "template":{
-     * "jsonTypeInfo":"Select",
+     * "jsonTypeInfo":"SELECT",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -456,7 +474,7 @@ public class ImpController {
      * },
      * {
      * "template":{
-     * "jsonTypeInfo":"FileField",
+     * "jsonTypeInfo":"FILE_FIELD",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -467,7 +485,7 @@ public class ImpController {
      * },
      * {
      * "template":{
-     * "jsonTypeInfo":"Switch",
+     * "jsonTypeInfo":"SWITCH",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -501,7 +519,7 @@ public class ImpController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     * "impScopes": ["private", "shared", "public"]
+     * ["PRIVATE", "SHARED", "PUBLIC"]
      * }
      * @apiError {String} message Errormessage
      */
@@ -517,10 +535,6 @@ public class ImpController {
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
      * @apiParam {ImpType} impType The implementation type
-     * @apiParamExample {json} RequestExample:
-     * {
-     * "impType":"Handler"
-     * }
      * @apiSuccess {Implementation} implementation Implementation object
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
@@ -530,8 +544,8 @@ public class ImpController {
      * }
      */
     @GetMapping("/default")
-    public ImmutableImplementation getDefaultImpCreate(@PathParam("type") ImpType type) {
-        return impService.getDefaultImpCreate(type);
+    public ImmutableImplementation getDefaultImpCreate(@RequestParam(value = "impType", required = false) String impType) {
+        return impService.getDefaultImpCreate(ImpType.valueOf(impType));
     }
 
 
@@ -544,7 +558,7 @@ public class ImpController {
      * @apiParam (Request body) {Implementation} implementation Implementation object
      * @apiParamExample {json} Request-Example:
      * {
-     * "jsonTypeInfo":"Deserializer",
+     * "jsonTypeInfo":"DESERIALIZER",
      * "implementationId":7,
      * "author":"a@gmail.com",
      * "name":"deserializer_7",
@@ -553,7 +567,7 @@ public class ImpController {
      * "impScope":"SHARED"
      * },
      * "configurationRoot":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AAGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -563,7 +577,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -576,7 +590,7 @@ public class ImpController {
      * ]
      * },
      * "protocolType":{
-     * "jsonTypeInfo":"ProtocolType",
+     * "jsonTypeInfo":"PROTOCOL_TYPE",
      * "implementationId":0,
      * "author":"a@gmail.com",
      * "name":"protocolType_0",
@@ -586,7 +600,7 @@ public class ImpController {
      * }
      * },
      * "messageType":{
-     * "jsonTypeInfo":"MessageType",
+     * "jsonTypeInfo":"MESSAGE_TYPE",
      * "implementationId":3,
      * "author":"a@gmail.com",
      * "name":"messageType_3",
