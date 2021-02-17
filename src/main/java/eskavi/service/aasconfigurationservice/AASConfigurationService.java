@@ -18,24 +18,15 @@ import java.util.Optional;
 
 @Service
 public class AASConfigurationService {
-//    private final ImplementationRepository impRepository;
-//    private final AASSessionHandler sessionHandler;
-//
-//    public AASConfigurationService(ImplementationRepository impRepository,
-//                                   AASSessionHandler sessionHandler) {
-//        this.impRepository = impRepository;
-//        this.sessionHandler = sessionHandler;
-//    }
-
-    private final MockImplementationRepository impRepository;
-    private final MockUserRepository userRepository;
+    private final ImplementationRepository impRepository;
     private final AASSessionHandler sessionHandler;
+    private final UserRepository userRepository;
 
-    public AASConfigurationService(MockImplementationRepository impRepository, MockUserRepository userRepository,
+    public AASConfigurationService(ImplementationRepository impRepository, UserRepository userRepository,
                                    AASSessionHandler sessionHandler) {
         this.impRepository = impRepository;
-        this.userRepository = userRepository;
         this.sessionHandler = sessionHandler;
+        this.userRepository = userRepository;
     }
 
     public long createAASConstructionSession(String userId) {

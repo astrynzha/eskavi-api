@@ -11,19 +11,30 @@ import eskavi.model.implementation.MessageType;
 import eskavi.model.implementation.ProtocolType;
 import eskavi.model.implementation.moduleimp.Serializer;
 import eskavi.model.user.User;
+import eskavi.repository.ImplementationRepository;
+import eskavi.repository.UserRepository;
 import eskavi.service.ImpService;
 import eskavi.service.UserManagementService;
 import eskavi.service.mockrepo.MockImplementationRepository;
 import eskavi.service.mockrepo.MockUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest(properties = {"spring.jpa.hibernate.ddl-auto=create-drop"})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class AASConfigurationServiceTest {
+    @Autowired
+    private ImplementationRepository impRepo;
+    @Autowired
+    private UserRepository userRepo;
 
     private AASConfigurationService aasService;
     private ImpService impService;
@@ -37,12 +48,10 @@ class AASConfigurationServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockUserRepository userRepo = new MockUserRepository(); // TODO: replace
-        MockImplementationRepository impRepo = new MockImplementationRepository(); // TODO: replace
-        //impService = new ImpService(impRepo, userRepo);
-        //aasService = new AASConfigurationService(impRepo, userRepo,
-        //        new AASSessionHandler()); // TODO: replace
-        //userManagementService = new UserManagementService(userRepo);
+        impService = new ImpService(impRepo, userRepo);
+        aasService = new AASConfigurationService(impRepo, userRepo,
+                new AASSessionHandler()); // TODO: replace
+        userManagementService = new UserManagementService(userRepo);
         someEmail = "a.str@gmail.com";
         userManagementService.createUser(someEmail, "dka;fj");
         configuration1 = new ConfigurationAggregate("first", false,
@@ -53,6 +62,8 @@ class AASConfigurationServiceTest {
                 "protocolType_0", ImplementationScope.SHARED);
         messageType = new MessageType(3, (User) userManagementService.getUser(someEmail),
                 "messageType_3", ImplementationScope.SHARED);
+        messageType = (MessageType) impService.addImplementation(messageType, someEmail);
+        protocolType = (ProtocolType) impService.addImplementation(protocolType, someEmail);
         serializer = new Serializer(8, (User) userManagementService.getUser(someEmail),
                 "serializer_8", ImplementationScope.SHARED, configuration1, messageType, protocolType);
     }
@@ -77,7 +88,7 @@ class AASConfigurationServiceTest {
     @Test
     void addModuleInstance() {
         // add serializer to some session
-        impService.addImplementation(serializer, someEmail);
+        serializer = (Serializer) impService.addImplementation(serializer, someEmail);
         long sessionId = aasService.createAASConstructionSession(someEmail);
         aasService.addModuleInstance(sessionId, serializer.getImplementationId());
         // test if serializer is there
@@ -88,7 +99,7 @@ class AASConfigurationServiceTest {
     @Test
     void updateConfiguration() {
         // add serializer to some session
-        impService.addImplementation(serializer, someEmail);
+        serializer = (Serializer) impService.addImplementation(serializer, someEmail);
         long sessionId = aasService.createAASConstructionSession(someEmail);
         aasService.addModuleInstance(sessionId, serializer.getImplementationId());
         Configuration conf = aasService.getConfiguration(sessionId, serializer.getImplementationId());
@@ -105,7 +116,7 @@ class AASConfigurationServiceTest {
 
     @Test
     void removeModuleInstance() {
-        impService.addImplementation(serializer, someEmail);
+        serializer = (Serializer) impService.addImplementation(serializer, someEmail);
         long sessionId  = aasService.createAASConstructionSession(someEmail);
         aasService.addModuleInstance(sessionId, serializer.getImplementationId());
         aasService.removeModuleInstance(sessionId, serializer.getImplementationId());
