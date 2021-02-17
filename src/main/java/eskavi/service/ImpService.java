@@ -73,7 +73,7 @@ public class ImpService {
         // add author to scope if SHARED
         if (mi.getImplementationScope().equals(ImplementationScope.SHARED)) {
             try {
-                updateScope(caller, mi);
+                updateScope(caller, savedMi);
             } catch (IllegalAccessException e) {
                 throw new IllegalStateException("this should never happen, scope is SHARED " +
                         "and thus subscribe is possible");

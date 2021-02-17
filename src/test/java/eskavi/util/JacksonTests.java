@@ -137,7 +137,7 @@ public class JacksonTests {
         content.add("value1");
         content.add("value2");
         Select select = new Select("name", false, new KeyExpression("<select>", "<select>"), content);
-
+        select.setValue("value1");
         String result = new ObjectMapper().writeValueAsString(select);
         System.out.println(result);
         Select copy = new ObjectMapper().readValue(result, Select.class);

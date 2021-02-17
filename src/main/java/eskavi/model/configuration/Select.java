@@ -1,5 +1,8 @@
 package eskavi.model.configuration;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +24,9 @@ public class Select extends SingleValueField {
      * @param expression    the {@link KeyExpression} of this Select
      * @param content
      */
-    public Select(String name, boolean allowMultiple, KeyExpression expression, List<String> content) {
+    @JsonCreator
+    public Select(@JsonProperty("name") String name, @JsonProperty("allowMultiple") boolean allowMultiple,
+                  @JsonProperty("keyExpression") KeyExpression expression, @JsonProperty("content") List<String> content) {
         super(name, allowMultiple, expression);
         this.content = content;
     }
