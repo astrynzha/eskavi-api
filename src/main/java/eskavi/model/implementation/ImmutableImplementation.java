@@ -1,6 +1,7 @@
 package eskavi.model.implementation;
 
 import eskavi.model.user.ImmutableUser;
+import eskavi.model.user.User;
 
 import java.util.Collection;
 
@@ -12,18 +13,15 @@ import java.util.Collection;
  * @version 1.0.0
  */
 public interface ImmutableImplementation {
-    public long getImplementationId();
+    public long getId();
 
     public String getName();
 
     public ImmutableUser getAuthor();
-
-    public Scope getScope(); // TODO: or getSubscribed():List<ImmutableUser> ?
-
     /**
      * @return list of all the users that are subscribed to this Implementation
      */
-    public Collection<ImmutableUser> getUsers();
+    public Collection<User> getSubscribed();
 
     public boolean isSubscribed(ImmutableUser user);
 

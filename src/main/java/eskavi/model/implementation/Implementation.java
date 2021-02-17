@@ -123,7 +123,7 @@ public abstract class Implementation implements ImmutableImplementation {
     }
 
     @Override
-    public long getImplementationId() {
+    public long getId() {
         return implementationId;
     }
 
@@ -141,11 +141,6 @@ public abstract class Implementation implements ImmutableImplementation {
         return (ImmutableUser) author; // TODO: should the cast be here or in view?
     }
 
-    @Override
-    public Scope getScope() {
-        return scope;
-    }
-
     /**
      * Assign a new scope object to this implementation object.
      * If the scope is shared -> subscribes the author
@@ -156,6 +151,7 @@ public abstract class Implementation implements ImmutableImplementation {
         this.scope = scope;
         if (scope.getImpScope().equals(ImplementationScope.SHARED)) {
             try {
+                // TODO subscribe this to the author as well?
                 scope.subscribe((User) getAuthor());
             } catch (IllegalAccessException e) {
                 throw new IllegalStateException("this cannot happen, scope is checked, before adding a new user");
@@ -165,8 +161,8 @@ public abstract class Implementation implements ImmutableImplementation {
 
     @JsonIgnore
     @Override
-    public Collection<ImmutableUser> getUsers() {
-        return new HashSet<>(scope.getGrantedUsers());
+    public Collection<User> getSubscribed() {
+        return scope.getGrantedUsers();
     }
 
     @Override

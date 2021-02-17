@@ -24,11 +24,11 @@ public class MockImplementationRepository {
     }
 
     public Implementation save(Implementation imp) {
-        repo.put(imp.getImplementationId(), imp);
+        repo.put(imp.getId(), imp);
         return imp;
     }
 
     public void delete(Implementation imp) {
-        repo.remove(imp.getImplementationId());
+        repo.remove(imp.getId());
     }
 }
