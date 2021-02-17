@@ -30,7 +30,7 @@ public class ScopeDeserializer extends StdDeserializer<Scope> {
     @Override
     public Scope deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-        long id = node.findValue("id").asLong();
+        long id = node.findValue("scopeId").asLong();
         String type = node.findValue("impScope").asText();
         ImplementationScope impScope = ImplementationScope.valueOf(type);
 

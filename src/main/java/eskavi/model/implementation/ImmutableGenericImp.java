@@ -1,5 +1,7 @@
 package eskavi.model.implementation;
 
+import javax.persistence.Entity;
+
 /**
  * This interface inherits ImmutableImplementation and makes GenericImplementations available.
  * However, it is not possible to change the Generic Implementation via this interface.

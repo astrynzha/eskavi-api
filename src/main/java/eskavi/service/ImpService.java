@@ -5,13 +5,16 @@ import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
+import eskavi.util.Config;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 // TODO: change all optional isEmpty checks to .orElseThrow()
@@ -19,10 +22,12 @@ import java.util.stream.StreamSupport;
 public class ImpService {
     private final ImplementationRepository impRepository;
     private final UserRepository userRepository;
+    private final Config config;
 
-    public ImpService(ImplementationRepository impRepository, UserRepository userRepository) {
+    public ImpService(ImplementationRepository impRepository, UserRepository userRepository, Config config) {
         this.impRepository = impRepository;
         this.userRepository = userRepository;
+        this.config = config;
     }
 
 
@@ -43,7 +48,36 @@ public class ImpService {
 
     // TODO
     public ImmutableModuleImp getDefaultImpCreate(ImpType type) {
-        return null;
+        long id;
+        switch (type) {
+            case ASSET_CONNECTION -> {
+                id = config.getASSET_CONNECTION();
+            }
+            case DESERIALIZER -> {
+                id = config.getDESERIALIZER();
+            }
+            case DISPATCHER -> {
+                id = config.getDISPATCHER();
+            }
+            case ENDPOINT -> {
+                id = config.getENDPOINT();
+            }
+            case HANDLER -> {
+                id = config.getHANDLER();
+            }
+            case INTERACTION_STARTER -> {
+                id = config.getINTERACTION_STARTER();
+            }
+            case PERSISTENCE_MANAGER -> {
+                id = config.getPERSISTENCE_MANAGER();
+            }
+            case SERIALIZER -> {
+                id = config.getSERIALIZER();
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + type);
+        }
+        return (ImmutableModuleImp) impRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public Collection<ImmutableImplementation> getImps(ImpType impType) {
@@ -73,7 +107,7 @@ public class ImpService {
         // add author to scope if SHARED
         if (mi.getImplementationScope().equals(ImplementationScope.SHARED)) {
             try {
-                updateScope(caller, mi);
+                updateScope(caller, savedMi);
             } catch (IllegalAccessException e) {
                 throw new IllegalStateException("this should never happen, scope is SHARED " +
                         "and thus subscribe is possible");
@@ -186,11 +220,11 @@ public class ImpService {
         impRepository.save(imp);
     }
 
-    private ModuleImp getMutableImp(ImmutableImplementation mi) throws IllegalAccessException {
-        if (!(mi instanceof ModuleImp)) {
-            throw new IllegalAccessException("ImmutableImplementation is not an instance of ModuleImp!");
+    private Implementation getMutableImp(ImmutableImplementation mi) throws IllegalAccessException {
+        if (!(mi instanceof Implementation)) {
+            throw new IllegalAccessException("ImmutableImplementation is not an instance of Implementation!");
         }
-        return (ModuleImp) mi;
+        return (Implementation) mi;
     }
 
     private User getMutableUser(ImmutableUser user) throws IllegalAccessException {

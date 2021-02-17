@@ -1,4 +1,3 @@
-
 package eskavi.service;
 
 import eskavi.model.configuration.Configuration;
@@ -11,6 +10,7 @@ import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
+import eskavi.util.Config;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,9 @@ class ImpServiceTest {
     UserRepository userRepository;
     @Autowired
     ImplementationRepository implementationRepository;
+    @Autowired
+    Config config;
+
     private ImpService impService;
     private UserManagementService userService;
     private ProtocolType protocolTypeA;
@@ -55,7 +58,7 @@ class ImpServiceTest {
 
     @BeforeEach
     void setUp() {
-        impService = new ImpService(implementationRepository, userRepository);
+        impService = new ImpService(implementationRepository, userRepository, config);
         userService = new UserManagementService(userRepository);
         userA = userService.createUser("a.str@gmail.com", "dja;lsfkdjsafk");
         userB = userService.createUser("str@gmail.com", "dsa;lfj[b");

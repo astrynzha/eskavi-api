@@ -5,6 +5,7 @@ import eskavi.model.configuration.Configuration;
 public class UpdateConfigurationRequest {
     private Configuration configuration;
     private long impId;
+    private long sessionId;
 
     public Configuration getConfiguration() {
         return configuration;
@@ -29,6 +30,4 @@ public class UpdateConfigurationRequest {
     public void setSessionId(long sessionId) {
         this.sessionId = sessionId;
     }
-
-    private long sessionId;
 }

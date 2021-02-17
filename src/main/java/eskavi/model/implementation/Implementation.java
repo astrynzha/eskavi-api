@@ -1,9 +1,6 @@
 package eskavi.model.implementation;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import eskavi.deserializer.ScopeDeserializer;
 import eskavi.deserializer.UserByIdDeserializer;
@@ -37,6 +34,7 @@ public abstract class Implementation implements ImmutableImplementation {
     @JsonDeserialize(using = UserByIdDeserializer.class)
     private User author;
     private String name;
+    @JsonProperty("scope")
     @JsonDeserialize(using = ScopeDeserializer.class)
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Scope scope;

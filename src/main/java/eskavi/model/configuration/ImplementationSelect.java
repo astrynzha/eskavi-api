@@ -6,12 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import eskavi.deserializer.GenericsDeserializer;
-import eskavi.model.implementation.ImmutableGenericImp;
-import eskavi.model.implementation.ImmutableModuleImp;
-import eskavi.model.implementation.ImpType;
-import eskavi.model.implementation.ModuleInstance;
+import eskavi.model.implementation.*;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 import java.util.*;
 
@@ -22,8 +20,8 @@ import java.util.*;
 public class ImplementationSelect extends Configuration {
     @Transient
     private ModuleInstance instance;
-    @Transient
-    private HashSet<ImmutableGenericImp> generics;
+    @ManyToMany(targetEntity = GenericImp.class)
+    private Set<ImmutableGenericImp> generics;
     @JsonIdentityReference(alwaysAsId = true)
     private ImpType type;
 
@@ -36,7 +34,7 @@ public class ImplementationSelect extends Configuration {
      * @param generic       The required generics for this Configuration.
      * @param type          the required {@link ImpType} for this Configuration
      */
-    public ImplementationSelect(String name, boolean allowMultiple, KeyExpression expression, HashSet<ImmutableGenericImp> generic,
+    public ImplementationSelect(String name, boolean allowMultiple, KeyExpression expression, Set<ImmutableGenericImp> generic,
                                 ImpType type) {
         super(name, allowMultiple, expression);
         this.generics = generic;
@@ -53,13 +51,13 @@ public class ImplementationSelect extends Configuration {
      * @return The required generics for this Configuration
      */
     @JsonIdentityReference(alwaysAsId = true)
-    public HashSet<ImmutableGenericImp> getGenerics() {
+    public Set<ImmutableGenericImp> getGenerics() {
         return generics;
     }
 
     @JsonSetter
     @JsonDeserialize(using = GenericsDeserializer.class)
-    public void setGenerics(HashSet<ImmutableGenericImp> generics) {
+    public void setGenerics(Set<ImmutableGenericImp> generics) {
         this.generics = generics;
     }
 

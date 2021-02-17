@@ -31,6 +31,8 @@ public class JacksonSpringTest {
     private UserRepository userRepo;
     @Autowired
     private ImplementationRepository impRepo;
+    @Autowired
+    Config config;
 
     private ImpService impService;
     private UserManagementService userManagementService;
@@ -55,7 +57,7 @@ public class JacksonSpringTest {
     @BeforeEach
     void setUp() throws IOException {
         userManagementService = new UserManagementService(userRepo);
-        impService = new ImpService(impRepo, userRepo);
+        impService = new ImpService(impRepo, userRepo, config);
         dummy = new TextField("dummy", false, new KeyExpression("<dummy>", "<dummy>"), DataType.TEXT);
         dummy.setValue("dummy");
         userA = new User("a@gmail.com", "dfjask;fj",

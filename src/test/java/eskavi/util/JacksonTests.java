@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -133,11 +132,11 @@ public class JacksonTests {
 
     @Test
     void testSelectToJson() throws JsonProcessingException {
-        Map<String, String> content = new HashMap<>();
-        content.put("first", "value1");
-        content.put("second", "value2");
+        List<String> content = new ArrayList<>();
+        content.add("value1");
+        content.add("value2");
         Select select = new Select("name", false, new KeyExpression("<select>", "<select>"), content);
-
+        select.setValue("value1");
         String result = new ObjectMapper().writeValueAsString(select);
         System.out.println(result);
         Select copy = new ObjectMapper().readValue(result, Select.class);
@@ -160,6 +159,12 @@ public class JacksonTests {
         imps.add(manager);
         imps.add(deserializer);
         String result = new ObjectMapper().writeValueAsString(imps);
+        System.out.println(result);
+    }
+
+    @Test
+    void dataTypesToJson() throws JsonProcessingException {
+        String result = new ObjectMapper().writeValueAsString(DataType.values());
         System.out.println(result);
     }
 }

@@ -7,12 +7,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import eskavi.model.implementation.ImmutableGenericImp;
-import eskavi.model.implementation.ImplementationScope;
-import eskavi.model.implementation.MessageType;
-import eskavi.model.implementation.ProtocolType;
-import eskavi.model.user.SecurityQuestion;
-import eskavi.model.user.User;
-import eskavi.model.user.UserLevel;
 import eskavi.service.ImpService;
 import org.springframework.beans.factory.annotation.Autowired;
 

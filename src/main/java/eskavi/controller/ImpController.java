@@ -10,6 +10,7 @@ import eskavi.model.implementation.Implementation;
 import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.user.ImmutableUser;
 import eskavi.service.ImpService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -44,7 +45,7 @@ public class ImpController {
      * {
      * implementations: [
      * {
-     * "jsonTypeInfo":"PersistenceManager",
+     * "jsonTypeInfo":"PERSISTENCE_MANAGER",
      * "implementationId":13,
      * "author":"a@gmail.com",
      * "name":"manager",
@@ -53,7 +54,7 @@ public class ImpController {
      * "impScope":"SHARED"
      * },
      * "configurationRoot":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -63,7 +64,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -77,7 +78,7 @@ public class ImpController {
      * }
      * },
      * {
-     * "jsonTypeInfo":"Endpoint",
+     * "jsonTypeInfo":"ENDPOINT",
      * "implementationId":11,
      * "author":"a@gmail.com",
      * "name":"endpoint",
@@ -86,7 +87,7 @@ public class ImpController {
      * "impScope":"SHARED"
      * },
      * "configurationRoot":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"<parent>",
      * "expressionEnd":"<parent>"
@@ -96,7 +97,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"<mapping>",
      * "expressionEnd":"<mapping>"
@@ -106,7 +107,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -117,7 +118,7 @@ public class ImpController {
      * "allowMultiple":false
      * },
      * {
-     * "jsonTypeInfo":"ImplementationSelect",
+     * "jsonTypeInfo":"IMPLEMENTATION_SELECT",
      * "keyExpression":{
      * "expressionStart":"<serializer>",
      * "expressionEnd":"<serializer>"
@@ -125,7 +126,7 @@ public class ImpController {
      * "instance":{
      * "moduleImp":8,
      * "instanceConfiguration":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -135,7 +136,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -157,7 +158,7 @@ public class ImpController {
      * "allowMultiple":false
      * },
      * {
-     * "jsonTypeInfo":"ImplementationSelect",
+     * "jsonTypeInfo":"IMPLEMENTATION_SELECT",
      * "keyExpression":{
      * "expressionStart":"<deserializer>",
      * "expressionEnd":"<deserializer>"
@@ -165,7 +166,7 @@ public class ImpController {
      * "instance":{
      * "moduleImp":7,
      * "instanceConfiguration":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -175,7 +176,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -197,7 +198,7 @@ public class ImpController {
      * "allowMultiple":false
      * },
      * {
-     * "jsonTypeInfo":"ImplementationSelect",
+     * "jsonTypeInfo":"IMPLEMENTATION_SELECT",
      * "keyExpression":{
      * "expressionStart":"<dispatcher>",
      * "expressionEnd":"<dispatcher>"
@@ -205,7 +206,7 @@ public class ImpController {
      * "instance":{
      * "moduleImp":9,
      * "instanceConfiguration":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -215,7 +216,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"ImplementationSelect",
+     * "jsonTypeInfo":"IMPLEMENTATION_SELECT",
      * "keyExpression":{
      * "expressionStart":"<handler>",
      * "expressionEnd":"<handler>"
@@ -223,7 +224,7 @@ public class ImpController {
      * "instance":{
      * "moduleImp":10,
      * "instanceConfiguration":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -233,7 +234,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -266,7 +267,7 @@ public class ImpController {
      * ]
      * },
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<port>",
      * "expressionEnd":"<port>"
@@ -279,7 +280,7 @@ public class ImpController {
      * ]
      * },
      * "protocolType":{
-     * "jsonTypeInfo":"ProtocolType",
+     * "jsonTypeInfo":"PROTOCOL_TYPE",
      * "implementationId":0,
      * "author":"a@gmail.com",
      * "name":"protocolType_0",
@@ -300,8 +301,8 @@ public class ImpController {
     @GetMapping
     public Collection<ImmutableImplementation> get(@RequestParam(value = "id", required = false) Long impId,
                                                    @RequestParam(value = "impType", required = false) String impType,
-                                                   @RequestHeader String jwtToken) {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+                                                   @RequestHeader String Authorization) {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
         if (impId != null) {
             return Arrays.asList(impService.getImp(impId));
         } else if (impType != null) {
@@ -323,38 +324,56 @@ public class ImpController {
      * HTTP/1.1 200 OK
      * {
      * [
-     * {
-     * "topLevel":true,
-     * "name":"ASSET_CONNECTION"
-     * },
-     * {
-     * "topLevel":false,
-     * "name":"DESERIALIZER"
-     * },
-     * {
-     * "topLevel":false,
-     * "name":"DISPATCHER"
-     * },
-     * {
-     * "topLevel":true,
-     * "name":"ENDPOINT"
-     * },
-     * {
-     * "topLevel":false,
-     * "name":"HANDLER"
-     * },
-     * {
-     * "topLevel":true,
-     * "name":"INTERACTION_STARTER"
-     * },
-     * {
-     * "topLevel":true,
-     * "name":"PERSISTENCE_MANAGER"
-     * },
-     * {
-     * "topLevel":false,
-     * "name":"SERIALIZER"
-     * }
+     *    {
+     *       "name":"ASSET_CONNECTION",
+     *       "topLevel":true,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"DESERIALIZER",
+     *       "topLevel":false,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"DISPATCHER",
+     *       "topLevel":false,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"ENDPOINT",
+     *       "topLevel":true,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"HANDLER",
+     *       "topLevel":false,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"INTERACTION_STARTER",
+     *       "topLevel":true,
+     *       "maxUse":-1
+     *    },
+     *    {
+     *       "name":"PERSISTENCE_MANAGER",
+     *       "topLevel":true,
+     *       "maxUse":1
+     *    },
+     *    {
+     *       "name":"SERIALIZER",
+     *       "topLevel":false,
+     *       "maxUse":1
+     *    },
+     *    {
+     *       "name":"PROTOCOL_TYPE",
+     *       "topLevel":false,
+     *       "maxUse":0
+     *    },
+     *    {
+     *       "name":"MESSAGE_TYPE",
+     *       "topLevel":false,
+     *       "maxUse":0
+     *    }
      * ]
      * }
      * @apiError {String} message Errormessage
@@ -376,7 +395,7 @@ public class ImpController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     * "data_types": ["text", "number", "email", "date"]
+     * ["TEXT","NUMBER","EMAIL","PASSWORD","DATE","DATETIME"]
      * }
      * @apiError {String} message Errormessage
      */
@@ -399,7 +418,7 @@ public class ImpController {
      * [
      * {
      * "template":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -414,7 +433,7 @@ public class ImpController {
      * },
      * {
      * "template":{
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -426,7 +445,7 @@ public class ImpController {
      * },
      * {
      * "template":{
-     * "jsonTypeInfo":"ImplementationSelect",
+     * "jsonTypeInfo":"IMPLEMENTATION_SELECT",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -441,7 +460,7 @@ public class ImpController {
      * },
      * {
      * "template":{
-     * "jsonTypeInfo":"Select",
+     * "jsonTypeInfo":"SELECT",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -455,7 +474,7 @@ public class ImpController {
      * },
      * {
      * "template":{
-     * "jsonTypeInfo":"FileField",
+     * "jsonTypeInfo":"FILE_FIELD",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -466,7 +485,7 @@ public class ImpController {
      * },
      * {
      * "template":{
-     * "jsonTypeInfo":"Switch",
+     * "jsonTypeInfo":"SWITCH",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -500,7 +519,7 @@ public class ImpController {
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
      * {
-     * "impScopes": ["private", "shared", "public"]
+     * ["PRIVATE", "SHARED", "PUBLIC"]
      * }
      * @apiError {String} message Errormessage
      */
@@ -516,10 +535,6 @@ public class ImpController {
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
      * @apiParam {ImpType} impType The implementation type
-     * @apiParamExample {json} RequestExample:
-     * {
-     * "impType":"Handler"
-     * }
      * @apiSuccess {Implementation} implementation Implementation object
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
@@ -529,8 +544,8 @@ public class ImpController {
      * }
      */
     @GetMapping("/default")
-    public ImmutableImplementation getDefaultImpCreate(@PathParam("type") ImpType type) {
-        return impService.getDefaultImpCreate(type);
+    public ImmutableImplementation getDefaultImpCreate(@RequestParam(value = "impType", required = false) String impType) {
+        return impService.getDefaultImpCreate(ImpType.valueOf(impType));
     }
 
 
@@ -543,7 +558,7 @@ public class ImpController {
      * @apiParam (Request body) {Implementation} implementation Implementation object
      * @apiParamExample {json} Request-Example:
      * {
-     * "jsonTypeInfo":"Deserializer",
+     * "jsonTypeInfo":"DESERIALIZER",
      * "implementationId":7,
      * "author":"a@gmail.com",
      * "name":"deserializer_7",
@@ -552,7 +567,7 @@ public class ImpController {
      * "impScope":"SHARED"
      * },
      * "configurationRoot":{
-     * "jsonTypeInfo":"ConfigurationAggregate",
+     * "jsonTypeInfo":"CONFIGURATION_AAGGREGATE",
      * "keyExpression":{
      * "expressionStart":"",
      * "expressionEnd":""
@@ -562,7 +577,7 @@ public class ImpController {
      * "allowMultiple":false,
      * "children":[
      * {
-     * "jsonTypeInfo":"TextField",
+     * "jsonTypeInfo":"TEXT_FIELD",
      * "keyExpression":{
      * "expressionStart":"<dummy>",
      * "expressionEnd":"<dummy>"
@@ -575,7 +590,7 @@ public class ImpController {
      * ]
      * },
      * "protocolType":{
-     * "jsonTypeInfo":"ProtocolType",
+     * "jsonTypeInfo":"PROTOCOL_TYPE",
      * "implementationId":0,
      * "author":"a@gmail.com",
      * "name":"protocolType_0",
@@ -585,7 +600,7 @@ public class ImpController {
      * }
      * },
      * "messageType":{
-     * "jsonTypeInfo":"MessageType",
+     * "jsonTypeInfo":"MESSAGE_TYPE",
      * "implementationId":3,
      * "author":"a@gmail.com",
      * "name":"messageType_3",
@@ -595,12 +610,8 @@ public class ImpController {
      * }
      * }
      * }
-     * @apiSuccess {Number} impId Implementation unique ID
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 201 Created
-     * {
-     * "impId":"1"
-     * }
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 403 Forbidden
@@ -609,10 +620,10 @@ public class ImpController {
      * }
      */
     @PostMapping
-    public void add(@RequestHeader String jwtToken, @RequestBody Implementation mi) {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+    @ResponseStatus(HttpStatus.CREATED)
+    public void add(@RequestHeader String Authorization, @RequestBody Implementation mi) {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
         impService.addImplementation(mi, user.getEmailAddress());
-
     }
 
     /**
@@ -622,12 +633,8 @@ public class ImpController {
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
      * @apiParam (Request body) {Implementation} implementation Implementation object for example view PostImplementation
-     * @apiSuccess {Number} impId Implementation unique ID
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 201 Created
-     * {
-     * "impId":"1"
-     * }
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 403 Forbidden
@@ -636,8 +643,8 @@ public class ImpController {
      * }
      */
     @PutMapping
-    public void put(@RequestHeader String jwtToken, @RequestBody ImmutableImplementation request) throws IllegalAccessException {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+    public void put(@RequestHeader String Authorization, @RequestBody ImmutableImplementation request) throws IllegalAccessException {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
         impService.updateImplementation(request, user.getEmailAddress());
     }
 
@@ -652,9 +659,10 @@ public class ImpController {
      * @apiParam (Request body) {Number} impId Implementation unique ID
      */
     @PostMapping("/user")
-    public void addUser(@RequestHeader String jwtToken, @RequestBody AddUserRequest request) throws IllegalAccessException {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        impService.addUser(request.getImplementationId(), request.getUserId(), user.getEmailAddress());
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addUser(@RequestHeader String Authorization, @RequestBody AddUserRequest request) throws IllegalAccessException {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
+        impService.addUser(request.getImpId(), request.getUserId(), user.getEmailAddress());
     }
 
     /**
@@ -668,9 +676,9 @@ public class ImpController {
      * @apiParam (Request body) {Number} impId Implementation unique ID
      */
     @DeleteMapping("/user")
-    public void removeUser(@RequestHeader String jwtToken, @RequestBody RemoveUserRequest request) throws IllegalAccessException {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        impService.removeUser(request.getImplementationId(), request.getUserId(), user.getEmailAddress());
+    public void removeUser(@RequestHeader String Authorization, @RequestBody RemoveUserRequest request) throws IllegalAccessException {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
+        impService.removeUser(request.getImpId(), request.getUserId(), user.getEmailAddress());
     }
 
     /**
@@ -688,8 +696,8 @@ public class ImpController {
      * }
      */
     @DeleteMapping("/{id:[0-9]+}")
-    public void delete(@RequestHeader String jwtToken, @PathVariable("id") long impId) throws IllegalAccessException {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+    public void delete(@RequestHeader String Authorization, @PathVariable("id") long impId) throws IllegalAccessException {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
         impService.removeImplementation(impId, user.getEmailAddress());
     }
 }

@@ -3,7 +3,6 @@ package eskavi.model.configuration;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImplementationScope;
-import eskavi.model.implementation.Scope;
 import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;

@@ -18,22 +18,28 @@ import eskavi.model.implementation.moduleimp.*;
         property = "name")
 public enum ImpType {
     //TODO Generics
-    ASSET_CONNECTION(AssetConnection.class, true),
-    DESERIALIZER(Deserializer.class, false),
-    DISPATCHER(Dispatcher.class, false),
-    ENDPOINT(Endpoint.class, true),
-    HANDLER(Handler.class, false),
-    INTERACTION_STARTER(InteractionStarter.class, true),
-    PERSISTENCE_MANAGER(PersistenceManager.class, true),
-    SERIALIZER(Serializer.class, false);
+    ASSET_CONNECTION(AssetConnection.class, true, -1),
+    DESERIALIZER(Deserializer.class, false, -1),
+    DISPATCHER(Dispatcher.class, false, -1),
+    ENDPOINT(Endpoint.class, true, -1),
+    HANDLER(Handler.class, false, -1),
+    INTERACTION_STARTER(InteractionStarter.class, true, -1),
+    PERSISTENCE_MANAGER(PersistenceManager.class, true,  1),
+    SERIALIZER(Serializer.class, false, 1),
+    PROTOCOL_TYPE(ProtocolType.class, false, 0),
+    MESSAGE_TYPE(MessageType.class, false, 0);
+
 
     private Class matchingClass;
     @JsonProperty
     private boolean topLevel;
+    @JsonProperty
+    private int maxUse;
 
-    private ImpType(Class moduleImp, boolean topLevel) {
+    private ImpType(Class moduleImp, boolean topLevel, int maxUse) {
         this.matchingClass = moduleImp;
         this.topLevel = topLevel;
+        this.maxUse = maxUse;
     }
 
     public String getName() {

@@ -5,7 +5,6 @@ import eskavi.controller.requests.aas.AddModuleImpRequest;
 import eskavi.controller.requests.aas.UpdateConfigurationRequest;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.user.ImmutableUser;
-import eskavi.model.user.User;
 import eskavi.service.aasconfigurationservice.AASConfigurationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +32,8 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     @PostMapping
-    public long createSession(@RequestHeader String jwtToken) {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+    public long createSession(@RequestHeader String Authorization) {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
         return aasConfigurationService.createAASConstructionSession(user.getEmailAddress());
     }
 
@@ -49,8 +48,8 @@ public class AASConfigurationController {
      */
     //TODO Path Param?!
     @DeleteMapping()
-    public void closeSession(@RequestHeader String jwtToken, @ModelAttribute("sessionId") long sessionId) {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+    public void closeSession(@RequestHeader String Authorization, @ModelAttribute("sessionId") long sessionId) {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
         //TODO not every one should be able to randomly close sessions
         aasConfigurationService.removeAASConstructionSession(sessionId);
     }
@@ -65,7 +64,7 @@ public class AASConfigurationController {
      * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiError {String} message Errormessage
      */
-    @PostMapping("{/imp")
+    @PostMapping("/imp")
     public void addModuleImp(@RequestBody AddModuleImpRequest request) {
         aasConfigurationService.addModuleInstance(request.getSessionId(), request.getImpId());
     }
@@ -76,8 +75,8 @@ public class AASConfigurationController {
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
-     * @apiParam (Request body) {Number} sessionId Session unique ID
-     * @apiParam (Request body) {Number} impId Implementation unique ID
+     * @apiParam (queryStringParameter) {Number} sessionId Session unique ID
+     * @apiParam (queryStringParameter) {Number} impId Implementation unique ID
      * @apiSuccessExample Success-Example:
      * {
      * "jsonTypeInfo":"ConfigurationAggregate",
@@ -274,9 +273,8 @@ public class AASConfigurationController {
      * }
      * @apiError {String} message Errormessage
      */
-    //TODO Path param?
     @GetMapping("/imp/configuration")
-    public Configuration getConfiguration(@PathVariable long sessionId, @PathVariable long moduleId) {
+    public Configuration getConfiguration(@RequestParam long sessionId, @RequestParam long moduleId) {
         return aasConfigurationService.getConfiguration(sessionId, moduleId);
     }
 
@@ -505,8 +503,8 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     //TODO Path Variable?
-    @DeleteMapping("{/imp")
-    public void deleteModuleImp(@PathVariable long moduleId, @PathVariable long sessionId) {
+    @DeleteMapping("/imp")
+    public void deleteModuleImp(@RequestParam long moduleId, @RequestParam long sessionId) {
         aasConfigurationService.removeModuleInstance(sessionId, moduleId);
     }
 
@@ -519,8 +517,9 @@ public class AASConfigurationController {
      * @apiParam {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
      */
-    @GetMapping("{/sessionId:[0-9]+}/generate")
-    public byte[] generateJavaClass(@PathVariable("sessionId") long sessionId) throws IOException {
+    @GetMapping("/generate")
+    public byte[] generateJavaClass(@RequestParam("sessionId") long sessionId) throws IOException {
         return Files.toByteArray(aasConfigurationService.generateJavaClass(sessionId));
+        //return Files.toByteArray(aasConfigurationService.generateJavaClass(sessionId));
     }
 }
