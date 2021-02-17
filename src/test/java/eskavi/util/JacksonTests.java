@@ -161,4 +161,10 @@ public class JacksonTests {
         String result = new ObjectMapper().writeValueAsString(imps);
         System.out.println(result);
     }
+
+    @Test
+    void dataTypesToJson() throws JsonProcessingException {
+        String result = new ObjectMapper().writeValueAsString(DataType.values());
+        System.out.println(result);
+    }
 }
