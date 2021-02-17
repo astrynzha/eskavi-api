@@ -10,6 +10,7 @@ import eskavi.model.implementation.Implementation;
 import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.user.ImmutableUser;
 import eskavi.service.ImpService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -595,12 +596,8 @@ public class ImpController {
      * }
      * }
      * }
-     * @apiSuccess {Number} impId Implementation unique ID
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 201 Created
-     * {
-     * "impId":"1"
-     * }
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 403 Forbidden
@@ -609,10 +606,10 @@ public class ImpController {
      * }
      */
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void add(@RequestHeader String jwtToken, @RequestBody Implementation mi) {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
         impService.addImplementation(mi, user.getEmailAddress());
-
     }
 
     /**
@@ -622,12 +619,8 @@ public class ImpController {
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
      * @apiParam (Request body) {Implementation} implementation Implementation object for example view PostImplementation
-     * @apiSuccess {Number} impId Implementation unique ID
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 201 Created
-     * {
-     * "impId":"1"
-     * }
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 403 Forbidden
@@ -654,7 +647,7 @@ public class ImpController {
     @PostMapping("/user")
     public void addUser(@RequestHeader String jwtToken, @RequestBody AddUserRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        impService.addUser(request.getImplementationId(), request.getUserId(), user.getEmailAddress());
+        impService.addUser(request.getImpId(), request.getUserId(), user.getEmailAddress());
     }
 
     /**
@@ -670,7 +663,7 @@ public class ImpController {
     @DeleteMapping("/user")
     public void removeUser(@RequestHeader String jwtToken, @RequestBody RemoveUserRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        impService.removeUser(request.getImplementationId(), request.getUserId(), user.getEmailAddress());
+        impService.removeUser(request.getImpId(), request.getUserId(), user.getEmailAddress());
     }
 
     /**

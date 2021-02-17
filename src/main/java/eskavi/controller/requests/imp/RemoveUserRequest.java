@@ -1,15 +1,15 @@
 package eskavi.controller.requests.imp;
 
 public class RemoveUserRequest {
-    private long implementationId;
+    private long impId;
     private String userId;
 
-    public long getImplementationId() {
-        return implementationId;
+    public long getImpId() {
+        return impId;
     }
 
-    public void setImplementationId(long implementationId) {
-        this.implementationId = implementationId;
+    public void setImpId(long impId) {
+        this.impId = impId;
     }
 
     public String getUserId() {
