@@ -24,6 +24,7 @@ public class UserTokenMatcher {
 
     // TODO return userId instead of ImmutableUser
     public ImmutableUser getUser(String token) {
+        token = token.replaceFirst("^Bearer ", "");
         Algorithm algorithm = Algorithm.HMAC256("secret");
         JWTVerifier verifier = JWT.require(algorithm)
                 .build(); //Reusable verifier instance

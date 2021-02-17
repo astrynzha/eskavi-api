@@ -5,10 +5,10 @@ import eskavi.controller.requests.aas.AddModuleImpRequest;
 import eskavi.controller.requests.aas.UpdateConfigurationRequest;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.user.ImmutableUser;
-import eskavi.model.user.User;
 import eskavi.service.aasconfigurationservice.AASConfigurationService;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.io.IOException;
 
 @RestController
@@ -33,8 +33,8 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     @PostMapping
-    public long createSession(@RequestHeader String jwtToken) {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+    public long createSession(@RequestHeader String Authorization) {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
         return aasConfigurationService.createAASConstructionSession(user.getEmailAddress());
     }
 
@@ -49,8 +49,8 @@ public class AASConfigurationController {
      */
     //TODO Path Param?!
     @DeleteMapping()
-    public void closeSession(@RequestHeader String jwtToken, @ModelAttribute("sessionId") long sessionId) {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+    public void closeSession(@RequestHeader String Authorization, @ModelAttribute("sessionId") long sessionId) {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
         //TODO not every one should be able to randomly close sessions
         aasConfigurationService.removeAASConstructionSession(sessionId);
     }
@@ -521,6 +521,7 @@ public class AASConfigurationController {
      */
     @GetMapping("{/sessionId:[0-9]+}/generate")
     public byte[] generateJavaClass(@PathVariable("sessionId") long sessionId) throws IOException {
-        return Files.toByteArray(aasConfigurationService.generateJavaClass(sessionId));
+        return Files.toByteArray(new File("src/test/resources/HelloWorldTestClass.java"));
+        //return Files.toByteArray(aasConfigurationService.generateJavaClass(sessionId));
     }
 }
