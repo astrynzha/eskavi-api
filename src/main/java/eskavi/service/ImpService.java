@@ -9,11 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.HashSet;
 import java.util.stream.StreamSupport;
 
 // TODO: change all optional isEmpty checks to .orElseThrow()
@@ -24,7 +22,7 @@ public class ImpService {
 
     public ImpService(ImplementationRepository impRepository, UserRepository userRepository) {
         this.impRepository = impRepository;
-        this.userRepository = userRepository; // TODO: ausreichend, um eine userRepositry von springboot zu kriegen?
+        this.userRepository = userRepository;
     }
 
 
@@ -44,14 +42,14 @@ public class ImpService {
     }
 
     // TODO
-    public ImmutableModuleImp getTemplateImpCreate(Long id) {
+    public ImmutableModuleImp getDefaultImpCreate(ImpType type) {
         return null;
     }
 
-    // TODO
-    public ImmutableModuleImp getDefaultImpCreate(ImpType type) {
-        //Check config to get id of ImpType
-        return null;
+    public Collection<ImmutableImplementation> getImps(ImpType impType) {
+        return StreamSupport.stream(impRepository.findAll().spliterator(), false)
+                .filter(implementation -> impType.matches((ImmutableModuleImp) implementation))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -61,20 +59,21 @@ public class ImpService {
      * @param callerId Id of module developer that wants to add an implementation
      */
     public ImmutableImplementation addImplementation(Implementation mi, String callerId) {
-        if (!mi.isValid()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
         Optional<User> optionalCaller = userRepository.findById(callerId);
         if (optionalCaller.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         User caller = optionalCaller.get();
         mi.setAuthor(caller);
+        mi.setScope(new Scope(mi.getImplementationScope()));
+        if (!mi.isValid()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         Implementation savedMi = impRepository.save(mi);
         // add author to scope if SHARED
-        if (savedMi.getImplementationScope().equals(ImplementationScope.SHARED)) {
+        if (mi.getImplementationScope().equals(ImplementationScope.SHARED)) {
             try {
-                updateScope(caller, savedMi);
+                updateScope(caller, mi);
             } catch (IllegalAccessException e) {
                 throw new IllegalStateException("this should never happen, scope is SHARED " +
                         "and thus subscribe is possible");

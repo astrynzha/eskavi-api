@@ -13,6 +13,7 @@ import eskavi.service.ImpService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 
@@ -296,10 +297,18 @@ public class ImpController {
      * "error": "UserNotFound"
      * }
      */
-    @GetMapping("/{id:[0-9]+}")
-    public ImmutableImplementation get(@PathVariable("id") long impId, @RequestHeader String jwtToken) {
+    @GetMapping
+    public Collection<ImmutableImplementation> get(@RequestParam(value = "id", required = false) Long impId,
+                                                   @RequestParam(value = "impType", required = false) String impType,
+                                                   @RequestHeader String jwtToken) {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        return impService.getImp(impId);
+        if (impId != null) {
+            return Arrays.asList(impService.getImp(impId));
+        } else if (impType != null) {
+            return impService.getImps(ImpType.valueOf(impType));
+        } else {
+            return impService.getImps(user);
+        }
     }
 
     /**
@@ -600,9 +609,9 @@ public class ImpController {
      * }
      */
     @PostMapping
-    public void add(@RequestHeader String jwtToken, @RequestBody ImmutableImplementation mi) {
+    public void add(@RequestHeader String jwtToken, @RequestBody Implementation mi) {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        impService.addImplementation((Implementation) mi, user.getEmailAddress());
+        impService.addImplementation(mi, user.getEmailAddress());
 
     }
 
