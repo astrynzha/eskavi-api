@@ -56,7 +56,15 @@ public class AASConstructionSession {
     public File generateJavaClass() {
         //TODO does this look good?
         StringBuilder codeBuilder = new StringBuilder();
-        miMap.values().forEach(mi -> codeBuilder.append(mi.resolveConfiguration()));
+        String javaClassStart = "class App{ public static void main(String[] args){";
+        String javaClassEnd = "}}";
+        codeBuilder.append(javaClassStart);
+        miMap.values().forEach(mi -> codeBuilder.append(
+                mi.getModuleImp().getName() + " " +
+                        mi.getModuleImp().getName().toLowerCase() + "=" +
+                        mi.resolveConfiguration()
+        ));
+        codeBuilder.append(javaClassEnd);
         return JavaClassGenerator.generateClassFile(codeBuilder.toString());
     }
 

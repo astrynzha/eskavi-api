@@ -607,8 +607,8 @@ public class ImpController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestHeader String jwtToken, @RequestBody Implementation mi) {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+    public void add(@RequestHeader String Authorization, @RequestBody Implementation mi) {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
         impService.addImplementation(mi, user.getEmailAddress());
     }
 

@@ -13,7 +13,6 @@ public class JavaClassGenerator {
     public static File generateClassFile(String code) {
         try {
             File file = File.createTempFile("ass", ".java");
-            System.out.println(file.getAbsolutePath());
             Files.writeString(Path.of(file.getAbsolutePath()), format(code));
             file.deleteOnExit();
             return file;
