@@ -606,14 +606,9 @@ public class ImpController {
      * }
      */
     @PostMapping
-<<<<<<< HEAD
     @ResponseStatus(HttpStatus.CREATED)
     public void add(@RequestHeader String jwtToken, @RequestBody Implementation mi) {
         ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-=======
-    public void add(@RequestHeader String Authorization, @RequestBody Implementation mi) {
-        ImmutableUser user = userTokenMatcher.getUser(Authorization);
->>>>>>> ac1564f549b5c5fd909420f562f0ef5b82d6ca06
         impService.addImplementation(mi, user.getEmailAddress());
     }
 
@@ -650,15 +645,10 @@ public class ImpController {
      * @apiParam (Request body) {Number} impId Implementation unique ID
      */
     @PostMapping("/user")
-<<<<<<< HEAD
-    public void addUser(@RequestHeader String jwtToken, @RequestBody AddUserRequest request) throws IllegalAccessException {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        impService.addUser(request.getImpId(), request.getUserId(), user.getEmailAddress());
-=======
+    @ResponseStatus(HttpStatus.CREATED)
     public void addUser(@RequestHeader String Authorization, @RequestBody AddUserRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
-        impService.addUser(request.getImplementationId(), request.getUserId(), user.getEmailAddress());
->>>>>>> ac1564f549b5c5fd909420f562f0ef5b82d6ca06
+        impService.addUser(request.getImpId(), request.getUserId(), user.getEmailAddress());
     }
 
     /**
@@ -672,15 +662,9 @@ public class ImpController {
      * @apiParam (Request body) {Number} impId Implementation unique ID
      */
     @DeleteMapping("/user")
-<<<<<<< HEAD
-    public void removeUser(@RequestHeader String jwtToken, @RequestBody RemoveUserRequest request) throws IllegalAccessException {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
-        impService.removeUser(request.getImpId(), request.getUserId(), user.getEmailAddress());
-=======
     public void removeUser(@RequestHeader String Authorization, @RequestBody RemoveUserRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
-        impService.removeUser(request.getImplementationId(), request.getUserId(), user.getEmailAddress());
->>>>>>> ac1564f549b5c5fd909420f562f0ef5b82d6ca06
+        impService.removeUser(request.getImpId(), request.getUserId(), user.getEmailAddress());
     }
 
     /**
