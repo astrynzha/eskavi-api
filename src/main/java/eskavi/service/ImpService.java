@@ -186,11 +186,11 @@ public class ImpService {
         impRepository.save(imp);
     }
 
-    private ModuleImp getMutableImp(ImmutableImplementation mi) throws IllegalAccessException {
-        if (!(mi instanceof ModuleImp)) {
-            throw new IllegalAccessException("ImmutableImplementation is not an instance of ModuleImp!");
+    private Implementation getMutableImp(ImmutableImplementation mi) throws IllegalAccessException {
+        if (!(mi instanceof Implementation)) {
+            throw new IllegalAccessException("ImmutableImplementation is not an instance of Implementation!");
         }
-        return (ModuleImp) mi;
+        return (Implementation) mi;
     }
 
     private User getMutableUser(ImmutableUser user) throws IllegalAccessException {
