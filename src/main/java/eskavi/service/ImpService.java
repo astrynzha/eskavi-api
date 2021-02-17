@@ -155,15 +155,15 @@ public class ImpService {
         impRepository.save(getMutableImp(mi));
     }
 
-    public void removeImplementation(Long implementationId, String userId) throws IllegalAccessException {
+    public void removeImplementation(Long implementationId, String callerId) throws IllegalAccessException {
         Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalImplementation.isEmpty() || optionalUser.isEmpty()) {
+        Optional<User> optionalCaller = userRepository.findById(callerId);
+        if (optionalImplementation.isEmpty() || optionalCaller.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         Implementation imp = optionalImplementation.get();
-        User user = optionalUser.get();
-        if (!imp.getAuthor().equals(user)) {
+        User caller = optionalCaller.get();
+        if (!imp.getAuthor().equals(caller)) {
             throw new IllegalAccessException("This user cannot remove the implementation, he is not it's author");
         }
         //unsubscribe from all
