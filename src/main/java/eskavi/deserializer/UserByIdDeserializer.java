@@ -9,13 +9,14 @@ import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
 import eskavi.repository.UserRepository;
+import eskavi.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
 public class UserByIdDeserializer extends StdDeserializer<User> {
     @Autowired
-    UserRepository repository;
+    UserManagementService service;
 
     public UserByIdDeserializer() {
         this(null);
@@ -27,17 +28,8 @@ public class UserByIdDeserializer extends StdDeserializer<User> {
 
     @Override
     public User deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
-        //TODO:exclude after testing
-        User userA = new User("a@gmail.com", "dfjask;fj",
-                UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         String email = node.asText();
-        return userA;
-        /*
-        if (repository.findById(email).isPresent()) {
-            return repository.findById(email).get();
-        } else {
-            throw new IllegalArgumentException("invalid AuthorId");
-        }*/
+        return (User) service.getUser(email);
     }
 }
