@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.implementation.MessageType;
@@ -34,20 +35,12 @@ public class GenericsDeserializer extends StdDeserializer<HashSet<ImmutableGener
     public HashSet<ImmutableGenericImp> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         HashSet<ImmutableGenericImp> result = new HashSet<>();
-        //TODO delete when ready
-        User userA = new User("a@gmail.com", "dfjask;fj",
-                UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
-        result.add(new ProtocolType(0, userA, "protocolType_0", ImplementationScope.SHARED));
-        result.add(new MessageType(3, userA, "messageType_3", ImplementationScope.SHARED));
-        /*
         if (node.isArray()) {
             ArrayNode nodes = (ArrayNode) node;
             for (JsonNode element : nodes) {
                 result.add((ImmutableGenericImp) service.getImp(element.asLong()));
             }
         }
-        TODO get tests for services to work to test this section properly
-         */
         return result;
     }
 }
