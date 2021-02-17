@@ -5,15 +5,13 @@ import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
-import eskavi.service.mockrepo.MockImplementationRepository;
-import eskavi.service.mockrepo.MockUserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -136,7 +134,7 @@ public class ImpService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         Implementation imp = optionalImplementation.get();
-        return imp.getUsers();
+        return new HashSet<>(imp.getSubscribed());
     }
 
     // TODO:
@@ -144,7 +142,7 @@ public class ImpService {
     //  1. Soll man hier isValid auf die übergebene MI aufrufen?
     public void updateImplementation(ImmutableImplementation mi, String callerId) throws IllegalAccessException {
         Optional<User> optionalCaller = userRepository.findById(callerId);
-        Optional<Implementation> optionalImplementation = impRepository.findById(mi.getImplementationId());
+        Optional<Implementation> optionalImplementation = impRepository.findById(mi.getId());
         if (optionalImplementation.isEmpty() || optionalCaller.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -171,7 +169,7 @@ public class ImpService {
         }
         //unsubscribe from all
         Collection<User> subscribers = new ArrayList();
-        subscribers.addAll(imp.getScope().getGrantedUsers());
+        subscribers.addAll(imp.getSubscribed());
         for (User subscriber : subscribers) {
             subscriber.unsubscribe(imp);
             userRepository.save(subscriber);
