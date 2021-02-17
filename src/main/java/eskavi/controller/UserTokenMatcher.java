@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import eskavi.model.user.ImmutableUser;
 import eskavi.repository.UserRepository;
+import eskavi.util.Config;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -16,10 +17,12 @@ import java.util.Date;
 @Component
 public class UserTokenMatcher {
 
-    final UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final Config config;
 
-    public UserTokenMatcher(UserRepository userRepository) {
+    public UserTokenMatcher(UserRepository userRepository, Config config) {
         this.userRepository = userRepository;
+        this.config = config;
     }
 
     // TODO return userId instead of ImmutableUser
@@ -37,7 +40,7 @@ public class UserTokenMatcher {
         Algorithm algorithm = Algorithm.HMAC256("secret");
         return JWT.create()
                 .withClaim("email", userId)
-                .withExpiresAt(DateUtils.addHours(new Date(), 1))
+                .withExpiresAt(DateUtils.addHours(new Date(), config.getTOKEN_EXPIRES_AFTER_HOURS()))
                 .sign(algorithm);
     }
 }

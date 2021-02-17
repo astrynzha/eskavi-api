@@ -13,6 +13,7 @@ import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
 import eskavi.service.ImpService;
 import eskavi.service.UserManagementService;
+import eskavi.util.Config;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ class AASConfigurationServiceTest {
     private ImplementationRepository impRepo;
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    Config config;
 
     private AASConfigurationService aasService;
     private ImpService impService;
@@ -44,7 +47,7 @@ class AASConfigurationServiceTest {
 
     @BeforeEach
     void setUp() {
-        impService = new ImpService(impRepo, userRepo);
+        impService = new ImpService(impRepo, userRepo, config);
         aasService = new AASConfigurationService(impRepo, userRepo,
                 new AASSessionHandler()); // TODO: replace
         userManagementService = new UserManagementService(userRepo);
@@ -113,7 +116,7 @@ class AASConfigurationServiceTest {
     @Test
     void removeModuleInstance() {
         serializer = (Serializer) impService.addImplementation(serializer, someEmail);
-        long sessionId  = aasService.createAASConstructionSession(someEmail);
+        long sessionId = aasService.createAASConstructionSession(someEmail);
         aasService.addModuleInstance(sessionId, serializer.getImplementationId());
         aasService.removeModuleInstance(sessionId, serializer.getImplementationId());
         // exception thrown -> Module instance not found
