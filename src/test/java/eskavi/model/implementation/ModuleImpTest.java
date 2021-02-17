@@ -62,7 +62,7 @@ class ModuleImpTest {
 
     @Test
     void isCompatibleSerializer() {
-        Serializer serializer1 = new Serializer(serializer.getId(), (User) serializer.getAuthor(),
+        Serializer serializer1 = new Serializer(serializer.getImplementationId(), (User) serializer.getAuthor(),
                 "serializer_copy", serializer.getImplementationScope(), trueConfiguration, serializer.getMessageType(),
                 serializer.getProtocolType());
         assertTrue(serializer.isCompatible(usedImpCollection));
@@ -86,7 +86,7 @@ class ModuleImpTest {
 
     @Test
     void isCompatibleDeserializer() {
-        Serializer deserializer1 = new Serializer(deserializer.getId(), (User) deserializer.getAuthor(),
+        Serializer deserializer1 = new Serializer(deserializer.getImplementationId(), (User) deserializer.getAuthor(),
                 "deserializer_copy", deserializer.getImplementationScope(), trueConfiguration, deserializer.getMessageType(),
                 deserializer.getProtocolType());
         assertTrue(deserializer.isCompatible(usedImpCollection));
@@ -110,7 +110,7 @@ class ModuleImpTest {
 
     @Test
     void isCompatibleEndpoint() {
-        Endpoint endpoint1 = new Endpoint(endpoint.getId(), (User) endpoint.getAuthor(),
+        Endpoint endpoint1 = new Endpoint(endpoint.getImplementationId(), (User) endpoint.getAuthor(),
                 "endpoint_copy", endpoint.getImplementationScope(), trueConfiguration, endpoint.getProtocolType());
         assertTrue(endpoint.isCompatible(usedImpCollection));
         assertFalse(endpoint1.isCompatible(usedImpCollection));
@@ -136,7 +136,7 @@ class ModuleImpTest {
 
     @Test
     void isCompatibleDispatcher() {
-        Dispatcher dispatcher1 = new Dispatcher(dispatcher.getId(), (User) dispatcher.getAuthor(),
+        Dispatcher dispatcher1 = new Dispatcher(dispatcher.getImplementationId(), (User) dispatcher.getAuthor(),
                 "dispatcher_copy", dispatcher.getImplementationScope(), trueConfiguration, dispatcher.getMessageType());
         assertTrue(dispatcher.isCompatible(usedImpCollection));
         assertFalse(dispatcher1.isCompatible(usedImpCollection));
@@ -162,7 +162,7 @@ class ModuleImpTest {
 
     @Test
     void isCompatibleHandler() {
-        Handler handler1 = new Handler(handler.getId(), (User) handler.getAuthor(),
+        Handler handler1 = new Handler(handler.getImplementationId(), (User) handler.getAuthor(),
                 "handler_copy", handler.getImplementationScope(), trueConfiguration, handler.getMessageType());
         assertTrue(handler.isCompatible(usedImpCollection));
         assertTrue(handler1.isCompatible(usedImpCollection));
@@ -188,7 +188,7 @@ class ModuleImpTest {
 
     @Test
     void isCompatibleAssetConnection() {
-        AssetConnection assetConnection1 = new AssetConnection(assetConnection.getId(), (User) assetConnection.getAuthor(),
+        AssetConnection assetConnection1 = new AssetConnection(assetConnection.getImplementationId(), (User) assetConnection.getAuthor(),
                 "AC_copy", assetConnection.getImplementationScope(), trueConfiguration);
         assertTrue(assetConnection.isCompatible(usedImpCollection));
         assertTrue(assetConnection1.isCompatible(usedImpCollection));
@@ -217,7 +217,7 @@ class ModuleImpTest {
 
     @Test
     void isCompatibleInteractionStarter() {
-        InteractionStarter interactionStarter1 = new InteractionStarter(interactionStarter.getId(),
+        InteractionStarter interactionStarter1 = new InteractionStarter(interactionStarter.getImplementationId(),
                 (User) interactionStarter.getAuthor(), "IS_copy", interactionStarter.getImplementationScope(), trueConfiguration);
         assertTrue(interactionStarter.isCompatible(usedImpCollection));
         assertTrue(interactionStarter1.isCompatible(usedImpCollection));
@@ -246,7 +246,7 @@ class ModuleImpTest {
 
     @Test
     void isCompatiblePersistenceManager() {
-        PersistenceManager persistenceManager1 = new PersistenceManager(persistenceManager.getId(),
+        PersistenceManager persistenceManager1 = new PersistenceManager(persistenceManager.getImplementationId(),
                 (User) persistenceManager.getAuthor(), "PM_copy", persistenceManager.getImplementationScope(), trueConfiguration);
         assertTrue(persistenceManager.isCompatible(usedImpCollection));
         assertFalse(persistenceManager1.isCompatible(usedImpCollection));

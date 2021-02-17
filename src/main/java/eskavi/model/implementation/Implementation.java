@@ -123,7 +123,7 @@ public abstract class Implementation implements ImmutableImplementation {
     }
 
     @Override
-    public long getId() {
+    public long getImplementationId() {
         return implementationId;
     }
 

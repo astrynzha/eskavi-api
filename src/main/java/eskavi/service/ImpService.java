@@ -142,7 +142,7 @@ public class ImpService {
     //  1. Soll man hier isValid auf die übergebene MI aufrufen?
     public void updateImplementation(ImmutableImplementation mi, String callerId) throws IllegalAccessException {
         Optional<User> optionalCaller = userRepository.findById(callerId);
-        Optional<Implementation> optionalImplementation = impRepository.findById(mi.getId());
+        Optional<Implementation> optionalImplementation = impRepository.findById(mi.getImplementationId());
         if (optionalImplementation.isEmpty() || optionalCaller.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

@@ -13,8 +13,6 @@ import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
 import eskavi.service.ImpService;
 import eskavi.service.UserManagementService;
-import eskavi.service.mockrepo.MockImplementationRepository;
-import eskavi.service.mockrepo.MockUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,9 +86,9 @@ class AASConfigurationServiceTest {
         // add serializer to some session
         serializer = (Serializer) impService.addImplementation(serializer, someEmail);
         long sessionId = aasService.createAASConstructionSession(someEmail);
-        aasService.addModuleInstance(sessionId, serializer.getId());
+        aasService.addModuleInstance(sessionId, serializer.getImplementationId());
         // test if serializer is there
-        assertNotNull(aasService.getConfiguration(sessionId, serializer.getId()));
+        assertNotNull(aasService.getConfiguration(sessionId, serializer.getImplementationId()));
     }
 
     // TODO more tests with more sophisticated configurations & test if they are really updated. In der Testphase?
@@ -99,16 +97,16 @@ class AASConfigurationServiceTest {
         // add serializer to some session
         serializer = (Serializer) impService.addImplementation(serializer, someEmail);
         long sessionId = aasService.createAASConstructionSession(someEmail);
-        aasService.addModuleInstance(sessionId, serializer.getId());
-        Configuration conf = aasService.getConfiguration(sessionId, serializer.getId());
+        aasService.addModuleInstance(sessionId, serializer.getImplementationId());
+        Configuration conf = aasService.getConfiguration(sessionId, serializer.getImplementationId());
         assertEquals(configuration1.getName(), conf.getName());
 
         // test that changing configuration name causes an exception
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                aasService.updateConfiguration(sessionId, configuration2, serializer.getId()));
+                aasService.updateConfiguration(sessionId, configuration2, serializer.getImplementationId()));
         assertTrue(exception.getMessage().contains("Configuration has to match the template configuration"));
         // test that the configuration was not changed
-        conf = aasService.getConfiguration(sessionId, serializer.getId());
+        conf = aasService.getConfiguration(sessionId, serializer.getImplementationId());
         assertEquals(configuration1.getName(), conf.getName());
     }
 
@@ -116,12 +114,12 @@ class AASConfigurationServiceTest {
     void removeModuleInstance() {
         serializer = (Serializer) impService.addImplementation(serializer, someEmail);
         long sessionId  = aasService.createAASConstructionSession(someEmail);
-        aasService.addModuleInstance(sessionId, serializer.getId());
-        aasService.removeModuleInstance(sessionId, serializer.getId());
+        aasService.addModuleInstance(sessionId, serializer.getImplementationId());
+        aasService.removeModuleInstance(sessionId, serializer.getImplementationId());
         // exception thrown -> Module instance not found
         Exception exception = assertThrows(ResponseStatusException.class,
-                () -> aasService.getConfiguration(sessionId, serializer.getId()));
-        assertTrue(exception.getMessage().contains("ModuleInstance " + serializer.getId() +
+                () -> aasService.getConfiguration(sessionId, serializer.getImplementationId()));
+        assertTrue(exception.getMessage().contains("ModuleInstance " + serializer.getImplementationId() +
                 " is not found in the constructions session " + sessionId));
     }
 

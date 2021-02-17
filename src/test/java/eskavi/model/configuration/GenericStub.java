@@ -17,7 +17,7 @@ public class GenericStub implements ImmutableGenericImp {
     }
 
     @Override
-    public long getId() {
+    public long getImplementationId() {
         return 0;
     }
 

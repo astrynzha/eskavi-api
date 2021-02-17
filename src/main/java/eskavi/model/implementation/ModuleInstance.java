@@ -88,7 +88,7 @@ public class ModuleInstance {
 
     @JsonIgnore
     public long getImpId() {
-        return moduleImp.getId();
+        return moduleImp.getImplementationId();
     }
 
     @Override

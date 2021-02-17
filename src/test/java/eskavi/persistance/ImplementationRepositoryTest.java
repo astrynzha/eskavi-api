@@ -54,7 +54,7 @@ public class ImplementationRepositoryTest {
 
         userRepo.save(userA);
         endpoint = impRepo.save(endpoint);
-        Implementation implementation = impRepo.findById(endpoint.getId()).get();
+        Implementation implementation = impRepo.findById(endpoint.getImplementationId()).get();
         userA.subscribe(implementation);
         assertEquals(implementation, endpoint);
     }

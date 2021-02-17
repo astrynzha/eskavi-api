@@ -103,7 +103,7 @@ class ImpServiceTest {
     @Test
     void addImplementation() {
         endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
-        assertEquals(impService.getImp(endpoint.getId()), endpoint);
+        assertEquals(impService.getImp(endpoint.getImplementationId()), endpoint);
     }
 
     @Test
@@ -111,13 +111,13 @@ class ImpServiceTest {
         endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
         // addUser()
         try {
-            impService.addUser(endpoint.getId(), "str@gmail.com", "a.str@gmail.com");
+            impService.addUser(endpoint.getImplementationId(), "str@gmail.com", "a.str@gmail.com");
         } catch (IllegalAccessException e) {
             fail(e.getMessage());
         }
         //addUser() with callerId != authorId
         assertThrows(ResponseStatusException.class,
-                () -> impService.addUser(endpoint.getId(), "str@gmail.com", "str@gmail.com"));
+                () -> impService.addUser(endpoint.getImplementationId(), "str@gmail.com", "str@gmail.com"));
 
         // change scope to private + update repo
         endpoint.setScope(new Scope(ImplementationScope.PRIVATE));
@@ -129,7 +129,7 @@ class ImpServiceTest {
 
         //addUser() with scope != SHARED
         Exception exception = assertThrows(IllegalAccessException.class,
-                () -> impService.addUser(endpoint.getId(),
+                () -> impService.addUser(endpoint.getImplementationId(),
                         "str@gmail.com", "a.str@gmail.com"));
         assertTrue(exception.getMessage().contains("ImplementationScope is not SHARED"));
     }
@@ -138,25 +138,25 @@ class ImpServiceTest {
     void removeUser() {
         endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
         try {
-            impService.addUser(endpoint.getId(), "str@gmail.com", "a.str@gmail.com");
+            impService.addUser(endpoint.getImplementationId(), "str@gmail.com", "a.str@gmail.com");
         } catch (IllegalAccessException e) {
             fail(e.getMessage());
         }
 
         //removeUser() with callerId != authorId
         assertThrows(ResponseStatusException.class,
-                () -> impService.removeUser(endpoint.getId(),
+                () -> impService.removeUser(endpoint.getImplementationId(),
                         "str@gmail.com", "str@gmail.com"));
 
         try {
-            impService.removeUser(endpoint.getId(), "str@gmail.com", "a.str@gmail.com");
+            impService.removeUser(endpoint.getImplementationId(), "str@gmail.com", "a.str@gmail.com");
         } catch (IllegalAccessException e) {
             fail(e.getMessage());
         }
 
         //removeUser() trying to remove the author
         assertThrows(ResponseStatusException.class,
-                () -> impService.removeUser(endpoint.getId(),
+                () -> impService.removeUser(endpoint.getImplementationId(),
                         "a.str@gmail.com", "a.str@gmail.com"));
     }
 
@@ -164,12 +164,12 @@ class ImpServiceTest {
     void getUsers() {
         impService.addImplementation(endpoint, "a.str@gmail.com");
         try {
-            impService.addUser(endpoint.getId(), "str@gmail.com", "a.str@gmail.com");
-            impService.addUser(endpoint.getId(), "str1@gmail.com", "a.str@gmail.com");
+            impService.addUser(endpoint.getImplementationId(), "str@gmail.com", "a.str@gmail.com");
+            impService.addUser(endpoint.getImplementationId(), "str1@gmail.com", "a.str@gmail.com");
         } catch (IllegalAccessException e) {
             fail(e.getMessage());
         }
-        Collection<ImmutableUser> users = impService.getUsers(endpoint.getId());
+        Collection<ImmutableUser> users = impService.getUsers(endpoint.getImplementationId());
         assertEquals(3, users.size());
         assertTrue(users.contains(userB));
         assertTrue(users.contains(userC));
@@ -178,16 +178,16 @@ class ImpServiceTest {
     @Test
     void removeImplementation() {
         endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
-        assertEquals(impService.getImp(endpoint.getId()), endpoint);
+        assertEquals(impService.getImp(endpoint.getImplementationId()), endpoint);
 
         // try to removeImplementation with caller != author
         Exception exception = assertThrows(IllegalAccessException.class,
-                () -> impService.removeImplementation(endpoint.getId(), "str@gmail.com"));
+                () -> impService.removeImplementation(endpoint.getImplementationId(), "str@gmail.com"));
         assertTrue(exception.getMessage()
                 .contains("This user cannot remove the implementation, he is not it's author"));
 
         try {
-            impService.removeImplementation(endpoint.getId(), "a.str@gmail.com");
+            impService.removeImplementation(endpoint.getImplementationId(), "a.str@gmail.com");
         } catch (IllegalAccessException e) {
             fail(e.getMessage());
         }

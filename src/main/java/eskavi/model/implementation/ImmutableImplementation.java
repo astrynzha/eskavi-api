@@ -13,7 +13,7 @@ import java.util.Collection;
  * @version 1.0.0
  */
 public interface ImmutableImplementation {
-    public long getId();
+    public long getImplementationId();
 
     public String getName();
 

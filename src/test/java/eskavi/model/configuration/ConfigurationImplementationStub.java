@@ -27,7 +27,7 @@ public class ConfigurationImplementationStub implements ImmutableModuleImp {
     }
 
     @Override
-    public long getId() {
+    public long getImplementationId() {
         return 0;
     }
 
