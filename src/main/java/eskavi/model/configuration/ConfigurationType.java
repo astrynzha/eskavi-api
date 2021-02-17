@@ -22,7 +22,7 @@ public enum ConfigurationType {
     CONFIGURATION_AGGREGATE(new ConfigurationAggregate("", false, new KeyExpression("",""), new ArrayList<>(), false)),
     TEXT_FIELD(new TextField("", false, new KeyExpression("",""), DataType.TEXT)),
     IMPLEMENTATION_SELECT(new ImplementationSelect("", false, new KeyExpression("", ""), new HashSet<>(), ImpType.SERIALIZER)),
-    SELECT(new Select("", false, new KeyExpression("", ""), new HashMap<>())),
+    SELECT(new Select("", false, new KeyExpression("", ""), new ArrayList<>())),
     FILE_FIELD(new FileField("", false, new KeyExpression("",""))),
     SWITCH(new Switch("", false, new KeyExpression("",""), "", ""));
 

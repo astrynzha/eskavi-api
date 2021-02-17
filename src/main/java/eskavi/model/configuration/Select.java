@@ -1,6 +1,7 @@
 package eskavi.model.configuration;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -10,10 +11,7 @@ import java.util.Objects;
 @Entity
 public class Select extends SingleValueField {
     @ElementCollection(targetClass = String.class)
-    @CollectionTable(name = "MAP")
-    @MapKeyColumn(name = "key")
-    @Column(name = "value")
-    private Map<String, String> content;
+    private List<String> content;
 
     /**
      * Constructs a new Select object
@@ -23,7 +21,7 @@ public class Select extends SingleValueField {
      * @param expression    the {@link KeyExpression} of this Select
      * @param content
      */
-    public Select(String name, boolean allowMultiple, KeyExpression expression, Map<String, String> content) {
+    public Select(String name, boolean allowMultiple, KeyExpression expression, List<String> content) {
         super(name, allowMultiple, expression);
         this.content = content;
     }
@@ -35,25 +33,25 @@ public class Select extends SingleValueField {
      * Returns the Content stored in a Map. The key represents the value to show the User, while the value is inserted
      * into the {@link KeyExpression} when it is resolved
      *
-     * @return a map of the possible Content
+     * @return a list of the possible Content
      */
-    public Map<String, String> getContent() {
+    public List<String> getContent() {
         return content;
     }
 
     /**
      * Sets the content to the given map. Should only be invoked inside constructors
      *
-     * @param content the new content map
+     * @param content the new content list
      */
-    public void setContent(Map<String, String> content) {
+    public void setContent(List<String> content) {
         this.content = content;
     }
 
     @Override
     public void setValue(String value) throws IllegalArgumentException {
-        if (content.containsKey(value)) {
-            super.setValue(content.get(value));
+        if (content != null && content.contains(value)) {
+            super.setValue(value);
         } else {
             throw new IllegalArgumentException("value must be a possible value from content");
         }
@@ -89,12 +87,7 @@ public class Select extends SingleValueField {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
         Select result = new Select(getName(), allowsMultiple(), copy, getContent());
         if (getValue() != null) {
-            for (String value : getContent().values()) {
-                if (value.equals(getValue())) {
-                    result.setValue(value);
-                    return result;
-                }
-            }
+            result.setValue(getValue());
         }
         return result;
     }

@@ -3,19 +3,21 @@ package eskavi.model.configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SelectTest {
     private Select testObject;
-    private Map<String, String> content;
+    private List<String> content;
 
     @BeforeEach
     void setUp() {
-        content = new HashMap<>();
-        content.put("test", "testValue");
+        content = new ArrayList<>();
+        content.add("testValue");
         this.testObject = new Select("test", false, new KeyExpression("start", "end"), content);
     }
 
@@ -30,7 +32,7 @@ class SelectTest {
 
     @Test
     void setValueSuccess() {
-        testObject.setValue("test");
+        testObject.setValue("testValue");
         assertEquals("testValue", testObject.getValue());
     }
 
@@ -52,7 +54,7 @@ class SelectTest {
         assertEquals(testObject.getKeyExpression(), clone.getKeyExpression());
 
         //changing clone
-        Map<String, String> newContent = new HashMap<>();
+        List<String> newContent = new ArrayList<>();
         clone.setContent(newContent);
         assertNotEquals(testObject.getContent(), clone.getContent());
     }
@@ -65,8 +67,8 @@ class SelectTest {
 
     @Test
     void testEqualsFailure() {
-        Map<String, String> newContent = new HashMap<>();
-        newContent.put("fail", "fail");
+        List<String> newContent = new ArrayList<>();
+        newContent.add("fail");
         Select other = new Select("test", false, new KeyExpression("start", "end"), newContent);
         assertEquals(false, testObject.equals(other));
     }

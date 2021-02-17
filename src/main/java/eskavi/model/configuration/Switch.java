@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Entity;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,8 +16,8 @@ import java.util.Map;
  */
 @Entity
 public class Switch extends Select {
-    public static String TRUE = "trueValue";
-    public static String FALSE = "falseValue";
+    public static int TRUE_INDEX = 0;
+    public static int FALSE_INDEX = 1;
 
     /**
      * Constructs a new Switch
@@ -28,12 +30,18 @@ public class Switch extends Select {
      */
     public Switch(String name, boolean allowMultiple, KeyExpression expression, String trueValue, String falseValue) {
         super(name, allowMultiple, expression, null);
-        Map<String, String> content = new HashMap<>();
-        content.put(TRUE, trueValue);
-        content.put(FALSE, falseValue);
+        List<String> content = new ArrayList<>();
+        content.add(trueValue);
+        content.add(falseValue);
         this.setContent(content);
         //setting the default value
-        this.setValue(FALSE);
+        this.setValue(falseValue);
+    }
+
+    @JsonCreator
+    protected Switch(@JsonProperty("name") String name, @JsonProperty("allowMultiple") boolean allowMultiple,
+                     @JsonProperty("keyExpression") KeyExpression expression, @JsonProperty("content") List<String> content) {
+        super(name, allowMultiple, expression, content);
     }
 
     protected Switch() {
@@ -63,9 +71,9 @@ public class Switch extends Select {
     @Override
     public Switch clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
-        Switch result = new Switch(getName(), allowsMultiple(), copy, getContent().get(TRUE), getContent().get(FALSE));
+        Switch result = new Switch(getName(), allowsMultiple(), copy, getContent().get(TRUE_INDEX), getContent().get(FALSE_INDEX));
         // needed to be able to set value to previously set value
-        result.setValue(getValue().equals(getContent().get(TRUE)) ? TRUE : FALSE);
+        result.setValue(getValue());
         return result;
     }
 }

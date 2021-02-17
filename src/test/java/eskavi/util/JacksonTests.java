@@ -133,9 +133,9 @@ public class JacksonTests {
 
     @Test
     void testSelectToJson() throws JsonProcessingException {
-        Map<String, String> content = new HashMap<>();
-        content.put("first", "value1");
-        content.put("second", "value2");
+        List<String> content = new ArrayList<>();
+        content.add("value1");
+        content.add("value2");
         Select select = new Select("name", false, new KeyExpression("<select>", "<select>"), content);
 
         String result = new ObjectMapper().writeValueAsString(select);
