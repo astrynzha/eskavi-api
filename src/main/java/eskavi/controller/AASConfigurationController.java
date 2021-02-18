@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.IOException;
 
+@CrossOrigin
 @RestController
-@RequestMapping("aas")
+@RequestMapping("api/aas")
 public class AASConfigurationController {
 
     final AASConfigurationService aasConfigurationService;

@@ -46,7 +46,7 @@ public enum ImpType {
         return this.name();
     }
 
-    public boolean matches(ImmutableModuleImp input) {
+    public boolean matches(ImmutableImplementation input) {
         return matchingClass.isInstance(input);
     }
 }

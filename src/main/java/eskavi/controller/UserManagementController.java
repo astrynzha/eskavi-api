@@ -1,6 +1,7 @@
 package eskavi.controller;
 
 import eskavi.controller.requests.user.*;
+import eskavi.controller.responses.TokenResponse;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
@@ -13,8 +14,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Collection;
 import java.util.EnumSet;
 
+@CrossOrigin
 @RestController
-@RequestMapping("user")
+@RequestMapping("api/user")
 public class UserManagementController {
 
     final UserTokenMatcher userTokenMatcher;
@@ -39,9 +41,10 @@ public class UserManagementController {
      * "email": "test@web.de",
      * "password": "12345678"
      * }
+     * @return
      */
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
+    public TokenResponse register(@RequestBody RegisterRequest request) {
         userManagementService.createUser(request.getEmail(), new BCryptPasswordEncoder().encode(request.getEmail()));
         return userTokenMatcher.generateToken(request.getEmail());
     }
@@ -60,9 +63,10 @@ public class UserManagementController {
      * "email": "test@web.de",
      * "password": "12345678"
      * }
+     * @return
      */
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
+    public TokenResponse login(@RequestBody LoginRequest request) {
         ImmutableUser user = userManagementService.getUser(request.getEmail());
         if (new BCryptPasswordEncoder().encode(request.getPassword()).equals(user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "wrong Password");

@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import eskavi.controller.responses.TokenResponse;
 import eskavi.model.user.ImmutableUser;
 import eskavi.repository.UserRepository;
 import eskavi.util.Config;
@@ -36,11 +37,11 @@ public class UserTokenMatcher {
         return userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
     }
 
-    public String generateToken(String userId) {
+    public TokenResponse generateToken(String userId) {
         Algorithm algorithm = Algorithm.HMAC256("secret");
-        return JWT.create()
+        return new TokenResponse(JWT.create()
                 .withClaim("email", userId)
                 .withExpiresAt(DateUtils.addHours(new Date(), config.getTOKEN_EXPIRES_AFTER_HOURS()))
-                .sign(algorithm);
+                .sign(algorithm));
     }
 }

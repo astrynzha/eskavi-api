@@ -82,7 +82,7 @@ public class ImpService {
 
     public Collection<ImmutableImplementation> getImps(ImpType impType) {
         return StreamSupport.stream(impRepository.findAll().spliterator(), false)
-                .filter(implementation -> impType.matches((ImmutableModuleImp) implementation))
+                .filter(implementation -> impType.matches(implementation))
                 .collect(Collectors.toList());
     }
 
@@ -93,6 +93,7 @@ public class ImpService {
      * @param callerId Id of module developer that wants to add an implementation
      */
     public ImmutableImplementation addImplementation(Implementation mi, String callerId) {
+        mi.setImplementationId(0);
         Optional<User> optionalCaller = userRepository.findById(callerId);
         if (optionalCaller.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

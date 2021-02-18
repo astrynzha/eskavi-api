@@ -2,6 +2,10 @@ package eskavi.controller;
 
 import eskavi.controller.requests.imp.AddUserRequest;
 import eskavi.controller.requests.imp.RemoveUserRequest;
+import eskavi.controller.responses.DataTypesResponse;
+import eskavi.controller.responses.GetImplementationsResponse;
+import eskavi.controller.responses.ImpScopesResponse;
+import eskavi.controller.responses.ImpTypesResponse;
 import eskavi.model.configuration.ConfigurationType;
 import eskavi.model.configuration.DataType;
 import eskavi.model.implementation.ImmutableImplementation;
@@ -13,13 +17,13 @@ import eskavi.service.ImpService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 
+@CrossOrigin
 @RestController
-@RequestMapping("imp")
+@RequestMapping("api/imp")
 public class ImpController {
 
     final ImpService impService;
@@ -297,18 +301,19 @@ public class ImpController {
      * {
      * "error": "UserNotFound"
      * }
+     * @return
      */
     @GetMapping
-    public Collection<ImmutableImplementation> get(@RequestParam(value = "id", required = false) Long impId,
-                                                   @RequestParam(value = "impType", required = false) String impType,
-                                                   @RequestHeader String Authorization) {
+    public GetImplementationsResponse get(@RequestParam(value = "id", required = false) Long impId,
+                                          @RequestParam(value = "impType", required = false) String impType,
+                                          @RequestHeader String Authorization) {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
         if (impId != null) {
-            return Arrays.asList(impService.getImp(impId));
+            return new GetImplementationsResponse(Arrays.asList(impService.getImp(impId)));
         } else if (impType != null) {
-            return impService.getImps(ImpType.valueOf(impType));
+            return new GetImplementationsResponse(impService.getImps(ImpType.valueOf(impType)));
         } else {
-            return impService.getImps(user);
+            return new GetImplementationsResponse(impService.getImps(user));
         }
     }
 
@@ -377,10 +382,11 @@ public class ImpController {
      * ]
      * }
      * @apiError {String} message Errormessage
+     * @return
      */
     @GetMapping("/types")
-    public Collection<ImpType> getImplementationTypes() {
-        return EnumSet.allOf(ImpType.class);
+    public ImpTypesResponse getImplementationTypes() {
+        return new ImpTypesResponse(EnumSet.allOf(ImpType.class));
     }
 
     /**
@@ -400,8 +406,8 @@ public class ImpController {
      * @apiError {String} message Errormessage
      */
     @GetMapping("/config/data_types")
-    public Collection<DataType> getConfigDataTypes(ImmutableUser user) {
-        return EnumSet.allOf(DataType.class);
+    public DataTypesResponse getConfigDataTypes(ImmutableUser user) {
+        return new DataTypesResponse(EnumSet.allOf(DataType.class));
     }
 
 
@@ -524,8 +530,8 @@ public class ImpController {
      * @apiError {String} message Errormessage
      */
     @GetMapping("/scopes")
-    public Collection<ImplementationScope> getImpScopes() {
-        return EnumSet.allOf(ImplementationScope.class);
+    public ImpScopesResponse getImpScopes() {
+        return new ImpScopesResponse(EnumSet.allOf(ImplementationScope.class));
     }
 
     /**
@@ -621,8 +627,8 @@ public class ImpController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestHeader String jwtToken, @RequestBody Implementation mi) {
-        ImmutableUser user = userTokenMatcher.getUser(jwtToken);
+    public void add(@RequestHeader String Authorization, @RequestBody Implementation mi) {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
         impService.addImplementation(mi, user.getEmailAddress());
     }
 
