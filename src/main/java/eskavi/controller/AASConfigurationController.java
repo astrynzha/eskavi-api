@@ -521,6 +521,5 @@ public class AASConfigurationController {
     @GetMapping("/generate")
     public byte[] generateJavaClass(@RequestParam("sessionId") long sessionId) throws IOException {
         return Files.toByteArray(aasConfigurationService.generateJavaClass(sessionId));
-        //return Files.toByteArray(aasConfigurationService.generateJavaClass(sessionId));
     }
 }

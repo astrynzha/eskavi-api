@@ -35,6 +35,7 @@ public class ImpController {
     }
 
     /**
+     * @return
      * @api{get}/imp Get Implementation
      * @apiName GetImplementation
      * @apiGroup Implementation
@@ -301,7 +302,6 @@ public class ImpController {
      * {
      * "error": "UserNotFound"
      * }
-     * @return
      */
     @GetMapping
     public GetImplementationsResponse get(@RequestParam(value = "id", required = false) Long impId,
@@ -318,6 +318,7 @@ public class ImpController {
     }
 
     /**
+     * @return
      * @api{get}/imp/types Get Implementation types
      * @apiDescription Gets all types of implementations that can be created.
      * @apiName getTypes
@@ -329,60 +330,59 @@ public class ImpController {
      * HTTP/1.1 200 OK
      * {
      * [
-     *    {
-     *       "name":"ASSET_CONNECTION",
-     *       "topLevel":true,
-     *       "maxUse":-1
-     *    },
-     *    {
-     *       "name":"DESERIALIZER",
-     *       "topLevel":false,
-     *       "maxUse":-1
-     *    },
-     *    {
-     *       "name":"DISPATCHER",
-     *       "topLevel":false,
-     *       "maxUse":-1
-     *    },
-     *    {
-     *       "name":"ENDPOINT",
-     *       "topLevel":true,
-     *       "maxUse":-1
-     *    },
-     *    {
-     *       "name":"HANDLER",
-     *       "topLevel":false,
-     *       "maxUse":-1
-     *    },
-     *    {
-     *       "name":"INTERACTION_STARTER",
-     *       "topLevel":true,
-     *       "maxUse":-1
-     *    },
-     *    {
-     *       "name":"PERSISTENCE_MANAGER",
-     *       "topLevel":true,
-     *       "maxUse":1
-     *    },
-     *    {
-     *       "name":"SERIALIZER",
-     *       "topLevel":false,
-     *       "maxUse":1
-     *    },
-     *    {
-     *       "name":"PROTOCOL_TYPE",
-     *       "topLevel":false,
-     *       "maxUse":0
-     *    },
-     *    {
-     *       "name":"MESSAGE_TYPE",
-     *       "topLevel":false,
-     *       "maxUse":0
-     *    }
+     * {
+     * "name":"ASSET_CONNECTION",
+     * "topLevel":true,
+     * "maxUse":-1
+     * },
+     * {
+     * "name":"DESERIALIZER",
+     * "topLevel":false,
+     * "maxUse":-1
+     * },
+     * {
+     * "name":"DISPATCHER",
+     * "topLevel":false,
+     * "maxUse":-1
+     * },
+     * {
+     * "name":"ENDPOINT",
+     * "topLevel":true,
+     * "maxUse":-1
+     * },
+     * {
+     * "name":"HANDLER",
+     * "topLevel":false,
+     * "maxUse":-1
+     * },
+     * {
+     * "name":"INTERACTION_STARTER",
+     * "topLevel":true,
+     * "maxUse":-1
+     * },
+     * {
+     * "name":"PERSISTENCE_MANAGER",
+     * "topLevel":true,
+     * "maxUse":1
+     * },
+     * {
+     * "name":"SERIALIZER",
+     * "topLevel":false,
+     * "maxUse":1
+     * },
+     * {
+     * "name":"PROTOCOL_TYPE",
+     * "topLevel":false,
+     * "maxUse":0
+     * },
+     * {
+     * "name":"MESSAGE_TYPE",
+     * "topLevel":false,
+     * "maxUse":0
+     * }
      * ]
      * }
      * @apiError {String} message Errormessage
-     * @return
      */
     @GetMapping("/types")
     public ImpTypesResponse getImplementationTypes() {
@@ -701,8 +701,8 @@ public class ImpController {
      * "error": "ImplementationNotFound"
      * }
      */
-    @DeleteMapping("/{id:[0-9]+}")
-    public void delete(@RequestHeader String Authorization, @PathVariable("id") long impId) throws IllegalAccessException {
+    @DeleteMapping
+    public void delete(@RequestHeader String Authorization, @RequestParam("id") long impId) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
         impService.removeImplementation(impId, user.getEmailAddress());
     }
