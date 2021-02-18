@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 @Entity
 public class Handler extends ModuleImp {
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.MERGE)
     private MessageType messageType;
 
     public Handler() {

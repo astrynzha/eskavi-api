@@ -20,9 +20,9 @@ import java.util.Objects;
  */
 @Entity
 public class Serializer extends ModuleImp {
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.MERGE)
     private ProtocolType protocolType;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.MERGE)
     private MessageType messageType;
 
     public Serializer() {

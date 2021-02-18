@@ -43,7 +43,11 @@ public class ImpService {
 
     // TODO User id als parameter?
     public Collection<ImmutableImplementation> getImps(ImmutableUser user) {
-        return user.getSubscribed();
+        HashSet<ImmutableImplementation> result = new HashSet<>();
+        result.addAll(user.getSubscribed());
+        result.addAll(getPublic());
+        result.addAll(impRepository.findAllByAuthor(user));
+         return result;
     }
 
     // TODO
@@ -239,6 +243,10 @@ public class ImpService {
             throw new IllegalAccessException("ImmutableUser is not an instance of User!");
         }
         return (User) user;
+    }
+
+    private Collection<ImmutableImplementation> getPublic() {
+        return impRepository.findAllByScope_ImpScope(ImplementationScope.PUBLIC);
     }
 }
 

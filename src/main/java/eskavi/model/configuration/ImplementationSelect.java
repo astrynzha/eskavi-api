@@ -1,9 +1,6 @@
 package eskavi.model.configuration;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import eskavi.deserializer.GenericsDeserializer;
 import eskavi.model.implementation.*;
@@ -162,7 +159,9 @@ public class ImplementationSelect extends Configuration {
     public ImplementationSelect clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
         ImplementationSelect result = new ImplementationSelect(this.getName(), this.allowsMultiple(), copy, this.generics, this.type);
-        result.setInstance(this.instance);
+        if (instance != null) {
+            result.setInstance(this.instance);
+        }
         return result;
     }
 

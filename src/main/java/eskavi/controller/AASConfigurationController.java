@@ -4,7 +4,7 @@ import com.google.common.io.Files;
 import eskavi.controller.requests.aas.AddModuleImpRequest;
 import eskavi.controller.requests.aas.UpdateConfigurationRequest;
 import eskavi.controller.responses.aas.CreateSessionResponse;
-import eskavi.model.configuration.Configuration;
+import eskavi.controller.responses.aas.GetConfigurationResponse;
 import eskavi.model.user.ImmutableUser;
 import eskavi.service.aasconfigurationservice.AASConfigurationService;
 import org.springframework.web.bind.annotation.*;
@@ -275,10 +275,11 @@ public class AASConfigurationController {
      * ]
      * }
      * @apiError {String} message Errormessage
+     * @return
      */
     @GetMapping("/imp/configuration")
-    public Configuration getConfiguration(@RequestParam long sessionId, @RequestParam long moduleId) {
-        return aasConfigurationService.getConfiguration(sessionId, moduleId);
+    public GetConfigurationResponse getConfiguration(@RequestParam long sessionId, @RequestParam long impId) {
+        return new GetConfigurationResponse(aasConfigurationService.getConfiguration(sessionId, impId));
     }
 
     /**

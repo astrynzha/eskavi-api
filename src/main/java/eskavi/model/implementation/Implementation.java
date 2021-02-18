@@ -22,8 +22,11 @@ import java.util.Objects;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+/*
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "implementationId")
+
+ */
 public abstract class Implementation implements ImmutableImplementation {
     @Id
     @GeneratedValue
