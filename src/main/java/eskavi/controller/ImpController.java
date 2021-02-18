@@ -1,5 +1,6 @@
 package eskavi.controller;
 
+import eskavi.controller.requests.imp.AddImplementationResponse;
 import eskavi.controller.requests.imp.AddUserRequest;
 import eskavi.controller.requests.imp.AddUsersRequest;
 import eskavi.controller.requests.imp.RemoveUserRequest;
@@ -557,6 +558,7 @@ public class ImpController {
 
 
     /**
+     * @return
      * @api{post}/imp Post Implementation
      * @apiName PostImplementation
      * @apiGroup Implementation
@@ -628,9 +630,9 @@ public class ImpController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void add(@RequestHeader String Authorization, @RequestBody Implementation mi) {
+    public AddImplementationResponse add(@RequestHeader String Authorization, @RequestBody Implementation mi) {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
-        impService.addImplementation(mi, user.getEmailAddress());
+        return new AddImplementationResponse(impService.addImplementation(mi, user.getEmailAddress()));
     }
 
     /**
