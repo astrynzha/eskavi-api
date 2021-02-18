@@ -1,6 +1,7 @@
 package eskavi.controller;
 
 import eskavi.controller.requests.imp.AddUserRequest;
+import eskavi.controller.requests.imp.AddUsersRequest;
 import eskavi.controller.requests.imp.RemoveUserRequest;
 import eskavi.controller.responses.DataTypesResponse;
 import eskavi.controller.responses.GetImplementationsResponse;
@@ -669,6 +670,30 @@ public class ImpController {
     public void addUser(@RequestHeader String Authorization, @RequestBody AddUserRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
         impService.addUser(request.getImpId(), request.getUserId(), user.getEmailAddress());
+    }
+
+    /**
+     * @api{post}/imp/users Add multiple Users to Implementation
+     * @apiName AddUsersToImplementation
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiError {String} message Errormessage
+     * //TODO fix docu here
+     * @apiParam (Request body) {String} userId User unique ID
+     * @apiParam (Request body) {Number} impId Implementation unique ID
+     */
+    @PostMapping("/users")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addUsers(@RequestHeader String Authorization, @RequestBody AddUsersRequest request) throws IllegalAccessException {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
+        request.getUserIds().forEach(s -> {
+            try {
+                impService.addUser(request.getImpId(), s, user.getEmailAddress());
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
