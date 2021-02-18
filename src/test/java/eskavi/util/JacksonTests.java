@@ -167,4 +167,117 @@ public class JacksonTests {
         String result = new ObjectMapper().writeValueAsString(DataType.values());
         System.out.println(result);
     }
+
+    @Test
+    void test() throws JsonProcessingException {
+        Configuration config = new ObjectMapper().readValue("{" +
+                "  \"jsonTypeInfo\": \"CONFIGURATION_AGGREGATE\",\n" +
+                "  \"keyExpression\": {\n" +
+                "    \"expressionStart\": \"\",\n" +
+                "    \"expressionEnd\": \"\"\n" +
+                "  },\n" +
+                "  \"enforceCompatibility\": false,\n" +
+                "  \"name\": \"root\",\n" +
+                "  \"allowMultiple\": false,\n" +
+                "  \"children\": [\n" +
+                "    {\n" +
+                "      \"jsonTypeInfo\": \"TEXT_FIELD\",\n" +
+                "      \"keyExpression\": {\n" +
+                "        \"expressionStart\": \"\",\n" +
+                "        \"expressionEnd\": \"\"\n" +
+                "      },\n" +
+                "      \"dataType\": \"NUMBER\",\n" +
+                "      \"name\": \"port\",\n" +
+                "      \"allowMultiple\": false,\n" +
+                "      \"value\": \"6060\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"jsonTypeInfo\": \"CONFIGURATION_AGGREGATE\",\n" +
+                "      \"keyExpression\": {\n" +
+                "        \"expressionStart\": \"\",\n" +
+                "        \"expressionEnd\": \"\"\n" +
+                "      },\n" +
+                "      \"enforceCompatibility\": false,\n" +
+                "      \"name\": \"mapping\",\n" +
+                "      \"allowMultiple\": true,\n" +
+                "      \"children\": [\n" +
+                "        {\n" +
+                "          \"jsonTypeInfo\": \"IMPLEMENTATION_SELECT\",\n" +
+                "          \"keyExpression\": {\n" +
+                "            \"expressionStart\": \"\",\n" +
+                "            \"expressionEnd\": \"\"\n" +
+                "          },\n" +
+                "          \"generics\": [],\n" +
+                "          \"type\": \"SERIALIZER\",\n" +
+                "          \"name\": \"Serializer\",\n" +
+                "          \"allowMultiple\": false,\n" +
+                "          \"instance\": {\n" +
+                "            \"moduleImp\": 80,\n" +
+                "            \"instanceConfiguration\": {\n" +
+                "              \"jsonTypeInfo\": \"CONFIGURATION_AGGREGATE\",\n" +
+                "              \"keyExpression\": {\n" +
+                "                \"expressionStart\": \"\",\n" +
+                "                \"expressionEnd\": \"\"\n" +
+                "              },\n" +
+                "              \"enforceCompatibility\": false,\n" +
+                "              \"name\": \"root\",\n" +
+                "              \"allowMultiple\": false,\n" +
+                "              \"children\": [\n" +
+                "                {\n" +
+                "                  \"jsonTypeInfo\": \"TEXT_FIELD\",\n" +
+                "                  \"keyExpression\": {\n" +
+                "                    \"expressionStart\": \"\",\n" +
+                "                    \"expressionEnd\": \"\"\n" +
+                "                  },\n" +
+                "                  \"dataType\": \"NUMBER\",\n" +
+                "                  \"name\": \"dummy\",\n" +
+                "                  \"allowMultiple\": false,\n" +
+                "                  \"value\": \"rkh\"\n" +
+                "                }\n" +
+                "              ]\n" +
+                "            }\n" +
+                "          }\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"jsonTypeInfo\": \"IMPLEMENTATION_SELECT\",\n" +
+                "          \"keyExpression\": {\n" +
+                "            \"expressionStart\": \"\",\n" +
+                "            \"expressionEnd\": \"\"\n" +
+                "          },\n" +
+                "          \"generics\": [],\n" +
+                "          \"type\": \"DESERIALIZER\",\n" +
+                "          \"name\": \"Dezerializer\",\n" +
+                "          \"allowMultiple\": false,\n" +
+                "          \"instance\": {\n" +
+                "            \"moduleImp\": 84,\n" +
+                "            \"instanceConfiguration\": {\n" +
+                "              \"jsonTypeInfo\": \"CONFIGURATION_AGGREGATE\",\n" +
+                "              \"keyExpression\": {\n" +
+                "                \"expressionStart\": \"\",\n" +
+                "                \"expressionEnd\": \"\"\n" +
+                "              },\n" +
+                "              \"enforceCompatibility\": false,\n" +
+                "              \"name\": \"root\",\n" +
+                "              \"allowMultiple\": false,\n" +
+                "              \"children\": [\n" +
+                "                {\n" +
+                "                  \"jsonTypeInfo\": \"TEXT_FIELD\",\n" +
+                "                  \"keyExpression\": {\n" +
+                "                    \"expressionStart\": \"\",\n" +
+                "                    \"expressionEnd\": \"\"\n" +
+                "                  },\n" +
+                "                  \"dataType\": \"NUMBER\",\n" +
+                "                  \"name\": \"dummy\",\n" +
+                "                  \"allowMultiple\": false,\n" +
+                "                  \"value\": \"fgnfg\"\n" +
+                "                }\n" +
+                "              ]\n" +
+                "            }\n" +
+                "          }\n" +
+                "        }\n" +
+                "      ]\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}", Configuration.class);
+    }
 }

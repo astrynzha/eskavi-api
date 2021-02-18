@@ -3,8 +3,9 @@ package eskavi.model.implementation;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import eskavi.deserializer.ImplementationByIdDeserialzer;
+import eskavi.deserializer.ImplementationByIdDeserializer;
 import eskavi.model.configuration.Configuration;
 
 import java.util.Collection;
@@ -15,8 +16,8 @@ import java.util.Objects;
  * ModuleImp. It still holds all the function a ModuleImp has.
  */
 public class ModuleInstance {
-    @JsonDeserialize(using = ImplementationByIdDeserialzer.class)
-    @JsonIdentityReference(alwaysAsId = true)
+    //@JsonDeserialize(using = ImplementationByIdDeserializer.class)
+    //@JsonIdentityReference(alwaysAsId = true)
     private ImmutableModuleImp moduleImp;
     private Configuration instanceConfiguration;
 
@@ -62,6 +63,11 @@ public class ModuleInstance {
         return this.moduleImp;
     }
 
+    @JsonSetter
+    protected void setModuleImp(ImmutableModuleImp imp) {
+        this.moduleImp = imp;
+    }
+
     /**
      * Returns this Instances Configuration
      *
@@ -78,6 +84,7 @@ public class ModuleInstance {
      * @param instanceConfiguration new Configuration
      * @throws IllegalArgumentException if the given configuration doesnt match this imps template configuration
      */
+    @JsonSetter
     public void setInstanceConfiguration(Configuration instanceConfiguration) {
         if (instanceConfiguration.equals(this.moduleImp.getConfigurationRoot())) {
             this.instanceConfiguration = instanceConfiguration;

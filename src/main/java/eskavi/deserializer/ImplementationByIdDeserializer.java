@@ -11,15 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 
-public class ImplementationByIdDeserialzer extends StdDeserializer<ImmutableModuleImp> {
+public class ImplementationByIdDeserializer extends StdDeserializer<ImmutableModuleImp> {
     @Autowired
     private ImpService impService;
 
-    protected ImplementationByIdDeserialzer() {
+    protected ImplementationByIdDeserializer() {
         this(null);
     }
 
-    protected ImplementationByIdDeserialzer(Class<?> vc) {
+    protected ImplementationByIdDeserializer(Class<?> vc) {
         super(vc);
     }
 

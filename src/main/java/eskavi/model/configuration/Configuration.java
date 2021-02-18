@@ -13,7 +13,7 @@ import java.util.Objects;
  * Class represents the most generic abstraction of a Configuration. All subclasses represent a specific type of
  * Configuration
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "jsonTypeInfo")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ConfigurationAggregate.class, name = "CONFIGURATION_AGGREGATE"),
