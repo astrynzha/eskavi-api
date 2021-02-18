@@ -3,6 +3,7 @@ package eskavi.controller;
 import com.google.common.io.Files;
 import eskavi.controller.requests.aas.AddModuleImpRequest;
 import eskavi.controller.requests.aas.UpdateConfigurationRequest;
+import eskavi.controller.responses.aas.CreateSessionResponse;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.user.ImmutableUser;
 import eskavi.service.aasconfigurationservice.AASConfigurationService;
@@ -31,11 +32,12 @@ public class AASConfigurationController {
      * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
      * @apiSuccess {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
+     * @return
      */
     @PostMapping
-    public long createSession(@RequestHeader String Authorization) {
+    public CreateSessionResponse createSession(@RequestHeader String Authorization) {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
-        return aasConfigurationService.createAASConstructionSession(user.getEmailAddress());
+        return new CreateSessionResponse(aasConfigurationService.createAASConstructionSession(user.getEmailAddress()));
     }
 
     /**

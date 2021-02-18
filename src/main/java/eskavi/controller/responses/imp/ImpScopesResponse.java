@@ -1,4 +1,4 @@
-package eskavi.controller.responses;
+package eskavi.controller.responses.imp;
 
 import eskavi.model.implementation.ImplementationScope;
 

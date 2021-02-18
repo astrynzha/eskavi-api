@@ -2,12 +2,8 @@ package eskavi.controller;
 
 import eskavi.controller.requests.imp.AddImplementationResponse;
 import eskavi.controller.requests.imp.AddUserRequest;
-import eskavi.controller.requests.imp.AddUsersRequest;
 import eskavi.controller.requests.imp.RemoveUserRequest;
-import eskavi.controller.responses.DataTypesResponse;
-import eskavi.controller.responses.GetImplementationsResponse;
-import eskavi.controller.responses.ImpScopesResponse;
-import eskavi.controller.responses.ImpTypesResponse;
+import eskavi.controller.responses.imp.*;
 import eskavi.model.configuration.ConfigurationType;
 import eskavi.model.configuration.DataType;
 import eskavi.model.implementation.ImmutableImplementation;
@@ -550,10 +546,11 @@ public class ImpController {
      * {
      * "error": "UserNotFound"
      * }
+     * @return
      */
     @GetMapping("/default")
-    public ImmutableImplementation getDefaultImpCreate(@RequestParam(value = "impType", required = false) String impType) {
-        return impService.getDefaultImpCreate(ImpType.valueOf(impType));
+    public GetDefaultImpResponse getDefaultImpCreate(@RequestParam(value = "impType", required = false) String impType) {
+        return new GetDefaultImpResponse(impService.getDefaultImpCreate(ImpType.valueOf(impType)));
     }
 
 
@@ -667,35 +664,14 @@ public class ImpController {
      * @apiParam (Request body) {String} userId User unique ID
      * @apiParam (Request body) {Number} impId Implementation unique ID
      */
+    //TODO /user or /users?
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
     public void addUser(@RequestHeader String Authorization, @RequestBody AddUserRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
-        impService.addUser(request.getImpId(), request.getUserId(), user.getEmailAddress());
-    }
-
-    /**
-     * @api{post}/imp/users Add multiple Users to Implementation
-     * @apiName AddUsersToImplementation
-     * @apiGroup Implementation
-     * @apiVersion 0.0.1
-     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiError {String} message Errormessage
-     * //TODO fix docu here
-     * @apiParam (Request body) {String} userId User unique ID
-     * @apiParam (Request body) {Number} impId Implementation unique ID
-     */
-    @PostMapping("/users")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addUsers(@RequestHeader String Authorization, @RequestBody AddUsersRequest request) throws IllegalAccessException {
-        ImmutableUser user = userTokenMatcher.getUser(Authorization);
-        request.getUserIds().forEach(s -> {
-            try {
-                impService.addUser(request.getImpId(), s, user.getEmailAddress());
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        });
+        for (String userId : request.getUserIds()) {
+            impService.addUser(request.getImpId(), userId, user.getEmailAddress());
+        }
     }
 
     /**

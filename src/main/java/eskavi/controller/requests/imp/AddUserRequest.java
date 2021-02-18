@@ -1,8 +1,10 @@
 package eskavi.controller.requests.imp;
 
+import java.util.List;
+
 public class AddUserRequest {
     private long impId;
-    private String userId;
+    private List<String> userIds;
 
     public long getImpId() {
         return impId;
@@ -12,11 +14,11 @@ public class AddUserRequest {
         this.impId = impId;
     }
 
-    public String getUserId() {
-        return userId;
+    public List<String> getUserIds() {
+        return userIds;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserIds(List<String> userIds) {
+        this.userIds = userIds;
     }
 }

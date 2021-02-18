@@ -74,6 +74,12 @@ public class ImpService {
             case SERIALIZER -> {
                 id = config.getSERIALIZER();
             }
+            case PROTOCOL_TYPE -> {
+                id = config.getPROTOCOL_TYPE();
+            }
+            case MESSAGE_TYPE -> {
+                id = config.getMESSAGE_TYPE();
+            }
             default -> throw new IllegalStateException("Unexpected value: " + type);
         }
         return (ImmutableModuleImp) impRepository.findById(id)

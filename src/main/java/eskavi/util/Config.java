@@ -87,4 +87,22 @@ public class Config {
     private long INTERACTION_STARTER;
     private long PERSISTENCE_MANAGER;
     private long SERIALIZER;
+    private long PROTOCOL_TYPE;
+    private long MESSAGE_TYPE;
+
+    public long getPROTOCOL_TYPE() {
+        return PROTOCOL_TYPE;
+    }
+
+    public void setPROTOCOL_TYPE(long PROTOCOL_TYPE) {
+        this.PROTOCOL_TYPE = PROTOCOL_TYPE;
+    }
+
+    public long getMESSAGE_TYPE() {
+        return MESSAGE_TYPE;
+    }
+
+    public void setMESSAGE_TYPE(long MESSAGE_TYPE) {
+        this.MESSAGE_TYPE = MESSAGE_TYPE;
+    }
 }
