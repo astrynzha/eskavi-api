@@ -51,8 +51,8 @@ public class AASConfigurationController {
      */
     //TODO Path Param?!
     @DeleteMapping()
-    public void closeSession(@RequestHeader String Authorization, @ModelAttribute("sessionId") long sessionId) {
-        ImmutableUser user = userTokenMatcher.getUser(Authorization);
+    public void closeSession(@RequestParam("sessionId") long sessionId) {
+        //ImmutableUser user = userTokenMatcher.getUser(Authorization);
         //TODO not every one should be able to randomly close sessions
         aasConfigurationService.removeAASConstructionSession(sessionId);
     }
@@ -512,6 +512,7 @@ public class AASConfigurationController {
         aasConfigurationService.removeModuleInstance(sessionId, moduleId);
     }
 
+    //TODO improve error handling, wrong java syntax leads to crash
     /**
      * @api{get}/aas/file Generates a .java file which starts the AAS
      * @apiName GenerateJavaClass
