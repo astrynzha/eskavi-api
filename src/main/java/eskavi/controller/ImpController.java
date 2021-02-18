@@ -16,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.EnumSet;
 
 @CrossOrigin
@@ -410,6 +409,7 @@ public class ImpController {
 
 
     /**
+     * @return
      * @api{get}/imp/types Get ConfigurationTe Templates
      * @apiDescription Gets templates for all possible configuration types.
      * @apiName getConfigTemplates
@@ -507,8 +507,8 @@ public class ImpController {
      * @apiError {String} message Errormessage
      */
     @GetMapping("/configTemplates")
-    public Collection<ConfigurationType> getConfigTemplates() {
-        return EnumSet.allOf(ConfigurationType.class);
+    public ConfigurationTemplatesResponse getConfigTemplates() {
+        return new ConfigurationTemplatesResponse(EnumSet.allOf(ConfigurationType.class));
     }
 
     /**
@@ -533,6 +533,7 @@ public class ImpController {
     }
 
     /**
+     * @return
      * @api{get}/imp/default GetDefaultImplementation for ImplementationType
      * @apiName getDefaultImplementation
      * @apiGroup Implementation
@@ -546,7 +547,6 @@ public class ImpController {
      * {
      * "error": "UserNotFound"
      * }
-     * @return
      */
     @GetMapping("/default")
     public GetDefaultImpResponse getDefaultImpCreate(@RequestParam(value = "impType", required = false) String impType) {
