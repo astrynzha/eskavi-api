@@ -15,7 +15,6 @@ import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
-import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
@@ -43,8 +42,6 @@ public class CreateModuleImp {
     private MockMvc mvc;
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    ImplementationRepository implementationRepository;
     //dummyData
     User creator;
     String token;
