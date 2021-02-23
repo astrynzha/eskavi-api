@@ -53,7 +53,7 @@ public class ImplementationSelect extends Configuration {
     }
 
     @JsonSetter
-    @JsonDeserialize(using = GenericsDeserializer.class)
+    //@JsonDeserialize(using = GenericsDeserializer.class)
     public void setGenerics(Set<ImmutableGenericImp> generics) {
         this.generics = generics;
     }
