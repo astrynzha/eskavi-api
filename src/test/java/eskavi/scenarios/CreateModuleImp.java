@@ -15,10 +15,9 @@ import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
+import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(properties = {"spring.jpa.hibernate.ddl-auto=create-drop"}, classes = EskaviApplication.class)
 @DirtiesContext
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CreateModuleImp {
 
     //SpringBootComponents
@@ -42,21 +42,14 @@ public class CreateModuleImp {
     private MockMvc mvc;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ImplementationRepository impRepository;
     //dummyData
     User creator;
     String token;
-    //Imps
     Configuration configuration;
     MessageType messageType;
     ProtocolType protocolType;
-    AssetConnection assetConnection;
-    Serializer serializer;
-    Deserializer deserializer;
-    Dispatcher dispatcher;
-    Endpoint endpoint;
-    Handler handler;
-    InteractionStarter interactionStarter;
-    PersistenceManager persistenceManager;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -72,6 +65,9 @@ public class CreateModuleImp {
                 .andReturn();
         token = JsonPath.read(result.getResponse().getContentAsString(), "$.jwt");
         configuration = new TextField("text", false, new KeyExpression("<text>", "<text>"), DataType.TEXT);
+
+        messageType = impRepository.save(new MessageType(0, creator, "standardMessageType", ImplementationScope.PRIVATE));
+        protocolType = impRepository.save(new ProtocolType(1, creator, "standardProtocolType", ImplementationScope.PRIVATE));
     }
 
     private void performPost(ImmutableImplementation implementation) throws Exception {
@@ -87,73 +83,73 @@ public class CreateModuleImp {
     @Test
     @Order(100)
     void testMessageType() throws Exception {
-        messageType = new MessageType(0, creator, "messageType", ImplementationScope.SHARED);
+        messageType = new MessageType(0, creator, "messageType", ImplementationScope.PRIVATE);
         performPost(messageType);
     }
 
     @Test
     @Order(200)
     void testProtocolType() throws Exception {
-        protocolType = new ProtocolType(1, creator, "protocolType", ImplementationScope.SHARED);
+        protocolType = new ProtocolType(1, creator, "protocolType", ImplementationScope.PRIVATE);
         performPost(protocolType);
     }
 
     @Test
     @Order(300)
     void testAssetConnection() throws Exception {
-        assetConnection = new AssetConnection(2, creator, "assetConnection", ImplementationScope.SHARED, configuration);
+        AssetConnection assetConnection = new AssetConnection(2, creator, "assetConnection", ImplementationScope.PRIVATE, configuration);
         performPost(assetConnection);
     }
 
     @Test
     @Order(400)
     void testDeserializer() throws Exception {
-        deserializer = new Deserializer(3, creator, "deserializer", ImplementationScope.SHARED, configuration, messageType, protocolType);
+        Deserializer deserializer = new Deserializer(3, creator, "deserializer", ImplementationScope.PRIVATE, configuration, messageType, protocolType);
         performPost(deserializer);
     }
 
     @Test
     @Order(500)
     void testDispatcher() throws Exception {
-        dispatcher = new Dispatcher(4, creator, "dispatcher", ImplementationScope.SHARED, configuration, messageType);
+        Dispatcher dispatcher = new Dispatcher(4, creator, "dispatcher", ImplementationScope.PRIVATE, configuration, messageType);
         performPost(dispatcher);
     }
 
     @Test
     @Order(600)
     void testEndpoint() throws Exception {
-        endpoint = new Endpoint(5, creator, "endpoint", ImplementationScope.SHARED, configuration, protocolType);
+        Endpoint endpoint = new Endpoint(5, creator, "endpoint", ImplementationScope.PRIVATE, configuration, protocolType);
         performPost(endpoint);
     }
 
     @Test
     @Order(700)
     void testHandler() throws Exception {
-        handler = new Handler(6, creator, "handler", ImplementationScope.SHARED, configuration, messageType);
+        Handler handler = new Handler(6, creator, "handler", ImplementationScope.PRIVATE, configuration, messageType);
         performPost(handler);
     }
 
     @Test
     @Order(800)
     void testInteractionStarter() throws Exception {
-        interactionStarter = new InteractionStarter(7, creator,
-                "interactionStarter", ImplementationScope.SHARED, configuration);
+        InteractionStarter interactionStarter = new InteractionStarter(7, creator,
+                "interactionStarter", ImplementationScope.PRIVATE, configuration);
         performPost(interactionStarter);
     }
 
     @Test
     @Order(900)
     void testPersistenceManager() throws Exception {
-        persistenceManager = new PersistenceManager(8, creator,
-                "persistenceManager", ImplementationScope.SHARED, configuration);
+        PersistenceManager persistenceManager = new PersistenceManager(8, creator,
+                "persistenceManager", ImplementationScope.PRIVATE, configuration);
         performPost(persistenceManager);
     }
 
     @Test
     @Order(1000)
     void testSerializer() throws Exception {
-        serializer = new Serializer(9, creator,
-                "serializer", ImplementationScope.SHARED, configuration, messageType, protocolType);
+        Serializer serializer = new Serializer(9, creator,
+                "serializer", ImplementationScope.PRIVATE, configuration, messageType, protocolType);
         performPost(serializer);
     }
 }

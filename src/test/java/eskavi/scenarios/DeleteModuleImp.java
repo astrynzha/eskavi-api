@@ -13,9 +13,9 @@ import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
+import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,7 +28,6 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(properties = {"spring.jpa.hibernate.ddl-auto=create-drop"}, classes = EskaviApplication.class)
@@ -41,24 +40,26 @@ public class DeleteModuleImp {
     private MockMvc mvc;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ImplementationRepository impRepository;
     //dummyData
     User creator;
     String token;
-    //Imps
     Configuration configuration;
-    MessageType messageType;
-    ProtocolType protocolType;
-    AssetConnection assetConnection;
-    Serializer serializer;
-    Deserializer deserializer;
-    Dispatcher dispatcher;
-    Endpoint endpoint;
-    Handler handler;
-    InteractionStarter interactionStarter;
-    PersistenceManager persistenceManager;
+    long messageTypeId;
+    long protocolTypeId;
+    long assetConnectionId;
+    long serializerId;
+    long deserializerId;
+    long dispatcherId;
+    long endpointId;
+    long handlerId;
+    long interactionStarterId;
+    long persistenceManagerId;
 
     @BeforeEach
     void setUp() throws Exception {
+        //TODO setUp all Imps in Repository
         creator = new User("a@gmail.com", new BCryptPasswordEncoder().encode("1234"),
                 UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
         userRepository.save(creator);
@@ -69,8 +70,38 @@ public class DeleteModuleImp {
                         "\t\"password\":\"1234\"\n" +
                         "}"))
                 .andReturn();
+
         token = JsonPath.read(result.getResponse().getContentAsString(), "$.jwt");
         configuration = new TextField("text", false, new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        MessageType messageType = new MessageType(1, creator, "defaultMessageType", ImplementationScope.PRIVATE);
+        messageTypeId = impRepository.save(messageType).getImplementationId();
+
+        ProtocolType protocolType = new ProtocolType(2, creator, "defaultProtocolType", ImplementationScope.PRIVATE);
+        protocolTypeId = impRepository.save(protocolType).getImplementationId();
+
+        AssetConnection assetConnection = new AssetConnection(3, creator, "defaultAssetConnection", ImplementationScope.PRIVATE, configuration);
+        assetConnectionId = impRepository.save(assetConnection).getImplementationId();
+
+        InteractionStarter interactionStarter = new InteractionStarter(4, creator, "defaultInteractionStarter", ImplementationScope.PRIVATE, configuration);
+        interactionStarterId = impRepository.save(interactionStarter).getImplementationId();
+
+        PersistenceManager persistenceManager = new PersistenceManager(5, creator, "defaultPersistenceManager", ImplementationScope.PRIVATE, configuration);
+        persistenceManagerId = impRepository.save(persistenceManager).getImplementationId();
+
+        Deserializer deserializer = new Deserializer(6, creator, "defaultDeserializer", ImplementationScope.PRIVATE, configuration, messageType, protocolType);
+        deserializerId = impRepository.save(deserializer).getImplementationId();
+
+        Dispatcher dispatcher = new Dispatcher(7, creator, "defaultDispatcher", ImplementationScope.PRIVATE, configuration, messageType);
+        dispatcherId = impRepository.save(dispatcher).getImplementationId();
+
+        Endpoint endpoint = new Endpoint(8, creator, "defaultEndpoint", ImplementationScope.PRIVATE, configuration, protocolType);
+        endpointId = impRepository.save(endpoint).getImplementationId();
+
+        Serializer serializer = new Serializer(9, creator, "defaultSerializer", ImplementationScope.PRIVATE, configuration, messageType, protocolType);
+        serializerId = impRepository.save(serializer).getImplementationId();
+
+        Handler handler = new Handler(10, creator, "defaultHandler", ImplementationScope.PRIVATE, configuration, messageType);
+        handlerId = impRepository.save(handler).getImplementationId();
     }
 
     private void performDelete(long id) throws Exception {
@@ -78,80 +109,56 @@ public class DeleteModuleImp {
                 .header("Authorization", "Bearer " + token)
                 .queryParam("id", String.valueOf(id))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+                .andExpect(status().isOk());
     }
 
     @Test
-    @Order(100)
     void testMessageType() throws Exception {
-        messageType = new MessageType(0, creator, "messageType", ImplementationScope.SHARED);
-        performDelete(messageType.getImplementationId());
+        performDelete(messageTypeId);
     }
 
     @Test
-    @Order(200)
     void testProtocolType() throws Exception {
-        protocolType = new ProtocolType(1, creator, "protocolType", ImplementationScope.SHARED);
-        performDelete(protocolType.getImplementationId());
+        performDelete(protocolTypeId);
     }
 
     @Test
-    @Order(300)
     void testAssetConnection() throws Exception {
-        assetConnection = new AssetConnection(2, creator, "assetConnection", ImplementationScope.SHARED, configuration);
-        performDelete(assetConnection.getImplementationId());
+        performDelete(assetConnectionId);
     }
 
     @Test
-    @Order(400)
     void testDeserializer() throws Exception {
-        deserializer = new Deserializer(3, creator, "deserializer", ImplementationScope.SHARED, configuration, messageType, protocolType);
-        performDelete(deserializer.getImplementationId());
+        performDelete(deserializerId);
     }
 
     @Test
-    @Order(500)
     void testDispatcher() throws Exception {
-        dispatcher = new Dispatcher(4, creator, "dispatcher", ImplementationScope.SHARED, configuration, messageType);
-        performDelete(dispatcher.getImplementationId());
+        performDelete(dispatcherId);
     }
 
     @Test
-    @Order(600)
     void testEndpoint() throws Exception {
-        endpoint = new Endpoint(5, creator, "endpoint", ImplementationScope.SHARED, configuration, protocolType);
-        performDelete(endpoint.getImplementationId());
+        performDelete(endpointId);
     }
 
     @Test
-    @Order(700)
     void testHandler() throws Exception {
-        handler = new Handler(6, creator, "handler", ImplementationScope.SHARED, configuration, messageType);
-        performDelete(handler.getImplementationId());
+        performDelete(handlerId);
     }
 
     @Test
-    @Order(800)
     void testInteractionStarter() throws Exception {
-        interactionStarter = new InteractionStarter(7, creator,
-                "interactionStarter", ImplementationScope.SHARED, configuration);
-        performDelete(interactionStarter.getImplementationId());
+        performDelete(interactionStarterId);
     }
 
     @Test
-    @Order(900)
     void testPersistenceManager() throws Exception {
-        persistenceManager = new PersistenceManager(8, creator,
-                "persistenceManager", ImplementationScope.SHARED, configuration);
-        performDelete(persistenceManager.getImplementationId());
+        performDelete(persistenceManagerId);
     }
 
     @Test
-    @Order(1000)
     void testSerializer() throws Exception {
-        serializer = new Serializer(9, creator,
-                "serializer", ImplementationScope.SHARED, configuration, messageType, protocolType);
-        performDelete(serializer.getImplementationId());
+        performDelete(serializerId);
     }
 }

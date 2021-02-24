@@ -1,15 +1,21 @@
 package eskavi.scenarios;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import eskavi.EskaviApplication;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.configuration.DataType;
 import eskavi.model.configuration.KeyExpression;
 import eskavi.model.configuration.TextField;
+import eskavi.model.implementation.ImplementationScope;
+import eskavi.model.implementation.MessageType;
+import eskavi.model.implementation.ProtocolType;
+import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
+import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +41,8 @@ public class CreateModuleImpFromExisting {
     private MockMvc mvc;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ImplementationRepository impRepository;
     //dummyData
     User creator;
     String token;
@@ -66,14 +74,44 @@ public class CreateModuleImpFromExisting {
                 .andReturn();
         token = JsonPath.read(result.getResponse().getContentAsString(), "$.jwt");
         configuration = new TextField("text", false, new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        MessageType messageType = new MessageType(1, creator, "defaultMessageType", ImplementationScope.PRIVATE);
+        messageTypeId = impRepository.save(messageType).getImplementationId();
+
+        ProtocolType protocolType = new ProtocolType(2, creator, "defaultProtocolType", ImplementationScope.PRIVATE);
+        protocolTypeId = impRepository.save(protocolType).getImplementationId();
+
+        AssetConnection assetConnection = new AssetConnection(3, creator, "defaultAssetConnection", ImplementationScope.PRIVATE, configuration);
+        assetConnectionId = impRepository.save(assetConnection).getImplementationId();
+
+        InteractionStarter interactionStarter = new InteractionStarter(4, creator, "defaultInteractionStarter", ImplementationScope.PRIVATE, configuration);
+        interactionStarterId = impRepository.save(interactionStarter).getImplementationId();
+
+        PersistenceManager persistenceManager = new PersistenceManager(5, creator, "defaultPersistenceManager", ImplementationScope.PRIVATE, configuration);
+        persistenceManagerId = impRepository.save(persistenceManager).getImplementationId();
+
+        Deserializer deserializer = new Deserializer(6, creator, "defaultDeserializer", ImplementationScope.PRIVATE, configuration, messageType, protocolType);
+        deserializerId = impRepository.save(deserializer).getImplementationId();
+
+        Dispatcher dispatcher = new Dispatcher(7, creator, "defaultDispatcher", ImplementationScope.PRIVATE, configuration, messageType);
+        dispatcherId = impRepository.save(dispatcher).getImplementationId();
+
+        Endpoint endpoint = new Endpoint(8, creator, "defaultEndpoint", ImplementationScope.PRIVATE, configuration, protocolType);
+        endpointId = impRepository.save(endpoint).getImplementationId();
+
+        Serializer serializer = new Serializer(9, creator, "defaultSerializer", ImplementationScope.PRIVATE, configuration, messageType, protocolType);
+        serializerId = impRepository.save(serializer).getImplementationId();
+
+        Handler handler = new Handler(10, creator, "defaultHandler", ImplementationScope.PRIVATE, configuration, messageType);
+        handlerId = impRepository.save(handler).getImplementationId();
     }
 
     private String getImp(long moduleId) throws Exception {
-        return mvc.perform(get("/api/imp")
+        return new ObjectMapper().writeValueAsString(JsonPath.read(mvc.perform(get("/api/imp")
                 .header("Authorization", "Bearer " + token)
                 .queryParam("moduleId", String.valueOf(moduleId))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)).andReturn().getResponse().getContentAsString();
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse().getContentAsString(), "$.implementations[0]"));
     }
 
     private void addImp(String implementation) throws Exception {
