@@ -1,11 +1,8 @@
 package eskavi.model.implementation;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import eskavi.deserializer.ImplementationByIdDeserializer;
 import eskavi.model.configuration.Configuration;
 
 import java.util.Collection;

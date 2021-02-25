@@ -11,6 +11,7 @@ import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
 import eskavi.util.Config;
+import org.hibernate.annotations.Immutable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,14 @@ class ImpServiceTest {
     private PersistenceManager persistenceManager;
     private AssetConnection assetConnection;
     private List<ImmutableModuleImp> usedImpCollection;
-    private Configuration trueConfiguration;
+    private Configuration configuration;
+    private Configuration configuration1;
+    private Configuration configuration2;
+    private Configuration configuration3;
+    private Configuration configuration4;
+    private Configuration configuration5;
+    private Configuration configuration6;
+    private Configuration configuration7;
     private ImmutableUser userA;
     private ImmutableUser userB;
     private ImmutableUser userC;
@@ -65,7 +73,21 @@ class ImpServiceTest {
         userC = userService.createUser("str1@gmail.com", "dsa;lfj[b");
 
 
-        trueConfiguration = new TextField("text", false,
+        configuration = new TextField("text", false,
+                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        configuration1 = new TextField("text", false,
+                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        configuration2 = new TextField("text", false,
+                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        configuration3 = new TextField("text", false,
+                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        configuration4 = new TextField("text", false,
+                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        configuration5 = new TextField("text", false,
+                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        configuration6 = new TextField("text", false,
+                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        configuration7 = new TextField("text", false,
                 new KeyExpression("<text>", "<text>"), DataType.TEXT);
         protocolTypeA = new ProtocolType(0, (User) userA, "protocolType_0", ImplementationScope.SHARED);
         protocolTypeB = new ProtocolType(4, (User) userA, "protocolType_4", ImplementationScope.SHARED);
@@ -73,18 +95,18 @@ class ImpServiceTest {
         messageTypeB = new MessageType(5, (User) userA, "messageType_5", ImplementationScope.SHARED);
         protocolTypeA = (ProtocolType) impService.addImplementation(protocolTypeA, userA.getEmailAddress());
         messageTypeA = (MessageType) impService.addImplementation(messageTypeA, userA.getEmailAddress());
-        endpoint = new Endpoint(1, (User) userA, "endpoint_1", ImplementationScope.SHARED, trueConfiguration, protocolTypeA);
-        assetConnection = new AssetConnection(6, (User) userA, "assetconnection", ImplementationScope.PUBLIC, trueConfiguration);
+        endpoint = new Endpoint(1, (User) userA, "endpoint_1", ImplementationScope.SHARED, configuration, protocolTypeA);
+        assetConnection = new AssetConnection(6, (User) userA, "assetconnection", ImplementationScope.PUBLIC, configuration1);
         deserializer = new Deserializer(7, (User) userA, "deserializer_7",
-                ImplementationScope.SHARED, trueConfiguration, messageTypeA, protocolTypeA);
+                ImplementationScope.SHARED, configuration2, messageTypeA, protocolTypeA);
         serializer = new Serializer(8, (User) userA,
-                "serializer_8", ImplementationScope.SHARED, trueConfiguration, messageTypeA, protocolTypeA);
-        dispatcher = new Dispatcher(9, (User) userA, "dispatcher_9", ImplementationScope.SHARED, trueConfiguration, messageTypeA);
-        handler = new Handler(10, (User) userA, "handler_10", ImplementationScope.SHARED, trueConfiguration, messageTypeA);
+                "serializer_8", ImplementationScope.SHARED, configuration3, messageTypeA, protocolTypeA);
+        dispatcher = new Dispatcher(9, (User) userA, "dispatcher_9", ImplementationScope.SHARED, configuration4, messageTypeA);
+        handler = new Handler(10, (User) userA, "handler_10", ImplementationScope.SHARED, configuration5, messageTypeA);
         interactionStarter = new InteractionStarter(11, (User) userA,
-                "interactionStarter11", ImplementationScope.SHARED, trueConfiguration);
+                "interactionStarter11", ImplementationScope.SHARED, configuration6);
         persistenceManager = new PersistenceManager(12, (User) userA,
-                "persistanceManager_12", ImplementationScope.SHARED, trueConfiguration);
+                "persistanceManager_12", ImplementationScope.SHARED, configuration7);
         usedImpCollection = new LinkedList<>(Arrays.asList(endpoint, serializer, deserializer,
                 dispatcher, handler, assetConnection, interactionStarter, persistenceManager));
     }
@@ -96,10 +118,8 @@ class ImpServiceTest {
         Collection<ImmutableImplementation> imps = impService.getImps();
         assertTrue(imps.contains(endpoint));
         assertTrue(imps.contains(deserializer));
-    }
-
-    @Test
-    void getDefaultImpCreate() {
+        var imps1 = impService.getImps(ImpType.ENDPOINT);
+        assertTrue(imps1.contains(endpoint));
     }
 
     // TODO test isValid()
@@ -207,4 +227,63 @@ class ImpServiceTest {
     void isValidTest() {
         // TODO
     }
+
+    @Test
+    void getDefaultImpCreate() {
+        impService.addImplementation(endpoint, "a.str@gmail.com");
+        impService.addImplementation(dispatcher, "a.str@gmail.com");
+        impService.addImplementation(serializer, "a.str@gmail.com");
+        impService.addImplementation(deserializer, "a.str@gmail.com");
+        impService.addImplementation(assetConnection, "a.str@gmail.com");
+        impService.addImplementation(handler, "a.str@gmail.com");
+        impService.addImplementation(interactionStarter, "a.str@gmail.com");
+        impService.addImplementation(persistenceManager, "a.str@gmail.com");
+        impService.addImplementation(protocolTypeA, "a.str@gmail.com");
+        impService.addImplementation(messageTypeA, "a.str@gmail.com");
+
+        config.setENDPOINT(endpoint.getImplementationId());
+        config.setDISPATCHER(dispatcher.getImplementationId());
+        config.setSERIALIZER(serializer.getImplementationId());
+        config.setDESERIALIZER(deserializer.getImplementationId());
+        config.setASSET_CONNECTION(assetConnection.getImplementationId());
+        config.setHANDLER(handler.getImplementationId());
+        config.setINTERACTION_STARTER(interactionStarter.getImplementationId());
+        config.setPERSISTENCE_MANAGER(persistenceManager.getImplementationId());
+        config.setPROTOCOL_TYPE(protocolTypeA.getImplementationId());
+        config.setMESSAGE_TYPE(messageTypeA.getImplementationId());
+
+
+        ImmutableImplementation mi;
+
+        mi = impService.getDefaultImpCreate(ImpType.ENDPOINT);
+        assertEquals(endpoint.getName(), mi.getName());
+
+        mi = impService.getDefaultImpCreate(ImpType.SERIALIZER);
+        assertEquals(serializer.getName(), mi.getName());
+
+        mi = impService.getDefaultImpCreate(ImpType.DESERIALIZER);
+        assertEquals(deserializer.getName(), mi.getName());
+
+        mi = impService.getDefaultImpCreate(ImpType.DISPATCHER);
+        assertEquals(dispatcher.getName(), mi.getName());
+
+        mi = impService.getDefaultImpCreate(ImpType.ASSET_CONNECTION);
+        assertEquals(assetConnection.getName(), mi.getName());
+
+        mi = impService.getDefaultImpCreate(ImpType.HANDLER);
+        assertEquals(handler.getName(), mi.getName());
+
+        mi = impService.getDefaultImpCreate(ImpType.INTERACTION_STARTER);
+        assertEquals(interactionStarter.getName(), mi.getName());
+
+        mi = impService.getDefaultImpCreate(ImpType.PERSISTENCE_MANAGER);
+        assertEquals(persistenceManager.getName(), mi.getName());
+
+        mi = impService.getDefaultImpCreate(ImpType.MESSAGE_TYPE);
+        assertEquals(messageTypeA.getName(), mi.getName());
+
+        mi = impService.getDefaultImpCreate(ImpType.PROTOCOL_TYPE);
+        assertEquals(protocolTypeA.getName(), mi.getName());
+    }
+
 }

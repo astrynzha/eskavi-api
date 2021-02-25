@@ -32,7 +32,7 @@ public class UserManagementService {
     }
 
     // TODO who sets the admin
-    public void setUserLevel(String userId, UserLevel level, String callerId) throws IllegalAccessException {
+    public void setUserLevel(String userId, UserLevel level, String callerId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find the user"));
         User caller = userRepository.findById(callerId)

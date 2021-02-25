@@ -51,7 +51,7 @@ public class ImpService {
     }
 
     // TODO
-    public ImmutableModuleImp getDefaultImpCreate(ImpType type) {
+    public ImmutableImplementation getDefaultImpCreate(ImpType type) {
         long id;
         switch (type) {
             case ASSET_CONNECTION -> {
@@ -86,7 +86,7 @@ public class ImpService {
             }
             default -> throw new IllegalStateException("Unexpected value: " + type);
         }
-        return (ImmutableModuleImp) impRepository.findById(id)
+        return impRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
@@ -238,12 +238,12 @@ public class ImpService {
         return (Implementation) mi;
     }
 
-    private User getMutableUser(ImmutableUser user) throws IllegalAccessException {
-        if (!(user instanceof User)) {
-            throw new IllegalAccessException("ImmutableUser is not an instance of User!");
-        }
-        return (User) user;
-    }
+//    private User getMutableUser(ImmutableUser user) throws IllegalAccessException {
+//        if (!(user instanceof User)) {
+//            throw new IllegalAccessException("ImmutableUser is not an instance of User!");
+//        }
+//        return (User) user;
+//    }
 
     private Collection<ImmutableImplementation> getPublic() {
         return impRepository.findAllByScope_ImpScope(ImplementationScope.PUBLIC);

@@ -9,9 +9,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ConfigurationAggregateTest {
     private ConfigurationAggregate testObject;
@@ -102,6 +105,17 @@ class ConfigurationAggregateTest {
     }
 
     @Test
+    void removeChild() {
+        TextField textFieldMultiple = new TextField("unique", true,
+                new KeyExpression("<multiple>", "<multiple>"), DataType.TEXT);
+        textFieldMultiple.setValue("multipleSecondVal");
+        testObject.addChild(textFieldMultiple);
+        assertTrue(testObject.getChildren().contains(textFieldMultiple));
+        testObject.removeChild("unique");
+        assertFalse(testObject.getChildren().contains(textFieldMultiple));
+    }
+
+    @Test
     void getDependentModuleImps() {
         HashSet<ImmutableModuleImp> expected = new HashSet<>();
         ImplementationSelect impSelect = new ImplementationSelect("diffSelect", false,
@@ -115,6 +129,30 @@ class ConfigurationAggregateTest {
         expected.add(impSelect.getModuleImp());
         System.out.println(testObject.resolveKeyExpression());
         assertEquals(expected, testObject.getDependentModuleImps());
+    }
+
+    @Test
+    void toStringTest() {
+        ConfigurationAggregate ca = new ConfigurationAggregate("name", true,
+                new KeyExpression("String name = ", ";"),
+                new LinkedList<>(), true);
+        System.out.println(ca.toString());
+        assertEquals("ConfigurationAggregate{name='name', allowMultiple=true, keyExpression=KeyExpression{expr" +
+                        "essionStart='String name = ', expressionEnd=';'}, enforceCompatibility=true, children=[]}",
+                ca.toString());
+    }
+
+    @Test
+    void equalsTest() {
+        ConfigurationAggregate ca0 = new ConfigurationAggregate("name", true,
+                new KeyExpression("String name = ", ";"),
+                new LinkedList<>(), true);
+        ConfigurationAggregate ca1 = new ConfigurationAggregate("name", true,
+                new KeyExpression("String name = ", ";"),
+                new LinkedList<>(), true);
+        ca0.addChild(testObject);
+        ca1.addChild(testObject);
+        assertTrue(ca0.equals(ca1));
     }
 
     @Test

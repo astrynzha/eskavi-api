@@ -130,11 +130,7 @@ public class ConfigurationAggregate extends Configuration {
 
     @Override
     public void removeChild(String name) {
-        for (Configuration config : children) {
-            if (config.getName().equals(name)) {
-                children.remove(config);
-            }
-        }
+        children.removeIf(config -> config.getName().equals(name));
     }
 
     @Override

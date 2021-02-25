@@ -12,9 +12,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -58,6 +60,14 @@ class ModuleImpTest {
                 "persistanceManager_12", ImplementationScope.SHARED, trueConfiguration);
         usedImpCollection = new LinkedList<>(Arrays.asList(endpoint, serializer, deserializer,
                 dispatcher, handler, assetConnection, interactionStarter, persistenceManager));
+    }
+
+    @Test
+    void getGenerics() {
+        var generics = serializer.getGenerics();
+        assertEquals(2, generics.size());
+        var genericsAC = assetConnection.getGenerics();
+        assertTrue(genericsAC.isEmpty());
     }
 
     @Test
