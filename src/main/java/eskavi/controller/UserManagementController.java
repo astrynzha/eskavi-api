@@ -115,6 +115,17 @@ public class UserManagementController {
         return userManagementService.getAllUsers();
     }
 
+    /**
+     * @api{post}/user Refresh token
+     * @apiName RefreshToken
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     */
+    @PostMapping("/refresh")
+    public TokenResponse refresh(@RequestHeader String Authorization) {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
+        return userTokenMatcher.generateToken(user.getEmailAddress());
+    }
 
     /**
      * @api{delete}/user Delete User
