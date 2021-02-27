@@ -56,7 +56,7 @@ public class AASConstructionSession {
     public File generateJavaClass() {
         //TODO does this look good?
         StringBuilder codeBuilder = new StringBuilder();
-        String javaClassStart = "class App{ public static void main(String[] args){";
+        String javaClassStart = "class App{ public static void main(String[] args) throws Exception {";
         String javaClassEnd = "}}";
         codeBuilder.append(javaClassStart);
         miMap.values().forEach(mi -> codeBuilder.append(
