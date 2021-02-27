@@ -29,6 +29,7 @@ public class UserManagementController {
     }
 
     /**
+     * @return
      * @api{post}/user/register Register a new User
      * @apiName Register
      * @apiGroup User
@@ -41,7 +42,6 @@ public class UserManagementController {
      * "email": "test@web.de",
      * "password": "12345678"
      * }
-     * @return
      */
     @PostMapping("/register")
     public TokenResponse register(@RequestBody RegisterRequest request) {
@@ -50,6 +50,7 @@ public class UserManagementController {
     }
 
     /**
+     * @return
      * @api{post}/user/login Login for a registered User
      * @apiName Login
      * @apiGroup User
@@ -63,7 +64,6 @@ public class UserManagementController {
      * "email": "test@web.de",
      * "password": "12345678"
      * }
-     * @return
      */
     @PostMapping("/login")
     public TokenResponse login(@RequestBody LoginRequest request) {
@@ -219,7 +219,7 @@ public class UserManagementController {
     @PostMapping("/level")
     public void setUserLevel(@RequestHeader String Authorization, @RequestBody SetUserLevelRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
-        userManagementService.setUserLevel(user.getEmailAddress(), request.getUserLevel(), request.getEmail());
+        userManagementService.setUserLevel(request.getEmail(), request.getUserLevel(), user.getEmailAddress());
     }
 
 
