@@ -9,6 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 //TODO all parameters as ids
 @Service
 public class UserManagementService {
@@ -29,6 +33,11 @@ public class UserManagementService {
 
     public ImmutableUser getUser(String userId) {
         return userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    public Collection<ImmutableUser> getAllUsers() {
+        return StreamSupport.stream(userRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     // TODO who sets the admin

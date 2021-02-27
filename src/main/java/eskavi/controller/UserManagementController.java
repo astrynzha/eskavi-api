@@ -105,6 +105,18 @@ public class UserManagementController {
     }
 
     /**
+     * @api{get}/user Get all Users information
+     * @apiName GetAllUsers
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     */
+    @GetMapping("/all")
+    public Collection<ImmutableUser> getAllUsers() {
+        return userManagementService.getAllUsers();
+    }
+
+
+    /**
      * @api{delete}/user Delete User
      * @apiName DeleteUser
      * @apiGroup User
