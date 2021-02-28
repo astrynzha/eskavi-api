@@ -3,6 +3,7 @@ package eskavi.controller;
 import eskavi.controller.requests.user.*;
 import eskavi.controller.responses.TokenResponse;
 import eskavi.model.user.ImmutableUser;
+import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
 import eskavi.service.UserManagementService;
@@ -164,6 +165,17 @@ public class UserManagementController {
     public String getSecurityQuestion(@RequestBody String email) {
         ImmutableUser user = userManagementService.getUser(email);
         return userManagementService.getSecurityQuestion(user.getEmailAddress()).getQuestion();
+    }
+
+    /**
+     * @api{get}/user/questions Get all possible security questions
+     * @apiName GetAllSecurityQuestion
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     */
+    @GetMapping("questions")
+    public Collection<SecurityQuestion> getSecurityQuestions() {
+        return EnumSet.allOf(SecurityQuestion.class);
     }
 
     /**
