@@ -14,6 +14,7 @@ import eskavi.util.ImpCreatorUtil;
 import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -21,6 +22,7 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
 public class AASConstructionSessionTest {
     private ImpCreatorUtil imps;
     private AASConstructionSession testObject;
