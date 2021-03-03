@@ -120,7 +120,7 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
-    public void addChild(Configuration config) throws IllegalArgumentException {
+    public void addChild(Configuration config) {
         if (!children.contains(config) || config.allowsMultiple()) {
             children.add(config);
         } else {
@@ -140,7 +140,10 @@ public class ConfigurationAggregate extends Configuration {
 
     @JsonSetter("children")
     public void setChildren(List<Configuration> children) {
-        this.children = children;
+        this.children = new LinkedList<>();
+        for (Configuration config : children) {
+            addChild(config);
+        }
     }
 
     @Override
@@ -164,7 +167,23 @@ public class ConfigurationAggregate extends Configuration {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         ConfigurationAggregate that = (ConfigurationAggregate) o;
-        return enforceCompatibility == that.enforceCompatibility && Objects.equals(children, that.children);
+        if (enforceCompatibility != that.enforceCompatibility) {
+            return false;
+        }
+        // check that children of this and that have same fields but it is not necessary that their amount is equal
+        // e.g. (textField1, textField1, fileField1, fileField2) equals (textField1, fileField1, fileField2)
+        List<Configuration> thatChildren = that.getChildren();
+        for (Configuration thatChild : thatChildren) {
+            if (!this.children.contains(thatChild)) {
+                return false;
+            }
+        }
+        for (Configuration thisChild : this.children) {
+            if (!thatChildren.contains(thisChild)) {
+                return false;
+            }
+        }
+        return enforceCompatibility == that.enforceCompatibility && Objects.equals(thatChildren, that.children);
     }
 
     @Override
