@@ -106,7 +106,7 @@ public class UserManagementController {
     }
 
     /**
-     * @api{get}/user Get all Users information
+     * @api{get}/all Get all Users' information
      * @apiName GetAllUsers
      * @apiGroup User
      * @apiVersion 0.0.1
@@ -251,7 +251,7 @@ public class UserManagementController {
      * "error": "Access denied for non admin user"
      * }
      */
-    @PostMapping("/level")
+    @PutMapping("/level")
     public void setUserLevel(@RequestHeader String Authorization, @RequestBody SetUserLevelRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
         userManagementService.setUserLevel(request.getEmail(), request.getUserLevel(), user.getEmailAddress());
