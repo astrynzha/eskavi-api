@@ -7,6 +7,12 @@ public class UpdateConfigurationRequest {
     private long impId;
     private long sessionId;
 
+    public UpdateConfigurationRequest(Configuration configuration, long impId, long sessionId) {
+        this.configuration = configuration;
+        this.impId = impId;
+        this.sessionId = sessionId;
+    }
+
     public Configuration getConfiguration() {
         return configuration;
     }
