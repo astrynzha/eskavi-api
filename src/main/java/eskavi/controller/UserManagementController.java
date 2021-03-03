@@ -131,8 +131,9 @@ public class UserManagementController {
     }
 
     /**
-     * @api{delete}/user Delete User
-     * @apiName DeleteUser
+     * @api{delete}/user Delete my account
+     * @apiDescription Deletes the user account of the user currently authenticated
+     * @apiName DeleteMyAccount
      * @apiGroup User
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
@@ -259,7 +260,20 @@ public class UserManagementController {
         userManagementService.setUserLevel(request.getEmail(), request.getUserLevel(), user.getEmailAddress());
     }
 
-
+    /**
+     * @api{delete}/user/:email Delete User
+     * @apiName DeleteUser
+     * @apiGroup User
+     * @apiVersion 0.0.1
+     * @apiParam email Email of user account that should be deleted
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiError {String} message Errormessage
+     * @apiErrorExample {json} Error-Response:
+     * HTTP/1.1 404 Not Found
+     * {
+     * "error": "UserNotFound"
+     * }
+     */
     @DeleteMapping("/{id}")
     public void delete(@RequestHeader String Authorization, @PathVariable String id) {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
