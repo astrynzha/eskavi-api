@@ -20,13 +20,15 @@ import java.util.EnumSet;
 @RequestMapping("api/user")
 public class UserManagementController {
 
-    final UserTokenMatcher userTokenMatcher;
+    private final UserTokenMatcher userTokenMatcher;
+    private final UserManagementService userManagementService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    final UserManagementService userManagementService;
 
-    public UserManagementController(UserManagementService userManagementService, UserTokenMatcher userTokenMatcher) {
+    public UserManagementController(UserManagementService userManagementService, UserTokenMatcher userTokenMatcher, BCryptPasswordEncoder passwordEncoder) {
         this.userManagementService = userManagementService;
         this.userTokenMatcher = userTokenMatcher;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -46,7 +48,7 @@ public class UserManagementController {
      */
     @PostMapping("/register")
     public TokenResponse register(@RequestBody RegisterRequest request) {
-        userManagementService.createUser(request.getEmail(), new BCryptPasswordEncoder().encode(request.getEmail()));
+        userManagementService.createUser(request.getEmail(), passwordEncoder.encode(request.getEmail()));
         return userTokenMatcher.generateToken(request.getEmail());
     }
 
@@ -69,7 +71,7 @@ public class UserManagementController {
     @PostMapping("/login")
     public TokenResponse login(@RequestBody LoginRequest request) {
         ImmutableUser user = userManagementService.getUser(request.getEmail());
-        if (new BCryptPasswordEncoder().encode(request.getPassword()).equals(user.getPassword())) {
+        if (passwordEncoder.encode(request.getPassword()).equals(user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "wrong Password");
         }
         return userTokenMatcher.generateToken(request.getEmail());
@@ -201,7 +203,7 @@ public class UserManagementController {
     public void resetPassword(@RequestHeader String Authorization, @RequestBody ResetPasswordRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
         if (userManagementService.checkSecurityQuestion(user.getEmailAddress(), request.getAnswer())) {
-            userManagementService.setPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(request.getNewPassword()));
+            userManagementService.setPassword(user.getEmailAddress(), passwordEncoder.encode(request.getNewPassword()));
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -229,8 +231,8 @@ public class UserManagementController {
     @PostMapping("/change_password")
     public void setPassword(@RequestHeader String Authorization, @RequestBody SetPasswordRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
-        if (userManagementService.checkPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(request.getOldPassword()))) {
-            userManagementService.setPassword(user.getEmailAddress(), new BCryptPasswordEncoder().encode(request.getNewPassword()));
+        if (userManagementService.checkPassword(user.getEmailAddress(), passwordEncoder.encode(request.getOldPassword()))) {
+            userManagementService.setPassword(user.getEmailAddress(), passwordEncoder.encode(request.getNewPassword()));
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
