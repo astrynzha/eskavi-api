@@ -13,11 +13,9 @@ import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
 import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
-import eskavi.service.UserManagementService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -28,6 +26,7 @@ public class DataBaseSetup {
     UserRepository userRepository;
     @Autowired
     ImplementationRepository implementationRepository;
+
     @Test
     void setUp() {
         User admin = new User("admin@eskavi.com", new BCryptPasswordEncoder().encode("admin"), UserLevel.ADMINISTRATOR, SecurityQuestion.MAIDEN_NAME, "julia");
@@ -62,5 +61,8 @@ public class DataBaseSetup {
 
         Handler handler = new Handler(10, admin, "defaultHandler", ImplementationScope.PRIVATE, dummy, messageType);
         implementationRepository.save(handler);
+
+        Environment environment = new Environment(11, admin, "defaultEnvironment", ImplementationScope.PRIVATE, dummy);
+        implementationRepository.save(environment);
     }
 }
