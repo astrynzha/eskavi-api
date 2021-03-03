@@ -6,6 +6,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "config")
 public class Config {
+    private int TOKEN_EXPIRES_AFTER_HOURS;
+    private long ASSET_CONNECTION;
+    private long DESERIALIZER;
+    private long DISPATCHER;
+    private long ENDPOINT;
+    private long HANDLER;
+    private long INTERACTION_STARTER;
+    private long PERSISTENCE_MANAGER;
+    private long SERIALIZER;
+    private long PROTOCOL_TYPE;
+    private long MESSAGE_TYPE;
+    private long ENVIRONMENT;
+
     public int getTOKEN_EXPIRES_AFTER_HOURS() {
         return TOKEN_EXPIRES_AFTER_HOURS;
     }
@@ -78,18 +91,6 @@ public class Config {
         this.SERIALIZER = SERIALIZER;
     }
 
-    private int TOKEN_EXPIRES_AFTER_HOURS;
-    private long ASSET_CONNECTION;
-    private long DESERIALIZER;
-    private long DISPATCHER;
-    private long ENDPOINT;
-    private long HANDLER;
-    private long INTERACTION_STARTER;
-    private long PERSISTENCE_MANAGER;
-    private long SERIALIZER;
-    private long PROTOCOL_TYPE;
-    private long MESSAGE_TYPE;
-
     public long getPROTOCOL_TYPE() {
         return PROTOCOL_TYPE;
     }
@@ -104,5 +105,13 @@ public class Config {
 
     public void setMESSAGE_TYPE(long MESSAGE_TYPE) {
         this.MESSAGE_TYPE = MESSAGE_TYPE;
+    }
+
+    public long getENVIRONMENT() {
+        return ENVIRONMENT;
+    }
+
+    public void setENVIRONMENT(long ENVIRONMENT) {
+        this.ENVIRONMENT = ENVIRONMENT;
     }
 }
