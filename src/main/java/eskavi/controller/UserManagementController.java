@@ -260,6 +260,16 @@ public class UserManagementController {
     }
 
 
+    @DeleteMapping("/{id}")
+    public void delete(@RequestHeader String Authorization, @PathVariable String id) {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
+        if (user.getUserLevel() == UserLevel.ADMINISTRATOR) {
+            userManagementService.deleteUser(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
     /**
      * @api{get}/user/levels Get user levels
      * @apiName GetUserLevels
