@@ -2,6 +2,7 @@ package eskavi.controller;
 
 import com.google.common.io.Files;
 import eskavi.controller.requests.aas.AddModuleImpRequest;
+import eskavi.controller.requests.aas.AddRegistryRequest;
 import eskavi.controller.requests.aas.UpdateConfigurationRequest;
 import eskavi.controller.responses.aas.CreateSessionResponse;
 import eskavi.controller.responses.aas.GetConfigurationResponse;
@@ -55,6 +56,11 @@ public class AASConfigurationController {
         //ImmutableUser user = userTokenMatcher.getUser(Authorization);
         //TODO not every one should be able to randomly close sessions
         aasConfigurationService.removeAASConstructionSession(sessionId);
+    }
+
+    @PostMapping("/aas/registry")
+    public void addRegistry(@RequestBody AddRegistryRequest registryRequest) {
+        aasConfigurationService.addRegistry(registryRequest.getSessionId(), registryRequest.getUrl());
     }
 
     /**

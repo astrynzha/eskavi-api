@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,16 @@ public class AASConfigurationService {
 
     public void removeAASConstructionSession(long sessionId) {
         sessionHandler.deleteAASConstructionSession(sessionId);
+    }
+
+    public void addRegistry(long sessionId, List<String> registryList) {
+        AASConstructionSession session = null;
+        try {
+            session = sessionHandler.getAASConstructionSession(sessionId);
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+        session.setRegistryList(registryList);
     }
 
     // TODO: here we need to check if it is really the owner of the session who edits it. What's the best way to do it?
