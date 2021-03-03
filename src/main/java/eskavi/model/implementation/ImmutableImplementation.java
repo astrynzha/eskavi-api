@@ -26,7 +26,8 @@ import java.util.Collection;
         @JsonSubTypes.Type(value = PersistenceManager.class, name = "PERSISTENCE_MANAGER"),
         @JsonSubTypes.Type(value = Serializer.class, name = "SERIALIZER"),
         @JsonSubTypes.Type(value = ProtocolType.class, name = "PROTOCOL_TYPE"),
-        @JsonSubTypes.Type(value = MessageType.class, name = "MESSAGE_TYPE")
+        @JsonSubTypes.Type(value = MessageType.class, name = "MESSAGE_TYPE"),
+        @JsonSubTypes.Type(value = Environment.class, name = "ENVIRONMENT")
 })
 public interface ImmutableImplementation {
     public long getImplementationId();

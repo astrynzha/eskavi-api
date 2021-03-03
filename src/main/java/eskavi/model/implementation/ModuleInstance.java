@@ -48,7 +48,8 @@ public class ModuleInstance {
      * @return true if this Instance is compatible with the other ones, and the Configuration is compatible
      */
     public boolean isCompatible(Collection<ImmutableModuleImp> others) {
-        return this.moduleImp.isCompatible(others) && instanceConfiguration.checkCompatible();
+        return this.moduleImp.isCompatible(others) && this.moduleImp.isCompatible(instanceConfiguration.getDependentModuleImps())
+                && instanceConfiguration.checkCompatible();
     }
 
     /**

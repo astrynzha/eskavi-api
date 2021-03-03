@@ -107,8 +107,7 @@ public class ImplementationSelect extends Configuration {
 
     @Override
     public boolean checkCompatible() {
-        return this.instance != null && this.instance.getInstanceConfiguration().checkCompatible()
-                && this.instance.getModuleImp().isCompatible(this.instance.getInstanceConfiguration().getDependentModuleImps());
+        return this.instance != null && this.instance.isCompatible(new ArrayList<>());
     }
 
     @Override

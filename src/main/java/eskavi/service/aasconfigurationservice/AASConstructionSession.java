@@ -1,11 +1,13 @@
 package eskavi.service.aasconfigurationservice;
 
 import eskavi.model.configuration.Configuration;
+import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ModuleInstance;
 import eskavi.model.user.User;
 import eskavi.util.JavaClassGenerator;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,23 +64,35 @@ public class AASConstructionSession {
     }
 
     public File generateJavaClass() {
-        //TODO does this look good?
-        StringBuilder codeBuilder = new StringBuilder();
-        String javaClassStart = "class App{ public static void main(String[] args) throws Exception {";
-        String javaClassEnd = "}}";
-        codeBuilder.append(javaClassStart);
-        miMap.values().forEach(mi -> codeBuilder.append(
-                mi.getModuleImp().getName() + " " +
-                        mi.getModuleImp().getName().toLowerCase() + "=" +
-                        mi.resolveConfiguration()
-        ));
-        codeBuilder.append(javaClassEnd);
-        return JavaClassGenerator.generateClassFile(codeBuilder.toString());
+        if (this.isValid()) {
+            StringBuilder codeBuilder = new StringBuilder();
+            String javaClassStart = "class App{ public static void main(String[] args){";
+            String javaClassEnd = "}}";
+            codeBuilder.append(javaClassStart);
+            miMap.values().forEach(mi -> codeBuilder.append(
+                    mi.getModuleImp().getName() + " " +
+                            mi.getModuleImp().getName().toLowerCase() + "=" +
+                            mi.resolveConfiguration()
+            ));
+            codeBuilder.append(javaClassEnd);
+            return JavaClassGenerator.generateClassFile(codeBuilder.toString());
+        } else {
+            //TODO what should we throw here
+            throw new IllegalArgumentException("");
+        }
     }
 
     private boolean isValid() {
-        //TODO
-        return false;
-    }
+        List<ImmutableModuleImp> others = new ArrayList<>();
+        for (ModuleInstance instance : miMap.values()) {
+            others.add(instance.getModuleImp());
+        }
 
+        for (ModuleInstance instance : miMap.values()) {
+            if (!instance.isCompatible(others)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

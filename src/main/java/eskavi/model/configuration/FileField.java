@@ -1,13 +1,15 @@
 package eskavi.model.configuration;
 
+import eskavi.util.Config;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.Entity;
+import javax.persistence.FieldResult;
 
 @Entity
 public class FileField extends SingleValueField {
-    @Value("${file.defaultpath}")
-    private static String defaultPath;
+    private static String defaultpath = "./";
 
     public FileField(String name, boolean allowMultiple, KeyExpression expression) {
         super(name, allowMultiple, expression);
@@ -19,7 +21,7 @@ public class FileField extends SingleValueField {
     @Override
     public String resolveKeyExpression() {
         if (getValue() != null) {
-            return getKeyExpression().getExpressionStart() + FileField.defaultPath + getValue() + getKeyExpression().getExpressionEnd();
+            return getKeyExpression().getExpressionStart() + FileField.defaultpath + getValue() + getKeyExpression().getExpressionEnd();
         } else {
             throw new IllegalStateException("A value has to be assigned to Configuration: " + getName());
         }
