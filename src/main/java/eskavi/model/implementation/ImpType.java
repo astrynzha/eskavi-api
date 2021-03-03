@@ -27,7 +27,8 @@ public enum ImpType {
     PERSISTENCE_MANAGER(PersistenceManager.class, true,  1),
     SERIALIZER(Serializer.class, false, 1),
     PROTOCOL_TYPE(ProtocolType.class, false, 0),
-    MESSAGE_TYPE(MessageType.class, false, 0);
+    MESSAGE_TYPE(MessageType.class, false, 0),
+    ENVIRONMENT(Environment.class, true, 1);
 
 
     private Class matchingClass;
