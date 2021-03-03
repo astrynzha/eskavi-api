@@ -4,6 +4,7 @@ import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImpType;
 import eskavi.model.implementation.ModuleInstance;
+import eskavi.util.Config;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class ConfigurationAggregateTest {
     private ConfigurationAggregate testObject;
@@ -25,7 +29,7 @@ class ConfigurationAggregateTest {
     @BeforeEach
     void setUp() {
         setUpChildren();
-        testObject = new ConfigurationAggregate("aggregate", false, new KeyExpression("<aggregate>", "<aggregate>"),
+        testObject = new ConfigurationAggregate("aggregate", true, new KeyExpression("<aggregate>", "<aggregate>"),
                 children, false);
     }
 
@@ -143,7 +147,7 @@ class ConfigurationAggregateTest {
     }
 
     @Test
-    void equalsTest() {
+    void equalsTest0() {
         ConfigurationAggregate ca0 = new ConfigurationAggregate("name", true,
                 new KeyExpression("String name = ", ";"),
                 new LinkedList<>(), true);
@@ -152,7 +156,65 @@ class ConfigurationAggregateTest {
                 new LinkedList<>(), true);
         ca0.addChild(testObject);
         ca1.addChild(testObject);
-        assertTrue(ca0.equals(ca1));
+        assertEquals(ca0, ca1);
+    }
+
+    @Test
+    void equalsTest1() {
+        // TODO test if child is also an aggregate
+        Configuration testObject1 = testObject.clone();
+        TextField textFieldMultiple = new TextField("multiple", true,
+                new KeyExpression("<multiple>", "<multiple>"), DataType.TEXT);
+        try {
+            testObject1.addChild(textFieldMultiple);
+        } catch (IllegalAccessException e) {
+            fail(e.getMessage());
+        }
+        assertEquals(4, testObject1.getChildren().size());
+        // (TextField, ImpSelect, TextFieldMultiple) equals (TextField, ImpSelect, TextFieldMultiple, TextFieldMultiple)
+        assertEquals(testObject, testObject1);
+        try {
+            testObject1.removeChild("multiple");
+        } catch (IllegalAccessException e) {
+            fail(e.getMessage());
+        }
+        // (TextField, ImpSelect, TextFieldMultiple) !equals (TextField, ImpSelect)
+        assertFalse(testObject1.equals(testObject));
+        assertFalse(testObject.equals(testObject1));
+    }
+
+    @Test
+    void equalsTest2() {
+        // with aggregate
+        Configuration testObject1 = testObject.clone();
+        Configuration childAggregate = testObject.clone();
+        try {
+            testObject1.addChild(childAggregate);
+        } catch (IllegalAccessException e) {
+            fail(e.getMessage());
+        }
+        // (TextField, ImpSelect, TextFieldMultiple) !equals (TextField, ImpSelect, TextFieldMultiple, childAggregate))
+        assertFalse(testObject1.equals(testObject));
+        testObject.addChild(childAggregate);
+        testObject.addChild(childAggregate);
+        // (TextField, ImpSelect, TextFieldMultiple, childAggregate, childAggregate) !equals
+        // (TextField, ImpSelect, TextFieldMultiple, childAggregate))
+        assertTrue(testObject.equals(testObject1));
+    }
+
+    @Test
+    void setChildrenTest() {
+        List<Configuration> children = new LinkedList<>();
+        TextField textFieldMultiple = new TextField("multiple", true,
+                new KeyExpression("<multiple>", "<multiple>"), DataType.TEXT);
+        TextField textField = new TextField("single", false,
+                new KeyExpression("<single>", "<single>"), DataType.TEXT);
+        children.add(textFieldMultiple);
+        children.add(textFieldMultiple);
+        children.add(textField);
+        testObject.setChildren(children); // throws no exception
+        children.add(textField);
+        assertThrows(IllegalArgumentException.class, () -> testObject.setChildren(children));
     }
 
     @Test

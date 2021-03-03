@@ -28,7 +28,7 @@ public class ModuleInstance {
         this.instanceConfiguration = moduleImp.getConfigurationRoot().clone();
     }
 
-    protected ModuleInstance() {
+    public ModuleInstance() {
 
     }
 
@@ -86,9 +86,7 @@ public class ModuleInstance {
     @JsonSetter
     public void setInstanceConfiguration(Configuration instanceConfiguration) {
         /*
-        if (instanceConfiguration.equals(this.moduleImp.getConfigurationRoot())) {
-            this.instanceConfiguration = instanceConfiguration;
-        } else {
+        if (!instanceConfiguration.equals(this.moduleImp.getConfigurationRoot())) {
             throw new IllegalArgumentException("Configuration has to match the template configuration.");
         }
          */
