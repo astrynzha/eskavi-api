@@ -26,6 +26,7 @@ public class AASConfigurationController {
     }
 
     /**
+     * @return
      * @api{post}/aas Post AAS session
      * @apiName CreateSession
      * @apiGroup AAS
@@ -33,7 +34,6 @@ public class AASConfigurationController {
      * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
      * @apiSuccess {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
-     * @return
      */
     @PostMapping
     public CreateSessionResponse createSession(@RequestHeader String Authorization) {
@@ -58,7 +58,7 @@ public class AASConfigurationController {
         aasConfigurationService.removeAASConstructionSession(sessionId);
     }
 
-    @PostMapping("/aas/registry")
+    @PostMapping("/registry")
     public void addRegistry(@RequestBody AddRegistryRequest registryRequest) {
         aasConfigurationService.addRegistry(registryRequest.getSessionId(), registryRequest.getUrl());
     }
@@ -79,6 +79,7 @@ public class AASConfigurationController {
     }
 
     /**
+     * @return
      * @api{get}/aas/imp/configuration Get Configuration from ModuleImplementation in Session
      * @apiName GetConfiguration
      * @apiGroup AAS
@@ -281,7 +282,6 @@ public class AASConfigurationController {
      * ]
      * }
      * @apiError {String} message Errormessage
-     * @return
      */
     @GetMapping("/imp/configuration")
     public GetConfigurationResponse getConfiguration(@RequestParam long sessionId, @RequestParam long impId) {
@@ -519,6 +519,7 @@ public class AASConfigurationController {
     }
 
     //TODO improve error handling, wrong java syntax leads to crash
+
     /**
      * @api{get}/aas/file Generates a .java file which starts the AAS
      * @apiName GenerateJavaClass
