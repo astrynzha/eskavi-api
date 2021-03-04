@@ -9,6 +9,7 @@ import eskavi.util.JavaClassGenerator;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,11 +17,13 @@ public class AASConstructionSession {
     private long sessionId;
     private User owner;
     private Map<Long, ModuleInstance> miMap;
+    private List<String> registryList;
 
     public AASConstructionSession(long sessionId, User owner) {
         this.sessionId = sessionId;
         this.owner = owner;
         this.miMap = new LinkedHashMap<>();
+        this.registryList = new LinkedList<>();
     }
 
     public long getSessionId() {
@@ -46,6 +49,10 @@ public class AASConstructionSession {
         ModuleInstance mi = miMap.get(moduleId);
         mi.setInstanceConfiguration(updateConfig);
         miMap.replace(moduleId, mi);
+    }
+
+    public void setRegistryList(List<String> registryList) {
+        this.registryList = registryList;
     }
 
     public Configuration getConfiguration(long moduleId) throws IllegalAccessException {

@@ -82,14 +82,11 @@ public class ModuleInstance {
      * @param instanceConfiguration new Configuration
      * @throws IllegalArgumentException if the given configuration doesnt match this imps template configuration
      */
-    //TODO reestablish have to rework the equals because allowMultiple causes problems. children returns false
     @JsonSetter
     public void setInstanceConfiguration(Configuration instanceConfiguration) {
-        /*
         if (!instanceConfiguration.equals(this.moduleImp.getConfigurationRoot())) {
             throw new IllegalArgumentException("Configuration has to match the template configuration.");
         }
-         */
         this.instanceConfiguration = instanceConfiguration;
     }
 
