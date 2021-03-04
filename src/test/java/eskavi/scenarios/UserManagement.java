@@ -6,6 +6,7 @@ import eskavi.EskaviApplication;
 import eskavi.controller.requests.user.LoginRequest;
 import eskavi.controller.requests.user.ResetPasswordRequest;
 import eskavi.controller.requests.user.SetPasswordRequest;
+import eskavi.controller.requests.user.SetUserLevelRequest;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
@@ -25,6 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(properties = {"spring.jpa.hibernate.ddl-auto=create-drop"}, classes = EskaviApplication.class)
@@ -46,7 +48,7 @@ public class UserManagement {
 
     private void login() throws Exception {
         creator = new User("a@gmail.com", new BCryptPasswordEncoder().encode("1234"),
-                UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
+                UserLevel.ADMINISTRATOR, SecurityQuestion.MAIDEN_NAME, "Julia");
         userRepository.save(creator);
         MvcResult result = mvc.perform(post("/api/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -122,5 +124,80 @@ public class UserManagement {
                 .content(new ObjectMapper().writeValueAsString(new LoginRequest(creator.getEmailAddress(), newPassword))))
                 .andExpect(status().isOk())
                 .andReturn();
+    }
+
+    @Test
+    @Order(500)
+    void testGetUser() throws Exception {
+        mvc.perform(get("/api/user")
+                .header("Authorization", "Bearer " + token)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    @Order(600)
+    void testGetAllUsers() throws Exception {
+        mvc.perform(get("/api/user/all")).andExpect(status().isOk());
+    }
+
+    @Test
+    @Order(700)
+    void testRefreshToken() throws Exception {
+        mvc.perform(post("/api/user/refresh")
+                .header("Authorization", "Bearer " + token)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    @Order(800)
+    void testDeleteUser() throws Exception {
+        mvc.perform(delete("/api/user")
+                .header("Authorization", "Bearer " + token)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    @Order(900)
+    void testGetSecurityQuestion() throws Exception {
+        mvc.perform(get("/api/user/security_question")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"a@gmail.com\"}")
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    @Order(1000)
+    void testGetSecurityQuestions() throws Exception {
+        mvc.perform(get("/api/user/questions")
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    @Order(1100)
+    void testSetUserLevel() throws Exception {
+        //register new User
+        SetUserLevelRequest request = new SetUserLevelRequest();
+        request.setEmail(creator.getEmailAddress());
+        request.setUserLevel(UserLevel.ADMINISTRATOR);
+        String body = new ObjectMapper().writeValueAsString(request);
+        mvc.perform(put("/api/user/level")
+                .header("Authorization", "Bearer " + token)
+                .content(body)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    @Order(1200)
+    void testDeleteUserByAdmin() throws Exception {
+        mvc.perform(delete("/api/user/a@gmail.com")
+                .header("Authorization", "Bearer " + token)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    @Order(1300)
+    void testGetUserLevels() throws Exception {
+        mvc.perform(get("/api/user/levels")
+        ).andExpect(status().isOk());
     }
 }
