@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 import java.util.HashSet;
 
+@Deprecated
 public class GenericsDeserializer extends StdDeserializer<HashSet<ImmutableGenericImp>> {
     @Autowired
     private ImpService service;
@@ -32,7 +33,7 @@ public class GenericsDeserializer extends StdDeserializer<HashSet<ImmutableGener
         if (node.isArray()) {
             ArrayNode nodes = (ArrayNode) node;
             for (JsonNode element : nodes) {
-                result.add((ImmutableGenericImp) service.getImp(element.asLong()));
+//                result.add((ImmutableGenericImp) service.getImp(element.asLong()));
             }
         }
         return result;

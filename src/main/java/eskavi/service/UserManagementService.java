@@ -65,14 +65,12 @@ public class UserManagementService {
         userRepository.save(user);
     }
 
-    // TODO: how do we set security question. createUser() ?
     public SecurityQuestion getSecurityQuestion(String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find the user"));
         return user.getSecurityQuestion();
     }
 
-    // TODO: set sequrity answer
     public boolean checkSecurityQuestion(String userId, String answer) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find the user"));

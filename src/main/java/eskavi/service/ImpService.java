@@ -17,23 +17,39 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-// TODO: change all optional isEmpty checks to .orElseThrow()
+/**
+ * This service class contains all the functionality needed to edit and use Implementations
+ *
+ * @version 1.0
+ * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ */
 @Service
 public class ImpService {
     private final ImplementationRepository impRepository;
     private final UserRepository userRepository;
     private final Config config;
 
+    /**
+     * Standard constructor
+     * @param impRepository repository with implementations
+     * @param userRepository repository with users
+     * @param config repository with config
+     */
     public ImpService(ImplementationRepository impRepository, UserRepository userRepository, Config config) {
         this.impRepository = impRepository;
         this.userRepository = userRepository;
         this.config = config;
     }
 
-
-    //TODO should the access of the caller to the Imp be checked here?
-    public ImmutableImplementation getImp(Long id) {
-        return impRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public ImmutableImplementation getImp(Long impId, String userId) {
+        Implementation imp = impRepository.findById(impId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (!user.isSubscribedTo(imp)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        return imp;
     }
 
     public Collection<ImmutableImplementation> getImps() {
@@ -41,14 +57,23 @@ public class ImpService {
                 .collect(Collectors.toList());
     }
 
-    // TODO User id als parameter?
     public Collection<ImmutableImplementation> getImps(ImmutableUser user) {
         HashSet<ImmutableImplementation> result = new HashSet<>();
         result.addAll(user.getSubscribed());
         result.addAll(getPublic());
         result.addAll(impRepository.findAllByAuthor(user));
-         return result;
+        return result;
     }
+
+    public Collection<ImmutableImplementation> getImps(ImpType impType, String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find the user"));
+        return StreamSupport.stream(impRepository.findAll().spliterator(), false)
+                .filter(implementation -> impType.matches(implementation))
+                .filter(implementation -> user.isSubscribedTo(implementation))
+                .collect(Collectors.toList());
+    }
+
 
     // TODO
     public ImmutableImplementation getDefaultImpCreate(ImpType type) {
@@ -88,12 +113,6 @@ public class ImpService {
         }
         return impRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
-    public Collection<ImmutableImplementation> getImps(ImpType impType) {
-        return StreamSupport.stream(impRepository.findAll().spliterator(), false)
-                .filter(implementation -> impType.matches(implementation))
-                .collect(Collectors.toList());
     }
 
     /**

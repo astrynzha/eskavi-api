@@ -59,6 +59,7 @@ class ImpServiceTest {
     private Configuration configuration5;
     private Configuration configuration6;
     private Configuration configuration7;
+    private Configuration configuration8;
     private ImmutableUser userA;
     private ImmutableUser userB;
     private ImmutableUser userC;
@@ -89,6 +90,8 @@ class ImpServiceTest {
                 new KeyExpression("<text>", "<text>"), DataType.TEXT);
         configuration7 = new TextField("text", false,
                 new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        configuration8 = new TextField("text", false,
+                new KeyExpression("<text>", "<text>"), DataType.TEXT);
         protocolTypeA = new ProtocolType(0, (User) userA, "protocolType_0", ImplementationScope.SHARED);
         protocolTypeB = new ProtocolType(4, (User) userA, "protocolType_4", ImplementationScope.SHARED);
         messageTypeA = new MessageType(3, (User) userA, "messageType_3", ImplementationScope.SHARED);
@@ -114,19 +117,24 @@ class ImpServiceTest {
     @Test
     void getImps() {
         endpoint = (Endpoint) impService.addImplementation(endpoint, "str@gmail.com");
+        Endpoint endpoint1 = new Endpoint(13, (User) userA,
+                "endpoint13", ImplementationScope.SHARED, configuration8, protocolTypeA);
+        endpoint1 = (Endpoint) impService.addImplementation(endpoint1, "a.str@gmail.com");
         deserializer = (Deserializer) impService.addImplementation(deserializer, "a.str@gmail.com");
         Collection<ImmutableImplementation> imps = impService.getImps();
         assertTrue(imps.contains(endpoint));
         assertTrue(imps.contains(deserializer));
-        var imps1 = impService.getImps(ImpType.ENDPOINT);
+        var imps1 = impService.getImps(ImpType.ENDPOINT, "str@gmail.com");
         assertTrue(imps1.contains(endpoint));
+        assertFalse(imps1.contains(endpoint1));
     }
 
     // TODO test isValid()
     @Test
     void addImplementation() {
         endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
-        assertEquals(impService.getImp(endpoint.getImplementationId()), endpoint);
+        assertEquals(impService.getImp(endpoint.getImplementationId(), endpoint.getAuthor().getEmailAddress()),
+                endpoint);
     }
 
     @Test
@@ -201,7 +209,7 @@ class ImpServiceTest {
     @Test
     void removeImplementation() {
         endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
-        assertEquals(impService.getImp(endpoint.getImplementationId()), endpoint);
+        assertEquals(impService.getImp(endpoint.getImplementationId(), endpoint.getAuthor().getEmailAddress()), endpoint);
 
         // try to removeImplementation with caller != author
         Exception exception = assertThrows(IllegalAccessException.class,
