@@ -21,7 +21,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,6 +83,13 @@ class AASConfigurationServiceTest {
         long id = aasService.createAASConstructionSession(someEmail);
         aasService.removeAASConstructionSession(id);
         assertThrows(ResponseStatusException.class, () -> aasService.generateJavaClass(id));
+    }
+
+    @Test
+    void addRegistry() {
+        long id1 = aasService.createAASConstructionSession(someEmail);
+        List<String> registry = new LinkedList<>(Arrays.asList("https://google.com", "https://eskavi.com"));
+        aasService.addRegistry(id1, registry);
     }
 
     // test addModuleInstance & getConfiguration

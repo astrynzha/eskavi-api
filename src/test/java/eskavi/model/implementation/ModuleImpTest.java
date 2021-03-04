@@ -33,6 +33,7 @@ class ModuleImpTest {
     private InteractionStarter interactionStarter;
     private PersistenceManager persistenceManager;
     private AssetConnection assetConnection;
+    private Environment environment;
     private List<ImmutableModuleImp> usedImpCollection;
     private Configuration trueConfiguration;
 
@@ -60,6 +61,7 @@ class ModuleImpTest {
                 "persistanceManager_12", ImplementationScope.SHARED, trueConfiguration);
         usedImpCollection = new LinkedList<>(Arrays.asList(endpoint, serializer, deserializer,
                 dispatcher, handler, assetConnection, interactionStarter, persistenceManager));
+        environment = new Environment(13, userA, "environment_13", ImplementationScope.SHARED, trueConfiguration);
     }
 
     @Test
@@ -281,5 +283,15 @@ class ModuleImpTest {
         handler.setMessageType(messageTypeB);
         assertTrue(persistenceManager.isCompatible(usedImpCollection));
         handler.setMessageType(messageTypeA);
+    }
+
+    @Test
+    void toStringTest() {
+        assertEquals("Environment{implementationId=13, author=User{emailAddress='a@gmail.com', " +
+                "hashedPassword='dfjask;fj', securityQuestion=MAIDEN_NAME, securityAnswer='Julia', " +
+                "userLevel=PUBLISHING_USER}, name='environment_13', scope=Scope{impScope=SHARED, " +
+                "grantedUsers=[User{emailAddress='a@gmail.com', hashedPassword='dfjask;fj', " +
+                "securityQuestion=MAIDEN_NAME, securityAnswer='Julia', userLevel=PUBLISHING_USER}]}}",
+                environment.toString());
     }
 }
