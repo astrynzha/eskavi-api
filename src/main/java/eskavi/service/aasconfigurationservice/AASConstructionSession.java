@@ -4,6 +4,7 @@ import eskavi.model.configuration.Configuration;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ModuleInstance;
 import eskavi.model.user.User;
+import eskavi.util.JavaClassConstants;
 import eskavi.util.JavaClassGenerator;
 
 import java.io.File;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AASConstructionSession {
+
     private long sessionId;
     private User owner;
     private Map<Long, ModuleInstance> miMap;
@@ -66,15 +68,23 @@ public class AASConstructionSession {
     public File generateJavaClass() {
         if (this.isValid()) {
             StringBuilder codeBuilder = new StringBuilder();
-            String javaClassStart = "class App{ public static void main(String[] args){";
-            String javaClassEnd = "}}";
-            codeBuilder.append(javaClassStart);
+            codeBuilder.append(JavaClassConstants.getClassStart());
             miMap.values().forEach(mi -> codeBuilder.append(
                     mi.getModuleImp().getName() + " " +
                             mi.getModuleImp().getName().toLowerCase() + "=" +
                             mi.resolveConfiguration()
             ));
-            codeBuilder.append(javaClassEnd);
+            codeBuilder.append(JavaClassConstants.getAasBuilderStart());
+            miMap.values().forEach(mi -> codeBuilder.append(
+                    //TODO make classname properly
+                    "." + mi.getModuleImp().getClass().getSimpleName().toLowerCase() + "(" +
+                            mi.getModuleImp().getName().toLowerCase() + ")"
+            ));
+            codeBuilder.append(JavaClassConstants.getAasBuilderEnd());
+            registryList.forEach(registry -> codeBuilder.append(
+                    JavaClassConstants.getRegisterStart() + registry + JavaClassConstants.getRegisterEnd()
+            ));
+            codeBuilder.append(JavaClassConstants.getClassEnd());
             return JavaClassGenerator.generateClassFile(codeBuilder.toString());
         } else {
             //TODO what should we throw here
