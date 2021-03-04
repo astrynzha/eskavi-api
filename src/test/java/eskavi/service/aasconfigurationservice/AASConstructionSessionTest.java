@@ -47,7 +47,7 @@ public class AASConstructionSessionTest {
         // To remove first newline
         data = data.substring(1);
         assertEquals("class App {\n" +
-                "  public static void main(String[] args) {\n" +
+                "  public static void main(String[] args) throws IOException {\n" +
                 "    Assetconnection assetconnection = Builder().dummy(\"dummy\").build();\n" +
                 "    InteractionStarter interactionstarter = Builder().dummy(\"dummy\").build();\n" +
                 "    PersistanceManager persistancemanager = Builder().dummy(\"dummy\").build();\n" +
@@ -59,6 +59,15 @@ public class AASConstructionSessionTest {
                 "                Dispatcher.builder().handler(Handler.builder().dummy(\"dummy\").build()).build())\n" +
                 "            .port(8080)\n" +
                 "            .build();\n" +
+                "    AasService service =\n" +
+                "        AasService.builder()\n" +
+                "            .assetconnection(assetconnection)\n" +
+                "            .interactionstarter(interactionstarter)\n" +
+                "            .persistencemanager(persistancemanager)\n" +
+                "            .endpoint(endpoint)\n" +
+                "            .build();\n" +
+                "    AasServiceManager.Instance.setAasService(service);\n" +
+                "    service.start();\n" +
                 "  }\n" +
                 "}", data);
     }
