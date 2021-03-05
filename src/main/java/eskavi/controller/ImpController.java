@@ -661,7 +661,7 @@ public class ImpController {
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
      * @apiError {String} message Errormessage
-     * @apiParam (Request body) {String} userId User unique ID
+     * @apiParam (Request body) {String[]} userIds Array of unique User IDs
      * @apiParam (Request body) {Number} impId Implementation unique ID
      */
     //TODO /user or /users?
