@@ -46,7 +46,8 @@ public class ImpService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if (!user.isSubscribedTo(imp)) {
+        //TODO we have to think about scopes again
+        if (imp.getAuthor().equals(user) || !user.isSubscribedTo(imp)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         return imp;

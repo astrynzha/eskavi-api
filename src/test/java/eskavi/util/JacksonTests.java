@@ -145,6 +145,15 @@ public class JacksonTests {
     }
 
     @Test
+    void testFileField() throws JsonProcessingException {
+        FileField field = new FileField("fileField", false, new KeyExpression("start", "end"));
+        String result = new ObjectMapper().writeValueAsString(field);
+        System.out.println(result);
+        FileField copy = new ObjectMapper().readValue(result, FileField.class);
+        System.out.println(copy.toString());
+    }
+
+    @Test
     void testSwitchToJson() throws JsonProcessingException {
         Switch switch_ = new Switch("name", false, new KeyExpression("<switch>", "<switch>"), "true", "false");
         String result = new ObjectMapper().writeValueAsString(switch_);
