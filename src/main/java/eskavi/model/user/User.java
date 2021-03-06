@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import eskavi.model.implementation.ImmutableImplementation;
 import eskavi.model.implementation.Implementation;
+import eskavi.model.implementation.ImplementationScope;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -134,8 +135,9 @@ public class User implements ImmutableUser {
     }
 
     @Override
-    public boolean isSubscribedTo(ImmutableImplementation mi) {
-        return this.implementations.contains(mi);
+    public boolean hasAccess(ImmutableImplementation mi) {
+        return mi.getImplementationScope() == ImplementationScope.PUBLIC || mi.getAuthor().equals(this)
+                ||this.implementations.contains(mi);
     }
 
     @Override

@@ -53,7 +53,7 @@ public interface ImmutableUser {
      * @param mi {@link ImmutableImplementation} to be checked
      * @return true if accessible by user, false if not
      */
-    public boolean isSubscribedTo(ImmutableImplementation mi);
+    public boolean hasAccess(ImmutableImplementation mi);
 
     /**
      * Gets all {@link ImmutableImplementation} the user has access to.

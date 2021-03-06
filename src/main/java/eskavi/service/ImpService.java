@@ -47,7 +47,7 @@ public class ImpService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         //TODO we have to think about scopes again
-        if (!imp.getAuthor().equals(user) || !user.isSubscribedTo(imp)) {
+        if (!imp.getAuthor().equals(user) || !user.hasAccess(imp)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
         return imp;
@@ -71,7 +71,7 @@ public class ImpService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find the user"));
         return StreamSupport.stream(impRepository.findAll().spliterator(), false)
                 .filter(implementation -> impType.matches(implementation))
-                .filter(implementation -> user.isSubscribedTo(implementation))
+                .filter(implementation -> user.hasAccess(implementation))
                 .collect(Collectors.toList());
     }
 
@@ -109,6 +109,9 @@ public class ImpService {
             }
             case MESSAGE_TYPE -> {
                 id = config.getMESSAGE_TYPE();
+            }
+            case ENVIRONMENT -> {
+                id = config.getENVIRONMENT();
             }
             default -> throw new IllegalStateException("Unexpected value: " + type);
         }

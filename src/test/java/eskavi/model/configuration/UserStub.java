@@ -39,7 +39,7 @@ public class UserStub implements ImmutableUser {
     }
 
     @Override
-    public boolean isSubscribedTo(ImmutableImplementation mi) {
+    public boolean hasAccess(ImmutableImplementation mi) {
         return false;
     }
 
