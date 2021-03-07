@@ -71,7 +71,7 @@ public class UserManagementController {
     @PostMapping("/login")
     public TokenResponse login(@RequestBody LoginRequest request) {
         ImmutableUser user = userManagementService.getUser(request.getEmail());
-        if (passwordEncoder.encode(request.getPassword()).equals(user.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "wrong Password");
         }
         return userTokenMatcher.generateToken(request.getEmail());
