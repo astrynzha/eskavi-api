@@ -33,37 +33,40 @@ public class DefaultData implements ApplicationRunner {
         User admin = new User("admin@eskavi.com", new BCryptPasswordEncoder().encode("admin"), UserLevel.ADMINISTRATOR, SecurityQuestion.MAIDEN_NAME, "julia");
         userRepository.save(admin);
         Configuration dummy = new TextField("dummy", false, new KeyExpression("Dummy(\"", "\");"), DataType.TEXT);
-        MessageType messageType = new MessageType(config.getMESSAGE_TYPE(), admin, "defaultMessageType", ImplementationScope.PRIVATE);
-        messageType = implementationRepository.save(messageType);
+        // TODO very ugly solution to prevent this to always create new scopes. Should find a real solution
+        if (!implementationRepository.existsById(config.getASSET_CONNECTION())) {
+            MessageType messageType = new MessageType(config.getMESSAGE_TYPE(), admin, "defaultMessageType", ImplementationScope.PRIVATE);
+            messageType = implementationRepository.save(messageType);
 
-        ProtocolType protocolType = new ProtocolType(config.getPROTOCOL_TYPE(), admin, "defaultProtocolType", ImplementationScope.PRIVATE);
-        protocolType = implementationRepository.save(protocolType);
+            ProtocolType protocolType = new ProtocolType(config.getPROTOCOL_TYPE(), admin, "defaultProtocolType", ImplementationScope.PRIVATE);
+            protocolType = implementationRepository.save(protocolType);
 
-        AssetConnection assetConnection = new AssetConnection(config.getASSET_CONNECTION(), admin, "defaultAssetConnection", ImplementationScope.PRIVATE, dummy);
-        implementationRepository.save(assetConnection);
+            AssetConnection assetConnection = new AssetConnection(config.getASSET_CONNECTION(), admin, "defaultAssetConnection", ImplementationScope.PRIVATE, dummy);
+            implementationRepository.save(assetConnection);
 
-        InteractionStarter interactionStarter = new InteractionStarter(config.getINTERACTION_STARTER(), admin, "defaultInteractionStarter", ImplementationScope.PRIVATE, dummy);
-        implementationRepository.save(interactionStarter);
+            InteractionStarter interactionStarter = new InteractionStarter(config.getINTERACTION_STARTER(), admin, "defaultInteractionStarter", ImplementationScope.PRIVATE, dummy);
+            implementationRepository.save(interactionStarter);
 
-        PersistenceManager persistenceManager = new PersistenceManager(config.getPERSISTENCE_MANAGER(), admin, "defaultPersistenceManager", ImplementationScope.PRIVATE, dummy);
-        implementationRepository.save(persistenceManager);
+            PersistenceManager persistenceManager = new PersistenceManager(config.getPERSISTENCE_MANAGER(), admin, "defaultPersistenceManager", ImplementationScope.PRIVATE, dummy);
+            implementationRepository.save(persistenceManager);
 
-        Deserializer deserializer = new Deserializer(config.getDESERIALIZER(), admin, "defaultDeserializer", ImplementationScope.PRIVATE, dummy, messageType, protocolType);
-        implementationRepository.save(deserializer);
+            Deserializer deserializer = new Deserializer(config.getDESERIALIZER(), admin, "defaultDeserializer", ImplementationScope.PRIVATE, dummy, messageType, protocolType);
+            implementationRepository.save(deserializer);
 
-        Dispatcher dispatcher = new Dispatcher(config.getDISPATCHER(), admin, "defaultDispatcher", ImplementationScope.PRIVATE, dummy, messageType);
-        implementationRepository.save(dispatcher);
+            Dispatcher dispatcher = new Dispatcher(config.getDISPATCHER(), admin, "defaultDispatcher", ImplementationScope.PRIVATE, dummy, messageType);
+            implementationRepository.save(dispatcher);
 
-        Endpoint endpoint = new Endpoint(config.getENDPOINT(), admin, "defaultEndpoint", ImplementationScope.PRIVATE, dummy, protocolType);
-        implementationRepository.save(endpoint);
+            Endpoint endpoint = new Endpoint(config.getENDPOINT(), admin, "defaultEndpoint", ImplementationScope.PRIVATE, dummy, protocolType);
+            implementationRepository.save(endpoint);
 
-        Serializer serializer = new Serializer(config.getSERIALIZER(), admin, "defaultSerializer", ImplementationScope.PRIVATE, dummy, messageType, protocolType);
-        implementationRepository.save(serializer);
+            Serializer serializer = new Serializer(config.getSERIALIZER(), admin, "defaultSerializer", ImplementationScope.PRIVATE, dummy, messageType, protocolType);
+            implementationRepository.save(serializer);
 
-        Handler handler = new Handler(config.getHANDLER(), admin, "defaultHandler", ImplementationScope.PRIVATE, dummy, messageType);
-        implementationRepository.save(handler);
+            Handler handler = new Handler(config.getHANDLER(), admin, "defaultHandler", ImplementationScope.PRIVATE, dummy, messageType);
+            implementationRepository.save(handler);
 
-        Environment environment = new Environment(config.getENVIRONMENT(), admin, "defaultEnvironment", ImplementationScope.PRIVATE, dummy);
-        implementationRepository.save(environment);
+            Environment environment = new Environment(config.getENVIRONMENT(), admin, "defaultEnvironment", ImplementationScope.PRIVATE, dummy);
+            implementationRepository.save(environment);
+        }
     }
 }
