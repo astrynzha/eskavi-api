@@ -16,6 +16,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import java.io.IOException;
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class JacksonTests {
     private Configuration configuration;
     private ConfigurationAggregate mapping;
@@ -82,53 +84,51 @@ public class JacksonTests {
     @Test
     void testConfiguration() throws IOException {
         String result = new ObjectMapper().writeValueAsString(configuration);
-        System.out.println(result);
-        Configuration copy = new ObjectMapper().readValue(result, Configuration.class);
-        System.out.println(copy.toString());
-        /*
-        ConfigurationAggregate copy = new ObjectMapper().readValue(result, ConfigurationAggregate.class);
-        assertEquals(configuration, copy);
-        */
+        //System.out.println(result);
+        assertEquals("{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"<parent>\",\"expressionEnd\":\"<parent>\"},\"enforceCompatibility\":false,\"name\":\"parent\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"<mapping>\",\"expressionEnd\":\"<mapping>\"},\"enforceCompatibility\":true,\"name\":\"mapping\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false},{\"jsonTypeInfo\":\"IMPLEMENTATION_SELECT\",\"keyExpression\":{\"expressionStart\":\"<serializer>\",\"expressionEnd\":\"<serializer>\"},\"instance\":{\"moduleImp\":{\"jsonTypeInfo\":\"SERIALIZER\",\"implementationId\":8,\"author\":\"a@gmail.com\",\"name\":\"serializer_8\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"protocolType\":{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"instanceConfiguration\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]}},\"generics\":[{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}],\"type\":\"SERIALIZER\",\"name\":\"serializer\",\"allowMultiple\":false},{\"jsonTypeInfo\":\"IMPLEMENTATION_SELECT\",\"keyExpression\":{\"expressionStart\":\"<deserializer>\",\"expressionEnd\":\"<deserializer>\"},\"instance\":{\"moduleImp\":{\"jsonTypeInfo\":\"DESERIALIZER\",\"implementationId\":7,\"author\":\"a@gmail.com\",\"name\":\"deserializer_7\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"protocolType\":{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"instanceConfiguration\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]}},\"generics\":[{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}],\"type\":\"DESERIALIZER\",\"name\":\"deserializer\",\"allowMultiple\":false},{\"jsonTypeInfo\":\"IMPLEMENTATION_SELECT\",\"keyExpression\":{\"expressionStart\":\"<dispatcher>\",\"expressionEnd\":\"<dispatcher>\"},\"instance\":{\"moduleImp\":{\"jsonTypeInfo\":\"DISPATCHER\",\"implementationId\":9,\"author\":\"a@gmail.com\",\"name\":\"dispatcher_9\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"IMPLEMENTATION_SELECT\",\"keyExpression\":{\"expressionStart\":\"<handler>\",\"expressionEnd\":\"<handler>\"},\"instance\":{\"moduleImp\":{\"jsonTypeInfo\":\"HANDLER\",\"implementationId\":10,\"author\":\"a@gmail.com\",\"name\":\"handler_10\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"instanceConfiguration\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]}},\"generics\":[{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}],\"type\":\"HANDLER\",\"name\":\"handler\",\"allowMultiple\":false}]},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"instanceConfiguration\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"IMPLEMENTATION_SELECT\",\"keyExpression\":{\"expressionStart\":\"<handler>\",\"expressionEnd\":\"<handler>\"},\"instance\":{\"moduleImp\":{\"jsonTypeInfo\":\"HANDLER\",\"implementationId\":10,\"author\":\"a@gmail.com\",\"name\":\"handler_10\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"instanceConfiguration\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]}},\"generics\":[{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}],\"type\":\"HANDLER\",\"name\":\"handler\",\"allowMultiple\":false}]}},\"generics\":[{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}],\"type\":\"DISPATCHER\",\"name\":\"dispatcher\",\"allowMultiple\":false}]},{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<port>\",\"expressionEnd\":\"<port>\"},\"value\":\"8080\",\"dataType\":\"NUMBER\",\"name\":\"port\",\"allowMultiple\":false}]}", result);
     }
 
     @Test
     void testImplementation() throws JsonProcessingException {
         String result = new ObjectMapper().writeValueAsString(deserializer);
-        System.out.println(result);
-        //result = "{\"author\":\"a@gmail.com\",\"name\":\"deserializer_7\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"},\"protocolType\":{\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"messageType\":{\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}}\n";
-        Deserializer copy = new ObjectMapper().readValue(result, Deserializer.class);
-        System.out.println(copy);
+        //System.out.println(result);
+        assertEquals("{\"jsonTypeInfo\":\"DESERIALIZER\",\"implementationId\":7,\"author\":\"a@gmail.com\",\"name\":\"deserializer_7\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"protocolType\":{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}", result);
     }
 
     @Test
     void testImpTypesToJson() throws JsonProcessingException {
         String result = new ObjectMapper().writeValueAsString(ImpType.values());
-        System.out.println(result);
+        //System.out.println(result);
+        assertEquals("[{\"name\":\"ASSET_CONNECTION\",\"topLevel\":true,\"maxUse\":-1},{\"name\":\"DESERIALIZER\",\"topLevel\":false,\"maxUse\":-1},{\"name\":\"DISPATCHER\",\"topLevel\":false,\"maxUse\":-1},{\"name\":\"ENDPOINT\",\"topLevel\":true,\"maxUse\":-1},{\"name\":\"HANDLER\",\"topLevel\":false,\"maxUse\":-1},{\"name\":\"INTERACTION_STARTER\",\"topLevel\":true,\"maxUse\":-1},{\"name\":\"PERSISTENCE_MANAGER\",\"topLevel\":true,\"maxUse\":1},{\"name\":\"SERIALIZER\",\"topLevel\":false,\"maxUse\":1},{\"name\":\"PROTOCOL_TYPE\",\"topLevel\":false,\"maxUse\":0},{\"name\":\"MESSAGE_TYPE\",\"topLevel\":false,\"maxUse\":0},{\"name\":\"ENVIRONMENT\",\"topLevel\":true,\"maxUse\":1}]", result);
     }
 
     @Test
     void testEndpoint() throws JsonProcessingException {
         String result = new ObjectMapper().writeValueAsString(endpoint);
-        System.out.println(result);
+        //System.out.println(result);
+        assertEquals("{\"jsonTypeInfo\":\"ENDPOINT\",\"implementationId\":11,\"author\":\"a@gmail.com\",\"name\":\"endpoint\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"<parent>\",\"expressionEnd\":\"<parent>\"},\"enforceCompatibility\":false,\"name\":\"parent\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"<mapping>\",\"expressionEnd\":\"<mapping>\"},\"enforceCompatibility\":true,\"name\":\"mapping\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false},{\"jsonTypeInfo\":\"IMPLEMENTATION_SELECT\",\"keyExpression\":{\"expressionStart\":\"<serializer>\",\"expressionEnd\":\"<serializer>\"},\"instance\":{\"moduleImp\":{\"jsonTypeInfo\":\"SERIALIZER\",\"implementationId\":8,\"author\":\"a@gmail.com\",\"name\":\"serializer_8\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"protocolType\":{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"instanceConfiguration\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]}},\"generics\":[{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}],\"type\":\"SERIALIZER\",\"name\":\"serializer\",\"allowMultiple\":false},{\"jsonTypeInfo\":\"IMPLEMENTATION_SELECT\",\"keyExpression\":{\"expressionStart\":\"<deserializer>\",\"expressionEnd\":\"<deserializer>\"},\"instance\":{\"moduleImp\":{\"jsonTypeInfo\":\"DESERIALIZER\",\"implementationId\":7,\"author\":\"a@gmail.com\",\"name\":\"deserializer_7\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"protocolType\":{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"instanceConfiguration\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]}},\"generics\":[{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}],\"type\":\"DESERIALIZER\",\"name\":\"deserializer\",\"allowMultiple\":false},{\"jsonTypeInfo\":\"IMPLEMENTATION_SELECT\",\"keyExpression\":{\"expressionStart\":\"<dispatcher>\",\"expressionEnd\":\"<dispatcher>\"},\"instance\":{\"moduleImp\":{\"jsonTypeInfo\":\"DISPATCHER\",\"implementationId\":9,\"author\":\"a@gmail.com\",\"name\":\"dispatcher_9\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"IMPLEMENTATION_SELECT\",\"keyExpression\":{\"expressionStart\":\"<handler>\",\"expressionEnd\":\"<handler>\"},\"instance\":{\"moduleImp\":{\"jsonTypeInfo\":\"HANDLER\",\"implementationId\":10,\"author\":\"a@gmail.com\",\"name\":\"handler_10\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"instanceConfiguration\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]}},\"generics\":[{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}],\"type\":\"HANDLER\",\"name\":\"handler\",\"allowMultiple\":false}]},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"instanceConfiguration\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"IMPLEMENTATION_SELECT\",\"keyExpression\":{\"expressionStart\":\"<handler>\",\"expressionEnd\":\"<handler>\"},\"instance\":{\"moduleImp\":{\"jsonTypeInfo\":\"HANDLER\",\"implementationId\":10,\"author\":\"a@gmail.com\",\"name\":\"handler_10\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"instanceConfiguration\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]}},\"generics\":[{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}],\"type\":\"HANDLER\",\"name\":\"handler\",\"allowMultiple\":false}]}},\"generics\":[{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}],\"type\":\"DISPATCHER\",\"name\":\"dispatcher\",\"allowMultiple\":false}]},{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<port>\",\"expressionEnd\":\"<port>\"},\"value\":\"8080\",\"dataType\":\"NUMBER\",\"name\":\"port\",\"allowMultiple\":false}]},\"protocolType\":{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}",result);
     }
 
     @Test
     void testGeneric() throws JsonProcessingException {
         String result = new ObjectMapper().writeValueAsString(protocolTypeA);
-        System.out.println(result);
+        //System.out.println(result);
+        assertEquals("{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}", result);
     }
 
     @Test
     void testPersistenceManager() throws JsonProcessingException {
         PersistenceManager manager = new PersistenceManager(13, userA, "manager", ImplementationScope.SHARED, dummy);
         String result = new ObjectMapper().writeValueAsString(manager);
-        System.out.println(result);
+        //System.out.println(result);
+        assertEquals("{\"jsonTypeInfo\":\"PERSISTENCE_MANAGER\",\"implementationId\":13,\"author\":\"a@gmail.com\",\"name\":\"manager\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}", result);
     }
 
     @Test
     void testConfigType() throws JsonProcessingException {
         String result = new ObjectMapper().writeValueAsString(ConfigurationType.values());
-        System.out.println(result);
+        //System.out.println(result);
+        assertEquals("[{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"\",\"allowMultiple\":false,\"children\":[]},{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"dataType\":\"TEXT\",\"name\":\"\",\"allowMultiple\":false},{\"jsonTypeInfo\":\"IMPLEMENTATION_SELECT\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"generics\":[],\"type\":\"SERIALIZER\",\"name\":\"\",\"allowMultiple\":false},{\"jsonTypeInfo\":\"SELECT\",\"name\":\"\",\"allowMultiple\":false,\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"content\":[]},{\"jsonTypeInfo\":\"FILE_FIELD\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"name\":\"\",\"allowMultiple\":false},{\"jsonTypeInfo\":\"SWITCH\",\"name\":\"\",\"allowMultiple\":false,\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"content\":[\"\",\"\"],\"value\":\"\"}]",result);
     }
 
     @Test
@@ -139,27 +139,33 @@ public class JacksonTests {
         Select select = new Select("name", false, new KeyExpression("<select>", "<select>"), content);
         select.setValue("value1");
         String result = new ObjectMapper().writeValueAsString(select);
-        System.out.println(result);
+        //System.out.println(result);
+        assertEquals("{\"jsonTypeInfo\":\"SELECT\",\"name\":\"name\",\"allowMultiple\":false,\"keyExpression\":{\"expressionStart\":\"<select>\",\"expressionEnd\":\"<select>\"},\"content\":[\"value1\",\"value2\"],\"value\":\"value1\"}", result);
         Select copy = new ObjectMapper().readValue(result, Select.class);
-        System.out.println(copy.toString());
+        //System.out.println(copy.toString());
+        assertEquals(select, copy);
     }
 
     @Test
     void testFileField() throws JsonProcessingException {
         FileField field = new FileField("fileField", false, new KeyExpression("start", "end"));
         String result = new ObjectMapper().writeValueAsString(field);
-        System.out.println(result);
+        //System.out.println(result);
+        assertEquals("{\"jsonTypeInfo\":\"FILE_FIELD\",\"keyExpression\":{\"expressionStart\":\"start\",\"expressionEnd\":\"end\"},\"name\":\"fileField\",\"allowMultiple\":false}", result);
         FileField copy = new ObjectMapper().readValue(result, FileField.class);
-        System.out.println(copy.toString());
+        //System.out.println(copy.toString());
+        assertEquals(field, copy);
     }
 
     @Test
     void testSwitchToJson() throws JsonProcessingException {
         Switch switch_ = new Switch("name", false, new KeyExpression("<switch>", "<switch>"), "true", "false");
         String result = new ObjectMapper().writeValueAsString(switch_);
-        System.out.println(result);
+        //System.out.println(result);
+        assertEquals("{\"jsonTypeInfo\":\"SWITCH\",\"name\":\"name\",\"allowMultiple\":false,\"keyExpression\":{\"expressionStart\":\"<switch>\",\"expressionEnd\":\"<switch>\"},\"content\":[\"true\",\"false\"],\"value\":\"false\"}", result);
         Select copy = new ObjectMapper().readValue(result, Switch.class);
-        System.out.println(copy.toString());
+        //System.out.println(copy.toString());
+        assertEquals(switch_, copy);
     }
 
     @Test
@@ -169,125 +175,14 @@ public class JacksonTests {
         imps.add(manager);
         imps.add(deserializer);
         String result = new ObjectMapper().writeValueAsString(imps);
-        System.out.println(result);
+        //System.out.println(result);
+        assertEquals("[{\"implementationId\":13,\"author\":\"a@gmail.com\",\"name\":\"manager\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},{\"implementationId\":7,\"author\":\"a@gmail.com\",\"name\":\"deserializer_7\",\"configurationRoot\":{\"jsonTypeInfo\":\"CONFIGURATION_AGGREGATE\",\"keyExpression\":{\"expressionStart\":\"\",\"expressionEnd\":\"\"},\"enforceCompatibility\":false,\"name\":\"root\",\"allowMultiple\":false,\"children\":[{\"jsonTypeInfo\":\"TEXT_FIELD\",\"keyExpression\":{\"expressionStart\":\"<dummy>\",\"expressionEnd\":\"<dummy>\"},\"value\":\"dummy\",\"dataType\":\"TEXT\",\"name\":\"dummy\",\"allowMultiple\":false}]},\"protocolType\":{\"jsonTypeInfo\":\"PROTOCOL_TYPE\",\"implementationId\":0,\"author\":\"a@gmail.com\",\"name\":\"protocolType_0\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"messageType\":{\"jsonTypeInfo\":\"MESSAGE_TYPE\",\"implementationId\":3,\"author\":\"a@gmail.com\",\"name\":\"messageType_3\",\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}},\"scope\":{\"scopeId\":0,\"impScope\":\"SHARED\"}}]", result);
     }
 
     @Test
     void dataTypesToJson() throws JsonProcessingException {
         String result = new ObjectMapper().writeValueAsString(DataType.values());
-        System.out.println(result);
-    }
-
-    @Test
-    void test() throws JsonProcessingException {
-        Configuration config = new ObjectMapper().readValue("{" +
-                "  \"jsonTypeInfo\": \"CONFIGURATION_AGGREGATE\",\n" +
-                "  \"keyExpression\": {\n" +
-                "    \"expressionStart\": \"\",\n" +
-                "    \"expressionEnd\": \"\"\n" +
-                "  },\n" +
-                "  \"enforceCompatibility\": false,\n" +
-                "  \"name\": \"root\",\n" +
-                "  \"allowMultiple\": false,\n" +
-                "  \"children\": [\n" +
-                "    {\n" +
-                "      \"jsonTypeInfo\": \"TEXT_FIELD\",\n" +
-                "      \"keyExpression\": {\n" +
-                "        \"expressionStart\": \"\",\n" +
-                "        \"expressionEnd\": \"\"\n" +
-                "      },\n" +
-                "      \"dataType\": \"NUMBER\",\n" +
-                "      \"name\": \"port\",\n" +
-                "      \"allowMultiple\": false,\n" +
-                "      \"value\": \"6060\"\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"jsonTypeInfo\": \"CONFIGURATION_AGGREGATE\",\n" +
-                "      \"keyExpression\": {\n" +
-                "        \"expressionStart\": \"\",\n" +
-                "        \"expressionEnd\": \"\"\n" +
-                "      },\n" +
-                "      \"enforceCompatibility\": false,\n" +
-                "      \"name\": \"mapping\",\n" +
-                "      \"allowMultiple\": true,\n" +
-                "      \"children\": [\n" +
-                "        {\n" +
-                "          \"jsonTypeInfo\": \"IMPLEMENTATION_SELECT\",\n" +
-                "          \"keyExpression\": {\n" +
-                "            \"expressionStart\": \"\",\n" +
-                "            \"expressionEnd\": \"\"\n" +
-                "          },\n" +
-                "          \"generics\": [],\n" +
-                "          \"type\": \"SERIALIZER\",\n" +
-                "          \"name\": \"Serializer\",\n" +
-                "          \"allowMultiple\": false,\n" +
-                "          \"instance\": {\n" +
-                "            \"moduleImp\": 80,\n" +
-                "            \"instanceConfiguration\": {\n" +
-                "              \"jsonTypeInfo\": \"CONFIGURATION_AGGREGATE\",\n" +
-                "              \"keyExpression\": {\n" +
-                "                \"expressionStart\": \"\",\n" +
-                "                \"expressionEnd\": \"\"\n" +
-                "              },\n" +
-                "              \"enforceCompatibility\": false,\n" +
-                "              \"name\": \"root\",\n" +
-                "              \"allowMultiple\": false,\n" +
-                "              \"children\": [\n" +
-                "                {\n" +
-                "                  \"jsonTypeInfo\": \"TEXT_FIELD\",\n" +
-                "                  \"keyExpression\": {\n" +
-                "                    \"expressionStart\": \"\",\n" +
-                "                    \"expressionEnd\": \"\"\n" +
-                "                  },\n" +
-                "                  \"dataType\": \"NUMBER\",\n" +
-                "                  \"name\": \"dummy\",\n" +
-                "                  \"allowMultiple\": false,\n" +
-                "                  \"value\": \"rkh\"\n" +
-                "                }\n" +
-                "              ]\n" +
-                "            }\n" +
-                "          }\n" +
-                "        },\n" +
-                "        {\n" +
-                "          \"jsonTypeInfo\": \"IMPLEMENTATION_SELECT\",\n" +
-                "          \"keyExpression\": {\n" +
-                "            \"expressionStart\": \"\",\n" +
-                "            \"expressionEnd\": \"\"\n" +
-                "          },\n" +
-                "          \"generics\": [],\n" +
-                "          \"type\": \"DESERIALIZER\",\n" +
-                "          \"name\": \"Dezerializer\",\n" +
-                "          \"allowMultiple\": false,\n" +
-                "          \"instance\": {\n" +
-                "            \"moduleImp\": 84,\n" +
-                "            \"instanceConfiguration\": {\n" +
-                "              \"jsonTypeInfo\": \"CONFIGURATION_AGGREGATE\",\n" +
-                "              \"keyExpression\": {\n" +
-                "                \"expressionStart\": \"\",\n" +
-                "                \"expressionEnd\": \"\"\n" +
-                "              },\n" +
-                "              \"enforceCompatibility\": false,\n" +
-                "              \"name\": \"root\",\n" +
-                "              \"allowMultiple\": false,\n" +
-                "              \"children\": [\n" +
-                "                {\n" +
-                "                  \"jsonTypeInfo\": \"TEXT_FIELD\",\n" +
-                "                  \"keyExpression\": {\n" +
-                "                    \"expressionStart\": \"\",\n" +
-                "                    \"expressionEnd\": \"\"\n" +
-                "                  },\n" +
-                "                  \"dataType\": \"NUMBER\",\n" +
-                "                  \"name\": \"dummy\",\n" +
-                "                  \"allowMultiple\": false,\n" +
-                "                  \"value\": \"fgnfg\"\n" +
-                "                }\n" +
-                "              ]\n" +
-                "            }\n" +
-                "          }\n" +
-                "        }\n" +
-                "      ]\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}", Configuration.class);
+        //System.out.println(result);
+        assertEquals("[\"TEXT\",\"NUMBER\",\"EMAIL\",\"PASSWORD\",\"DATE\",\"DATETIME\"]", result);
     }
 }
