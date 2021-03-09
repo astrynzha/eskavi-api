@@ -2,6 +2,7 @@ package eskavi.controller;
 
 import eskavi.controller.requests.user.*;
 import eskavi.controller.responses.TokenResponse;
+import eskavi.controller.responses.aas.GetSecurityQuestionResponse;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
@@ -166,9 +167,9 @@ public class UserManagementController {
      * }
      */
     @GetMapping("/security_question")
-    public String getSecurityQuestion(@RequestParam(value = "email", required = false) String email) {
+    public GetSecurityQuestionResponse getSecurityQuestion(@RequestParam(value = "email", required = false) String email) {
         ImmutableUser user = userManagementService.getUser(email);
-        return userManagementService.getSecurityQuestion(user.getEmailAddress()).getQuestion();
+        return new GetSecurityQuestionResponse(userManagementService.getSecurityQuestion(user.getEmailAddress()).getQuestion());
     }
 
     /**
