@@ -165,7 +165,7 @@ public class UserManagementController {
      * }
      */
     @GetMapping("/security_question")
-    public String getSecurityQuestion(@RequestBody String email) {
+    public String getSecurityQuestion(@RequestParam(value = "email", required = false) String email) {
         ImmutableUser user = userManagementService.getUser(email);
         return userManagementService.getSecurityQuestion(user.getEmailAddress()).getQuestion();
     }
