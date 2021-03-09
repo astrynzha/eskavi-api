@@ -17,7 +17,6 @@ import eskavi.model.implementation.moduleimp.*;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "name")
 public enum ImpType {
-    //TODO Generics
     ASSET_CONNECTION(AssetConnection.class, true, -1),
     DESERIALIZER(Deserializer.class, false, -1),
     DISPATCHER(Dispatcher.class, false, -1),

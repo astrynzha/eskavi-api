@@ -13,7 +13,6 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-//TODO all parameters as ids
 @Service
 public class UserManagementService {
 
@@ -23,7 +22,6 @@ public class UserManagementService {
         this.userRepository = userRepository;
     }
 
-    // TODO other constructor of User
     public ImmutableUser createUser(String email, String hashedPassword,
                                     SecurityQuestion securityQuestion, String securityAnswer) {
         if (userRepository.findById(email).isPresent()) {
@@ -41,7 +39,6 @@ public class UserManagementService {
                 .collect(Collectors.toList());
     }
 
-    // TODO who sets the admin
     public void setUserLevel(String userId, UserLevel level, String callerId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find the user"));
@@ -54,7 +51,6 @@ public class UserManagementService {
         userRepository.save(user);
     }
 
-    // TODO: caller has to be an admin or the user that wants to delete himself
     public void deleteUser(String userId) {
         userRepository.deleteById(userId);
     }
@@ -83,11 +79,4 @@ public class UserManagementService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find the user"));
         return user.getPassword().equals(hashedPassword);
     }
-
-//    private User getMutableUser(ImmutableUser user) throws IllegalAccessException {
-//        if (!(user instanceof User)) {
-//            throw new IllegalAccessException("ImmutableUser is not an instance of User!");
-//        }
-//        return (User) user;
-//    }
 }

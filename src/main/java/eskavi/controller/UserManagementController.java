@@ -41,10 +41,14 @@ public class UserManagementController {
      * @apiSuccess {String} jwt Token to authenticate future requests
      * @apiParam (Request body) {String} email User mail
      * @apiParam (Request body) {String} password User password
+     * @apiParam (Request body) {SecurityQuestion} securityQuestion User security question
+     * @apiParam (Request body) {String} securityAnswer User security answer
      * @apiParamExample {json} Request-Example:
      * {
      * "email": "test@web.de",
-     * "password": "12345678"
+     * "password": "12345678",
+     * "securityQuestion":"MAIDEN_NAME",
+     * "securityAnswer":"test"
      * }
      */
     @PostMapping("/register")
