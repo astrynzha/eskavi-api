@@ -12,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SelectTest {
     private Select testObject;
-    private List<String> content;
+    private Map<String, String> content;
 
     @BeforeEach
     void setUp() {
-        content = new ArrayList<>();
-        content.add("testValue");
+        content = new HashMap<>();
+        content.put("testValue", "value");
         this.testObject = new Select("test", false, new KeyExpression("start", "end"), content);
     }
 
@@ -54,7 +54,7 @@ class SelectTest {
         assertEquals(testObject.getKeyExpression(), clone.getKeyExpression());
 
         //changing clone
-        List<String> newContent = new ArrayList<>();
+        Map<String, String> newContent = new HashMap<>();
         clone.setContent(newContent);
         assertNotEquals(testObject.getContent(), clone.getContent());
     }
@@ -67,8 +67,8 @@ class SelectTest {
 
     @Test
     void testEqualsFailure() {
-        List<String> newContent = new ArrayList<>();
-        newContent.add("fail");
+        Map<String, String> newContent = new HashMap<>();
+        newContent.put("fail", "fail");
         Select other = new Select("test", false, new KeyExpression("start", "end"), newContent);
         assertEquals(false, testObject.equals(other));
     }
