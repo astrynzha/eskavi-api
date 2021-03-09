@@ -52,7 +52,7 @@ class AASConfigurationServiceTest {
     void setUp() {
         impService = new ImpService(impRepo, userRepo, config);
         aasService = new AASConfigurationService(impRepo, userRepo,
-                new AASSessionHandler()); // TODO: replace
+                new AASSessionHandler());
         userManagementService = new UserManagementService(userRepo);
         someEmail = "a.str@gmail.com";
         userManagementService.createUser(someEmail, "dka;fj",

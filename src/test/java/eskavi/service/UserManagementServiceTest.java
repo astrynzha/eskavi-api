@@ -107,7 +107,6 @@ class UserManagementServiceTest {
         assertTrue(userService.checkPassword(someEmail1, "b"));
     }
 
-    // TODO: check with other questions
     @Test
     void getSecurityQuestion() {
         userService.createUser(someEmail1, "a",

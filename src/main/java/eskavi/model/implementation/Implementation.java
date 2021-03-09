@@ -130,7 +130,7 @@ public abstract class Implementation implements ImmutableImplementation {
 
     @Override
     public ImmutableUser getAuthor() {
-        return (ImmutableUser) author; // TODO: should the cast be here or in view?
+        return author;
     }
 
     /**
@@ -159,7 +159,7 @@ public abstract class Implementation implements ImmutableImplementation {
 
     @Override
     public boolean isSubscribed(ImmutableUser user) {
-        if (!(user instanceof User)) { // TODO: mehh instanceof. Is it possible to do without it here?
+        if (!(user instanceof User)) {
             return false;
         }
         return scope.isSubscribed((User) user);

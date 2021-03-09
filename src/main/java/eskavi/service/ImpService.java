@@ -41,6 +41,12 @@ public class ImpService {
         this.config = config;
     }
 
+    /**
+     *
+     * @param impId
+     * @param userId
+     * @return
+     */
     public ImmutableImplementation getImp(Long impId, String userId) {
         Implementation imp = impRepository.findById(impId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -75,7 +81,6 @@ public class ImpService {
     }
 
 
-    // TODO
     public ImmutableImplementation getDefaultImpCreate(ImpType type) {
         long id;
         switch (type) {
@@ -204,8 +209,8 @@ public class ImpService {
     }
 
     // TODO:
-    //  2. Check that the scope is not changed upon update
     //  1. Soll man hier isValid auf die übergebene MI aufrufen?
+    //  2. Check that the scope is not changed upon update
     public void updateImplementation(ImmutableImplementation mi, String callerId) throws IllegalAccessException {
         Optional<User> optionalCaller = userRepository.findById(callerId);
         Optional<Implementation> optionalImplementation = impRepository.findById(mi.getImplementationId());
@@ -217,8 +222,6 @@ public class ImpService {
         if (!imp.getAuthor().equals(user)) {
             throw new IllegalAccessException("This caller cannot update the implementation, he is not it's author");
         }
-        // TODO will spring automatically update by id?
-        // TODO test it
         impRepository.save(getMutableImp(mi));
     }
 

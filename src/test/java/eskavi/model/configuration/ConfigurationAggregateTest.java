@@ -161,7 +161,6 @@ class ConfigurationAggregateTest {
 
     @Test
     void equalsTest1() {
-        // TODO test if child is also an aggregate
         Configuration testObject1 = testObject.clone();
         TextField textFieldMultiple = new TextField("multiple", true,
                 new KeyExpression("<multiple>", "<multiple>"), DataType.TEXT);
