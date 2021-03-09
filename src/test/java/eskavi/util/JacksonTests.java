@@ -2,6 +2,7 @@ package eskavi.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eskavi.controller.requests.user.RegisterRequest;
 import eskavi.model.configuration.*;
 import eskavi.model.implementation.*;
 import eskavi.model.implementation.moduleimp.*;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
+import javax.print.attribute.standard.JobKOctets;
 import java.io.IOException;
 import java.util.*;
 
@@ -184,5 +186,20 @@ public class JacksonTests {
         String result = new ObjectMapper().writeValueAsString(DataType.values());
         //System.out.println(result);
         assertEquals("[\"TEXT\",\"NUMBER\",\"EMAIL\",\"PASSWORD\",\"DATE\",\"DATETIME\"]", result);
+    }
+
+    @Test
+    void testRequest() throws JsonProcessingException {
+        RegisterRequest request = new RegisterRequest();
+        request.setSecurityAnswer("test");
+        request.setSecurityQuestion(SecurityQuestion.MAIDEN_NAME);
+        request.setEmail("eskavi@web.de");
+        request.setPassword("password");
+
+        String result = new ObjectMapper().writeValueAsString(request);
+        System.out.println(result);
+
+        RegisterRequest copy = new ObjectMapper().readValue(result, RegisterRequest.class);
+        System.out.println(copy.toString());
     }
 }

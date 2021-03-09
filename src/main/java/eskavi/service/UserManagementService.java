@@ -24,11 +24,12 @@ public class UserManagementService {
     }
 
     // TODO other constructor of User
-    public ImmutableUser createUser(String email, String hashedPassword) {
+    public ImmutableUser createUser(String email, String hashedPassword,
+                                    SecurityQuestion securityQuestion, String securityAnswer) {
         if (userRepository.findById(email).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "email is already registered");
         }
-        return userRepository.save(new User(email, hashedPassword));
+        return userRepository.save(new User(email, hashedPassword, UserLevel.BASIC_USER, securityQuestion, securityAnswer));
     }
 
     public ImmutableUser getUser(String userId) {
