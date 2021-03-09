@@ -7,6 +7,7 @@ import eskavi.model.configuration.TextField;
 import eskavi.model.implementation.*;
 import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.ImmutableUser;
+import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
@@ -69,9 +70,12 @@ class ImpServiceTest {
     void setUp() {
         impService = new ImpService(implementationRepository, userRepository, config);
         userService = new UserManagementService(userRepository);
-        userA = userService.createUser("a.str@gmail.com", "dja;lsfkdjsafk");
-        userB = userService.createUser("str@gmail.com", "dsa;lfj[b");
-        userC = userService.createUser("str1@gmail.com", "dsa;lfj[b");
+        userA = userService.createUser("a.str@gmail.com", "dja;lsfkdjsafk",
+                SecurityQuestion.MAIDEN_NAME, "Bezos");
+        userB = userService.createUser("str@gmail.com", "dsa;lfj[b",
+                SecurityQuestion.MAIDEN_NAME, "Gates");
+        userC = userService.createUser("str1@gmail.com", "dsa;lfj[b",
+                SecurityQuestion.MAIDEN_NAME, "Zuck");
 
 
         configuration = new TextField("text", false,

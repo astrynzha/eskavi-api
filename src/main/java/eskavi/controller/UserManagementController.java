@@ -48,7 +48,8 @@ public class UserManagementController {
      */
     @PostMapping("/register")
     public TokenResponse register(@RequestBody RegisterRequest request) {
-        userManagementService.createUser(request.getEmail(), passwordEncoder.encode(request.getEmail()));
+        userManagementService.createUser(request.getEmail(), passwordEncoder.encode(request.getEmail()),
+                request.getSecurityQuestion(), request.getSecurityAnswer());
         return userTokenMatcher.generateToken(request.getEmail());
     }
 
