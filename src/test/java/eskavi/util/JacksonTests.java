@@ -134,17 +134,31 @@ public class JacksonTests {
     }
 
     @Test
-    void testSelectToJson() throws JsonProcessingException {
-        List<String> content = new ArrayList<>();
-        content.add("value1");
-        content.add("value2");
+    void testSelectToJsonWithValueSet() throws JsonProcessingException {
+        Map<String, String> content = new HashMap<>();
+        content.put("value1", "1");
+        content.put("value2", "2");
         Select select = new Select("name", false, new KeyExpression("<select>", "<select>"), content);
         select.setValue("value1");
         String result = new ObjectMapper().writeValueAsString(select);
-        //System.out.println(result);
-        assertEquals("{\"jsonTypeInfo\":\"SELECT\",\"name\":\"name\",\"allowMultiple\":false,\"keyExpression\":{\"expressionStart\":\"<select>\",\"expressionEnd\":\"<select>\"},\"content\":[\"value1\",\"value2\"],\"value\":\"value1\"}", result);
+        System.out.println(result);
+        assertEquals("{\"jsonTypeInfo\":\"SELECT\",\"name\":\"name\",\"allowMultiple\":false,\"keyExpression\":{\"expressionStart\":\"<select>\",\"expressionEnd\":\"<select>\"},\"content\":{\"value2\":\"2\",\"value1\":\"1\"},\"value\":\"1\",\"valueKey\":\"value1\"}", result);
         Select copy = new ObjectMapper().readValue(result, Select.class);
-        //System.out.println(copy.toString());
+        System.out.println(copy.toString());
+        assertEquals(select, copy);
+    }
+
+    @Test
+    void testSelectToJsonWithoutValueSet() throws JsonProcessingException {
+        Map<String, String> content = new HashMap<>();
+        content.put("value1", "1");
+        content.put("value2", "2");
+        Select select = new Select("name", false, new KeyExpression("<select>", "<select>"), content);
+        String result = new ObjectMapper().writeValueAsString(select);
+        System.out.println(result);
+        assertEquals("{\"jsonTypeInfo\":\"SELECT\",\"name\":\"name\",\"allowMultiple\":false,\"keyExpression\":{\"expressionStart\":\"<select>\",\"expressionEnd\":\"<select>\"},\"content\":{\"value2\":\"2\",\"value1\":\"1\"}}", result);
+        Select copy = new ObjectMapper().readValue(result, Select.class);
+        System.out.println(copy.toString());
         assertEquals(select, copy);
     }
 
@@ -163,10 +177,12 @@ public class JacksonTests {
     void testSwitchToJson() throws JsonProcessingException {
         Switch switch_ = new Switch("name", false, new KeyExpression("<switch>", "<switch>"), "true", "false");
         String result = new ObjectMapper().writeValueAsString(switch_);
-        //System.out.println(result);
-        assertEquals("{\"jsonTypeInfo\":\"SWITCH\",\"name\":\"name\",\"allowMultiple\":false,\"keyExpression\":{\"expressionStart\":\"<switch>\",\"expressionEnd\":\"<switch>\"},\"content\":[\"true\",\"false\"],\"value\":\"false\"}", result);
-        Select copy = new ObjectMapper().readValue(result, Switch.class);
-        //System.out.println(copy.toString());
+        System.out.println(result);
+        assertEquals("{\"jsonTypeInfo\":\"SWITCH\",\"name\":\"name\",\"allowMultiple\":false,\"keyExpression\":{\"expressionStart\":\"<switch>\",\"expressionEnd\":\"<switch>\"},\"content\":{\"falseValue\":\"false\",\"trueValue\":\"true\"},\"value\":\"false\",\"valueKey\":\"falseValue\"}", result);
+        result = "{\"jsonTypeInfo\":\"SWITCH\",\"name\":\"name\",\"allowMultiple\":false,\"keyExpression\":{\"expressionStart\":\"<switch>\",\"expressionEnd\":\"<switch>\"},\"content\":{\"falseValue\":\"false\",\"trueValue\":\"true\"},\"value\":\"false\",\"valueKey\":\"trueValue\"}";
+        Switch copy = new ObjectMapper().readValue(result, Switch.class);
+        switch_.setValue("trueValue");
+        System.out.println(copy.toString());
         assertEquals(switch_, copy);
     }
 

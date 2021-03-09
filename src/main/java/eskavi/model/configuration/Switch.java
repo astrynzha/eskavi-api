@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Entity;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Class extends {@link Select} and only allows two values. If the Switch is set the true value will be used otherwise the
@@ -16,8 +13,8 @@ import java.util.Map;
  */
 @Entity
 public class Switch extends Select {
-    public static int TRUE_INDEX = 0;
-    public static int FALSE_INDEX = 1;
+    public static String TRUE_VALUE = "trueValue";
+    public static String FALSE_VALUE = "falseValue";
 
     /**
      * Constructs a new Switch
@@ -30,17 +27,17 @@ public class Switch extends Select {
      */
     public Switch(String name, boolean allowMultiple, KeyExpression expression, String trueValue, String falseValue) {
         super(name, allowMultiple, expression, null);
-        List<String> content = new ArrayList<>();
-        content.add(trueValue);
-        content.add(falseValue);
+        Map<String, String> content = new HashMap<>();
+        content.put(TRUE_VALUE, trueValue);
+        content.put(FALSE_VALUE, falseValue);
         this.setContent(content);
         //setting the default value
-        this.setValue(falseValue);
+        this.setValue(FALSE_VALUE);
     }
 
     @JsonCreator
     protected Switch(@JsonProperty("name") String name, @JsonProperty("allowMultiple") boolean allowMultiple,
-                     @JsonProperty("keyExpression") KeyExpression expression, @JsonProperty("content") List<String> content) {
+                     @JsonProperty("keyExpression") KeyExpression expression, @JsonProperty("content") Map<String, String> content) {
         super(name, allowMultiple, expression, content);
     }
 
@@ -71,7 +68,7 @@ public class Switch extends Select {
     @Override
     public Switch clone() {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
-        Switch result = new Switch(getName(), allowsMultiple(), copy, getContent().get(TRUE_INDEX), getContent().get(FALSE_INDEX));
+        Switch result = new Switch(getName(), allowsMultiple(), copy, getContent().get(TRUE_VALUE), getContent().get(FALSE_VALUE));
         // needed to be able to set value to previously set value
         result.setValue(getValue());
         return result;

@@ -1,7 +1,6 @@
 package eskavi.model.configuration;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +13,8 @@ import java.util.Objects;
 @Entity
 public class Select extends SingleValueField {
     @ElementCollection(targetClass = String.class)
-    private List<String> content;
+    private Map<String, String> content;
+    private String valueKey;
 
     /**
      * Constructs a new Select object
@@ -26,7 +26,7 @@ public class Select extends SingleValueField {
      */
     @JsonCreator
     public Select(@JsonProperty("name") String name, @JsonProperty("allowMultiple") boolean allowMultiple,
-                  @JsonProperty("keyExpression") KeyExpression expression, @JsonProperty("content") List<String> content) {
+                  @JsonProperty("keyExpression") KeyExpression expression, @JsonProperty("content") Map<String, String> content) {
         super(name, allowMultiple, expression);
         this.content = content;
     }
@@ -40,7 +40,7 @@ public class Select extends SingleValueField {
      *
      * @return a list of the possible Content
      */
-    public List<String> getContent() {
+    public Map<String, String> getContent() {
         return content;
     }
 
@@ -49,14 +49,27 @@ public class Select extends SingleValueField {
      *
      * @param content the new content list
      */
-    public void setContent(List<String> content) {
+    public void setContent(Map<String, String> content) {
         this.content = content;
     }
 
+    @JsonGetter
+    public String getValueKey() {
+        return valueKey;
+    }
+
+    @JsonSetter
+    protected void setValueKey(String valueKey) {
+        this.setValue(valueKey);
+    }
+
+
     @Override
+    @JsonIgnore
     public void setValue(String value) throws IllegalArgumentException {
-        if (content != null && content.contains(value)) {
-            super.setValue(value);
+        if (content != null && content.containsKey(value)) {
+            this.valueKey = value;
+            super.setValue(content.get(value));
         } else {
             throw new IllegalArgumentException("value must be a possible value from content");
         }
