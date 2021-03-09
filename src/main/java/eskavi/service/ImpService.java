@@ -42,10 +42,11 @@ public class ImpService {
     }
 
     /**
+     * Returns an implementation with the specified ID.
      *
-     * @param impId
-     * @param userId
-     * @return
+     * @param impId implementation id
+     * @param userId user id
+     * @return requested implementation
      */
     public ImmutableImplementation getImp(Long impId, String userId) {
         Implementation imp = impRepository.findById(impId).orElseThrow(() ->
@@ -58,21 +59,38 @@ public class ImpService {
         return imp;
     }
 
+
+    /**
+     * @return all implementations from the repository
+     */
     public Collection<ImmutableImplementation> getImps() {
         return StreamSupport.stream(impRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public Collection<ImmutableImplementation> getImps(ImmutableUser user) {
+    /**
+     * returns all implementation that the caller is subscribed to.
+     *
+     * @param caller user calls the function
+     * @return collection of implementations
+     */
+    public Collection<ImmutableImplementation> getImps(ImmutableUser caller) {
         HashSet<ImmutableImplementation> result = new HashSet<>();
-        result.addAll(user.getSubscribed());
+        result.addAll(caller.getSubscribed());
         result.addAll(getPublic());
-        result.addAll(impRepository.findAllByAuthor(user));
+        result.addAll(impRepository.findAllByAuthor(caller));
         return result;
     }
 
-    public Collection<ImmutableImplementation> getImps(ImpType impType, String userId) {
-        User user = userRepository.findById(userId)
+    /**
+     * returns all implementations that the caller is subscribed to, filtered by the implementation type.
+     *
+     * @param impType implementation Type.
+     * @param callerId caller ID.
+     * @return collection of implementations.
+     */
+    public Collection<ImmutableImplementation> getImps(ImpType impType, String callerId) {
+        User user = userRepository.findById(callerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find the user"));
         return StreamSupport.stream(impRepository.findAll().spliterator(), false)
                 .filter(impType::matches)
@@ -81,6 +99,12 @@ public class ImpService {
     }
 
 
+    /**
+     * Returns default Implementation for the provided Implementation type
+     *
+     * @param type implementation type
+     * @return default Implementation
+     */
     public ImmutableImplementation getDefaultImpCreate(ImpType type) {
         long id;
         switch (type) {
@@ -124,12 +148,17 @@ public class ImpService {
     }
 
     /**
+     * Adds an Implementation to the system, if the implementation is completely initialized, has an empty scope or,
+     * if SHARED, has the author in the scope.
      * Scope of the implementation has to be empty. All the users have to be subscribed through addUser API call.
      *
      * @param mi       implementation that the module developer has built in frontend
      * @param callerId Id of module developer that wants to add an implementation
      */
     public ImmutableImplementation addImplementation(Implementation mi, String callerId) {
+        if (!mi.isValid()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         mi.setImplementationId(0);
         Optional<User> optionalCaller = userRepository.findById(callerId);
         if (optionalCaller.isEmpty()) {
@@ -137,10 +166,7 @@ public class ImpService {
         }
         User caller = optionalCaller.get();
         mi.setAuthor(caller);
-        mi.setScope(new Scope(mi.getImplementationScope()));
-        if (!mi.isValid()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
+        mi.setScope(new Scope(mi.getImplementationScope())); // set an empty scope
         Implementation savedMi = impRepository.save(mi);
         // add author to scope if SHARED
         if (mi.getImplementationScope().equals(ImplementationScope.SHARED)) {
@@ -152,9 +178,19 @@ public class ImpService {
             }
             // moduleImp is persisted inside updateScope
         }
-        return savedMi;
+        return impRepository.findById(mi.getImplementationId())
+                .orElseThrow(() -> new IllegalStateException("this should not have happened, mi was persisted"));
     }
 
+    /**
+     * Subscribes a user to the Implementation and the Implementation to the User, if the caller is the author of the
+     * Implementation.
+     *
+     * @param implementationId Implementation ID to subscribe the user to.
+     * @param userId user ID to subscribe implementation to.
+     * @param callerId id of the caller.
+     * @throws IllegalAccessException if implementation is not SHARED.
+     */
     public void addUser(long implementationId, String userId, String callerId) throws IllegalAccessException {
         Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -174,6 +210,15 @@ public class ImpService {
         updateScope(user, imp);
     }
 
+    /**
+     * Unsubscribes a user from the Implementation and the Implementation from the User, if the caller is the author
+     * of the Implementation.
+     *
+     * @param implementationId Implementation ID to unsubscribe the user from.
+     * @param userId user ID to unsubscribe implementation from.
+     * @param callerId id of the caller.
+     * @throws IllegalAccessException if implementation is not SHARED.
+     */
     public void removeUser(long implementationId, String userId, String callerId) throws IllegalAccessException {
         Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -199,6 +244,12 @@ public class ImpService {
         userRepository.save(user);
     }
 
+    /**
+     * Returns all the users that are subscribed to the specified Implementation
+     *
+     * @param implementationId id of the implementation
+     * @return user subscribed to the implementation.
+     */
     public Collection<ImmutableUser> getUsers(Long implementationId) {
         Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
         if (optionalImplementation.isEmpty()) {
@@ -208,6 +259,14 @@ public class ImpService {
         return new HashSet<>(imp.getSubscribed());
     }
 
+    /**
+     * Used to modify the implementation.
+     * Substitutes the old implementation entity in repo with the received one.
+     *
+     * @param mi module implementation
+     * @param callerId id of the caller
+     * @throws IllegalAccessException if the caller is not the author of the mi and hence, cannot modify it.
+     */
     // TODO:
     //  1. Soll man hier isValid auf die übergebene MI aufrufen?
     //  2. Check that the scope is not changed upon update
@@ -225,6 +284,12 @@ public class ImpService {
         impRepository.save(getMutableImp(mi));
     }
 
+    /**
+     * Removes an Implementation from the system, if the caller is the author.
+     *
+     * @param implementationId implementation id
+     * @param callerId Id the caller
+     */
     public void removeImplementation(Long implementationId, String callerId) throws IllegalAccessException {
         Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);
         Optional<User> optionalCaller = userRepository.findById(callerId);
@@ -262,13 +327,6 @@ public class ImpService {
         }
         return (Implementation) mi;
     }
-
-//    private User getMutableUser(ImmutableUser user) throws IllegalAccessException {
-//        if (!(user instanceof User)) {
-//            throw new IllegalAccessException("ImmutableUser is not an instance of User!");
-//        }
-//        return (User) user;
-//    }
 
     private Collection<ImmutableImplementation> getPublic() {
         return impRepository.findAllByScope_ImpScope(ImplementationScope.PUBLIC);

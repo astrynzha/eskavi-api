@@ -137,8 +137,19 @@ class ImpServiceTest {
     @Test
     void addImplementation() {
         endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
+        // scope contains author
         assertEquals(impService.getImp(endpoint.getImplementationId(), endpoint.getAuthor().getEmailAddress()),
                 endpoint);
+    }
+
+    @Test
+    void addImplementation1() {
+        endpoint.setScope(new Scope(ImplementationScope.SHARED));
+        endpoint = (Endpoint) impService.addImplementation(endpoint, "a.str@gmail.com");
+        ImmutableImplementation i = impService.getImp(endpoint.getImplementationId(), endpoint.getAuthor().getEmailAddress());
+        // scope is empty now
+        assertEquals(i.getImplementationId(),
+                endpoint.getImplementationId());
     }
 
     @Test
