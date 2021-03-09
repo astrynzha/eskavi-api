@@ -7,7 +7,7 @@ import java.util.Collection;
 public class GetImplementationsResponse {
     private Collection<ImmutableImplementation> implementations;
 
-    public GetImplementationsResponse(Collection<ImmutableImplementation>implementations) {
+    public GetImplementationsResponse(Collection<ImmutableImplementation> implementations) {
         this.implementations = implementations;
     }
 
