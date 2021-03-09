@@ -8,6 +8,7 @@ import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.implementation.MessageType;
 import eskavi.model.implementation.ProtocolType;
 import eskavi.model.implementation.moduleimp.Serializer;
+import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
@@ -54,7 +55,8 @@ class AASConfigurationServiceTest {
                 new AASSessionHandler()); // TODO: replace
         userManagementService = new UserManagementService(userRepo);
         someEmail = "a.str@gmail.com";
-        userManagementService.createUser(someEmail, "dka;fj");
+        userManagementService.createUser(someEmail, "dka;fj",
+                SecurityQuestion.MAIDEN_NAME, "Bezos");
         configuration1 = new ConfigurationAggregate("first", false,
                 new KeyExpression("<text>", "<text>"), new LinkedList<>(), false);
         configuration2 = new ConfigurationAggregate("second", false,

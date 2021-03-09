@@ -43,10 +43,11 @@ class UserManagementServiceTest {
 
     @Test
     void createUser() {
-        userService.createUser(someEmail1, "askfjapojwe");
+        userService.createUser(someEmail1, "askfjapojwe", SecurityQuestion.MAIDEN_NAME, "Jj");
         assertEquals(someEmail1, userService.getUser(someEmail1).getEmailAddress());
         Exception exception = assertThrows(ResponseStatusException.class,
-                () -> userService.createUser(someEmail1, "djkafsk"));
+                () -> userService.createUser(someEmail1, "djkafsk",
+                        SecurityQuestion.MAIDEN_NAME, "Kk"));
         assertTrue(exception.getMessage().contains("email is already registered"));
     }
 
@@ -62,7 +63,8 @@ class UserManagementServiceTest {
         User admin = new User("a@gmail.com", "d;afjsdkjf", UserLevel.ADMINISTRATOR,
                 SecurityQuestion.MAIDEN_NAME, "x");
         repository.save(admin);
-        userService.createUser(someEmail1, "klda;sfj");
+        userService.createUser(someEmail1, "klda;sfj",
+                SecurityQuestion.MAIDEN_NAME, "Bezos");
         Optional<User> ou = repository.findById(someEmail1);
         if (ou.isEmpty()) {
             fail();
@@ -88,7 +90,8 @@ class UserManagementServiceTest {
 
     @Test
     void deleteUser() {
-        userService.createUser(someEmail1, "askfjapojwe");
+        userService.createUser(someEmail1, "askfjapojwe",
+                SecurityQuestion.MAIDEN_NAME, "Bezos");
         assertEquals(someEmail1, userService.getUser(someEmail1).getEmailAddress());
         userService.deleteUser(someEmail1);
         assertThrows(ResponseStatusException.class, () ->
@@ -97,7 +100,8 @@ class UserManagementServiceTest {
 
     @Test
     void setPassword() {
-        userService.createUser(someEmail1, "a");
+        userService.createUser(someEmail1, "a",
+                SecurityQuestion.MAIDEN_NAME, "Bezos");
         assertTrue(userService.checkPassword(someEmail1, "a"));
         userService.setPassword(someEmail1, "b");
         assertTrue(userService.checkPassword(someEmail1, "b"));
@@ -106,13 +110,15 @@ class UserManagementServiceTest {
     // TODO: check with other questions
     @Test
     void getSecurityQuestion() {
-        userService.createUser(someEmail1, "a");
+        userService.createUser(someEmail1, "a",
+                SecurityQuestion.MAIDEN_NAME, "Bezos");
         assertEquals(SecurityQuestion.MAIDEN_NAME, userService.getSecurityQuestion(someEmail1));
     }
 
     @Test
     void checkPassword() {
-        userService.createUser(someEmail1, "dk;jafq[w3");
+        userService.createUser(someEmail1, "dk;jafq[w3",
+                SecurityQuestion.MAIDEN_NAME, "Bezos");
         assertTrue(userService.checkPassword(someEmail1, "dk;jafq[w3"));
     }
 }
