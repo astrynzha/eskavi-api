@@ -235,13 +235,12 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/change_password")
-    public void setPassword(@RequestHeader String Authorization, @RequestBody SetPasswordRequest request) throws IllegalAccessException {
+    public void resetPassword(@RequestHeader String Authorization, @RequestBody SetPasswordRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
-        if (userManagementService.checkPassword(user.getEmailAddress(), passwordEncoder.encode(request.getOldPassword()))) {
-            userManagementService.setPassword(user.getEmailAddress(), passwordEncoder.encode(request.getNewPassword()));
-        } else {
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+        userManagementService.setPassword(user.getEmailAddress(), passwordEncoder.encode(request.getNewPassword()));
     }
 
     /**
