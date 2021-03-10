@@ -39,7 +39,7 @@ public abstract class Implementation implements ImmutableImplementation {
     private String name;
     @JsonProperty("scope")
     @JsonDeserialize(using = ScopeDeserializer.class)
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Scope scope;
 
     public Implementation() {
