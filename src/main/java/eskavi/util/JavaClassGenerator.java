@@ -4,7 +4,6 @@ import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,20 +15,12 @@ public class JavaClassGenerator {
             Files.writeString(Path.of(file.getAbsolutePath()), format(code));
             file.deleteOnExit();
             return file;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (FormatterException e) {
+        } catch (IOException | FormatterException e) {
             e.printStackTrace();
         }
         return null;
     }
-
-    public static File generateJarFile(File classFile) {
-        return null;
-    }
-
+    
     private static String format(String code) throws FormatterException {
         return new Formatter().formatSource(code);
     }

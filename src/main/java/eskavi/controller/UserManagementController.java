@@ -5,7 +5,6 @@ import eskavi.controller.responses.TokenResponse;
 import eskavi.controller.responses.aas.GetSecurityQuestionResponse;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.SecurityQuestion;
-import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
 import eskavi.service.UserManagementService;
 import org.springframework.http.HttpStatus;
@@ -152,7 +151,7 @@ public class UserManagementController {
      */
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteUser(@RequestHeader String Authorization) {
-        User user = (User) userManagementService.getUser(Authorization);
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
         userManagementService.deleteUser(user.getEmailAddress());
     }
 
