@@ -8,7 +8,10 @@ import eskavi.controller.responses.aas.CreateSessionResponse;
 import eskavi.controller.responses.aas.GetConfigurationResponse;
 import eskavi.model.user.ImmutableUser;
 import eskavi.service.aasconfigurationservice.AASConfigurationService;
+import eskavi.service.aasconfigurationservice.AASConstructionSession;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 
@@ -74,8 +77,22 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     @PostMapping("/imp")
-    public void addModuleImp(@RequestBody AddModuleImpRequest request) {
-        aasConfigurationService.addModuleInstance(request.getSessionId(), request.getImpId());
+    public void addModuleImp(@RequestHeader(required = false) String Authorization, @RequestBody AddModuleImpRequest request) {
+
+        if (hasAccess(Authorization, request.getSessionId())) {
+            aasConfigurationService.addModuleInstance(request.getSessionId(), request.getImpId());
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    private boolean hasAccess(String Authorization, long sessionId) {
+        AASConstructionSession session = aasConfigurationService.getSessionById(sessionId);
+        ImmutableUser caller = null;
+        if (Authorization != null) {
+            caller = userTokenMatcher.getUser(Authorization);
+        }
+        return caller == session.getOwner();
     }
 
     /**
@@ -514,8 +531,12 @@ public class AASConfigurationController {
      */
     //TODO Path Variable?
     @DeleteMapping("/imp")
-    public void deleteModuleImp(@RequestParam long moduleId, @RequestParam long sessionId) {
-        aasConfigurationService.removeModuleInstance(sessionId, moduleId);
+    public void deleteModuleImp(@RequestHeader(required = false) String Authorization, @RequestParam long moduleId, @RequestParam long sessionId) {
+        if (hasAccess(Authorization, sessionId)) {
+            aasConfigurationService.removeModuleInstance(sessionId, moduleId);
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
     }
 
     //TODO improve error handling, wrong java syntax leads to crash

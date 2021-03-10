@@ -8,15 +8,20 @@ import eskavi.util.JavaClassConstants;
 import eskavi.util.JavaClassGenerator;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AASConstructionSession {
 
     private long sessionId;
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     private User owner;
     private Map<Long, ModuleInstance> miMap;
     private List<String> registryList;

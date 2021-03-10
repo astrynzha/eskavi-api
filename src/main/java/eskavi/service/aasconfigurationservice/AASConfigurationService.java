@@ -48,6 +48,14 @@ public class AASConfigurationService {
         session.setRegistryList(registryList);
     }
 
+    public AASConstructionSession getSessionById(long sessionId) {
+        try {
+            return sessionHandler.getAASConstructionSession(sessionId);
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
     // TODO: here we need to check if it is really the owner of the session who edits it. What's the best way to do it?
     //       probably should do in the controller. Then a getOwner(long SessionId):User Method in this class is needed
     public void addModuleInstance(long sessionId, long moduleId) {
