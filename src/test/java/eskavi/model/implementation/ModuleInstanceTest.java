@@ -1,5 +1,7 @@
 package eskavi.model.implementation;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eskavi.model.configuration.*;
 import eskavi.model.implementation.moduleimp.*;
 import eskavi.model.user.SecurityQuestion;
@@ -92,6 +94,11 @@ class ModuleInstanceTest {
                 new LinkedList<Configuration>(Arrays.asList(mapping, port)), false);
         endpoint.setConfigurationRoot(configuration);
         instance = new ModuleInstance(endpoint);
+        try {
+            System.out.println(new ObjectMapper().writeValueAsString(instance));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

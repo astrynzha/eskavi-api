@@ -151,6 +151,7 @@ public class UserManagement {
     @Test
     @Order(800)
     void testDeleteUser() throws Exception {
+        login();
         mvc.perform(delete("/api/user")
                 .header("Authorization", "Bearer " + token)
         ).andExpect(status().isOk());
@@ -159,9 +160,10 @@ public class UserManagement {
     @Test
     @Order(900)
     void testGetSecurityQuestion() throws Exception {
+        login();
         mvc.perform(get("/api/user/security_question")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"email\":\"a@gmail.com\"}")
+                .content("a@gmail.com")
         ).andExpect(status().isOk());
     }
 
@@ -176,12 +178,14 @@ public class UserManagement {
     @Order(1100)
     void testSetUserLevel() throws Exception {
         //register new User
+        login();
         SetUserLevelRequest request = new SetUserLevelRequest();
-        request.setEmail(creator.getEmailAddress());
+        request.setEmail("a@gmail.com");
         request.setUserLevel(UserLevel.ADMINISTRATOR);
         String body = new ObjectMapper().writeValueAsString(request);
         mvc.perform(put("/api/user/level")
                 .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(body)
         ).andExpect(status().isOk());
     }
@@ -189,6 +193,7 @@ public class UserManagement {
     @Test
     @Order(1200)
     void testDeleteUserByAdmin() throws Exception {
+        login();
         mvc.perform(delete("/api/user/a@gmail.com")
                 .header("Authorization", "Bearer " + token)
         ).andExpect(status().isOk());

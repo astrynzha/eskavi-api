@@ -3,6 +3,8 @@ package eskavi.scenarios;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import eskavi.EskaviApplication;
+import eskavi.controller.requests.imp.AddUserRequest;
+import eskavi.controller.requests.imp.RemoveUserRequest;
 import eskavi.model.configuration.Configuration;
 import eskavi.model.configuration.DataType;
 import eskavi.model.configuration.KeyExpression;
@@ -30,8 +32,11 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.List;
+
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(properties = {"spring.jpa.hibernate.ddl-auto=create-drop"}, classes = EskaviApplication.class)
@@ -48,10 +53,10 @@ public class EditModuleImp {
     ImplementationRepository impRepository;
     //dummyData
     User creator;
+    User newUser;
     String token;
     //Imps
     Configuration dummy = new TextField("text", false, new KeyExpression("<text>", "<text>"), DataType.TEXT);
-    ;
     MessageType messageType;
     ProtocolType protocolType;
 
@@ -186,5 +191,37 @@ public class EditModuleImp {
                 "serializer", ImplementationScope.SHARED, dummy, messageType, protocolType);
         performPut(serializer2);
         Assertions.assertEquals(serializer2, impRepository.findById(serializer.getImplementationId()).get());
+    }
+
+
+    @Test
+    @Order(1100)
+    void testAddUser() throws Exception {
+        AddUserRequest request = new AddUserRequest();
+        newUser = new User("abc@gmail.com", new BCryptPasswordEncoder().encode("1234"),
+                UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
+        userRepository.save(newUser);
+        request.setUserIds(List.of(newUser.getEmailAddress()));
+        request.setImpId(messageType.getImplementationId());
+        String body = new ObjectMapper().writeValueAsString(request);
+        mvc.perform(post("/api/imp/user")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @Order(1200)
+    void testRemoveUser() throws Exception {
+        RemoveUserRequest request = new RemoveUserRequest();
+        request.setUserId(newUser.getEmailAddress());
+        request.setImpId(messageType.getImplementationId());
+        String body = new ObjectMapper().writeValueAsString(request);
+        mvc.perform(delete("/api/imp/user")
+                .header("Authorization", "Bearer " + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(body))
+                .andExpect(status().isOk());
     }
 }
