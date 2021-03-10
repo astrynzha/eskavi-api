@@ -307,6 +307,8 @@ public class ImpController {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
         if (impId != null) {
             return new GetImplementationsResponse(Arrays.asList(impService.getImp(impId, user.getEmailAddress())));
+        } else if (impType != null) {
+            return new GetImplementationsResponse(impService.getImps(ImpType.valueOf(impType), user.getEmailAddress()));
         } else {
             return new GetImplementationsResponse(impService.getImps(user));
         }
