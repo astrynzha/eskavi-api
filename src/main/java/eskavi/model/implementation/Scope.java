@@ -37,6 +37,11 @@ public class Scope {
         this.grantedUsers = new HashSet<>();
     }
 
+    public Scope(ImplementationScope impScope, Collection<User> grantedUsers) {
+        this.impScope = impScope;
+        this.grantedUsers = grantedUsers;
+    }
+
     public Scope() {
 
     }

@@ -34,6 +34,9 @@ public class ScopeDeserializer extends StdDeserializer<Scope> {
         String type = node.findValue("impScope").asText();
         ImplementationScope impScope = ImplementationScope.valueOf(type);
 
-        return repository.findById(id).orElse(new Scope(impScope)) ;
+        Scope data = repository.findById(id).orElse(new Scope(impScope));
+        Scope result = new Scope(impScope, data.getGrantedUsers());
+
+        return result;
     }
 }

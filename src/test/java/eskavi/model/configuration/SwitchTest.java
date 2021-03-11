@@ -21,7 +21,7 @@ class SwitchTest {
 
     @Test
     void testSetValueSuccess() {
-        testObject.setValue("true");
+        testObject.setValue("trueValue");
         assertEquals("true", testObject.getValue());
     }
 
@@ -43,7 +43,7 @@ class SwitchTest {
         assertEquals(testObject.getKeyExpression(), clone.getKeyExpression());
 
         //changing clone
-        clone.setValue("true");
+        clone.setValue("trueValue");
         assertNotEquals(testObject.getValue(), clone.getValue());
     }
 }
