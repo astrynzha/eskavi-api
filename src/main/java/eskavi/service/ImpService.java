@@ -106,10 +106,10 @@ public class ImpService {
     public Collection<ImmutableImplementation> getImps(ImpType impType, Collection<Long> generics, String callerId) {
         User user = userRepository.findById(callerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find the user"));
-        List<ImmutableGenericImp> genericImps = StreamSupport.stream(impRepository.findAllById(generics).spliterator(), false)
+        Set<ImmutableGenericImp> genericImps = StreamSupport.stream(impRepository.findAllById(generics).spliterator(), false)
                 .filter(i -> i instanceof GenericImp)
                 .map(i -> (GenericImp) i)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         return StreamSupport.stream(impRepository.findAll().spliterator(), false)
                 .filter(i -> filterByImpType(impType, i))
                 .filter(user::hasAccess)
@@ -127,7 +127,7 @@ public class ImpService {
     }
 
     private boolean containsGenerics(ModuleImp mi, Collection<ImmutableGenericImp> generics) {
-        return mi.getGenerics().retainAll(generics);
+        return !Collections.disjoint(mi.getGenerics(), generics);
     }
 
     /**
