@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.EnumSet;
 
 @CrossOrigin
@@ -303,15 +304,20 @@ public class ImpController {
     @GetMapping
     public GetImplementationsResponse get(@RequestParam(value = "id", required = false) Long impId,
                                           @RequestParam(value = "impType", required = false) String impType,
+                                          @RequestParam(value = "generics", required = false) Collection<Long> generics,
                                           @RequestHeader String Authorization) {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
+        ImpType type = impType != null ? ImpType.valueOf(impType) : null;
         if (impId != null) {
             return new GetImplementationsResponse(Arrays.asList(impService.getImp(impId, user.getEmailAddress())));
-        } else if (impType != null) {
-            return new GetImplementationsResponse(impService.getImps(ImpType.valueOf(impType), user.getEmailAddress()));
-        } else {
-            return new GetImplementationsResponse(impService.getImps(user));
         }
+        if (generics != null) {
+            return new GetImplementationsResponse(impService.getImps(type, generics, user.getEmailAddress()));
+        }
+        if (impType != null) {
+            return new GetImplementationsResponse(impService.getImps(type, user.getEmailAddress()));
+        }
+        return new GetImplementationsResponse(impService.getImps(user));
     }
 
     /**

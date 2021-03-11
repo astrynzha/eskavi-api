@@ -10,18 +10,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
  * This service class contains all the functionality needed to edit and use Implementations
  *
- * @version 1.0
  * @author Andrii Strynzha, David Kaufmann, Maximilian Georg
+ * @version 1.0
  */
 @Service
 public class ImpService {
@@ -31,9 +28,10 @@ public class ImpService {
 
     /**
      * Standard constructor
-     * @param impRepository repository with implementations
+     *
+     * @param impRepository  repository with implementations
      * @param userRepository repository with users
-     * @param config repository with config
+     * @param config         repository with config
      */
     public ImpService(ImplementationRepository impRepository, UserRepository userRepository, Config config) {
         this.impRepository = impRepository;
@@ -44,7 +42,7 @@ public class ImpService {
     /**
      * Returns an implementation with the specified ID.
      *
-     * @param impId implementation id
+     * @param impId  implementation id
      * @param userId user id
      * @return requested implementation
      */
@@ -85,7 +83,7 @@ public class ImpService {
     /**
      * returns all implementations that the caller is subscribed to, filtered by the implementation type.
      *
-     * @param impType implementation Type.
+     * @param impType  implementation Type.
      * @param callerId caller ID.
      * @return collection of implementations.
      */
@@ -98,6 +96,39 @@ public class ImpService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * returns all implementations that the caller is subscribed to, filtered by the implementation type and there generics.
+     *
+     * @param impType  implementation Type.
+     * @param callerId caller ID.
+     * @return collection of implementations.
+     */
+    public Collection<ImmutableImplementation> getImps(ImpType impType, Collection<Long> generics, String callerId) {
+        User user = userRepository.findById(callerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find the user"));
+        List<ImmutableGenericImp> genericImps = StreamSupport.stream(impRepository.findAllById(generics).spliterator(), false)
+                .filter(i -> i instanceof GenericImp)
+                .map(i -> (GenericImp) i)
+                .collect(Collectors.toList());
+        return StreamSupport.stream(impRepository.findAll().spliterator(), false)
+                .filter(i -> filterByImpType(impType, i))
+                .filter(user::hasAccess)
+                .filter(i -> i instanceof ModuleImp)
+                .map(i -> (ModuleImp) i)
+                .filter(mi -> containsGenerics(mi, genericImps))
+                .collect(Collectors.toList());
+    }
+
+    private boolean filterByImpType(ImpType impType, ImmutableImplementation mi) {
+        if (impType == null) {
+            return true;
+        }
+        return impType.matches(mi);
+    }
+
+    private boolean containsGenerics(ModuleImp mi, Collection<ImmutableGenericImp> generics) {
+        return mi.getGenerics().retainAll(generics);
+    }
 
     /**
      * Returns default Implementation for the provided Implementation type
@@ -187,8 +218,8 @@ public class ImpService {
      * Implementation.
      *
      * @param implementationId Implementation ID to subscribe the user to.
-     * @param userId user ID to subscribe implementation to.
-     * @param callerId id of the caller.
+     * @param userId           user ID to subscribe implementation to.
+     * @param callerId         id of the caller.
      * @throws IllegalAccessException if implementation is not SHARED.
      */
     public void addUser(long implementationId, String userId, String callerId) throws IllegalAccessException {
@@ -215,8 +246,8 @@ public class ImpService {
      * of the Implementation.
      *
      * @param implementationId Implementation ID to unsubscribe the user from.
-     * @param userId user ID to unsubscribe implementation from.
-     * @param callerId id of the caller.
+     * @param userId           user ID to unsubscribe implementation from.
+     * @param callerId         id of the caller.
      * @throws IllegalAccessException if implementation is not SHARED.
      */
     public void removeUser(long implementationId, String userId, String callerId) throws IllegalAccessException {
@@ -263,7 +294,7 @@ public class ImpService {
      * Used to modify the implementation.
      * Substitutes the old implementation entity in repo with the received one.
      *
-     * @param mi module implementation
+     * @param mi       module implementation
      * @param callerId id of the caller
      * @throws IllegalAccessException if the caller is not the author of the mi and hence, cannot modify it.
      */
@@ -288,7 +319,7 @@ public class ImpService {
      * Removes an Implementation from the system, if the caller is the author.
      *
      * @param implementationId implementation id
-     * @param callerId Id the caller
+     * @param callerId         Id the caller
      */
     public void removeImplementation(Long implementationId, String callerId) throws IllegalAccessException {
         Optional<Implementation> optionalImplementation = impRepository.findById(implementationId);

@@ -238,7 +238,7 @@ public class UserManagementController {
     public void resetPassword(@RequestHeader String Authorization, @RequestBody SetPasswordRequest request) throws IllegalAccessException {
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
         if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "wrong password");
         }
         userManagementService.setPassword(user.getEmailAddress(), passwordEncoder.encode(request.getNewPassword()));
     }
