@@ -92,7 +92,7 @@ public class AASConfigurationController {
         if (Authorization != null) {
             caller = userTokenMatcher.getUser(Authorization);
         }
-        return caller == session.getOwner();
+        return session.getOwner().equals(caller);
     }
 
     /**
