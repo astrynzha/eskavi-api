@@ -191,6 +191,7 @@ public class UserManagementController {
      * @apiName ResetPasswordQuestion
      * @apiGroup User
      * @apiVersion 0.0.1
+     * @apiParam (Request body) {String} email Email of user account
      * @apiParam (Request body) {String} answer Answer to the security question
      * @apiParam (Request body) {String} newPassword New password
      * @apiParamExample {json} Request-Example:
@@ -206,10 +207,9 @@ public class UserManagementController {
      * }
      */
     @PostMapping("/reset_password")
-    public void resetPassword(@RequestHeader String Authorization, @RequestBody ResetPasswordRequest request) throws IllegalAccessException {
-        ImmutableUser user = userTokenMatcher.getUser(Authorization);
-        if (userManagementService.checkSecurityQuestion(user.getEmailAddress(), request.getAnswer())) {
-            userManagementService.setPassword(user.getEmailAddress(), passwordEncoder.encode(request.getNewPassword()));
+    public void resetPassword(@RequestBody ResetPasswordRequest request) throws IllegalAccessException {
+        if (userManagementService.checkSecurityQuestion(request.getEmail(), request.getAnswer())) {
+            userManagementService.setPassword(request.getEmail(), passwordEncoder.encode(request.getNewPassword()));
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
