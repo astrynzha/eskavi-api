@@ -702,7 +702,7 @@ public class ImpController {
      * @apiGroup Implementation
      * @apiVersion 0.0.1
      * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
-     * @apiParam (Request body) {Number} impId Implementation unique ID
+     * @apiParam (Request Parameter) {Number} id Implementation unique ID
      * @apiError {String} message Errormessage
      * @apiErrorExample {json} Error-Response:
      * HTTP/1.1 404 Not Found
