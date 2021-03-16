@@ -697,6 +697,21 @@ public class ImpController {
     }
 
     /**
+     * @api{post}/imp/impScope Remove User from Implementation
+     * @apiName UpdateImpScope
+     * @apiGroup Implementation
+     * @apiVersion 0.0.1
+     * @apiHeader {String} Authorization Authorization header using the Bearer schema: Bearer token
+     * @apiError {String} message Errormessage
+     * @apiParam (Request body) {String} impScope The requested impScope
+     * @apiParam (Request body) {Number} impId Implementation unique ID
+     */
+    @PostMapping("/impScope")
+    public void setImpScope() {
+
+    }
+
+    /**
      * @api{delete}/imp/ Delete Implementation
      * @apiName DeleteImplementation
      * @apiGroup Implementation
