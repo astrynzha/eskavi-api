@@ -35,8 +35,9 @@ public class ScopeDeserializer extends StdDeserializer<Scope> {
         ImplementationScope impScope = ImplementationScope.valueOf(type);
 
         Scope data = repository.findById(id).orElse(new Scope(impScope));
-        Scope result = new Scope(impScope, data.getGrantedUsers());
 
-        return result;
+        if (impScope.equals(data.getImpScope())) { return data; }
+
+        return new Scope(impScope);
     }
 }
