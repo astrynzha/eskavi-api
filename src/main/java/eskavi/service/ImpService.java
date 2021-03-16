@@ -362,5 +362,9 @@ public class ImpService {
     private Collection<ImmutableImplementation> getPublic() {
         return impRepository.findAllByScope_ImpScope(ImplementationScope.PUBLIC);
     }
+
+    public ImmutableUser getPublicUser() {
+        return userRepository.findById(config.getPUBLIC_USER_ID()).orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
 }
 
