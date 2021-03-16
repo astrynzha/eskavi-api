@@ -166,10 +166,10 @@ public class JacksonTests {
     void testFileField() throws JsonProcessingException {
         FileField field = new FileField("fileField", false, new KeyExpression("start", "end"));
         String result = new ObjectMapper().writeValueAsString(field);
-        //System.out.println(result);
+        System.out.println(result);
         assertEquals("{\"jsonTypeInfo\":\"FILE_FIELD\",\"keyExpression\":{\"expressionStart\":\"start\",\"expressionEnd\":\"end\"},\"name\":\"fileField\",\"allowMultiple\":false}", result);
         FileField copy = new ObjectMapper().readValue(result, FileField.class);
-        //System.out.println(copy.toString());
+        System.out.println(copy.toString());
         assertEquals(field, copy);
     }
 

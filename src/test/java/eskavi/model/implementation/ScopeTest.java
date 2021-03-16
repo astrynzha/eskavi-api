@@ -53,11 +53,9 @@ class ScopeTest {
         } catch (IllegalAccessException e) {
             fail(e.getMessage());
         }
-        try {
-            implementationA.unsubscribe(userB);
-        } catch (IllegalAccessException e) {
-            fail(e.getMessage());
-        }
+
+        implementationA.unsubscribe(userB);
+
         assertFalse(implementationA.isSubscribed(userB), "user is still subscribed after unsubscribe");
     }
 
@@ -69,15 +67,11 @@ class ScopeTest {
             fail(e.getMessage());
         }
         assertTrue(implementationA.isSubscribed(userB), "Could not subscribe a new user");
-        assertTrue(implementationA.isSubscribed(userA), "Author is not subscribed");
         implementationA.setScope(new Scope(ImplementationScope.PUBLIC));
         assertFalse(implementationA.isSubscribed(userB), "userB is still subscribed after changing the scope");
-        assertFalse(implementationA.isSubscribed(userA), "userA is still subscribed after changing the scope");
         implementationA.setScope(new Scope(ImplementationScope.SHARED));
-        assertTrue(implementationA.isSubscribed(userA), "Author is not subscribed");
         assertFalse(implementationA.isSubscribed(userB), "user is still subscribed after changing the scope");
         implementationA.setScope(new Scope(ImplementationScope.PRIVATE));
         assertFalse(implementationA.isSubscribed(userB), "userB is still subscribed after changing the scope");
-        assertFalse(implementationA.isSubscribed(userA), "userA is still subscribed after changing the scope");
     }
 }

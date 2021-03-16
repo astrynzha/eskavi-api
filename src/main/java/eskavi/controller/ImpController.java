@@ -3,6 +3,7 @@ package eskavi.controller;
 import eskavi.controller.requests.imp.AddImplementationResponse;
 import eskavi.controller.requests.imp.AddUserRequest;
 import eskavi.controller.requests.imp.RemoveUserRequest;
+import eskavi.controller.requests.imp.UpdateImpScopeRequest;
 import eskavi.controller.responses.imp.*;
 import eskavi.model.configuration.ConfigurationType;
 import eskavi.model.configuration.DataType;
@@ -707,8 +708,9 @@ public class ImpController {
      * @apiParam (Request body) {Number} impId Implementation unique ID
      */
     @PostMapping("/impScope")
-    public void setImpScope() {
-
+    public void updateImpScope(@RequestHeader String Authorization, @RequestBody UpdateImpScopeRequest request) {
+        ImmutableUser user = userTokenMatcher.getUser(Authorization);
+        impService.updateImpScope(request.getImpScope(), request.getImpId(), user);
     }
 
     /**

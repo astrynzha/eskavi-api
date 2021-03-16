@@ -82,7 +82,7 @@ public class User implements ImmutableUser {
      *
      * @param mi {@link Implementation} to unsubscribe from
      */
-    public void unsubscribe(Implementation mi) throws IllegalAccessException {
+    public void unsubscribe(Implementation mi) {
         if (!this.implementations.contains(mi)) {
             return;
         }

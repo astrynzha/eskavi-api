@@ -60,10 +60,7 @@ public class Scope {
      * @param user user to unsubscribe
      * @throws IllegalAccessException if the scope is not SHARED
      */
-    public void unsubscribe(User user) throws IllegalAccessException {
-        if (!(impScope.equals(ImplementationScope.SHARED))) {
-            throw new IllegalAccessException("Could not subscribe a user to scope. Scope is not SHARED");
-        }
+    public void unsubscribe(User user) {
         grantedUsers.remove(user);
     }
 

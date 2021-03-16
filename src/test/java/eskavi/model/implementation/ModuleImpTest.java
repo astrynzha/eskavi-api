@@ -287,11 +287,7 @@ class ModuleImpTest {
 
     @Test
     void toStringTest() {
-        assertEquals("Environment{implementationId=13, author=User{emailAddress='a@gmail.com', " +
-                "hashedPassword='dfjask;fj', securityQuestion=MAIDEN_NAME, securityAnswer='Julia', " +
-                "userLevel=PUBLISHING_USER}, name='environment_13', scope=Scope{impScope=SHARED, " +
-                "grantedUsers=[User{emailAddress='a@gmail.com', hashedPassword='dfjask;fj', " +
-                "securityQuestion=MAIDEN_NAME, securityAnswer='Julia', userLevel=PUBLISHING_USER}]}}",
+        assertEquals("Environment{implementationId=13, author=User{emailAddress='a@gmail.com', hashedPassword='dfjask;fj', securityQuestion=MAIDEN_NAME, securityAnswer='Julia', userLevel=PUBLISHING_USER}, name='environment_13', scope=Scope{impScope=SHARED, grantedUsers=[]}}",
                 environment.toString());
     }
 }

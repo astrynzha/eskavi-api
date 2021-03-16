@@ -8,6 +8,7 @@ import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -56,17 +57,9 @@ public abstract class Implementation implements ImmutableImplementation {
      */
     protected Implementation(long implementationId, User author, String name, ImplementationScope impScope) {
         this.implementationId = implementationId;
-        this.author = author;
+        setAuthor(author);
         this.name = name;
         this.scope = new Scope(impScope);
-        if (impScope == ImplementationScope.SHARED) {
-            try {
-                scope.subscribe(author);
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException("This should never happen, scope is SHARED and " +
-                        "the moduleImp can be subscribed to the author", e);
-            }
-        }
     }
 
     /**
@@ -77,7 +70,7 @@ public abstract class Implementation implements ImmutableImplementation {
      * @throws IllegalAccessException if the scope is not SHARED
      */
     public void subscribe(User user) throws IllegalAccessException {
-        if (isSubscribed(user)) {
+        if (isSubscribed(user) || getAuthor().equals(user)) {
             return;
         }
         scope.subscribe(user);
@@ -91,7 +84,7 @@ public abstract class Implementation implements ImmutableImplementation {
      * @param user User to subscribe
      * @throws IllegalAccessException if the scope is not SHARED
      */
-    public void unsubscribe(User user) throws IllegalAccessException {
+    public void unsubscribe(User user) {
         if (!isSubscribed(user)) {
             return;
         }
@@ -107,11 +100,7 @@ public abstract class Implementation implements ImmutableImplementation {
     @JsonIgnore
     public boolean isValid() {
         return implementationId >= 0 && author != null && name != null && scope != null && scope.getImpScope() != null
-                && scope.getScopeId() >= 0 && scope.getGrantedUsers() != null
-                // when the scope is SHARED -> author has to be subscribed, otherwise grantedUsers is empty
-                && (((scope.getImpScope().equals(ImplementationScope.SHARED)) && scope.getGrantedUsers().size() == 1
-                && scope.getGrantedUsers().contains(author))
-                || (!scope.getImpScope().equals(ImplementationScope.SHARED) && scope.getGrantedUsers().size() == 0));
+                && scope.getScopeId() >= 0 && scope.getGrantedUsers() != null;
     }
 
     @Override
@@ -140,17 +129,19 @@ public abstract class Implementation implements ImmutableImplementation {
      * @param scope new scope object
      */
     public void setScope(Scope scope) {
-        this.scope = scope;
-        if (scope.getImpScope().equals(ImplementationScope.SHARED)) {
-            try {
-                // TODO subscribe this to the author as well?
-                scope.subscribe((User) getAuthor());
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException("this cannot happen, scope is checked, before adding a new user");
+        if (this.scope != null) {
+            Collection<User> subscribers = new ArrayList<>(this.getSubscribed());
+            for (User user : subscribers) {
+                user.unsubscribe(this);
             }
         }
+        this.scope = scope;
     }
 
+    /**
+     * Returns all users that are subscriped to this Implementation. This does not include the author!
+     * @return Collection of all subscribed users
+     */
     @JsonIgnore
     @Override
     public Collection<User> getSubscribed() {
@@ -162,7 +153,7 @@ public abstract class Implementation implements ImmutableImplementation {
         if (!(user instanceof User)) {
             return false;
         }
-        return scope.isSubscribed((User) user);
+        return this.author.equals(user) || scope.isSubscribed((User) user);
     }
 
     @JsonIgnore
@@ -171,8 +162,21 @@ public abstract class Implementation implements ImmutableImplementation {
         return scope.getImpScope();
     }
 
+    /**
+     * Sets the author to the given User this method should usually never be used outside the constructor
+     * @param author
+     */
     public void setAuthor(User author) {
+        if (this.author != null) {
+            this.author.unsubscribe(this);
+        }
         this.author = author;
+        try {
+            author.subscribe(this);
+        } catch (IllegalAccessException e) {
+            //this should never be reached here
+            assert false;
+        }
     }
 
     public void setImplementationId(long implementationId) {

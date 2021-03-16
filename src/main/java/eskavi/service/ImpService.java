@@ -199,16 +199,7 @@ public class ImpService {
         mi.setAuthor(caller);
         mi.setScope(new Scope(mi.getImplementationScope())); // set an empty scope
         Implementation savedMi = impRepository.save(mi);
-        // add author to scope if SHARED
-        if (mi.getImplementationScope().equals(ImplementationScope.SHARED)) {
-            try {
-                updateScope(caller, savedMi);
-            } catch (IllegalAccessException e) {
-                throw new IllegalStateException("this should never happen, scope is SHARED " +
-                        "and thus subscribe is possible");
-            }
-            // moduleImp is persisted inside updateScope
-        }
+
         return impRepository.findById(mi.getImplementationId())
                 .orElseThrow(() -> new IllegalStateException("this should not have happened, mi was persisted"));
     }
@@ -365,6 +356,18 @@ public class ImpService {
 
     public ImmutableUser getPublicUser() {
         return userRepository.findById(config.getPUBLIC_USER_ID()).orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
+    public void updateImpScope(ImplementationScope impScope, long impId, ImmutableUser caller) {
+        Implementation imp = impRepository.findById(impId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (!imp.getImplementationScope().equals(impScope)) {
+            if (imp.getAuthor().equals(caller)) {
+                imp.setScope(new Scope(impScope));
+            } else {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
+        }
+        impRepository.save(imp);
     }
 }
 

@@ -74,11 +74,8 @@ class UserTest {
         //test getSubscribed
         assertTrue(this.user.getSubscribed().contains(imp));
         //test unsubscribe
-        try {
-            this.user.unsubscribe(imp);
-        } catch (IllegalAccessException e) {
-            fail(e.getMessage());
-        }
+
+        this.user.unsubscribe(imp);
         /*
         //changed method to hasAccess -> this is true now because author always has access
         assertFalse(this.user.hasAccess(imp));

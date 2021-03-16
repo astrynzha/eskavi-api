@@ -37,7 +37,9 @@ public class FileField extends SingleValueField {
     }
 
     @Override
-    public Configuration clone() {
-        return null;
+    public FileField clone() {
+        FileField result = new FileField(this.getName(), this.allowsMultiple(), this.getKeyExpression());
+        result.setValue(this.getValue());
+        return result;
     }
 }
