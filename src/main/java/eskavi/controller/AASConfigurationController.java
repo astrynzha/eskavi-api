@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @CrossOrigin
 @RestController
@@ -94,7 +95,7 @@ public class AASConfigurationController {
         if (Authorization != null) {
             caller = userTokenMatcher.getUser(Authorization);
         }
-        return session.getOwner().equals(caller);
+        return Objects.equals(session.getOwner(), caller);
     }
 
     /**
