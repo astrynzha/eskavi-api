@@ -18,6 +18,15 @@ public class Config {
     private long PROTOCOL_TYPE;
     private long MESSAGE_TYPE;
     private long ENVIRONMENT;
+    private String PUBLIC_USER_ID;
+
+    public String getPUBLIC_USER_ID() {
+        return PUBLIC_USER_ID;
+    }
+
+    public void setPUBLIC_USER_ID(String PUBLIC_USER_ID) {
+        this.PUBLIC_USER_ID = PUBLIC_USER_ID;
+    }
 
     public int getTOKEN_EXPIRES_AFTER_HOURS() {
         return TOKEN_EXPIRES_AFTER_HOURS;

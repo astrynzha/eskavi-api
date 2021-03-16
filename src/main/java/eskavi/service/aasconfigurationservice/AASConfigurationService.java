@@ -34,6 +34,10 @@ public class AASConfigurationService {
         return sessionHandler.createAASConstructionSession(user);
     }
 
+    public long createAASConstructionSessionWithoutUser() {
+        return sessionHandler.createAASConstructionSession(null);
+    }
+
     public void removeAASConstructionSession(long sessionId) {
         sessionHandler.deleteAASConstructionSession(sessionId);
     }

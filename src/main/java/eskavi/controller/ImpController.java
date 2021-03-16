@@ -305,8 +305,8 @@ public class ImpController {
     public GetImplementationsResponse get(@RequestParam(value = "id", required = false) Long impId,
                                           @RequestParam(value = "impType", required = false) String impType,
                                           @RequestParam(value = "generics", required = false) Collection<Long> generics,
-                                          @RequestHeader String Authorization) {
-        ImmutableUser user = userTokenMatcher.getUser(Authorization);
+                                          @RequestHeader(required = false) String Authorization) {
+        ImmutableUser user = Authorization != null ? userTokenMatcher.getUser(Authorization) : impService.getPublicUser();
         ImpType type = impType != null ? ImpType.valueOf(impType) : null;
         if (impId != null) {
             return new GetImplementationsResponse(Arrays.asList(impService.getImp(impId, user.getEmailAddress())));

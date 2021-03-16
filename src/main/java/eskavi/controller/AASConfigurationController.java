@@ -39,7 +39,10 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     @PostMapping
-    public CreateSessionResponse createSession(@RequestHeader String Authorization) {
+    public CreateSessionResponse createSession(@RequestHeader(required = false) String Authorization) {
+        if (Authorization == null) {
+            return new CreateSessionResponse(aasConfigurationService.createAASConstructionSessionWithoutUser());
+        }
         ImmutableUser user = userTokenMatcher.getUser(Authorization);
         return new CreateSessionResponse(aasConfigurationService.createAASConstructionSession(user.getEmailAddress()));
     }
@@ -53,12 +56,11 @@ public class AASConfigurationController {
      * @apiParam (Request body) {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
      */
-    //TODO Path Param?!
     @DeleteMapping()
-    public void closeSession(@RequestParam("sessionId") long sessionId) {
-        //ImmutableUser user = userTokenMatcher.getUser(Authorization);
-        //TODO not every one should be able to randomly close sessions
-        aasConfigurationService.removeAASConstructionSession(sessionId);
+    public void closeSession(@RequestHeader(required = false) String Authorization, @RequestParam("sessionId") long sessionId) {
+        if (hasAccess(Authorization, sessionId)) {
+            aasConfigurationService.removeAASConstructionSession(sessionId);
+        }
     }
 
     @PostMapping("/registry")
@@ -515,8 +517,12 @@ public class AASConfigurationController {
      * @apiError {String} message Errormessage
      */
     @PutMapping("/imp/configuration")
-    public void updateConfiguration(@RequestBody UpdateConfigurationRequest request) {
-        aasConfigurationService.updateConfiguration(request.getSessionId(), request.getConfiguration(), request.getImpId());
+    public void updateConfiguration(@RequestHeader(required = false) String Authorization, @RequestBody UpdateConfigurationRequest request) {
+        if (hasAccess(Authorization, request.getSessionId())) {
+            aasConfigurationService.updateConfiguration(request.getSessionId(), request.getConfiguration(), request.getImpId());
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
     }
 
     /**
@@ -529,7 +535,6 @@ public class AASConfigurationController {
      * @apiParam (Request body) {Number} impId Implementation unique ID
      * @apiError {String} message Errormessage
      */
-    //TODO Path Variable?
     @DeleteMapping("/imp")
     public void deleteModuleImp(@RequestHeader(required = false) String Authorization, @RequestParam long moduleId, @RequestParam long sessionId) {
         if (hasAccess(Authorization, sessionId)) {
@@ -538,8 +543,6 @@ public class AASConfigurationController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
     }
-
-    //TODO improve error handling, wrong java syntax leads to crash
 
     /**
      * @api{get}/aas/file Generates a .java file which starts the AAS

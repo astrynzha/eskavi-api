@@ -32,6 +32,9 @@ public class DefaultData implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         User admin = new User("admin@eskavi.com", new BCryptPasswordEncoder().encode("admin"), UserLevel.ADMINISTRATOR, SecurityQuestion.MAIDEN_NAME, "julia");
         userRepository.save(admin);
+        User publicUser = new User("public@eskavi.com", "", UserLevel.BASIC_USER, SecurityQuestion.MAIDEN_NAME, "");
+        userRepository.save(publicUser);
+
         Configuration dummy = new TextField("dummy", false, new KeyExpression("Dummy(\"", "\");"), DataType.TEXT);
 
         MessageType messageType = new MessageType(config.getMESSAGE_TYPE(), admin, "defaultMessageType", ImplementationScope.PRIVATE);
