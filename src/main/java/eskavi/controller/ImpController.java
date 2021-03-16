@@ -697,7 +697,7 @@ public class ImpController {
     }
 
     /**
-     * @api{post}/imp/impScope Remove User from Implementation
+     * @api{post}/imp/impScope Change scope of implementation
      * @apiName UpdateImpScope
      * @apiGroup Implementation
      * @apiVersion 0.0.1
