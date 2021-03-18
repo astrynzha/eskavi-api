@@ -6,6 +6,7 @@ import eskavi.model.implementation.ModuleInstance;
 import eskavi.model.user.User;
 import eskavi.util.JavaClassConstants;
 import eskavi.util.JavaClassGenerator;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class AASConstructionSession {
     private User owner;
     private ConcurrentMap<Long, ModuleInstance> miMap;
     private List<String> registryList;
+
     public AASConstructionSession(long sessionId, User owner) {
         this.sessionId = sessionId;
         this.owner = owner;
@@ -72,30 +74,44 @@ public class AASConstructionSession {
         return miMap.get(moduleId).getInstanceConfiguration();
     }
 
+    private void appendDeclarations(StringBuilder codeBuilder) {
+        miMap.values().forEach(mi -> codeBuilder.append(
+                mi.getModuleImp().getName() + " " +
+                        mi.getModuleImp().getName().toLowerCase() + "=" +
+                        mi.resolveConfiguration()
+        ));
+    }
+
+    private void appendAASContent(StringBuilder codeBuilder) {
+        miMap.values().forEach(mi -> codeBuilder.append(
+                //TODO make classname properly
+                "." + StringUtils.uncapitalize(mi.getModuleImp().getClass().getSimpleName()) + "(" +
+                        mi.getModuleImp().getName().toLowerCase() + ")"
+        ));
+    }
+
     public File generateJavaClass() {
         if (this.isValid()) {
             StringBuilder codeBuilder = new StringBuilder();
             codeBuilder.append(JavaClassConstants.getClassStart());
-            miMap.values().forEach(mi -> codeBuilder.append(
-                    mi.getModuleImp().getName() + " " +
-                            mi.getModuleImp().getName().toLowerCase() + "=" +
-                            mi.resolveConfiguration()
-            ));
+
+            appendDeclarations(codeBuilder);
+
             codeBuilder.append(JavaClassConstants.getAasBuilderStart());
-            miMap.values().forEach(mi -> codeBuilder.append(
-                    //TODO make classname properly
-                    "." + mi.getModuleImp().getClass().getSimpleName().toLowerCase() + "(" +
-                            mi.getModuleImp().getName().toLowerCase() + ")"
-            ));
+
+            appendAASContent(codeBuilder);
+
             codeBuilder.append(JavaClassConstants.getAasBuilderEnd());
+
             registryList.forEach(registry -> codeBuilder.append(
                     JavaClassConstants.getRegisterStart() + registry + JavaClassConstants.getRegisterEnd()
             ));
+
             codeBuilder.append(JavaClassConstants.getClassEnd());
             return JavaClassGenerator.generateClassFile(codeBuilder.toString());
         } else {
             //TODO what should we throw here
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("The Session has invalid Java Syntax");
         }
     }
 
