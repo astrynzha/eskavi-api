@@ -8,11 +8,24 @@ import eskavi.util.JavaClassConstants;
 import eskavi.util.JavaClassGenerator;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class AASConstructionSession {
 
     private long sessionId;
+    private User owner;
+    private ConcurrentMap<Long, ModuleInstance> miMap;
+    private List<String> registryList;
+    public AASConstructionSession(long sessionId, User owner) {
+        this.sessionId = sessionId;
+        this.owner = owner;
+        this.miMap = new ConcurrentHashMap<>();
+        this.registryList = new LinkedList<>();
+    }
 
     public User getOwner() {
         return owner;
@@ -20,17 +33,6 @@ public class AASConstructionSession {
 
     public void setOwner(User owner) {
         this.owner = owner;
-    }
-
-    private User owner;
-    private Map<Long, ModuleInstance> miMap;
-    private List<String> registryList;
-
-    public AASConstructionSession(long sessionId, User owner) {
-        this.sessionId = sessionId;
-        this.owner = owner;
-        this.miMap = new LinkedHashMap<>();
-        this.registryList = new LinkedList<>();
     }
 
     public long getSessionId() {
