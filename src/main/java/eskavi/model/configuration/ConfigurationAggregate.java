@@ -116,7 +116,7 @@ public class ConfigurationAggregate extends Configuration {
                 }
             }
         }
-        return true;
+        return getKeyExpression().isValid();
     }
 
     @Override

@@ -1,8 +1,9 @@
 package eskavi.model.configuration;
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import eskavi.deserializer.GenericsDeserializer;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import eskavi.model.implementation.*;
 
 import javax.persistence.Entity;
@@ -112,7 +113,7 @@ public class ImplementationSelect extends Configuration {
 
     @Override
     public boolean isValid() {
-        return true;
+        return getKeyExpression().isValid();
     }
 
     @JsonIgnore
