@@ -3,6 +3,7 @@ package eskavi.service;
 import eskavi.model.implementation.*;
 import eskavi.model.user.ImmutableUser;
 import eskavi.model.user.User;
+import eskavi.model.user.UserLevel;
 import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
 import eskavi.util.Config;
@@ -358,13 +359,26 @@ public class ImpService {
         return userRepository.findById(config.getPUBLIC_USER_ID()).orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
+    /**
+     * This method is called by the Controller to update the impScope of an Implementation. It therefore checks whether the
+     * caller is the author of the given Implementation and if the author is allowed to set the scope to the requested one. Only
+     * if both criteria is met the impScope gets updated.
+     * @param impScope new ImpScope
+     * @param impId id of the Imp which is changed
+     * @param caller User who made the request
+     */
     public void updateImpScope(ImplementationScope impScope, long impId, ImmutableUser caller) {
         Implementation imp = impRepository.findById(impId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         if (!imp.getImplementationScope().equals(impScope)) {
             if (imp.getAuthor().equals(caller)) {
-                imp.setScope(new Scope(impScope));
+                if (!impScope.equals(ImplementationScope.PUBLIC) || imp.getAuthor().getUserLevel().equals(UserLevel.ADMINISTRATOR)
+                        || imp.getAuthor().getUserLevel().equals(UserLevel.PUBLISHING_USER)) {
+                    imp.setScope(new Scope(impScope));
+                } else {
+                    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only publishing users are allowed to publish Implementations");
+                }
             } else {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only the author is allowed to change an Implementation.");
             }
         }
         impRepository.save(imp);
