@@ -108,7 +108,11 @@ public class AASConfigurationService {
         }
 
         try {
-            session.updateInstanceConfiguration(moduleId, configuration);
+            if (configuration.checkCompatible()) {
+                session.updateInstanceConfiguration(moduleId, configuration);
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The given Configuration is not valid. All values have to be set.");
+            }
         } catch (IllegalAccessException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

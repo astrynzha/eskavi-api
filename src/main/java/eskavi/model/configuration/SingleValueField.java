@@ -53,7 +53,7 @@ public abstract class SingleValueField extends Configuration {
 
     @Override
     public boolean checkCompatible() {
-        return true;
+        return this.value != null;
     }
 
     @Override
