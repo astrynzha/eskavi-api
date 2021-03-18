@@ -37,37 +37,37 @@ public class DefaultData implements ApplicationRunner {
 
         Configuration dummy = new TextField("dummy", false, new KeyExpression("Dummy(\"", "\");"), DataType.TEXT);
 
-        MessageType messageType = new MessageType(config.getMESSAGE_TYPE(), admin, "defaultMessageType", ImplementationScope.PRIVATE);
+        MessageType messageType = new MessageType(config.getMESSAGE_TYPE(), admin, "DefaultMessageType", ImplementationScope.PRIVATE);
         messageType = implementationRepository.save(messageType);
 
-        ProtocolType protocolType = new ProtocolType(config.getPROTOCOL_TYPE(), admin, "defaultProtocolType", ImplementationScope.PRIVATE);
+        ProtocolType protocolType = new ProtocolType(config.getPROTOCOL_TYPE(), admin, "DefaultProtocolType", ImplementationScope.PRIVATE);
         protocolType = implementationRepository.save(protocolType);
 
-        AssetConnection assetConnection = new AssetConnection(config.getASSET_CONNECTION(), admin, "defaultAssetConnection", ImplementationScope.PRIVATE, dummy);
+        AssetConnection assetConnection = new AssetConnection(config.getASSET_CONNECTION(), admin, "DefaultAssetConnection", ImplementationScope.PRIVATE, dummy);
         implementationRepository.save(assetConnection);
 
-        InteractionStarter interactionStarter = new InteractionStarter(config.getINTERACTION_STARTER(), admin, "defaultInteractionStarter", ImplementationScope.PRIVATE, dummy);
+        InteractionStarter interactionStarter = new InteractionStarter(config.getINTERACTION_STARTER(), admin, "DefaultInteractionStarter", ImplementationScope.PRIVATE, dummy);
         implementationRepository.save(interactionStarter);
 
-        PersistenceManager persistenceManager = new PersistenceManager(config.getPERSISTENCE_MANAGER(), admin, "defaultPersistenceManager", ImplementationScope.PRIVATE, dummy);
+        PersistenceManager persistenceManager = new PersistenceManager(config.getPERSISTENCE_MANAGER(), admin, "DefaultPersistenceManager", ImplementationScope.PRIVATE, dummy);
         implementationRepository.save(persistenceManager);
 
-        Deserializer deserializer = new Deserializer(config.getDESERIALIZER(), admin, "defaultDeserializer", ImplementationScope.PRIVATE, dummy, messageType, protocolType);
+        Deserializer deserializer = new Deserializer(config.getDESERIALIZER(), admin, "DefaultDeserializer", ImplementationScope.PRIVATE, dummy, messageType, protocolType);
         implementationRepository.save(deserializer);
 
-        Dispatcher dispatcher = new Dispatcher(config.getDISPATCHER(), admin, "defaultDispatcher", ImplementationScope.PRIVATE, dummy, messageType);
+        Dispatcher dispatcher = new Dispatcher(config.getDISPATCHER(), admin, "DefaultDispatcher", ImplementationScope.PRIVATE, dummy, messageType);
         implementationRepository.save(dispatcher);
 
-        Endpoint endpoint = new Endpoint(config.getENDPOINT(), admin, "defaultEndpoint", ImplementationScope.PRIVATE, dummy, protocolType);
+        Endpoint endpoint = new Endpoint(config.getENDPOINT(), admin, "DefaultEndpoint", ImplementationScope.PRIVATE, dummy, protocolType);
         implementationRepository.save(endpoint);
 
-        Serializer serializer = new Serializer(config.getSERIALIZER(), admin, "defaultSerializer", ImplementationScope.PRIVATE, dummy, messageType, protocolType);
+        Serializer serializer = new Serializer(config.getSERIALIZER(), admin, "DefaultSerializer", ImplementationScope.PRIVATE, dummy, messageType, protocolType);
         implementationRepository.save(serializer);
 
-        Handler handler = new Handler(config.getHANDLER(), admin, "defaultHandler", ImplementationScope.PRIVATE, dummy, messageType);
+        Handler handler = new Handler(config.getHANDLER(), admin, "DefaultHandler", ImplementationScope.PRIVATE, dummy, messageType);
         implementationRepository.save(handler);
 
-        Environment environment = new Environment(config.getENVIRONMENT(), admin, "defaultEnvironment", ImplementationScope.PRIVATE, dummy);
+        Environment environment = new Environment(config.getENVIRONMENT(), admin, "DefaultEnvironment", ImplementationScope.PRIVATE, dummy);
         implementationRepository.save(environment);
 
     }
