@@ -157,6 +157,16 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
+    public Collection<ImmutableModuleImp> getRequiredInstances() {
+        HashSet<ImmutableModuleImp> result = new HashSet<>();
+        for (Configuration child : children) {
+            result.addAll(child.getDependentModuleImps());
+        }
+        result.remove(null);
+        return result;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), children, enforceCompatibility);
     }

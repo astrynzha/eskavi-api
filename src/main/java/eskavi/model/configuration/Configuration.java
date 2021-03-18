@@ -95,6 +95,16 @@ public abstract class Configuration {
     }
 
     /**
+     * Returns all the ModuleImps of Instances used in this configuration. All these Instances have to be added to the java class
+     * before this one can be added.
+     * @return Collection of the Instances
+     */
+    @JsonIgnore
+    public Collection<ImmutableModuleImp> getRequiredInstances() {
+        return null;
+    }
+
+    /**
      * @return the {@link KeyExpression} of this Configuration
      */
     public KeyExpression getKeyExpression() {
