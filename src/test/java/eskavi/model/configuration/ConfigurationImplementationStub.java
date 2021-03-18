@@ -10,7 +10,7 @@ import eskavi.model.user.User;
 import java.util.Collection;
 import java.util.HashSet;
 
-public class ConfigurationImplementationStub implements ImmutableModuleImp {
+public class ConfigurationImplementationStub extends Endpoint implements ImmutableModuleImp {
     private Configuration instanceConfig;
     private int compatible;
     private ImmutableGenericImp genericImp;

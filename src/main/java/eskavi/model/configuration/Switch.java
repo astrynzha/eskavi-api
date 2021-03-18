@@ -70,7 +70,7 @@ public class Switch extends Select {
         KeyExpression copy = new KeyExpression(getKeyExpression().getExpressionStart(), getKeyExpression().getExpressionEnd());
         Switch result = new Switch(getName(), allowsMultiple(), copy, getContent().get(TRUE_VALUE), getContent().get(FALSE_VALUE));
         // needed to be able to set value to previously set value
-        result.setValue(getValue());
+        result.setValue(getValueKey());
         return result;
     }
 }

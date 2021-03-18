@@ -33,7 +33,7 @@ class SelectTest {
     @Test
     void setValueSuccess() {
         testObject.setValue("testValue");
-        assertEquals("testValue", testObject.getValue());
+        assertEquals("value", testObject.getValue());
     }
 
     @Test
