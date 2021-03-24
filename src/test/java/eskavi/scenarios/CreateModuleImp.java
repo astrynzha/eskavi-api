@@ -37,9 +37,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CreateModuleImp {
 
-    //SpringBootComponents
-    @Autowired
-    private MockMvc mvc;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -50,6 +47,9 @@ public class CreateModuleImp {
     Configuration configuration;
     MessageType messageType;
     ProtocolType protocolType;
+    //SpringBootComponents
+    @Autowired
+    private MockMvc mvc;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -64,7 +64,7 @@ public class CreateModuleImp {
                         "}"))
                 .andReturn();
         token = JsonPath.read(result.getResponse().getContentAsString(), "$.jwt");
-        configuration = new TextField("text", false, new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        configuration = new TextField("text", false, new KeyExpression("Text(", ");"), DataType.TEXT);
 
         messageType = impRepository.save(new MessageType(0, creator, "standardMessageType", ImplementationScope.PRIVATE));
         protocolType = impRepository.save(new ProtocolType(1, creator, "standardProtocolType", ImplementationScope.PRIVATE));

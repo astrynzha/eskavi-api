@@ -12,7 +12,6 @@ import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
 import eskavi.util.Config;
-import org.hibernate.annotations.Immutable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,23 +78,23 @@ class ImpServiceTest {
 
 
         configuration = new TextField("text", false,
-                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+                new KeyExpression("Text(", ");"), DataType.TEXT);
         configuration1 = new TextField("text", false,
-                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+                new KeyExpression("Text(", ");"), DataType.TEXT);
         configuration2 = new TextField("text", false,
-                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+                new KeyExpression("Text(", ");"), DataType.TEXT);
         configuration3 = new TextField("text", false,
-                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+                new KeyExpression("Text(", ");"), DataType.TEXT);
         configuration4 = new TextField("text", false,
-                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+                new KeyExpression("Text(", ");"), DataType.TEXT);
         configuration5 = new TextField("text", false,
-                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+                new KeyExpression("Text(", ");"), DataType.TEXT);
         configuration6 = new TextField("text", false,
-                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+                new KeyExpression("Text(", ");"), DataType.TEXT);
         configuration7 = new TextField("text", false,
-                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+                new KeyExpression("Text(", ");"), DataType.TEXT);
         configuration8 = new TextField("text", false,
-                new KeyExpression("<text>", "<text>"), DataType.TEXT);
+                new KeyExpression("Text(", ");"), DataType.TEXT);
         protocolTypeA = new ProtocolType(0, (User) userA, "protocolType_0", ImplementationScope.SHARED);
         protocolTypeB = new ProtocolType(4, (User) userA, "protocolType_4", ImplementationScope.SHARED);
         messageTypeA = new MessageType(3, (User) userA, "messageType_3", ImplementationScope.SHARED);
@@ -216,7 +215,7 @@ class ImpServiceTest {
             fail(e.getMessage());
         }
         Collection<ImmutableUser> users = impService.getUsers(endpoint.getImplementationId());
-        assertEquals(3, users.size());
+        assertEquals(2, users.size());
         assertTrue(users.contains(userB));
         assertTrue(users.contains(userC));
     }

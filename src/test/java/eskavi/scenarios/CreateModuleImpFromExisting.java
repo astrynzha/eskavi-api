@@ -38,8 +38,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class CreateModuleImpFromExisting {
     @Autowired
-    private MockMvc mvc;
-    @Autowired
     UserRepository userRepository;
     @Autowired
     ImplementationRepository impRepository;
@@ -58,6 +56,8 @@ public class CreateModuleImpFromExisting {
     long handlerId;
     long interactionStarterId;
     long persistenceManagerId;
+    @Autowired
+    private MockMvc mvc;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -73,7 +73,7 @@ public class CreateModuleImpFromExisting {
                         "}"))
                 .andReturn();
         token = JsonPath.read(result.getResponse().getContentAsString(), "$.jwt");
-        configuration = new TextField("text", false, new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        configuration = new TextField("text", false, new KeyExpression("Text(", ");"), DataType.TEXT);
         MessageType messageType = new MessageType(1, creator, "defaultMessageType", ImplementationScope.PRIVATE);
         messageTypeId = impRepository.save(messageType).getImplementationId();
 
