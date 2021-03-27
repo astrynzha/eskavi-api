@@ -175,6 +175,16 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
+    public boolean hasCircularRequirements(ImmutableModuleImp imp) {
+        for (Configuration config : this.children) {
+            if (config.hasCircularRequirements(imp)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), children, enforceCompatibility);
     }

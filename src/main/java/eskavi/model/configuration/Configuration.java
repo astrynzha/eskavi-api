@@ -110,6 +110,11 @@ public abstract class Configuration {
         return null;
     }
 
+    @JsonIgnore
+    public boolean hasCircularRequirements(ImmutableModuleImp imp) {
+        return false;
+    }
+
     /**
      * @return the {@link KeyExpression} of this Configuration
      */
