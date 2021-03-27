@@ -113,6 +113,11 @@ public class ImplementationSelect extends Configuration {
 
     @Override
     public boolean isValid() {
+        return true;
+    }
+
+    @Override
+    public boolean isValidJavaCode() {
         return getKeyExpression().isValid();
     }
 

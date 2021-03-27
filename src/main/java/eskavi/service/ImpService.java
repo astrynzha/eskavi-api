@@ -191,6 +191,9 @@ public class ImpService {
         if (!mi.isValid()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+        if (!mi.isValidJavaCode()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid Java code in key expression");
+        }
         mi.setImplementationId(0);
         Optional<User> optionalCaller = userRepository.findById(callerId);
         if (optionalCaller.isEmpty()) {
@@ -363,9 +366,10 @@ public class ImpService {
      * This method is called by the Controller to update the impScope of an Implementation. It therefore checks whether the
      * caller is the author of the given Implementation and if the author is allowed to set the scope to the requested one. Only
      * if both criteria is met the impScope gets updated.
+     *
      * @param impScope new ImpScope
-     * @param impId id of the Imp which is changed
-     * @param caller User who made the request
+     * @param impId    id of the Imp which is changed
+     * @param caller   User who made the request
      */
     public void updateImpScope(ImplementationScope impScope, long impId, ImmutableUser caller) {
         Implementation imp = impRepository.findById(impId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

@@ -69,6 +69,12 @@ public abstract class Configuration {
     public abstract boolean isValid();
 
     /**
+     * @return boolean whether this configuration generates valid java code
+     */
+    @JsonIgnore
+    public abstract boolean isValidJavaCode();
+
+    /**
      * Adds a child Configuration if this Configuration is of type {@link ConfigurationAggregate}, otherwise exception is thrown
      *
      * @param child Configuration to be added to Aggregate

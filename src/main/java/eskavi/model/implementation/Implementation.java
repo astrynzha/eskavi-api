@@ -1,6 +1,8 @@
 package eskavi.model.implementation;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import eskavi.deserializer.ScopeDeserializer;
 import eskavi.deserializer.UserByIdDeserializer;
@@ -10,7 +12,6 @@ import eskavi.model.user.User;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -123,23 +124,8 @@ public abstract class Implementation implements ImmutableImplementation {
     }
 
     /**
-     * Assign a new scope object to this implementation object.
-     * If the scope is shared -> subscribes the author
-     *
-     * @param scope new scope object
-     */
-    public void setScope(Scope scope) {
-        if (this.scope != null) {
-            Collection<User> subscribers = new ArrayList<>(this.getSubscribed());
-            for (User user : subscribers) {
-                user.unsubscribe(this);
-            }
-        }
-        this.scope = scope;
-    }
-
-    /**
      * Returns all users that are subscriped to this Implementation. This does not include the author!
+     *
      * @return Collection of all subscribed users
      */
     @JsonIgnore
@@ -164,6 +150,7 @@ public abstract class Implementation implements ImmutableImplementation {
 
     /**
      * Sets the author to the given User this method should usually never be used outside the constructor
+     *
      * @param author
      */
     public void setAuthor(User author) {
@@ -181,6 +168,22 @@ public abstract class Implementation implements ImmutableImplementation {
 
     public void setImplementationId(long implementationId) {
         this.implementationId = implementationId;
+    }
+
+    /**
+     * Assign a new scope object to this implementation object.
+     * If the scope is shared -> subscribes the author
+     *
+     * @param scope new scope object
+     */
+    public void setScope(Scope scope) {
+        if (this.scope != null) {
+            Collection<User> subscribers = new ArrayList<>(this.getSubscribed());
+            for (User user : subscribers) {
+                user.unsubscribe(this);
+            }
+        }
+        this.scope = scope;
     }
 
     @Override
@@ -204,5 +207,9 @@ public abstract class Implementation implements ImmutableImplementation {
                 ", name='" + name + '\'' +
                 ", scope=" + scope.toString() +
                 '}';
+    }
+
+    public boolean isValidJavaCode() {
+        return true;
     }
 }
