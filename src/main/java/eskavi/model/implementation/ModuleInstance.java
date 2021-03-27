@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import eskavi.model.configuration.Configuration;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -50,6 +51,10 @@ public class ModuleInstance {
     public boolean isCompatible(Collection<ImmutableModuleImp> others) {
         return this.moduleImp.isCompatible(others) && this.moduleImp.isCompatible(instanceConfiguration.getDependentModuleImps())
                 && instanceConfiguration.checkCompatible();
+    }
+
+    public boolean hasCircularRequirements() {
+        return this.instanceConfiguration.hasCircularRequirements(this.getModuleImp());
     }
 
     /**

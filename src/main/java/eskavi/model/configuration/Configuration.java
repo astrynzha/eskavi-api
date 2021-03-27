@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import eskavi.model.implementation.ImmutableModuleImp;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Class represents the most generic abstraction of a Configuration. All subclasses represent a specific type of
@@ -101,12 +98,13 @@ public abstract class Configuration {
     }
 
     /**
-     * Returns all the ModuleImps of Instances used in this configuration. All these Instances have to be added to the java class
-     * before this one can be added.
+     * Returns all the ModuleImps of Instances this configuration needs to be setup to work. All these Instances have to be added to the java class
+     * before this one can be added. This collection contains all instances selected in InstanceSelects of this configuration and all instances selected
+     * in the selected instances.
      * @return Collection of the Instances
      */
     @JsonIgnore
-    public Collection<ImmutableModuleImp> getRequiredInstances() {
+    public Collection<ImmutableModuleImp> getRequiredInstances(ImmutableModuleImp imp) {
         return null;
     }
 

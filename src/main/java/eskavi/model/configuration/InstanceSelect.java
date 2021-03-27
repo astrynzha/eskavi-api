@@ -5,10 +5,7 @@ import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImpType;
 
 import javax.persistence.Entity;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class InstanceSelect extends ImplementationSelect {
@@ -50,7 +47,27 @@ public class InstanceSelect extends ImplementationSelect {
     }
 
     @Override
-    public Collection<ImmutableModuleImp> getRequiredInstances() {
-        return Arrays.asList(this.getInstance().getModuleImp());
+    public Collection<ImmutableModuleImp> getRequiredInstances(ImmutableModuleImp imp) {
+        List<ImmutableModuleImp> result = new ArrayList<>();
+        if (hasCircularRequirements(imp)) {
+            throw new IllegalStateException("There are circular requirements present");
+        }
+        result.add(this.getInstance().getModuleImp());
+        result.addAll(this.getInstance().getInstanceConfiguration().getRequiredInstances(imp));
+        return result;
+    }
+
+    @Override
+    public boolean hasCircularRequirements(ImmutableModuleImp imp) {
+        return this.getInstance() != null && this.getInstance().getModuleImp().equals(imp);
+    }
+
+    @Override
+    public InstanceSelect clone() {
+        InstanceSelect result = new InstanceSelect(this.getName(), this.allowsMultiple(), this.getKeyExpression(), this.getGenerics(), this.getType());
+        if (this.getInstance() != null) {
+            result.setInstance(this.getInstance());
+        }
+        return result;
     }
 }

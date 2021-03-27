@@ -165,10 +165,10 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
-    public Collection<ImmutableModuleImp> getRequiredInstances() {
+    public Collection<ImmutableModuleImp> getRequiredInstances(ImmutableModuleImp imp) {
         HashSet<ImmutableModuleImp> result = new HashSet<>();
         for (Configuration child : children) {
-            result.addAll(child.getDependentModuleImps());
+            result.addAll(child.getRequiredInstances(imp));
         }
         result.remove(null);
         return result;
