@@ -120,6 +120,14 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
+    public boolean isValidJavaCode() {
+        for (Configuration config : children) {
+            if (!config.isValidJavaCode()) return false;
+        }
+        return getKeyExpression().isValid();
+    }
+
+    @Override
     public void addChild(Configuration config) {
         if (!children.contains(config) || config.allowsMultiple()) {
             children.add(config);

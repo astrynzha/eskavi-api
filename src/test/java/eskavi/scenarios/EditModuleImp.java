@@ -44,9 +44,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class EditModuleImp {
 
-    //SpringBootComponents
-    @Autowired
-    private MockMvc mvc;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -56,9 +53,12 @@ public class EditModuleImp {
     User newUser;
     String token;
     //Imps
-    Configuration dummy = new TextField("text", false, new KeyExpression("<text>", "<text>"), DataType.TEXT);
+    Configuration dummy = new TextField("text", false, new KeyExpression("Text(", ");"), DataType.TEXT);
     MessageType messageType;
     ProtocolType protocolType;
+    //SpringBootComponents
+    @Autowired
+    private MockMvc mvc;
 
     private void login() throws Exception {
         creator = new User("a@gmail.com", new BCryptPasswordEncoder().encode("1234"),
@@ -72,6 +72,9 @@ public class EditModuleImp {
                         "}"))
                 .andReturn();
         token = JsonPath.read(result.getResponse().getContentAsString(), "$.jwt");
+
+        messageType = impRepository.save(new MessageType(0, creator, "standardMessageType", ImplementationScope.SHARED));
+        protocolType = impRepository.save(new ProtocolType(1, creator, "standardProtocolType", ImplementationScope.SHARED));
     }
 
     @BeforeEach
@@ -208,13 +211,16 @@ public class EditModuleImp {
                 .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
     @Order(1200)
     void testRemoveUser() throws Exception {
         RemoveUserRequest request = new RemoveUserRequest();
+        newUser = new User("abc@gmail.com", new BCryptPasswordEncoder().encode("1234"),
+                UserLevel.PUBLISHING_USER, SecurityQuestion.MAIDEN_NAME, "Julia");
+        userRepository.save(newUser);
         request.setUserId(newUser.getEmailAddress());
         request.setImpId(messageType.getImplementationId());
         String body = new ObjectMapper().writeValueAsString(request);

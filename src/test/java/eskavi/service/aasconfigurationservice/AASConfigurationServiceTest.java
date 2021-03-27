@@ -32,12 +32,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class AASConfigurationServiceTest {
     @Autowired
+    Config config;
+    @Autowired
     private ImplementationRepository impRepo;
     @Autowired
     private UserRepository userRepo;
-    @Autowired
-    Config config;
-
     private AASConfigurationService aasService;
     private ImpService impService;
     private UserManagementService userManagementService;
@@ -58,9 +57,9 @@ class AASConfigurationServiceTest {
         userManagementService.createUser(someEmail, "dka;fj",
                 SecurityQuestion.MAIDEN_NAME, "Bezos");
         configuration1 = new ConfigurationAggregate("first", false,
-                new KeyExpression("<text>", "<text>"), new LinkedList<>(), false);
+                new KeyExpression("Text(", ");"), new LinkedList<>(), false);
         configuration2 = new ConfigurationAggregate("second", false,
-                new KeyExpression("<text>", "<text>"), new LinkedList<>(), false);
+                new KeyExpression("Text(", ");"), new LinkedList<>(), false);
         protocolType = new ProtocolType(0, (User) userManagementService.getUser(someEmail),
                 "protocolType_0", ImplementationScope.SHARED);
         messageType = new MessageType(3, (User) userManagementService.getUser(someEmail),

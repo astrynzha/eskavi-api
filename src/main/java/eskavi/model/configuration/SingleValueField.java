@@ -1,8 +1,6 @@
 package eskavi.model.configuration;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * Class extends {@link Configuration} and is an abstraction of all Configurations just containing one value
@@ -59,6 +57,11 @@ public abstract class SingleValueField extends Configuration {
     @Override
     public boolean isValid() {
         return true;
+    }
+
+    @Override
+    public boolean isValidJavaCode() {
+        return getKeyExpression().isValid();
     }
 
     @Override

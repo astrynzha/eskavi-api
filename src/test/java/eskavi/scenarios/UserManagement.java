@@ -35,16 +35,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserManagement {
     @Autowired
-    private MockMvc mvc;
-    @Autowired
     UserRepository userRepository;
     @Autowired
     ImplementationRepository implementationRepository;
     @Autowired
     BCryptPasswordEncoder encoder;
-
     User creator;
     String token;
+    @Autowired
+    private MockMvc mvc;
 
     private void login() throws Exception {
         creator = new User("a@gmail.com", new BCryptPasswordEncoder().encode("1234"),
@@ -94,11 +93,11 @@ public class UserManagement {
         login();
         ResetPasswordRequest request = new ResetPasswordRequest();
         String newPassword = "12345678";
+        request.setEmail("a@gmail.com");
         request.setAnswer("Julia");
         request.setNewPassword(newPassword);
         mvc.perform(post("/api/user/reset_password")
                 .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + token)
                 .content(new ObjectMapper().writeValueAsString(request)));
         mvc.perform(post("/api/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -163,7 +162,7 @@ public class UserManagement {
         login();
         mvc.perform(get("/api/user/security_question")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("a@gmail.com")
+                .param("email", "a@gmail.com")
         ).andExpect(status().isOk());
     }
 

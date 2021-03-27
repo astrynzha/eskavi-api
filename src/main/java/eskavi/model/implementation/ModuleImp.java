@@ -118,8 +118,7 @@ public abstract class ModuleImp extends Implementation implements ImmutableModul
         return new HashSet<>();
     }
 
-    @Override
-    public boolean isValid() {
-        return super.isValid() && configurationRoot.isValid();
+    public boolean isValidJavaCode() {
+        return configurationRoot.isValidJavaCode();
     }
 }

@@ -35,9 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class DeleteModuleImp {
 
-    //SpringBootComponents
-    @Autowired
-    private MockMvc mvc;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -56,6 +53,9 @@ public class DeleteModuleImp {
     long handlerId;
     long interactionStarterId;
     long persistenceManagerId;
+    //SpringBootComponents
+    @Autowired
+    private MockMvc mvc;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -72,7 +72,7 @@ public class DeleteModuleImp {
                 .andReturn();
 
         token = JsonPath.read(result.getResponse().getContentAsString(), "$.jwt");
-        configuration = new TextField("text", false, new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        configuration = new TextField("text", false, new KeyExpression("Text(", ");"), DataType.TEXT);
         MessageType messageType = new MessageType(1, creator, "defaultMessageType", ImplementationScope.PRIVATE);
         messageTypeId = impRepository.save(messageType).getImplementationId();
 

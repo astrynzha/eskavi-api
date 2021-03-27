@@ -1,17 +1,8 @@
 package eskavi.service.aasconfigurationservice;
 
-import eskavi.model.configuration.DataType;
-import eskavi.model.configuration.KeyExpression;
-import eskavi.model.configuration.TextField;
-import eskavi.model.implementation.ImplementationScope;
-import eskavi.model.implementation.MessageType;
 import eskavi.model.implementation.ProtocolType;
-import eskavi.model.implementation.moduleimp.*;
-import eskavi.model.user.SecurityQuestion;
-import eskavi.model.user.User;
-import eskavi.model.user.UserLevel;
+import eskavi.model.implementation.moduleimp.Endpoint;
 import eskavi.util.ImpCreatorUtil;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -48,9 +39,6 @@ public class AASConstructionSessionTest {
         data = data.substring(1);
         assertEquals("class App {\n" +
                 "  public static void main(String[] args) throws IOException {\n" +
-                "    Assetconnection assetconnection = Builder().dummy(\"dummy\").build();\n" +
-                "    InteractionStarter interactionstarter = Builder().dummy(\"dummy\").build();\n" +
-                "    PersistanceManager persistancemanager = Builder().dummy(\"dummy\").build();\n" +
                 "    Endpoint endpoint =\n" +
                 "        Builder()\n" +
                 "            .mapping(\n" +
@@ -59,12 +47,15 @@ public class AASConstructionSessionTest {
                 "                Dispatcher.builder().handler(Handler.builder().dummy(\"dummy\").build()).build())\n" +
                 "            .port(8080)\n" +
                 "            .build();\n" +
+                "    Assetconnection assetconnection = Builder().dummy(\"dummy\").build();\n" +
+                "    InteractionStarter interactionstarter = Builder().dummy(\"dummy\").build();\n" +
+                "    PersistanceManager persistancemanager = Builder().dummy(\"dummy\").build();\n" +
                 "    AasService service =\n" +
                 "        AasService.builder()\n" +
-                "            .assetconnection(assetconnection)\n" +
-                "            .interactionstarter(interactionstarter)\n" +
-                "            .persistencemanager(persistancemanager)\n" +
                 "            .endpoint(endpoint)\n" +
+                "            .assetConnection(assetconnection)\n" +
+                "            .interactionStarter(interactionstarter)\n" +
+                "            .persistenceManager(persistancemanager)\n" +
                 "            .build();\n" +
                 "    AasServiceManager.Instance.setAasService(service);\n" +
                 "    service.start();\n" +

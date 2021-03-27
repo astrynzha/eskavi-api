@@ -4,7 +4,6 @@ import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImpType;
 import eskavi.model.implementation.ModuleInstance;
-import eskavi.util.Config;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +12,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ConfigurationAggregateTest {
     private ConfigurationAggregate testObject;
@@ -29,31 +23,31 @@ class ConfigurationAggregateTest {
     @BeforeEach
     void setUp() {
         setUpChildren();
-        testObject = new ConfigurationAggregate("aggregate", true, new KeyExpression("<aggregate>", "<aggregate>"),
+        testObject = new ConfigurationAggregate("aggregate", true, new KeyExpression("Aggregate(", ");"),
                 children, false);
     }
 
     private void setUpChildren() {
         children = new ArrayList<>();
-        TextField textField = new TextField("text", false, new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        TextField textField = new TextField("text", false, new KeyExpression("TextField(", ");"), DataType.TEXT);
         textField.setValue("textValue");
         children.add(textField);
         generics = new HashSet<>();
         generics.add(new GenericStub("generic"));
         impSelect = new ImplementationSelect("impSelect", false,
-                new KeyExpression("<impSelect>", "<impSelect>"), generics, ImpType.ENDPOINT);
+                new KeyExpression("Imp(", ");"), generics, ImpType.ENDPOINT);
         children.add(impSelect);
-        TextField instanceConfig = new TextField("instanceConfig", false, new KeyExpression("<instanceConfig>", "<instanceConfig>"), DataType.TEXT);
+        TextField instanceConfig = new TextField("instanceConfig", false, new KeyExpression("Config(", ");"), DataType.TEXT);
         instanceConfig.setValue("value");
         impSelect.setInstance(new ModuleInstance(new ConfigurationImplementationStub(1, new GenericStub("generic"), instanceConfig)));
-        TextField textFieldMultiple = new TextField("multiple", true, new KeyExpression("<multiple>", "<multiple>"), DataType.TEXT);
+        TextField textFieldMultiple = new TextField("multiple", true, new KeyExpression("MultipleText(", ");"), DataType.TEXT);
         textFieldMultiple.setValue("multipleFirstVal");
         children.add(textFieldMultiple);
     }
 
     @Test
     void resolveKeyExpression() {
-        assertEquals("<aggregate><text>textValue<text><impSelect><instanceConfig>value<instanceConfig><impSelect><multiple>multipleFirstVal<multiple><aggregate>",
+        assertEquals("Aggregate(TextField(textValue);Imp(Config(value););MultipleText(multipleFirstVal););",
                 testObject.resolveKeyExpression());
     }
 
@@ -88,7 +82,7 @@ class ConfigurationAggregateTest {
 
     @Test
     void addChildWhichIsAlreadyPart() {
-        TextField textField = new TextField("text", false, new KeyExpression("<text>", "<text>"), DataType.TEXT);
+        TextField textField = new TextField("text", false, new KeyExpression("TextField(", ");"), DataType.TEXT);
         textField.setValue("textValue");
         try {
             testObject.addChild(textField);
@@ -163,7 +157,7 @@ class ConfigurationAggregateTest {
     void equalsTest1() {
         Configuration testObject1 = testObject.clone();
         TextField textFieldMultiple = new TextField("multiple", true,
-                new KeyExpression("<multiple>", "<multiple>"), DataType.TEXT);
+                new KeyExpression("MultipleText(", ");"), DataType.TEXT);
         try {
             testObject1.addChild(textFieldMultiple);
         } catch (IllegalAccessException e) {
@@ -226,7 +220,7 @@ class ConfigurationAggregateTest {
         HashSet<ImmutableGenericImp> newGeneric = new HashSet<>();
         newGeneric.add(new GenericStub("other"));
         ImplementationSelect impSelect = new ImplementationSelect("diffSelect", false,
-                new KeyExpression("<diffSelect>", "<diffSelect>"), generics, ImpType.ENDPOINT);
+                new KeyExpression("Diff(", ");"), generics, ImpType.ENDPOINT);
         testObject.addChild(impSelect);
 
         assertEquals(true, testObject.isValid());
