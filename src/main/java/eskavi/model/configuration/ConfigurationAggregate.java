@@ -116,6 +116,14 @@ public class ConfigurationAggregate extends Configuration {
                 }
             }
         }
+        return true;
+    }
+
+    @Override
+    public boolean isValidJavaCode() {
+        for (Configuration config : children) {
+            if (!config.isValidJavaCode()) return false;
+        }
         return getKeyExpression().isValid();
     }
 
