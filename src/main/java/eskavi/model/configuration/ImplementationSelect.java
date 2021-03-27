@@ -152,7 +152,8 @@ public class ImplementationSelect extends Configuration {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         ImplementationSelect that = (ImplementationSelect) o;
-        return Objects.equals(instance, that.instance) && Objects.equals(generics, that.generics) && type == that.type;
+        return this.generics != null ? new ArrayList<>().addAll(getGenerics()) : new ArrayList<>()
+                .equals(that.generics != null ? new ArrayList<>(that.generics) : new ArrayList<>()) && type == that.type;
     }
 
     @Override
