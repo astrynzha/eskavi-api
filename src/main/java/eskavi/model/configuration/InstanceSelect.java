@@ -3,6 +3,7 @@ package eskavi.model.configuration;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImpType;
+import eskavi.model.implementation.ModuleInstance;
 
 import javax.persistence.Entity;
 import java.util.*;
@@ -47,19 +48,22 @@ public class InstanceSelect extends ImplementationSelect {
     }
 
     @Override
-    public Collection<ImmutableModuleImp> getRequiredInstances(ImmutableModuleImp imp) {
-        List<ImmutableModuleImp> result = new ArrayList<>();
+    public Collection<ModuleInstance> getRequiredInstances(ImmutableModuleImp imp) {
+        List<ModuleInstance> result = new ArrayList<>();
         if (hasCircularRequirements(imp)) {
             throw new IllegalStateException("There are circular requirements present");
         }
-        result.add(this.getInstance().getModuleImp());
+        result.add(this.getInstance());
         result.addAll(this.getInstance().getInstanceConfiguration().getRequiredInstances(imp));
         return result;
     }
 
     @Override
     public boolean hasCircularRequirements(ImmutableModuleImp imp) {
-        return this.getInstance() != null && this.getInstance().getModuleImp().equals(imp);
+        if (this.getInstance() == null) return false;
+        if (this.getInstance().getModuleImp().equals(imp))  return true;
+        if (this.getInstance().getInstanceConfiguration().hasCircularRequirements(imp)) return true;
+        return false;
     }
 
     @Override

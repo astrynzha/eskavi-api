@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
+import eskavi.model.implementation.ModuleInstance;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -165,8 +166,8 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
-    public Collection<ImmutableModuleImp> getRequiredInstances(ImmutableModuleImp imp) {
-        HashSet<ImmutableModuleImp> result = new HashSet<>();
+    public Collection<ModuleInstance> getRequiredInstances(ImmutableModuleImp imp) {
+        HashSet<ModuleInstance> result = new HashSet<>();
         for (Configuration child : children) {
             result.addAll(child.getRequiredInstances(imp));
         }

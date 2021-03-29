@@ -26,6 +26,10 @@ public class InstanceSelectTest {
     private ModuleInstance instance1;
     private ModuleInstance instance2;
     private ModuleInstance instance3;
+    private InstanceSelect select1;
+    private InstanceSelect select2;
+    private InstanceSelect select3;
+    private ConfigurationAggregate root;
 
     @BeforeEach
     void setUp() {
@@ -34,9 +38,9 @@ public class InstanceSelectTest {
         dummys.add(dummyGeneric);
         User userA = new User("test@web.de", "jassdja", UserLevel.ADMINISTRATOR, SecurityQuestion.MAIDEN_NAME, "julia");
 
-        InstanceSelect select1 = new InstanceSelect("select", false, new KeyExpression(".instance1(",")"), new HashSet<>(), ImpType.ENVIRONMENT);
-        InstanceSelect select2 = new InstanceSelect("select", false, new KeyExpression(".instance2(",")"), new HashSet<>(), ImpType.INTERACTION_STARTER);
-        InstanceSelect select3 = new InstanceSelect("select", false, new KeyExpression(".instance3(",")"), new HashSet<>(), ImpType.ASSET_CONNECTION);
+        select1 = new InstanceSelect("select", false, new KeyExpression(".instance1(",")"), new HashSet<>(), ImpType.ENVIRONMENT);
+        select2 = new InstanceSelect("select", false, new KeyExpression(".instance2(",")"), new HashSet<>(), ImpType.INTERACTION_STARTER);
+        select3 = new InstanceSelect("select", false, new KeyExpression(".instance3(",")"), new HashSet<>(), ImpType.ASSET_CONNECTION);
 
         AssetConnection assetConnection = new AssetConnection(0, userA, "assetConnection", ImplementationScope.PRIVATE, select1);
         Environment environment = new Environment(1, userA, "environment", ImplementationScope.PRIVATE, select2);
@@ -46,23 +50,31 @@ public class InstanceSelectTest {
         this.instance2 = new ModuleInstance(environment);
         this.instance3 = new ModuleInstance(interactionStarter);
 
-        ConfigurationAggregate root = new ConfigurationAggregate("root", false, new KeyExpression("", ""), new ArrayList<>(), false);
+        root = new ConfigurationAggregate("root", false, new KeyExpression("", ""), new ArrayList<>(), false);
         select1.setInstance(instance2);
         root.setChildren(Arrays.asList(select1));
         instance1.setInstanceConfiguration(root);
 
+        root = new ConfigurationAggregate("root", false, new KeyExpression("", ""), new ArrayList<>(), false);
+
         select2.setInstance(instance3);
         root.setChildren(Arrays.asList(select2));
         instance2.setInstanceConfiguration(root);
-
-        select3.setInstance(instance1);
-        root.setChildren(Arrays.asList(select3));
-        instance3.setInstanceConfiguration(root);
-
     }
 
     @Test
     void testCircularWithout() {
         assertEquals(false, instance1.hasCircularRequirements());
+    }
+
+    @Test
+    void testWithCircular() {
+        root = new ConfigurationAggregate("root", false, new KeyExpression("", ""), new ArrayList<>(), false);
+
+        select3.setInstance(instance1);
+        root.setChildren(Arrays.asList(select3));
+        instance3.setInstanceConfiguration(root);
+
+        assertEquals(true, instance1.hasCircularRequirements());
     }
 }

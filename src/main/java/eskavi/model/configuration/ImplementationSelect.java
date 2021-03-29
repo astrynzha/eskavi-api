@@ -177,7 +177,8 @@ public class ImplementationSelect extends Configuration {
                 ", allowMultiple=" + allowsMultiple() +
                 ", keyExpression=" + getKeyExpression().toString() +
                 ", generics=" + getGenerics().toString() +
-                ", type=" + type.name() +
-                ", instance=" + instance.toString() + "}";
+                ", type=" + type.name();
+        //TODO add again
+//                ", instance=" + (instance != null ? instance.toString() : "null") + "}";
     }
 }

@@ -75,12 +75,30 @@ public class AASConstructionSession {
         return miMap.get(moduleId).getInstanceConfiguration();
     }
 
+    /*
     private void appendDeclarations(StringBuilder codeBuilder) {
         miMap.values().forEach(mi -> codeBuilder.append(
                 mi.getModuleImp().getName() + " " +
                         mi.getModuleImp().getName().toLowerCase() + "=" +
                         mi.resolveConfiguration()
         ));
+    }*/
+
+    private void appendDeclarations(StringBuilder codeBuilder) {
+        List<ModuleInstance> alreadyAdded = new ArrayList<>();
+        for (ModuleInstance instance : this.miMap.values()) {
+            appendDeclaration(instance, codeBuilder, alreadyAdded);
+        }
+    }
+
+    private void appendDeclaration(ModuleInstance instance, StringBuilder codeBuilder, List<ModuleInstance> alreadyUsed) {
+        for (ModuleInstance required : instance.getInstanceConfiguration().getRequiredInstances(instance.getModuleImp())) {
+            appendDeclaration(required, codeBuilder, alreadyUsed);
+        }
+        codeBuilder.append(instance.getModuleImp().getName() + " " +
+                        instance.getModuleImp().getName().toLowerCase() + "=" +
+                        instance.resolveConfiguration());
+        alreadyUsed.add(instance);
     }
 
     private void appendAASContent(StringBuilder codeBuilder) {
@@ -123,7 +141,7 @@ public class AASConstructionSession {
         }
 
         for (ModuleInstance instance : miMap.values()) {
-            if (!instance.isCompatible(others)) {
+            if (!instance.isCompatible(others) || instance.hasCircularRequirements()) {
                 return false;
             }
         }
