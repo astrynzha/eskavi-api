@@ -7,6 +7,9 @@ import eskavi.controller.requests.aas.UpdateConfigurationRequest;
 import eskavi.controller.responses.aas.CreateSessionResponse;
 import eskavi.controller.responses.aas.GetConfigurationResponse;
 import eskavi.controller.responses.aas.GetImpsResponse;
+import eskavi.model.implementation.ImmutableImplementation;
+import eskavi.model.implementation.ImmutableModuleImp;
+import eskavi.model.implementation.ImpType;
 import eskavi.model.user.ImmutableUser;
 import eskavi.service.aasconfigurationservice.AASConfigurationService;
 import eskavi.service.aasconfigurationservice.AASConstructionSession;
@@ -15,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @CrossOrigin
@@ -105,11 +111,13 @@ public class AASConfigurationController {
      * @apiGroup AAS
      * @apiVersion 0.0.1
      * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
-     * @apiParam (Query String param) {Number} sessionId Session unique ID
+     * @apiParam (queryStringParam) {Number} sessionId Session unique ID
      * @apiError {String} message Errormessage
      */
     @GetMapping("toplevelimps")
-    public GetImpsResponse getImps(@RequestParam long sessionId) {
+    public GetImpsResponse getImps(@RequestParam long sessionId, @RequestParam(value = "impType", required = false) String impType,
+                                   @RequestParam(value = "generics", required = false) Collection<Long> generics,
+                                   @RequestHeader(required = false) String Authorization) {
         return new GetImpsResponse(aasConfigurationService.getTopLevelImps(sessionId));
     }
 
