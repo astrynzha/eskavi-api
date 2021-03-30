@@ -328,8 +328,8 @@ public class ImpService {
             throw new IllegalAccessException("This user cannot remove the implementation, he is not it's author");
         }
         //unsubscribe from all
-        Collection<User> subscribers = new ArrayList();
-        subscribers.addAll(imp.getSubscribed());
+        List<User> subscribers = new ArrayList<>(imp.getSubscribed());
+        subscribers.add((User) imp.getAuthor());
         for (User subscriber : subscribers) {
             subscriber.unsubscribe(imp);
             userRepository.save(subscriber);
