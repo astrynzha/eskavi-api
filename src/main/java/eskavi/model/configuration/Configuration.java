@@ -19,7 +19,8 @@ import java.util.*;
         @JsonSubTypes.Type(value = ImplementationSelect.class, name = "IMPLEMENTATION_SELECT"),
         @JsonSubTypes.Type(value = Select.class, name = "SELECT"),
         @JsonSubTypes.Type(value = Switch.class, name = "SWITCH"),
-        @JsonSubTypes.Type(value = FileField.class, name = "FILE_FIELD")
+        @JsonSubTypes.Type(value = FileField.class, name = "FILE_FIELD"),
+        @JsonSubTypes.Type(value = InstanceSelect.class, name = "INSTANCE_SELECT")
 })
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
