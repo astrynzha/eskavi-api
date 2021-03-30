@@ -1,26 +1,62 @@
 package eskavi.model.configuration;
 
-import eskavi.model.implementation.ImmutableGenericImp;
-import eskavi.model.implementation.ImmutableModuleImp;
-import eskavi.model.implementation.ImpType;
-import eskavi.model.implementation.ModuleInstance;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import eskavi.model.implementation.*;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import java.util.*;
 
 @Entity
-public class InstanceSelect extends ImplementationSelect {
+public class InstanceSelect extends Configuration {
+    @Transient
+    private ImmutableModuleImp implementation;
+    @ManyToMany(targetEntity = GenericImp.class)
+    private Set<ImmutableGenericImp> generics;
+    @JsonIdentityReference(alwaysAsId = true)
+    private ImpType type;
+
     public InstanceSelect(String name, boolean allowMultiple, KeyExpression expression, Set<ImmutableGenericImp> generic,
-                                       ImpType type) {
-        super(name, allowMultiple, expression, generic, type);
+                          ImpType type) {
+        super(name, allowMultiple, expression);
+        this.generics = generic;
+        this.type = type;
     }
 
     protected InstanceSelect() {}
 
+    public ImmutableModuleImp getImplementation() {
+        return implementation;
+    }
+
+    public void setImplementation(ImmutableModuleImp implementation) {
+        this.implementation = implementation;
+    }
+
+    public Set<ImmutableGenericImp> getGenerics() {
+        return generics;
+    }
+
+    @JsonSetter
+    public void setGenerics(Set<ImmutableGenericImp> generics) {
+        this.generics = generics;
+    }
+
+    /**
+     * Returns the required {@link ImpType} for this Configuration
+     *
+     * @return the type required for this Select
+     */
+    public ImpType getType() {
+        return type;
+    }
+
     @Override
     public String resolveKeyExpression() {
-        if (getInstance() != null) {
-            return this.getKeyExpression().getExpressionStart() + this.getInstance().getModuleImp().getName().toLowerCase()
+        if (getImplementation() != null) {
+            return this.getKeyExpression().getExpressionStart() + this.getImplementation().getName().toLowerCase()
                     + this.getKeyExpression().getExpressionEnd();
         } else {
             throw new IllegalStateException("Instance has to be set");
@@ -29,48 +65,29 @@ public class InstanceSelect extends ImplementationSelect {
 
     @Override
     public boolean checkCompatible() {
-        return this.getInstance() != null;
+        return this.getImplementation() != null;
     }
 
     @Override
-    public List<Configuration> getChildren() {
-        return null;
+    public boolean isValid() {
+        return true;
     }
 
     @Override
-    public Collection<ImmutableModuleImp> getDependentModuleImps() {
-        return null;
+    public boolean isValidJavaCode() {
+        return this.getKeyExpression().isValid();
     }
 
     @Override
-    public ImmutableModuleImp getModuleImp() {
-        return null;
-    }
-
-    @Override
-    public Collection<ModuleInstance> getRequiredInstances(ImmutableModuleImp imp) {
-        List<ModuleInstance> result = new ArrayList<>();
-        if (hasCircularRequirements(imp)) {
-            throw new IllegalStateException("There are circular requirements present");
-        }
-        result.add(this.getInstance());
-        result.addAll(this.getInstance().getInstanceConfiguration().getRequiredInstances(imp));
-        return result;
-    }
-
-    @Override
-    public boolean hasCircularRequirements(ImmutableModuleImp imp) {
-        if (this.getInstance() == null) return false;
-        if (this.getInstance().getModuleImp().equals(imp))  return true;
-        if (this.getInstance().getInstanceConfiguration().hasCircularRequirements(imp)) return true;
-        return false;
+    public Collection<ImmutableModuleImp> getRequiredInstances() {
+        return Arrays.asList(this.getImplementation());
     }
 
     @Override
     public InstanceSelect clone() {
         InstanceSelect result = new InstanceSelect(this.getName(), this.allowsMultiple(), this.getKeyExpression(), this.getGenerics(), this.getType());
-        if (this.getInstance() != null) {
-            result.setInstance(this.getInstance());
+        if (this.getImplementation() != null) {
+            result.setImplementation(this.getImplementation());
         }
         return result;
     }

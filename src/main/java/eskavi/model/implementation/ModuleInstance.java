@@ -53,10 +53,6 @@ public class ModuleInstance {
                 && instanceConfiguration.checkCompatible();
     }
 
-    public boolean hasCircularRequirements() {
-        return this.instanceConfiguration.hasCircularRequirements(this.getModuleImp());
-    }
-
     /**
      * Returns the {@link ImmutableModuleImp} this is an Instance of
      *

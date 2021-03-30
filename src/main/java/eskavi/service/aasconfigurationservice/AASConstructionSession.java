@@ -1,6 +1,7 @@
 package eskavi.service.aasconfigurationservice;
 
 import eskavi.model.configuration.Configuration;
+import eskavi.model.implementation.ImmutableImplementation;
 import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ModuleInstance;
 import eskavi.model.user.User;
@@ -59,6 +60,9 @@ public class AASConstructionSession {
             throw new IllegalAccessException("no MI with id " + moduleId + " is found in session");
         }
         ModuleInstance mi = miMap.get(moduleId);
+        if (hasCircularRequirements(mi, updateConfig)) {
+            throw new IllegalStateException("the given configuration leads to a circular dependency of selected Instances");
+        }
         mi.setInstanceConfiguration(updateConfig);
         miMap.replace(moduleId, mi);
     }
@@ -92,8 +96,8 @@ public class AASConstructionSession {
     }
 
     private void appendDeclaration(ModuleInstance instance, StringBuilder codeBuilder, List<ModuleInstance> alreadyUsed) {
-        for (ModuleInstance required : instance.getInstanceConfiguration().getRequiredInstances(instance.getModuleImp())) {
-            appendDeclaration(required, codeBuilder, alreadyUsed);
+        for (ImmutableModuleImp required : instance.getInstanceConfiguration().getRequiredInstances()) {
+            appendDeclaration(miMap.get(required.getImplementationId()), codeBuilder, alreadyUsed);
         }
         codeBuilder.append(instance.getModuleImp().getName() + " " +
                         instance.getModuleImp().getName().toLowerCase() + "=" +
@@ -141,10 +145,23 @@ public class AASConstructionSession {
         }
 
         for (ModuleInstance instance : miMap.values()) {
-            if (!instance.isCompatible(others) || instance.hasCircularRequirements()) {
+            if (!instance.isCompatible(others) || hasCircularRequirements(instance, instance.getInstanceConfiguration())) {
                 return false;
             }
         }
         return true;
+    }
+
+    public boolean hasCircularRequirements(ModuleInstance instance, Configuration configuration) {
+        if (configuration.getRequiredInstances().contains(instance.getModuleImp())) return true;
+
+        //continue recursion
+        for (ImmutableModuleImp required : configuration.getRequiredInstances()) {
+            long id = required.getImplementationId();
+            if (hasCircularRequirements(instance, miMap.get(id).getInstanceConfiguration())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

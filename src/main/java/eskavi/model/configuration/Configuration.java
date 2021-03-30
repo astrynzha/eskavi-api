@@ -2,7 +2,6 @@ package eskavi.model.configuration;
 
 import com.fasterxml.jackson.annotation.*;
 import eskavi.model.implementation.ImmutableModuleImp;
-import eskavi.model.implementation.ModuleInstance;
 
 import javax.persistence.*;
 import java.util.*;
@@ -106,13 +105,8 @@ public abstract class Configuration {
      * @return Collection of the Instances
      */
     @JsonIgnore
-    public Collection<ModuleInstance> getRequiredInstances(ImmutableModuleImp imp) {
+    public Collection<ImmutableModuleImp> getRequiredInstances() {
         return new HashSet<>();
-    }
-
-    @JsonIgnore
-    public boolean hasCircularRequirements(ImmutableModuleImp imp) {
-        return false;
     }
 
     /**
