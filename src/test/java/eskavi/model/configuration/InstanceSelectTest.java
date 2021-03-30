@@ -5,14 +5,12 @@ import eskavi.model.implementation.ImpType;
 import eskavi.model.implementation.ImplementationScope;
 import eskavi.model.implementation.ModuleInstance;
 import eskavi.model.implementation.moduleimp.AssetConnection;
-import eskavi.model.implementation.moduleimp.Endpoint;
 import eskavi.model.implementation.moduleimp.Environment;
 import eskavi.model.implementation.moduleimp.InteractionStarter;
 import eskavi.model.user.SecurityQuestion;
 import eskavi.model.user.User;
 import eskavi.model.user.UserLevel;
 import eskavi.service.aasconfigurationservice.AASConstructionSession;
-import org.apache.commons.codec.digest.Md5Crypt;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,13 +59,13 @@ public class InstanceSelectTest {
         this.instance3 = new ModuleInstance(interactionStarter);
 
         root = new ConfigurationAggregate("root", false, new KeyExpression("", ""), new ArrayList<>(), false);
-        select1.setImplementation(environment);
+        select1.setModuleImp(environment);
         root.setChildren(Arrays.asList(select1));
         instance1.setInstanceConfiguration(root);
 
         root = new ConfigurationAggregate("root", false, new KeyExpression("", ""), new ArrayList<>(), false);
 
-        select2.setImplementation(interactionStarter);
+        select2.setModuleImp(interactionStarter);
         root.setChildren(Arrays.asList(select2));
         instance2.setInstanceConfiguration(root);
 
@@ -91,7 +89,7 @@ public class InstanceSelectTest {
         interactionStarter = new InteractionStarter(2, userA, "interactionStarter", ImplementationScope.PRIVATE, select3);
         instance3 = new ModuleInstance(interactionStarter);
 
-        select3.setImplementation(assetConnection);
+        select3.setModuleImp(assetConnection);
         root.setChildren(Arrays.asList(select3));
         instance3.setInstanceConfiguration(root);
 
@@ -106,7 +104,7 @@ public class InstanceSelectTest {
         interactionStarter = new InteractionStarter(2, userA, "interactionStarter", ImplementationScope.PRIVATE, select3);
         instance3 = new ModuleInstance(interactionStarter);
 
-        select3.setImplementation(assetConnection);
+        select3.setModuleImp(assetConnection);
         root.setChildren(Arrays.asList(select3));
 
         try {

@@ -12,7 +12,7 @@ import java.util.*;
 @Entity
 public class InstanceSelect extends Configuration {
     @Transient
-    private ImmutableModuleImp implementation;
+    private ImmutableModuleImp moduleImp;
     @ManyToMany(targetEntity = GenericImp.class)
     private Set<ImmutableGenericImp> generics;
     @JsonIdentityReference(alwaysAsId = true)
@@ -27,12 +27,12 @@ public class InstanceSelect extends Configuration {
 
     protected InstanceSelect() {}
 
-    public ImmutableModuleImp getImplementation() {
-        return implementation;
+    public ImmutableModuleImp getModuleImp() {
+        return moduleImp;
     }
 
-    public void setImplementation(ImmutableModuleImp implementation) {
-        this.implementation = implementation;
+    public void setModuleImp(ImmutableModuleImp moduleImp) {
+        this.moduleImp = moduleImp;
     }
 
     public Set<ImmutableGenericImp> getGenerics() {
@@ -55,8 +55,8 @@ public class InstanceSelect extends Configuration {
 
     @Override
     public String resolveKeyExpression() {
-        if (getImplementation() != null) {
-            return this.getKeyExpression().getExpressionStart() + this.getImplementation().getName().toLowerCase()
+        if (getModuleImp() != null) {
+            return this.getKeyExpression().getExpressionStart() + this.getModuleImp().getName().toLowerCase()
                     + this.getKeyExpression().getExpressionEnd();
         } else {
             throw new IllegalStateException("Instance has to be set");
@@ -65,7 +65,7 @@ public class InstanceSelect extends Configuration {
 
     @Override
     public boolean checkCompatible() {
-        return this.getImplementation() != null;
+        return this.getModuleImp() != null;
     }
 
     @Override
@@ -80,14 +80,14 @@ public class InstanceSelect extends Configuration {
 
     @Override
     public Collection<ImmutableModuleImp> getRequiredInstances() {
-        return Arrays.asList(this.getImplementation());
+        return Arrays.asList(this.getModuleImp());
     }
 
     @Override
     public InstanceSelect clone() {
         InstanceSelect result = new InstanceSelect(this.getName(), this.allowsMultiple(), this.getKeyExpression(), this.getGenerics(), this.getType());
-        if (this.getImplementation() != null) {
-            result.setImplementation(this.getImplementation());
+        if (this.getModuleImp() != null) {
+            result.setModuleImp(this.getModuleImp());
         }
         return result;
     }
