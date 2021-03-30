@@ -1,14 +1,13 @@
 package eskavi.controller.responses.aas;
 
-import eskavi.model.implementation.ImmutableModuleImp;
-import eskavi.model.implementation.ModuleInstance;
+import eskavi.model.implementation.ImmutableImplementation;
 
-import java.util.List;
+import java.util.Collection;
 
 public class GetImpsResponse {
-    private List<ImmutableModuleImp> implementations;
+    private Collection<ImmutableImplementation> implementations;
 
-    public GetImpsResponse(List<ImmutableModuleImp> imps) {
+    public GetImpsResponse(Collection<ImmutableImplementation> imps) {
         this.implementations = imps;
     }
 }

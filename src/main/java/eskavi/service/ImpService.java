@@ -386,5 +386,18 @@ public class ImpService {
         }
         impRepository.save(imp);
     }
+
+    public Collection<ImmutableImplementation> getImps(Long impId, Collection<Long> generics, ImpType type, ImmutableUser user) {
+        if (impId != null) {
+            return Arrays.asList(getImp(impId, user.getEmailAddress()));
+        }
+        if (generics != null) {
+            return getImps(type, generics, user.getEmailAddress());
+        }
+        if (type != null) {
+            return getImps(type, user.getEmailAddress());
+        }
+        return getImps(user);
+    }
 }
 

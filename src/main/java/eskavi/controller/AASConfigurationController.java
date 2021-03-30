@@ -8,9 +8,9 @@ import eskavi.controller.responses.aas.CreateSessionResponse;
 import eskavi.controller.responses.aas.GetConfigurationResponse;
 import eskavi.controller.responses.aas.GetImpsResponse;
 import eskavi.model.implementation.ImmutableImplementation;
-import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.ImpType;
 import eskavi.model.user.ImmutableUser;
+import eskavi.service.ImpService;
 import eskavi.service.aasconfigurationservice.AASConfigurationService;
 import eskavi.service.aasconfigurationservice.AASConstructionSession;
 import org.springframework.http.HttpStatus;
@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 @CrossOrigin
@@ -29,10 +27,12 @@ import java.util.Objects;
 public class AASConfigurationController {
 
     final AASConfigurationService aasConfigurationService;
+    final ImpService impService;
     final UserTokenMatcher userTokenMatcher;
 
-    public AASConfigurationController(AASConfigurationService aasConfigurationService, UserTokenMatcher userTokenMatcher) {
+    public AASConfigurationController(AASConfigurationService aasConfigurationService, ImpService impService, UserTokenMatcher userTokenMatcher) {
         this.aasConfigurationService = aasConfigurationService;
+        this.impService = impService;
         this.userTokenMatcher = userTokenMatcher;
     }
 
@@ -118,7 +118,11 @@ public class AASConfigurationController {
     public GetImpsResponse getImps(@RequestParam long sessionId, @RequestParam(value = "impType", required = false) String impType,
                                    @RequestParam(value = "generics", required = false) Collection<Long> generics,
                                    @RequestHeader(required = false) String Authorization) {
-        return new GetImpsResponse(aasConfigurationService.getTopLevelImps(sessionId));
+        ImmutableUser user = Authorization != null ? userTokenMatcher.getUser(Authorization) : impService.getPublicUser();
+        ImpType type = impType != null ? ImpType.valueOf(impType) : null;
+        Collection<ImmutableImplementation> imps = impService.getImps(type, generics, user.getEmailAddress());
+        imps.retainAll(aasConfigurationService.getTopLevelImps(sessionId));
+        return new GetImpsResponse(imps);
     }
 
     /**

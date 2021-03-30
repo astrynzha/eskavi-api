@@ -16,7 +16,6 @@ import eskavi.service.ImpService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 
@@ -309,16 +308,8 @@ public class ImpController {
                                           @RequestHeader(required = false) String Authorization) {
         ImmutableUser user = Authorization != null ? userTokenMatcher.getUser(Authorization) : impService.getPublicUser();
         ImpType type = impType != null ? ImpType.valueOf(impType) : null;
-        if (impId != null) {
-            return new GetImplementationsResponse(Arrays.asList(impService.getImp(impId, user.getEmailAddress())));
-        }
-        if (generics != null) {
-            return new GetImplementationsResponse(impService.getImps(type, generics, user.getEmailAddress()));
-        }
-        if (impType != null) {
-            return new GetImplementationsResponse(impService.getImps(type, user.getEmailAddress()));
-        }
-        return new GetImplementationsResponse(impService.getImps(user));
+        Collection<ImmutableImplementation> imps = impService.getImps(impId, generics, type, user);
+        return new GetImplementationsResponse(imps);
     }
 
     /**
