@@ -6,6 +6,7 @@ import eskavi.controller.requests.aas.AddRegistryRequest;
 import eskavi.controller.requests.aas.UpdateConfigurationRequest;
 import eskavi.controller.responses.aas.CreateSessionResponse;
 import eskavi.controller.responses.aas.GetConfigurationResponse;
+import eskavi.controller.responses.aas.GetImpsResponse;
 import eskavi.model.user.ImmutableUser;
 import eskavi.service.aasconfigurationservice.AASConfigurationService;
 import eskavi.service.aasconfigurationservice.AASConstructionSession;
@@ -96,6 +97,20 @@ public class AASConfigurationController {
             caller = userTokenMatcher.getUser(Authorization);
         }
         return Objects.equals(session.getOwner(), caller);
+    }
+
+    /**
+     * @api{post}/aas/toplevelimps Get all Top-Level imps of the given Session
+     * @apiName GetTopLevel
+     * @apiGroup AAS
+     * @apiVersion 0.0.1
+     * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
+     * @apiParam (Query String param) {Number} sessionId Session unique ID
+     * @apiError {String} message Errormessage
+     */
+    @GetMapping("toplevelimps")
+    public GetImpsResponse getImps(@RequestParam long sessionId) {
+        return new GetImpsResponse(aasConfigurationService.getTopLevelImps(sessionId));
     }
 
     /**

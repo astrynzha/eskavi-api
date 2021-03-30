@@ -1,6 +1,7 @@
 package eskavi.service.aasconfigurationservice;
 
 import eskavi.model.configuration.Configuration;
+import eskavi.model.implementation.ImmutableModuleImp;
 import eskavi.model.implementation.Implementation;
 import eskavi.model.implementation.ModuleImp;
 import eskavi.model.implementation.ModuleInstance;
@@ -139,4 +140,13 @@ public class AASConfigurationService {
         return session.generateJavaClass();
     }
 
+    public List<ImmutableModuleImp> getTopLevelImps(long sessionId) {
+        AASConstructionSession session = null;
+        try {
+            session = sessionHandler.getAASConstructionSession(sessionId);
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+        return session.getImps();
+    }
 }

@@ -164,4 +164,12 @@ public class AASConstructionSession {
         }
         return false;
     }
+
+    public List<ImmutableModuleImp> getImps() {
+        List<ImmutableModuleImp> result = new ArrayList<>();
+        for (ModuleInstance instance : miMap.values()) {
+            result.add(instance.getModuleImp());
+        }
+        return result;
+    }
 }
