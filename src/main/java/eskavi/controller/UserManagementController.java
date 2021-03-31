@@ -211,7 +211,7 @@ public class UserManagementController {
         if (userManagementService.checkSecurityQuestion(request.getEmail(), request.getAnswer())) {
             userManagementService.setPassword(request.getEmail(), passwordEncoder.encode(request.getNewPassword()));
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong answer");
         }
     }
 
