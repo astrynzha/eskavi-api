@@ -10,4 +10,12 @@ public class GetImpsResponse {
     public GetImpsResponse(Collection<ImmutableImplementation> imps) {
         this.implementations = imps;
     }
+
+    public Collection<ImmutableImplementation> getImplementations() {
+        return implementations;
+    }
+
+    public void setImplementations(Collection<ImmutableImplementation> implementations) {
+        this.implementations = implementations;
+    }
 }
