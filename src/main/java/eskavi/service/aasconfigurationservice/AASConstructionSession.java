@@ -61,7 +61,7 @@ public class AASConstructionSession {
         }
         ModuleInstance mi = miMap.get(moduleId);
         if (hasCircularRequirements(mi, updateConfig)) {
-            throw new IllegalStateException("the given configuration leads to a circular dependency of selected Instances");
+            throw new IllegalStateException("your selection leads to circular dependencies of selected Instances");
         }
         mi.setInstanceConfiguration(updateConfig);
         miMap.replace(moduleId, mi);
@@ -153,7 +153,9 @@ public class AASConstructionSession {
     }
 
     public boolean hasCircularRequirements(ModuleInstance instance, Configuration configuration) {
-        if (configuration.getRequiredInstances().contains(instance.getModuleImp())) return true;
+        for (ImmutableModuleImp imp: configuration.getRequiredInstances()) {
+            if (instance.getModuleImp().equals(imp)) return true;
+        }
 
         //continue recursion
         for (ImmutableModuleImp required : configuration.getRequiredInstances()) {

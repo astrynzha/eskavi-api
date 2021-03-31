@@ -113,7 +113,7 @@ public class AASConfigurationService {
             } else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The given Configuration is not valid. All values have to be set.");
             }
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | IllegalStateException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }

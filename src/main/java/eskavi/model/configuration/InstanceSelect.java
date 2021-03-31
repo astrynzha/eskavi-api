@@ -1,5 +1,6 @@
 package eskavi.model.configuration;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import eskavi.model.implementation.*;
@@ -27,12 +28,18 @@ public class InstanceSelect extends Configuration {
 
     protected InstanceSelect() {}
 
+    @JsonGetter
     public ImmutableModuleImp getModuleImp() {
         return moduleImp;
     }
 
+    @JsonSetter
     public void setModuleImp(ImmutableModuleImp moduleImp) {
-        this.moduleImp = moduleImp;
+        if (type.matches(moduleImp) && (generics.isEmpty() || moduleImp.getGenerics().equals(generics))) {
+            this.moduleImp = moduleImp;
+        } else {
+            throw new IllegalArgumentException("given ModuleImp doesn't match required type or required generics");
+        }
     }
 
     public Set<ImmutableGenericImp> getGenerics() {
