@@ -72,7 +72,9 @@ public abstract class Configuration {
      * @return boolean whether this configuration generates valid java code
      */
     @JsonIgnore
-    public abstract boolean isValidJavaCode();
+    public boolean isValidJavaCode() {
+        return true;
+    }
 
     /**
      * Adds a child Configuration if this Configuration is of type {@link ConfigurationAggregate}, otherwise exception is thrown
@@ -103,6 +105,7 @@ public abstract class Configuration {
     /**
      * Returns all the ModuleImps of Instances used in this configuration. All these Instances have to be added to the java class
      * before this one can be added.
+     *
      * @return Collection of the Instances
      */
     @JsonIgnore

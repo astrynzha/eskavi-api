@@ -60,11 +60,6 @@ public abstract class SingleValueField extends Configuration {
     }
 
     @Override
-    public boolean isValidJavaCode() {
-        return getKeyExpression().isValid();
-    }
-
-    @Override
     public String toString() {
         return "SingleValueField{" +
                 "name='" + getName() + '\'' +

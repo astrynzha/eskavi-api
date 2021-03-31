@@ -1,9 +1,5 @@
 package eskavi.model.configuration;
 
-import com.google.googlejavaformat.java.Formatter;
-import com.google.googlejavaformat.java.FormatterException;
-import eskavi.util.JavaClassConstants;
-
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
@@ -28,17 +24,6 @@ public class KeyExpression {
 
     protected KeyExpression() {
 
-    }
-
-    public boolean isValid() {
-        //TODO is there any better way to do this?
-        String input = JavaClassConstants.getClassStart() + expressionStart + expressionEnd + "}}";
-        try {
-            new Formatter().formatSource(input);
-            return true;
-        } catch (FormatterException e) {
-            return false;
-        }
     }
 
     /**
