@@ -2,8 +2,11 @@ package eskavi.model.configuration;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.google.googlejavaformat.java.Formatter;
+import com.google.googlejavaformat.java.FormatterException;
 import eskavi.model.implementation.ImmutableGenericImp;
 import eskavi.model.implementation.ImmutableModuleImp;
+import eskavi.util.JavaClassConstants;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -121,10 +124,17 @@ public class ConfigurationAggregate extends Configuration {
 
     @Override
     public boolean isValidJavaCode() {
-        for (Configuration config : children) {
-            if (!config.isValidJavaCode()) return false;
+        StringBuilder result = new StringBuilder();
+        result.append(this.getKeyExpression().getExpressionStart());
+        children.forEach(c -> result.append(c.getKeyExpression().getExpressionStart() + c.getKeyExpression().getExpressionEnd()));
+        result.append(this.getKeyExpression().getExpressionEnd());
+        String input = JavaClassConstants.getClassStart() + result + "}}";
+        try {
+            new Formatter().formatSource(input);
+            return true;
+        } catch (FormatterException e) {
+            return false;
         }
-        return getKeyExpression().isValid();
     }
 
     @Override
@@ -155,17 +165,17 @@ public class ConfigurationAggregate extends Configuration {
     }
 
     @Override
-    public Collection<ImmutableModuleImp> getDependentModuleImps() {
+    public Collection<ImmutableModuleImp> getRequiredInstances() {
         HashSet<ImmutableModuleImp> result = new HashSet<>();
         for (Configuration child : children) {
-            result.addAll(child.getDependentModuleImps());
+            result.addAll(child.getRequiredInstances());
         }
         result.remove(null);
         return result;
     }
 
     @Override
-    public Collection<ImmutableModuleImp> getRequiredInstances() {
+    public Collection<ImmutableModuleImp> getDependentModuleImps() {
         HashSet<ImmutableModuleImp> result = new HashSet<>();
         for (Configuration child : children) {
             result.addAll(child.getRequiredInstances());
