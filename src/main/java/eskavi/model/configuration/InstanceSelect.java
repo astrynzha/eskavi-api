@@ -81,11 +81,6 @@ public class InstanceSelect extends Configuration {
     }
 
     @Override
-    public boolean isValidJavaCode() {
-        return this.getKeyExpression().isValid();
-    }
-
-    @Override
     public Collection<ImmutableModuleImp> getRequiredInstances() {
         return Arrays.asList(this.getModuleImp());
     }
