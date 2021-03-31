@@ -209,6 +209,7 @@ public abstract class Implementation implements ImmutableImplementation {
                 '}';
     }
 
+    @JsonIgnore
     public boolean isValidJavaCode() {
         return true;
     }

@@ -1,5 +1,6 @@
 package eskavi.model.configuration;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 import eskavi.util.JavaClassConstants;
@@ -30,6 +31,7 @@ public class KeyExpression {
 
     }
 
+    @JsonIgnore
     public boolean isValid() {
         //TODO is there any better way to do this?
         String input = JavaClassConstants.getClassStart() + expressionStart + expressionEnd + "}}";
