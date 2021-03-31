@@ -116,11 +116,6 @@ public class ImplementationSelect extends Configuration {
         return true;
     }
 
-    @Override
-    public boolean isValidJavaCode() {
-        return getKeyExpression().isValid();
-    }
-
     @JsonIgnore
     @Override
     public List<Configuration> getChildren() {
