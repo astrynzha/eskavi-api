@@ -6,7 +6,11 @@ import eskavi.controller.requests.aas.AddRegistryRequest;
 import eskavi.controller.requests.aas.UpdateConfigurationRequest;
 import eskavi.controller.responses.aas.CreateSessionResponse;
 import eskavi.controller.responses.aas.GetConfigurationResponse;
+import eskavi.controller.responses.aas.GetImpsResponse;
+import eskavi.model.implementation.ImmutableImplementation;
+import eskavi.model.implementation.ImpType;
 import eskavi.model.user.ImmutableUser;
+import eskavi.service.ImpService;
 import eskavi.service.aasconfigurationservice.AASConfigurationService;
 import eskavi.service.aasconfigurationservice.AASConstructionSession;
 import org.springframework.http.HttpStatus;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Objects;
 
 @CrossOrigin
@@ -22,10 +27,12 @@ import java.util.Objects;
 public class AASConfigurationController {
 
     final AASConfigurationService aasConfigurationService;
+    final ImpService impService;
     final UserTokenMatcher userTokenMatcher;
 
-    public AASConfigurationController(AASConfigurationService aasConfigurationService, UserTokenMatcher userTokenMatcher) {
+    public AASConfigurationController(AASConfigurationService aasConfigurationService, ImpService impService, UserTokenMatcher userTokenMatcher) {
         this.aasConfigurationService = aasConfigurationService;
+        this.impService = impService;
         this.userTokenMatcher = userTokenMatcher;
     }
 
@@ -96,6 +103,26 @@ public class AASConfigurationController {
             caller = userTokenMatcher.getUser(Authorization);
         }
         return Objects.equals(session.getOwner(), caller);
+    }
+
+    /**
+     * @api{post}/aas/toplevelimps Get all Top-Level imps of the given Session
+     * @apiName GetTopLevel
+     * @apiGroup AAS
+     * @apiVersion 0.0.1
+     * @apiHeader {String} [Authorization] Authorization header using the Bearer schema: Bearer token
+     * @apiParam (queryStringParam) {Number} sessionId Session unique ID
+     * @apiError {String} message Errormessage
+     */
+    @GetMapping("toplevelimps")
+    public GetImpsResponse getImps(@RequestParam long sessionId, @RequestParam(value = "impType", required = false) String impType,
+                                   @RequestParam(value = "generics", required = false) Collection<Long> generics,
+                                   @RequestHeader(required = false) String Authorization) {
+        ImmutableUser user = Authorization != null ? userTokenMatcher.getUser(Authorization) : impService.getPublicUser();
+        ImpType type = impType != null ? ImpType.valueOf(impType) : null;
+        Collection<ImmutableImplementation> imps = impService.getImps(type, generics, user.getEmailAddress());
+        imps.retainAll(aasConfigurationService.getTopLevelImps(sessionId));
+        return new GetImpsResponse(imps);
     }
 
     /**

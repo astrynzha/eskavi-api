@@ -1,9 +1,7 @@
 package eskavi.service.aasconfigurationservice;
 
 import eskavi.model.configuration.Configuration;
-import eskavi.model.implementation.Implementation;
-import eskavi.model.implementation.ModuleImp;
-import eskavi.model.implementation.ModuleInstance;
+import eskavi.model.implementation.*;
 import eskavi.model.user.User;
 import eskavi.repository.ImplementationRepository;
 import eskavi.repository.UserRepository;
@@ -12,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,7 +113,7 @@ public class AASConfigurationService {
             } else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The given Configuration is not valid. All values have to be set.");
             }
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | IllegalStateException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
@@ -139,4 +139,13 @@ public class AASConfigurationService {
         return session.generateJavaClass();
     }
 
+    public List<ImmutableModuleImp> getTopLevelImps(long sessionId) {
+        AASConstructionSession session = null;
+        try {
+            session = sessionHandler.getAASConstructionSession(sessionId);
+        } catch (IllegalAccessException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+        return session.getImps();
+    }
 }

@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import eskavi.model.implementation.ImmutableModuleImp;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Class represents the most generic abstraction of a Configuration. All subclasses represent a specific type of
@@ -21,7 +18,8 @@ import java.util.Objects;
         @JsonSubTypes.Type(value = ImplementationSelect.class, name = "IMPLEMENTATION_SELECT"),
         @JsonSubTypes.Type(value = Select.class, name = "SELECT"),
         @JsonSubTypes.Type(value = Switch.class, name = "SWITCH"),
-        @JsonSubTypes.Type(value = FileField.class, name = "FILE_FIELD")
+        @JsonSubTypes.Type(value = FileField.class, name = "FILE_FIELD"),
+        @JsonSubTypes.Type(value = InstanceSelect.class, name = "INSTANCE_SELECT")
 })
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -103,14 +101,14 @@ public abstract class Configuration {
     }
 
     /**
-     * Returns all the ModuleImps of Instances used in this configuration. All these Instances have to be added to the java class
-     * before this one can be added.
-     *
+     * Returns all the ModuleImps of Instances this configuration needs to be setup to work. All these Instances have to be added to the java class
+     * before this one can be added. This collection contains all instances selected in InstanceSelects of this configuration and all instances selected
+     * in the selected instances.
      * @return Collection of the Instances
      */
     @JsonIgnore
     public Collection<ImmutableModuleImp> getRequiredInstances() {
-        return null;
+        return new HashSet<>();
     }
 
     /**

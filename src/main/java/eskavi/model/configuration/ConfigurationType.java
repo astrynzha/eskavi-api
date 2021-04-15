@@ -24,7 +24,8 @@ public enum ConfigurationType {
     IMPLEMENTATION_SELECT(new ImplementationSelect("", false, new KeyExpression("", ""), new HashSet<>(), ImpType.SERIALIZER)),
     SELECT(new Select("", false, new KeyExpression("", ""), new HashMap<>())),
     FILE_FIELD(new FileField("", false, new KeyExpression("",""))),
-    SWITCH(new Switch("", false, new KeyExpression("",""), "", ""));
+    SWITCH(new Switch("", false, new KeyExpression("",""), "", "")),
+    INSTANCE_SELECT(new InstanceSelect("", false, new KeyExpression("", ""), new HashSet<>(), ImpType.ENDPOINT));
 
     @JsonValue
     private Configuration template;

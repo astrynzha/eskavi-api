@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import eskavi.model.configuration.Configuration;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 
 /**

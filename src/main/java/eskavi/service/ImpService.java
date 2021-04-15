@@ -107,16 +107,16 @@ public class ImpService {
     public Collection<ImmutableImplementation> getImps(ImpType impType, Collection<Long> generics, String callerId) {
         User user = userRepository.findById(callerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "could not find the user"));
-        Set<ImmutableGenericImp> genericImps = StreamSupport.stream(impRepository.findAllById(generics).spliterator(), false)
+        Set<ImmutableGenericImp> genericImps = generics != null ? StreamSupport.stream(impRepository.findAllById(generics).spliterator(), false)
                 .filter(i -> i instanceof GenericImp)
                 .map(i -> (GenericImp) i)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toSet()) : new HashSet<>();
         return StreamSupport.stream(impRepository.findAll().spliterator(), false)
                 .filter(i -> filterByImpType(impType, i))
                 .filter(user::hasAccess)
                 .filter(i -> i instanceof ModuleImp)
                 .map(i -> (ModuleImp) i)
-                .filter(mi -> containsGenerics(mi, genericImps))
+                .filter(mi -> generics == null || containsGenerics(mi, genericImps))
                 .collect(Collectors.toList());
     }
 
@@ -128,7 +128,7 @@ public class ImpService {
     }
 
     private boolean containsGenerics(ModuleImp mi, Collection<ImmutableGenericImp> generics) {
-        return !Collections.disjoint(mi.getGenerics(), generics);
+        return generics.containsAll(mi.getGenerics());
     }
 
     /**
@@ -385,6 +385,19 @@ public class ImpService {
             }
         }
         impRepository.save(imp);
+    }
+
+    public Collection<ImmutableImplementation> getImps(Long impId, Collection<Long> generics, ImpType type, ImmutableUser user) {
+        if (impId != null) {
+            return Arrays.asList(getImp(impId, user.getEmailAddress()));
+        }
+        if (generics != null) {
+            return getImps(type, generics, user.getEmailAddress());
+        }
+        if (type != null) {
+            return getImps(type, user.getEmailAddress());
+        }
+        return getImps(user);
     }
 }
 

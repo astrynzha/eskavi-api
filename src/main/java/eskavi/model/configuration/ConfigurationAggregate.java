@@ -178,7 +178,7 @@ public class ConfigurationAggregate extends Configuration {
     public Collection<ImmutableModuleImp> getDependentModuleImps() {
         HashSet<ImmutableModuleImp> result = new HashSet<>();
         for (Configuration child : children) {
-            result.addAll(child.getDependentModuleImps());
+            result.addAll(child.getRequiredInstances());
         }
         result.remove(null);
         return result;

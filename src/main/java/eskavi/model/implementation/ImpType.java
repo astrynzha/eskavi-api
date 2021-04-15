@@ -17,17 +17,17 @@ import eskavi.model.implementation.moduleimp.*;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "name")
 public enum ImpType {
-    ASSET_CONNECTION(AssetConnection.class, true, -1),
-    DESERIALIZER(Deserializer.class, false, -1),
-    DISPATCHER(Dispatcher.class, false, -1),
-    ENDPOINT(Endpoint.class, true, -1),
-    HANDLER(Handler.class, false, -1),
-    INTERACTION_STARTER(InteractionStarter.class, true, -1),
-    PERSISTENCE_MANAGER(PersistenceManager.class, true,  1),
-    SERIALIZER(Serializer.class, false, 1),
-    PROTOCOL_TYPE(ProtocolType.class, false, 0),
-    MESSAGE_TYPE(MessageType.class, false, 0),
-    ENVIRONMENT(Environment.class, true, 1);
+    ASSET_CONNECTION(AssetConnection.class, true, -1, true),
+    DESERIALIZER(Deserializer.class, false, -1, true),
+    DISPATCHER(Dispatcher.class, false, -1, true),
+    ENDPOINT(Endpoint.class, true, -1, false),
+    HANDLER(Handler.class, false, -1, true),
+    INTERACTION_STARTER(InteractionStarter.class, true, -1, true),
+    PERSISTENCE_MANAGER(PersistenceManager.class, true,  1, false),
+    SERIALIZER(Serializer.class, false, 1, true),
+    PROTOCOL_TYPE(ProtocolType.class, false, 0, true),
+    MESSAGE_TYPE(MessageType.class, false, 0, true),
+    ENVIRONMENT(Environment.class, true, 1, false);
 
 
     private Class matchingClass;
@@ -35,11 +35,15 @@ public enum ImpType {
     private boolean topLevel;
     @JsonProperty
     private int maxUse;
+    @JsonProperty
+    private boolean optional;
 
-    private ImpType(Class moduleImp, boolean topLevel, int maxUse) {
+
+    private ImpType(Class moduleImp, boolean topLevel, int maxUse, boolean optional) {
         this.matchingClass = moduleImp;
         this.topLevel = topLevel;
         this.maxUse = maxUse;
+        this.optional = optional;
     }
 
     public String getName() {

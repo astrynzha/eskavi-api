@@ -59,10 +59,12 @@ public class Endpoint extends ModuleImp {
         return true;
     }
 
+    //TODO is that important?
+    /*
     @Override
     public boolean checkCompatibleEndpoint(Endpoint endpoint) {
         return endpoint.equals(this) || !endpoint.getProtocolType().checkCompatibility(protocolType);
-    }
+    }*/
 
     @Override
     public boolean checkCompatibleSerializer(Serializer serializer) {
