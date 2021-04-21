@@ -3,18 +3,25 @@ package eskavi.model.configuration;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import eskavi.model.implementation.*;
+import eskavi.model.implementation.GenericImp;
+import eskavi.model.implementation.ImmutableGenericImp;
+import eskavi.model.implementation.ImmutableModuleImp;
+import eskavi.model.implementation.ImpType;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 public class InstanceSelect extends Configuration {
     @Transient
     private ImmutableModuleImp moduleImp;
     @ManyToMany(targetEntity = GenericImp.class)
+    @ColumnDefault("0")
     private Set<ImmutableGenericImp> generics;
     @JsonIdentityReference(alwaysAsId = true)
     private ImpType type;
@@ -26,20 +33,7 @@ public class InstanceSelect extends Configuration {
         this.type = type;
     }
 
-    protected InstanceSelect() {}
-
-    @JsonGetter
-    public ImmutableModuleImp getModuleImp() {
-        return moduleImp;
-    }
-
-    @JsonSetter
-    public void setModuleImp(ImmutableModuleImp moduleImp) {
-        if (type.matches(moduleImp) && (generics.isEmpty() || moduleImp.getGenerics().equals(generics))) {
-            this.moduleImp = moduleImp;
-        } else {
-            throw new IllegalArgumentException("given ModuleImp doesn't match required type or required generics");
-        }
+    protected InstanceSelect() {
     }
 
     public Set<ImmutableGenericImp> getGenerics() {
@@ -83,6 +77,20 @@ public class InstanceSelect extends Configuration {
     @Override
     public Collection<ImmutableModuleImp> getRequiredInstances() {
         return Arrays.asList(this.getModuleImp());
+    }
+
+    @JsonGetter
+    public ImmutableModuleImp getModuleImp() {
+        return moduleImp;
+    }
+
+    @JsonSetter
+    public void setModuleImp(ImmutableModuleImp moduleImp) {
+        if (type.matches(moduleImp) && (generics.isEmpty() || moduleImp.getGenerics().equals(generics))) {
+            this.moduleImp = moduleImp;
+        } else {
+            throw new IllegalArgumentException("given ModuleImp doesn't match required type or required generics");
+        }
     }
 
     @Override
