@@ -87,7 +87,7 @@ public class ImplementationSelect extends Configuration {
     //TODO test and add serious if
     @JsonSetter
     public void setInstance(ModuleInstance instance) throws IllegalArgumentException {
-        if (type.matches(instance.getModuleImp()) && instance.getModuleImp().getGenerics().equals(generics)) {
+        if (type.matches(instance.getModuleImp()) && instance.getModuleImp().getGenerics().containsAll(generics)) {
             this.instance = instance;
         } else {
             throw new IllegalArgumentException("given ModuleImp doesn't match required type or required generics");

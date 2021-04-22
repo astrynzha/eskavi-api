@@ -35,7 +35,7 @@ public class InstanceSelect extends Configuration {
 
     @JsonSetter
     public void setModuleImp(ImmutableModuleImp moduleImp) {
-        if (type.matches(moduleImp) && (generics.isEmpty() || moduleImp.getGenerics().equals(generics))) {
+        if (type.matches(moduleImp) && (generics.isEmpty() || moduleImp.getGenerics().containsAll(generics))) {
             this.moduleImp = moduleImp;
         } else {
             throw new IllegalArgumentException("given ModuleImp doesn't match required type or required generics");
