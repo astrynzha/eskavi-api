@@ -50,6 +50,8 @@ public class ImplementationSelect extends Configuration {
      */
     @JsonIdentityReference(alwaysAsId = true)
     public Set<ImmutableGenericImp> getGenerics() {
+        HashSet<ImmutableGenericImp> result = new HashSet<>();
+        result.addAll(this.generics);
         return generics;
     }
 
@@ -152,8 +154,7 @@ public class ImplementationSelect extends Configuration {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         ImplementationSelect that = (ImplementationSelect) o;
-        return this.generics != null ? new ArrayList<>().addAll(getGenerics()) : new ArrayList<>()
-                .equals(that.generics != null ? new ArrayList<>(that.generics) : new ArrayList<>()) && type == that.type;
+        return this.getGenerics().equals(that.getGenerics()) && type == that.type;
     }
 
     @Override

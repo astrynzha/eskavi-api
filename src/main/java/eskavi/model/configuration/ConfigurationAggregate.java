@@ -153,7 +153,9 @@ public class ConfigurationAggregate extends Configuration {
 
     @Override
     public List<Configuration> getChildren() {
-        return children;
+        List<Configuration> result = new ArrayList<>();
+        result.addAll(children);
+        return result;
     }
 
     @JsonSetter("children")
@@ -200,6 +202,7 @@ public class ConfigurationAggregate extends Configuration {
         }
         // check that children of this and that have same fields but it is not necessary that their amount is equal
         // e.g. (textField1, textField1, fileField1, fileField2) equals (textField1, fileField1, fileField2)
+
         List<Configuration> thatChildren = that.getChildren();
         for (Configuration thatChild : thatChildren) {
             if (!this.children.contains(thatChild)) {
@@ -211,7 +214,8 @@ public class ConfigurationAggregate extends Configuration {
                 return false;
             }
         }
-        return enforceCompatibility == that.enforceCompatibility && Objects.equals(thatChildren, that.children);
+
+        return enforceCompatibility == that.enforceCompatibility /*&& Objects.equals(thatChildren, that.children)*/;
     }
 
     @Override
