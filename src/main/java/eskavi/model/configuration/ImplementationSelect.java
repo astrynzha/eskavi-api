@@ -101,7 +101,8 @@ public class ImplementationSelect extends Configuration {
     public String resolveKeyExpression() {
         if (instance != null) {
             return this.getKeyExpression().getExpressionStart() +
-                    this.instance.getInstanceConfiguration().resolveKeyExpression() +
+                    this.instance.getInstanceConfiguration().resolveKeyExpression()
+                            .substring(0, this.instance.getInstanceConfiguration().resolveKeyExpression().length() - 1) +
                     this.getKeyExpression().getExpressionEnd();
         } else {
             throw new IllegalStateException("instance has to be set");
