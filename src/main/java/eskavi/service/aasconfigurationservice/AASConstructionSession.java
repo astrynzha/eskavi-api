@@ -79,15 +79,6 @@ public class AASConstructionSession {
         return miMap.get(moduleId).getInstanceConfiguration();
     }
 
-    /*
-    private void appendDeclarations(StringBuilder codeBuilder) {
-        miMap.values().forEach(mi -> codeBuilder.append(
-                mi.getModuleImp().getName() + " " +
-                        mi.getModuleImp().getName().toLowerCase() + "=" +
-                        mi.resolveConfiguration()
-        ));
-    }*/
-
     private void appendDeclarations(StringBuilder codeBuilder) {
         List<ModuleInstance> alreadyAdded = new ArrayList<>();
         for (ModuleInstance instance : this.miMap.values()) {
