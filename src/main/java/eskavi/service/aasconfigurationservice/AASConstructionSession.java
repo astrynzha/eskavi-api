@@ -91,7 +91,9 @@ public class AASConstructionSession {
     private void appendDeclarations(StringBuilder codeBuilder) {
         List<ModuleInstance> alreadyAdded = new ArrayList<>();
         for (ModuleInstance instance : this.miMap.values()) {
-            appendDeclaration(instance, codeBuilder, alreadyAdded);
+            if (!alreadyAdded.contains(instance)) {
+                appendDeclaration(instance, codeBuilder, alreadyAdded);
+            }
         }
     }
 
