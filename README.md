@@ -6,6 +6,7 @@ The app allows users to generate Asset Administration Shells (AAS) aka digital t
 
 The app also allows manufacturers to create AAS modules and add them to the catalogue, where the user can access them. Manufacturers specify the AAS Java code and parameter fields for the users to fill out. Manufacturers can publish the modules globally, share them with specific users or keep them private.
 
+Backend MVC architecture can be viewed [here](https://lucid.app/documents/view/4161efbe-1cf2-4e47-a8be-06e03bf22b24) (UML).
 ## Screenshots
 
 Configuring different modules of an AAS:
