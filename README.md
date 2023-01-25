@@ -22,3 +22,6 @@ User login page:
 ![image](https://user-images.githubusercontent.com/48807494/214474461-6f6c0505-28dd-4a59-8e9e-79fdb54b5e18.png)
 
 
+# Resources
+- [Backend Architecture Diagram](https://lucid.app/documents/view/4161efbe-1cf2-4e47-a8be-06e03bf22b24)
+- [Frontend repo](https://github.com/eskavi/frontend)
